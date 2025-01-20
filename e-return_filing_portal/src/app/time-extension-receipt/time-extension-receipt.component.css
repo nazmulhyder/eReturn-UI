@@ -1,0 +1,15 @@
+.btn-customize {
+    background-color: white;
+    font-size: 12px;
+  }
+  .btn-customize:hover {
+    background-color: black !important;
+    color:  white;
+  }
+  @media print
+  {
+      .after-print
+      {
+         text-align: right !important;
+      }
+  }

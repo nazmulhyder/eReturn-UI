@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Challan Entry</title>
+</head>
+
+<div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-12 col-sm-12 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left iconStyle">
+                </i>Challan List &nbsp; &nbsp;
+            </span>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-10 mt-3">
+            <div class="row">
+                <div class="col-5">
+                    <label for="">Name : {{ companyName }}</label>
+                </div>
+                <div class="col-4">
+                    <label for="">Assessment Year : 2021-2022</label>
+                </div>
+                <div class="col-3">
+                    <label for="">WIN : 5199191227</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-2" style="float: right;">
+            <button (click)="gotoChallanEntryPage()" style="float: right;" type="button" class="btn btn-sm addBtn">
+                <i class="fa fa-plus titleText"></i>Add Challan
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="form-horizontal" [formGroup]="challanListForm" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="challanListTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">S.L</th>
+                                    <th scope="col">Challan No</th>
+                                    <th scope="col">Challan Date</th>
+                                    <th scope="col">Code No.</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col" width="19%">Tax Office Verification</th>
+                                    <th scope="col" width="18%">Upload Details</th>
+                                    <th scope="col" width="18%">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of ChallanListData; let k = index">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row">{{ item.challanNo }}</td>
+                                    <td scope="row">{{ item.challanDate }}</td>
+                                    <td scope="row">{{ item.code }}</td>
+                                    <td scope="row">{{ item.totalChallanAmount }}</td>
+                                    <td scope="row" *ngIf="item.verificationStatus==='VERIFIED'">
+                                        <h5><label class="badge badge-success">Verified</label></h5>
+                                    </td>
+                                    <td scope="row" *ngIf="item.verificationStatus==='PENDING'">
+                                        <h5><label class="badge badge-warning">Pending</label></h5>
+                                    </td>
+                                    <td scope="row" *ngIf="item.verificationStatus==='REJECTED'">
+                                        <h5><label class="badge badge-danger">Rejected</label></h5>
+                                    </td>
+                                    <td scope="row"><button (click)="gotoUploadPage(item.entryRef)" type="button" class="btn btn-sm uploadBtn">
+                                        <i class="fa fa-upload titleText"></i>Upload
+                                    </button></td>
+                                    <td scope="row" *ngIf="item.verificationStatus==='PENDING'"><button class="btn btn-sm btn-danger" (click)="deleteEntry(item.entryRef)">Delete</button></td>
+                                    <td scope="row" *ngIf="item.verificationStatus!=='PENDING'"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+<ngx-ui-loader></ngx-ui-loader>

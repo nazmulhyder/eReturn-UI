@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Source Tax on iBAS++</title>
+</head>
+
+<div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>iBAS++ (Salary) &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-6 mt-3">
+            <label class="float-right" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="row form-horizontal" [formGroup]="salaryTdsForm" aria-labelledby="title">
+                    <input type="text" hidden formControlName="id">
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label for="claimAmount" class="label col-8 form-control-label">TDS Claim
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="claimAmount"></i>
+                            </label>
+                            <ng-template #claimAmount>
+                                <div [innerHtml]="tdsClaimTooltip"></div>
+                            </ng-template>
+                            <div class="col-8">
+                                <input type="text" placeholder="Enter Claim Amount" (keyup)="keyUpClaimAmt($event)"
+                                    formControlName="claimAmount" class="form-control" (keypress)="numberOnly($event)"
+                                    id="claimAmount" required
+                                    [ngClass]="{'is-invalid':salaryTdsForm.get('claimAmount').touched && salaryTdsForm.get('claimAmount').invalid}">
+                                <div class="invalid-feedback ">
+                                    <div>TDS Claim is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 mt-4">
+                        <div class="form-group">
+                            <ng-template #resetBtn>
+                                <div [innerHtml]="resetBtnTooltip"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <button type="button" [disabled]="!salaryTdsForm.valid" class="btn submitBtn"
+                                    (click)="submittedData()">
+                                    <i class="fa fa-save btnText"></i>Save
+                                </button>
+                                <!-- <button type="button" id="resetBtn" class="btn btn-warning tooltip-350 reset"
+                                    (click)="reset()" [tooltip]="resetBtn">
+                                    Reset
+                                </button> -->
+
+                                <ng-template #searchBtn>
+                                    <div [innerHtml]="searchBtnTooltip"></div>
+                                </ng-template>
+                                <button type="button" id="searchBtn" class="btn searchBtn mr-2 tooltip-350"
+                                    (click)="search($event, searchModalShow)" [tooltip]="searchBtn">
+                                    <i class="fa fa-search btnText" aria-hidden="true"></i>Search
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!isListSectionHidden">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>iBAS++ (Salary) TDS List &nbsp; &nbsp;
+            </span>
+        </div>
+    </div>
+
+    <div class="row mt-3" *ngIf="!isListSectionHidden">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="form-horizontal" [formGroup]="salaryTdsForm" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="salaryTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th scope="col">Office Name</th>
+                                    <th scope="col">Designation</th>
+                                    <th scope="col">TDS Claim</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of iBasGetData; let k = index">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row">{{ item.office }}</td>
+                                    <td scope="row">{{ item.designation }}</td>
+                                    <td scope="row">{{ commonUtilService.commaSeperator(item.tdsClaim) }}</td>
+                                    <!-- <td scope="row">
+                                        <button type="button" *ngIf="!iBasDataConfirmation[k]" (click)="ibasConfirmation(k)" class="addAnotherBtnStyle">
+                                            <i class="fa fa-check-circle-o mr-2" aria-hidden="true"></i>Confirm</button>
+                                        <i class="fa fa-check-circle-o fa-lg confirmIcon" *ngIf="iBasDataConfirmation[k]" aria-hidden="true"></i>
+                                    </td> -->
+                                    <td scope="row">
+                                        <button type="button" class="btn btn-sm btn-info editBtnStyle mr-2"
+                                            title="Click here to edit" (click)="onEdit(item.id)"><i
+                                                class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-sm deleteBtnStyle"
+                                            title="Click here to delete" (click)="onDelete(item.id)"><i
+                                                class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #searchModalShow>
+    <div class="modal-header">
+        <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">iBAS++ (Salary) TDS Details</h5>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="close_Search()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" [formGroup]="ibasTDSForm" aria-labelledby="title">
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="assessmentYear" class="label form-control-label">Assessment Year
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="assessmentYear" class="form-control " readonly>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="incomeYear" class="label form-control-label">Income Year
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="incomeYear" class="form-control " readonly>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="employerName" class="label form-control-label">
+                        <!-- Employer Name -->
+                        Office Name
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="employerName" class="form-control " readonly>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="designation" class="label form-control-label">Designation
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="designation" class="form-control " readonly>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="tdsAmount" class="label form-control-label">TDS on Salary
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="tdsAmount" class="form-control " readonly>
+                </div>
+            </div>
+
+        </form>
+        <button type="button" class="btn btn-sm btn-outline-danger" style="float: right;width: 100px;"
+            (click)="close_Search()">close</button>
+    </div>
+</ng-template>
+
+</html>
+
+<ngx-ui-loader></ngx-ui-loader>
+
+<!-- <pre>Form values: {{salaryTdsForm.value | json}}</pre> -->

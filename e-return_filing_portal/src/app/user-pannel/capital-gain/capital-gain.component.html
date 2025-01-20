@@ -1,0 +1,1031 @@
+<div class="row" ngxUiLoaderBlurred *ngIf="isShow">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-12 col-sm-2">
+        <span class="incomeDetailsSpan">Income Details</span>
+      </div>
+      <div class="col-12 col-sm-10">
+        <div class="row buttonAllign">
+          <button type="button" class="btn btn-pill rounded-pill btn-outline-dark btn-customize btn-sm main_nav"
+            *ngFor="let head of selectedNavbar; let i = index" (click)="mainNavActiveSelect(head['id'])"
+            [class.activeMainNav]="mainNavActive[head['id']]" routerLink="{{head['link']}}"
+            style="float: right; margin-right: 5px;">{{head['name']}}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-12">
+        <ul class="nav nav-tabs nav_font" style="margin-top: 36px">
+          <li class="nav-item" *ngFor="let head of headsOfIncome; let i = index">
+            <a class="nav-link" [class.activeHead]="navActive[head['id']]" routerLink="{{head['link']}}"
+              (click)="navActiveSelect(head['id'])">{{head['name']}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="multiple-section">
+      <div class="row">
+        <div class="col-sm-9">
+          <button class="btn btn-sm btn-light capitalGainBtn" [hidden]="isVisibleTab[i]"
+            [class.capital-gain-btn-active]="isVisibleForm == i" *ngFor="let item of formArray.controls; let i = index"
+            (click)="selectedCapitalGain(i)">{{capitalGainTypeName[i]}}
+            <i class="fa fa-times-circle" (click)="onCloseTabClick(closetabpopup)" aria-hidden="true">
+            </i>
+            <ng-template #closetabpopup>
+              <div class="modal-header">
+                <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>This Action will Remove All Your Unsaved Data.</p>
+                <p>Would You like to Remove It?</p>
+                <button type="button" class="btn btn-danger" style="float: right;" (click)="close(i)">Remove</button>
+                <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+                  (click)="modalRef.hide()">Keep</button>
+              </div>
+            </ng-template>
+            &nbsp;
+          </button>
+        </div>
+        <div class="col-sm-3 addAnother">
+          <button type="button" [disabled]="isDisableAddSalBtn" class="btn btn-sm btn-pill addAnotherCatBtn"
+            (click)="insertFormGroupToArray()">
+            <i class="fa fa-plus-square" aria-hidden="true">
+            </i>&nbsp;Add Another Category
+          </button>&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+
+    <div class="content-background">
+      <form [formGroup]="form" *ngFor="let form of formArray.controls; let i = index">
+        <div class="row">
+          <div class="col-sm-6" [hidden]="i != isVisibleForm">
+            <div>
+              <div class="content-background">
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">Type of Gains</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" placement="top" [tooltip]="cgTypeTT"></i>
+                  <ng-template #cgTypeTT> <div [innerHtml]="cgType"></div>
+                  </ng-template>
+                  <select class="form-control" id="exampleFormControlSelect1" formControlName="gainType"
+                    (change)="capitalGainTypeChange($event,i)" [ngClass]="{'is-invalid': typeOfGains_showError[i]}">
+                    <option value="0" selected>Select One</option>
+                    <option value="Transfer_of_Property_Land">Transfer of Property (Land Only)</option>
+                    <option value="Transfer_of_Property_House_Apartment">Transfer of Property (House/Apartment)</option>
+                    <option value="Signing_Money_from_Developer">Signing Money from the Developer</option>
+                    <option value="Compensation_Against_Property_Acquisition">Compensation Against Property Acquisition
+                    </option>
+                    <option value="Transfer_of_Share_Securities_of_Listed_Company">Transfer of share of listed Co. (Director/Sponsor)</option>
+                    <option value="Other_Capital_Gain">Other Capital Gain</option>
+                    <option value="Gain_Exempted_or_Reduced_Tax_Rate_by_SRO">Gain Subject to Reduced Tax Rate
+                    </option>
+                  </select>
+                  <div class="invalid-feedback">
+                    <div>Type of Gains is Required!</div>
+                  </div>
+                </div>
+                <div *ngIf="form.value.gainType === 'Transfer_of_Property_Land'">
+                  <div class="form-group">                    
+                    <label for="exampleFormControlInput9">Description of the Property</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="descriptionofPropertyTT" placement="top"></i>
+                    <ng-template #descriptionofPropertyTT> <div [innerHtml]="propertyDes"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeDesOfProperty(i)"
+                      formControlName="descriptionofProperty" [ngClass]="{'is-invalid': desOfProperty_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Description of the Property is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <label for="exampleFormControlInput9">Total Area</label>
+                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="totalAreaTT" placement="top"></i>
+                        <ng-template #totalAreaTT> <div [innerHtml]="totalArea"></div>
+                        </ng-template>
+                        <input type="text"  (keyup)="initializeTotalArea($event,i)" (keyup)="acceptAreasFloatingPoints($event,i,'totalArea')" class="form-control"
+                          id="exampleFormControlInput9" placeholder="" formControlName="totalArea" [ngClass]="{'is-invalid': totalArea_showError[i]}">
+                          <div class="invalid-feedback">
+                            <div>Total Area is Required!</div>
+                          </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <label for="totalAreaUnit"></label>
+                          <select class="form-control mt-8" id="exampleFormControlInput9ee" formControlName="unitOfTotalArea">
+                            <option value="Decimal">Decimal</option>
+                            <option value="Acre">Acre</option>
+                          </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">TIN of Buyer</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="tinofBuyerTT" placement="top"></i>
+                    <ng-template #tinofBuyerTT> <div [innerHtml]="buyerTIN"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keypress)="numberOnly($event)"  (keyup)="initializeTinOfBuyer(i)"
+                      formControlName="tinofBuyer" [ngClass]="{'is-invalid': tinOfBuyer_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>TIN of Buyer is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Deed No</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="deedNoTT" placement="top"></i>
+                    <ng-template #deedNoTT> <div [innerHtml]="deedNumber"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeDeedNo(i)"
+                      formControlName="deedNo"  [ngClass]="{'is-invalid': deedNo_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Deed No is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Date of Deed</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="dateofDeedTT" placement="top"></i>
+                    <ng-template #dateofDeedTT> <div [innerHtml]="dateOfDeed"></div>
+                    </ng-template>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="" formControlName="dateofDeed" (bsValueChange)="initializeDateOfDeed(i)"
+                        aria-label="Recipient's username" [minDate]="minDateLen" [maxDate]="maxDateLen"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}"
+                        aria-describedby="button-addon2" #dateofDeed ="bsDatepicker" bsDatepicker [ngClass]="{'is-invalid': dateOfDeed_showError[i]}">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-info btn-sm" type="button" (click)="dateofDeed.toggle()">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                          </button>
+                        </div>
+                        <div class="invalid-feedback">
+                          <div>Date of Deed is Required!</div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Sub Registrar Office</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="subRegisterOfficeTT" placement="top"></i>
+                    <ng-template #subRegisterOfficeTT> <div [innerHtml]="subregisterOfc"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeSubRegisterOfc(i)"
+                      formControlName="subRegisterOffice" [ngClass]="{'is-invalid': subRegisterOfc_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Sub Registrar Office is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Sale Deed Value</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="saleDeedValueTT" placement="top"></i>
+                    <ng-template #saleDeedValueTT> <div [innerHtml]="saleDeedVal"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" class="form-control"
+                      id="exampleFormControlInput9" (keyup)="capital_gain_Calc(i,'saleDeedValue')" placeholder=""
+                      formControlName="saleDeedValue" [ngClass]="{'is-invalid': saleDeedVal_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Sale Deed Value is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Cost of Acquisition</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="costofAcquisitionTT" placement="top"></i>
+                    <ng-template #costofAcquisitionTT> <div [innerHtml]="costOfAcq"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      id="exampleFormControlInput9" (keyup)="capital_gain_Calc(i,'costofAcquisition')" placeholder=""
+                      formControlName="costofAcquisition">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Capital Gain</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="capitalGainTT" placement="top"></i>
+                    <ng-template #capitalGainTT> <div [innerHtml]="capitalGain"></div>
+                    </ng-template>
+                    <input type="text"  class="form-control" id="exampleFormControlInput9" placeholder=""
+                      formControlName="capitalGain" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Tax Deducted/Collected at Source</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="tdsTT" placement="top"></i>
+                    <ng-template #tdsTT> <div [innerHtml]="TDS"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)" (keyup)="initializeTDS($event,i)" class="form-control"
+                      id="exampleFormControlInput9" placeholder="" formControlName="taxDeductatSource" [ngClass]="{'is-invalid': tds_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Tax Deducted/Collected at Source is Required!</div>
+                      </div>
+                  </div>
+                </div>
+                <div *ngIf="form.value.gainType === 'Transfer_of_Property_House_Apartment'">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Description of the Property</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="descriptionofPropertyTT" placement="top"></i>
+                    <ng-template #descriptionofPropertyTT> <div [innerHtml]="propertyDes"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeDesOfProperty(i)"
+                      formControlName="descriptionofProperty" [ngClass]="{'is-invalid': desOfProperty_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Description of the Property is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <label for="exampleFormControlInput9">Land Area</label>
+                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="landAreaTT" placement="top"></i>
+                        <ng-template #landAreaTT> <div [innerHtml]="landArea"></div>
+                        </ng-template>
+                        <input type="text"  (keyup)="initializeLandArea($event,i)" (keyup)="acceptAreasFloatingPoints($event,i,'landArea')" class="form-control"
+                          id="exampleFormControlInput9" placeholder="" formControlName="landArea" [ngClass]="{'is-invalid': landArea_showError[i]}">
+                          <div class="invalid-feedback">
+                            <div>Land Area is Required!</div>
+                          </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <label for="landAreaUnit"></label>
+                        <select class="form-control mt-8" id="exampleFormControlSelect1" formControlName="unitOfLandArea">
+                          <option value="Decimal">Decimal</option>
+                          <option value="Acre">Acre</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <label for="exampleFormControlInput9">Flat/Building Area</label>
+                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="flatAreaTT" placement="top"></i>
+                        <ng-template #flatAreaTT> <div [innerHtml]="flatBuildingArea"></div>
+                        </ng-template>
+                        <input type="text"  (keyup)="initializeFlatArea($event,i)" (keyup)="acceptAreasFloatingPoints($event,i,'flatArea')" class="form-control"
+                          id="exampleFormControlInput9" placeholder="" formControlName="flatArea" [ngClass]="{'is-invalid': flatArea_showError[i]}">
+                          <div class="invalid-feedback">
+                            <div>Flat/Building Area is Required!</div>
+                          </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <label for="unitOfFlatBuildingArea"></label>
+                    <select class="form-control mt-8" id="exampleFormControlSelect1" formControlName="unitOfFlatBuildingArea">
+                      <option value="Square Feet">Square Feet</option>
+                      <option value="Square Meter">Square Meter</option>
+                    </select>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">TIN of Buyer</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="tinofBuyerTT" placement="top"></i>
+                    <ng-template #tinofBuyerTT> <div [innerHtml]="buyerTIN"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keypress)="numberOnly($event)" (keyup)="initializeTinOfBuyer(i)"
+                      formControlName="tinofBuyer" [ngClass]="{'is-invalid': tinOfBuyer_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>TIN of Buyer is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Deed No</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="deedNoTT" placement="top"></i>
+                    <ng-template #deedNoTT> <div [innerHtml]="deedNumber"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder=""  (keyup)="initializeDeedNo(i)"
+                      formControlName="deedNo" [ngClass]="{'is-invalid': deedNo_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Deed No is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Date of Deed</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="dateofDeedTT" placement="top"></i>
+                    <ng-template #dateofDeedTT> <div [innerHtml]="dateOfDeed"></div>
+                    </ng-template>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="" formControlName="dateofDeed" (bsValueChange)="initializeDateOfDeed(i)"
+                        aria-label="Recipient's username" [minDate]="minDateLen" [maxDate]="maxDateLen"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}"
+                        aria-describedby="button-addon2" #dateofDeed="bsDatepicker" bsDatepicker [ngClass]="{'is-invalid': dateOfDeed_showError[i]}">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-info btn-sm" type="button" (click)="dateofDeed.toggle()">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                          </button>
+                        </div>
+                        <div class="invalid-feedback">
+                          <div>Date of Deed is Required!</div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Sub Register Office</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="subRegisterOfficeTT" placement="top"></i>
+                    <ng-template #subRegisterOfficeTT> <div [innerHtml]="subregisterOfc"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder=""  (keyup)="initializeSubRegisterOfc(i)"
+                      formControlName="subRegisterOffice" [ngClass]="{'is-invalid': subRegisterOfc_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Sub Register Office is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Sale Deed Value</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="saleDeedValueTT" placement="top"></i>
+                    <ng-template #saleDeedValueTT> <div [innerHtml]="saleDeedVal"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" class="form-control"
+                      id="exampleFormControlInput9" (keyup)="capital_gain_Calc(i,'saleDeedValue')" placeholder=""
+                      formControlName="saleDeedValue" [ngClass]="{'is-invalid': saleDeedVal_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Sale Deed Value is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Cost of Acquisition</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="costofAcquisitionTT" placement="top"></i>
+                    <ng-template #costofAcquisitionTT> <div [innerHtml]="costOfAcq"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      id="exampleFormControlInput9" (keyup)="capital_gain_Calc(i,'costofAcquisition')" placeholder=""
+                      formControlName="costofAcquisition">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Capital Gain</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="capitalGainTT" placement="top"></i>
+                    <ng-template #capitalGainTT> <div [innerHtml]="capitalGain"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder=""
+                      formControlName="capitalGain" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Tax Deducted/Collected at Source</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="tdsTT" placement="top"></i>
+                    <ng-template #tdsTT> <div [innerHtml]="TDS"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" (keyup)="initializeTDS($event,i)" class="form-control"
+                      id="exampleFormControlInput9" placeholder="" formControlName="taxDeductatSource" [ngClass]="{'is-invalid':tds_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Tax Deducted/Collected at Source is Required!</div>
+                      </div>
+                  </div>
+                </div>
+                <div *ngIf="form.value.gainType === 'Signing_Money_from_Developer'">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Description of the Property</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="propertyDesTT" placement="top"></i>
+                    <ng-template #propertyDesTT> <div [innerHtml]="propertyDes"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeDesOfProperty(i)"
+                      formControlName="descriptionofProperty" [ngClass]="{'is-invalid': desOfProperty_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Description of the Property is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <label for="exampleFormControlInput9">Total Area</label>
+                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="totalAreaTT" placement="top"></i>
+                        <ng-template #totalAreaTT> <div [innerHtml]="totalArea"></div>
+                        </ng-template>
+                        <input type="text"  (keyup)="initializeTotalArea($event,i)" (keyup)="acceptAreasFloatingPoints($event,i,'totalArea')" class="form-control"
+                          id="exampleFormControlInput9" placeholder="" formControlName="totalArea" [ngClass]="{'is-invalid': totalArea_showError[i]}">
+                          <div class="invalid-feedback">
+                            <div>Total Area is Required!</div>
+                          </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <label for="totalAreaUnit"></label>
+                          <select class="form-control mt-8" id="exampleFormControlInput9ee" formControlName="unitOfTotalArea">
+                            <option value="Decimal">Decimal</option>
+                            <option value="Acre">Acre</option>
+                          </select>
+                      </div>
+                    </div>     
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Name of Real Estate Developer</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="realestateDevName" placement="top"></i>
+                    <ng-template #realestateDevName> <div [innerHtml]="realEstateDev"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeRealEstateDev(i)"
+                      formControlName="nameofDeveloper" [ngClass]="{'is-invalid': nameOfRealEstateDev_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Name of Real Estate Developer is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Agreement No</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="agreementNoTT" placement="top"></i>
+                    <ng-template #agreementNoTT> <div [innerHtml]="agreementNumber"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder=""
+                      formControlName="agreementNo">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Agreement Date</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="agreementDateTT" placement="top"></i>
+                    <ng-template #agreementDateTT> <div [innerHtml]="agreementDate"></div>
+                    </ng-template>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="" formControlName="agreementDate"
+                        aria-label="Recipient's username" [minDate]="minDateLen" [maxDate]="maxDateLen"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}"
+                        aria-describedby="button-addon2" #agreementDate="bsDatepicker" bsDatepicker>
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-info btn-sm" type="button" (click)="agreementDate.toggle()">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                          </button>
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Gross Amount</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="grossAmountTT" placement="top"></i>
+                    <ng-template #grossAmountTT> <div [innerHtml]="grossAmount"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)"  class="form-control"
+                      id="exampleFormControlInput9" placeholder="" formControlName="grossAmount" (keyup)="calculateTDS_SMoney(i)" [ngClass]="{'is-invalid': grossAmount_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Gross Amount is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Tax Deducted/Collected at Source</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="tdsTT" placement="top"></i>
+                    <ng-template #tdsTT> <div [innerHtml]="TDS"></div>
+                    </ng-template>
+
+                    <input type="text"  (keypress)="numberOnly($event)" (keyup)="initializeTDS($event,i)" class="form-control"
+                      id="exampleFormControlInput9" placeholder="" formControlName="taxDeductatSource" [ngClass]="{'is-invalid': tds_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Gross Amount is Required!</div>
+                      </div>
+                  </div>
+                </div>
+                <div *ngIf="form.value.gainType === 'Compensation_Against_Property_Acquisition'">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Description of the Property</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="propertyDesTT" placement="top"></i>
+                    <ng-template #propertyDesTT> <div [innerHtml]="propertyDes"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeDesOfProperty(i)"
+                      formControlName="descriptionofProperty" [ngClass]="{'is-invalid': desOfProperty_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Description of the Property is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <label for="exampleFormControlInput9">Total Area</label>
+                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="totalAreaTT" placement="top"></i>
+                        <ng-template #totalAreaTT> <div [innerHtml]="totalArea"></div>
+                        </ng-template>
+                        <input type="text"  (keyup)="initializeTotalArea($event,i)" (keyup)="acceptAreasFloatingPoints($event,i,'totalArea')" class="form-control"
+                          id="exampleFormControlInput9" placeholder="" formControlName="totalArea"  [ngClass]="{'is-invalid': totalArea_showError[i]}">
+                          <div class="invalid-feedback">
+                            <div>Total Area is Required!</div>
+                          </div>
+                      </div>
+                      <div class="col-sm-4">
+                         <label for="totalAreaUnit"></label>
+                          <select class="form-control mt-8" id="exampleFormControlInput9ee" formControlName="unitOfTotalArea">
+                            <option value="Decimal">Decimal</option>
+                            <option value="Acre">Acre</option>
+                          </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Acquisition Authority</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="acquisitionAuthorityTT" placement="top"></i>
+                    <ng-template #acquisitionAuthorityTT> <div [innerHtml]="acqAuthority"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeAcqAuthority(i)"
+                      formControlName="acquisitionAuthority" [ngClass]="{'is-invalid': acqAuthority_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Acquisition Authority is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Order No</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="orderNoTT" placement="top"></i>
+                    <ng-template #orderNoTT> <div [innerHtml]="orderNo"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeOrderNo(i)"
+                      formControlName="orderNo" [ngClass]="{'is-invalid': orderNo_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Order No is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Date</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="compensionDateTT" placement="top"></i>
+                    <ng-template #compensionDateTT> <div [innerHtml]="compensionDate"></div>
+                    </ng-template>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="" formControlName="date" (bsValueChange)="initializeDate(i)"
+                        aria-label="Recipient's username" [minDate]="minDateLen" [maxDate]="maxDateLen"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}"
+                        aria-describedby="button-addon2" #date="bsDatepicker" bsDatepicker [ngClass]="{'is-invalid': date_showError[i]}">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-info btn-sm" type="button" (click)="date.toggle()">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                          </button>
+                        </div>
+                        <div class="invalid-feedback">
+                          <div>Date is Required!</div>
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Gross Amount</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="grossAmountTT" placement="top"></i>
+                    <ng-template #grossAmountTT> <div [innerHtml]="grossAmount"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)" (keyup)="initializeGrossAmount($event,i)" class="form-control"
+                      id="exampleFormControlInput9" placeholder="" formControlName="grossAmount" [ngClass]="{'is-invalid': grossAmount_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Gross Amount is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Tax Deducted/Collected at Source</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="tdsTT" placement="top"></i>
+                    <ng-template #tdsTT> <div [innerHtml]="TDS"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" (keyup)="initializeTDS($event,i)" class="form-control"
+                      id="exampleFormControlInput9" placeholder="" formControlName="taxDeductatSource" [ngClass]="{'is-invalid': tds_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Tax Deducted/Collected at Source is Required!</div>
+                      </div>
+                  </div>
+                </div>
+                <div *ngIf="form.value.gainType === 'Transfer_of_Share_Securities_of_Listed_Company'">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Name of the Company</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="companyNameTT" placement="top"></i>
+                    <ng-template #companyNameTT> <div [innerHtml]="companyName"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeDesOfProperty(i)"
+                      formControlName="nameOfCompany" [ngClass]="{'is-invalid': nameOfCompany_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Name of the Company is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Transfer No</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="transferNoTT" placement="top"></i>
+                    <ng-template #transferNoTT> <div [innerHtml]="transferNo"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeTransferNo(i)"
+                      formControlName="transferNo" [ngClass]="{'is-invalid': transferNo_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Transfer No is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Date of Transfer</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="dateofTransferTT" placement="top"></i>
+                    <ng-template #dateofTransferTT> <div [innerHtml]="transferDate"></div>
+                    </ng-template>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="" formControlName="dateofTransfer" (bsValueChange)="initializeTransferDate(i)"
+                        aria-label="Recipient's username" [minDate]="minDateLen" [maxDate]="maxDateLen"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}"
+                        aria-describedby="button-addon2" #dateofTransfer="bsDatepicker" bsDatepicker [ngClass]="{'is-invalid':  dateOfTransfer_showError[i]}">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-info btn-sm" type="button" (click)="dateofTransfer.toggle()">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                          </button>
+                        </div>
+                        <div class="invalid-feedback">
+                          <div>Date of Transfer is Required!</div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">No. of Share Transferred</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="noOfShareTT" placement="top"></i>
+                    <ng-template #noOfShareTT> <div [innerHtml]="shareTransfered"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)" (keyup)="acceptPositiveIntegerOnly($event,i)"  class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeNoShareTransfered(i)"
+                      formControlName="numberofShares" [ngClass]="{'is-invalid':  noOfShareTransfered_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>No. of Share Transferred is Required!</div>
+                      </div>
+                  </div> 
+              
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Sale Value of Share</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="saleValueTT" placement="top"></i>
+                    <ng-template #saleValueTT> <div [innerHtml]="saleValue"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" class="form-control"
+                      id="exampleFormControlInput9" (keyup)="shared_company_reliazed_gain_calc(i,'saleValueofShare')" (keyup)="calculateTDS_Shareholder(i)" placeholder=""
+                      formControlName="saleValueofShare" [ngClass]="{'is-invalid':  saleValueOfShare_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Sale Value of Share is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Cost Value of Share</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="costValueTT" placement="top"></i>
+                    <ng-template #costValueTT> <div [innerHtml]="costValue"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" class="form-control"
+                      id="exampleFormControlInput9" (keyup)="shared_company_reliazed_gain_calc(i,'costValueofShare')" (keyup)="calculateTDS_Shareholder(i)" placeholder=""
+                      formControlName="costValueofShare" [ngClass]="{'is-invalid':  costValueOfShare_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Cost Value of Share is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Related Expenses</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="relatedExpensesTT" placement="top"></i>
+                    <ng-template #relatedExpensesTT> <div [innerHtml]="relatedExp"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput9"
+                      (keyup)="shared_company_reliazed_gain_calc(i,'relatedExpenses')" (keyup)="calculateTDS_Shareholder(i)"  placeholder="" formControlName="relatedExpenses">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Realized Gain</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="realizedGainTT" placement="top"></i>
+                    <ng-template #realizedGainTT> <div [innerHtml]="realizedGain"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput9" placeholder=""
+                      formControlName="realizedGain" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Tax Deducted/Collected at Source</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="tdsTT" placement="top"></i>
+                    <ng-template #tdsTT> <div [innerHtml]="TDS"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" (keyup)="initializeTDS($event,i)" class="form-control"
+                      id="exampleFormControlInput9" placeholder="" formControlName="taxDeductatSource" [ngClass]="{'is-invalid':tds_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Tax Deducted/Collected at Source is Required!</div>
+                      </div>
+                  </div>
+                </div>
+                <div *ngIf="form.value.gainType === 'Other_Capital_Gain'">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Description of the Asset</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="desOfAssetTT" placement="top"></i>
+                    <ng-template #desOfAssetTT> <div [innerHtml]="desOfAsset"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder=""  (keyup)="initializeDesOfProperty(i)"
+                      formControlName="descriptionofAsset"  [ngClass]="{'is-invalid': desOfProperty_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Description of the Asset is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Name of Buyer</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="nameofBuyerTT" placement="top"></i>
+                    <ng-template #nameofBuyerTT> <div [innerHtml]="nameOfBuyer"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder=""
+                      formControlName="nameofBuyer">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">TIN/NID</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="tinorNidTT" placement="top"></i>
+                    <ng-template #tinorNidTT> <div [innerHtml]="TINorNID"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keypress)="numberOnly($event)"
+                      formControlName="tinorNid" [ngClass]="{'is-invalid': tinOfBuyer_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Invalid TIN/NID. TIN/NID must be 10/12/13/17 digit. </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Invoice No</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="invoiceNoTT" placement="top"></i>
+                    <ng-template #invoiceNoTT> <div [innerHtml]="invoiceNo"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeInvoiceNo(i)"
+                      formControlName="invoiceNo" [ngClass]="{'is-invalid':  invoiceNo_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Invoice No is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Date of Acquisition</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="dateOfAcqTT" placement="top"></i>
+                    <ng-template #dateOfAcqTT> <div [innerHtml]="dateOfAcq"></div>
+                    </ng-template>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="" formControlName="dateofAcquisition" (bsValueChange)="setupDateOfAlienation($event,i)"
+                        aria-label="Recipient's username" [maxDate]="dateofAcquisitionTo"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}"
+                        aria-describedby="button-addon2" #dateofAcquisition="bsDatepicker" bsDatepicker  [ngClass]="{'is-invalid':  dateOfAcq_showError[i] || dateValidation_showError[i]}">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-info btn-sm" type="button" (click)="dateofAcquisition.toggle()">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                          </button>
+                        </div>
+                        <div class="invalid-feedback">
+                          <div><span  *ngIf="dateOfAcq_showError[i]">Date of Acquisition is Required!</span><span *ngIf="dateValidation_showError[i]">The acquisition date will always be less than the alienation date.</span></div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Date of Alienation</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="dateOfAliTT" placement="top"></i>
+                    <ng-template #dateOfAliTT> <div [innerHtml]="dateOfAli"></div>
+                    </ng-template>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="" formControlName="dateofAlienation" (bsValueChange)="initializeDateOfAlienation(i)"
+                        aria-label="Recipient's username" [minDate]="maxAlienationFrom[i]" [maxDate]="dateofAcquisitionTo"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}"
+                        aria-describedby="button-addon2" #dateofAlienation="bsDatepicker" bsDatepicker [ngClass]="{'is-invalid':  dateOfAli_showError[i] || dateValidation_showError[i]}">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-info btn-sm" type="button" (click)="dateofAlienation.toggle()">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                          </button>
+                        </div>
+                        <div class="invalid-feedback">
+                          <div><span *ngIf="dateOfAli_showError[i]">Date of Alienation is Required!</span><span *ngIf="dateValidation_showError[i]">The alienation date will always be greater than the acquisition date.</span></div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Sales Value/Fair Market Value</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="saleValueMarketValueTT" placement="top"></i>
+                    <ng-template #saleValueMarketValueTT> <div [innerHtml]="saleValueMarketValue"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" class="form-control"
+                      id="exampleFormControlInput9" placeholder="" (keyup)="sro_capital_gain_Calc(i,'salesValue')"
+                      formControlName="salesValue" [ngClass]="{'is-invalid':  saleMarketValue_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Sales Value/Fair Market Value is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Cost of Acquisition</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="costOfAcqTT" placement="top"></i>
+                    <ng-template #costOfAcqTT> <div [innerHtml]="costOfAcq"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      id="exampleFormControlInput9" placeholder="" (keyup)="sro_capital_gain_Calc(i,'costofAcquisition')"
+                      formControlName="costofAcquisition">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Transfer Related Expenses</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="relatedExpTT" placement="top"></i>
+                    <ng-template #relatedExpTT> <div [innerHtml]="relatedExp"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" class="form-control"
+                      id="exampleFormControlInput9" placeholder="" (keyup)="sro_capital_gain_Calc(i,'transferRelatedExpenses')"
+                      formControlName="transferRelatedExpenses">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Capital Gain</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="capitalGainTT" placement="top"></i>
+                    <ng-template #capitalGainTT> <div [innerHtml]="capitalGain"></div>
+                    </ng-template>
+                    <input type="text" class="form-control"
+                      id="exampleFormControlInput9" placeholder="" formControlName="capitalGain" readonly>
+                  </div>
+                </div>
+                <div *ngIf="form.value.gainType === 'Gain_Exempted_or_Reduced_Tax_Rate_by_SRO'">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Description of the Asset</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="descriptionofAssetTT" placement="top"></i>
+                    <ng-template #descriptionofAssetTT> <div [innerHtml]="desOfAsset"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder=""  (keyup)="initializeDesOfProperty(i)"
+                      formControlName="descriptionofAsset" [ngClass]="{'is-invalid': desOfProperty_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Description of the Asset is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Name of Buyer</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="buyerNameTT" placement="top"></i>
+                    <ng-template #buyerNameTT> <div [innerHtml]="nameOfBuyer"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder=""
+                      formControlName="nameofBuyer">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">TIN/NID</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="tinorNidTT" placement="top"></i>
+                    <ng-template #tinorNidTT> <div [innerHtml]="TINorNID"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keypress)="numberOnly($event)"
+                      formControlName="tinorNid" [ngClass]="{'is-invalid': tinOfBuyer_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Invalid TIN/NID. TIN/NID must be 10/12/13/17 digit. </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Invoice No</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="invoiceNoTT" placement="top"></i>
+                    <ng-template #invoiceNoTT> <div [innerHtml]="invoiceNo"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeInvoiceNo(i)"
+                      formControlName="invoiceNo"  [ngClass]="{'is-invalid':  invoiceNo_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Invoice No is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Date of Acquisition</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="dateOfAcqTT" placement="top"></i>
+                    <ng-template #dateOfAcqTT> <div [innerHtml]="dateOfAcq"></div>
+                    </ng-template>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="" formControlName="dateofAcquisition" (bsValueChange)= "setupDateOfAlienation($event,i)"
+                        aria-label="Recipient's username" [maxDate]="dateofAcquisitionTo"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}"
+                        aria-describedby="button-addon2" #dateofAcquisition="bsDatepicker" bsDatepicker [ngClass]="{'is-invalid':  dateOfAcq_showError[i] || dateValidation_showError[i] }">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-info btn-sm" type="button" (click)="dateofAcquisition.toggle()">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                          </button>
+                        </div>
+                        <div class="invalid-feedback">
+                          <div><span  *ngIf="dateOfAcq_showError[i]">Date of Acquisition is Required!</span><span *ngIf="dateValidation_showError[i]">The acquisition date will always be less than the alienation date.</span></div>
+                        </div>
+                    </div>
+                  </div>
+            <div class="form-group">
+                    <label for="exampleFormControlInput9">Date of Alienation</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="dateOfAliTT" placement="top"></i>
+                    <ng-template #dateOfAliTT> <div [innerHtml]="dateOfAli"></div>
+                    </ng-template>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="" formControlName="dateofAlienation" (bsValueChange)="initializeDateOfAlienation(i)"
+                        aria-label="Recipient's username" [minDate]="maxAlienationFrom[i]" [maxDate]="dateofAcquisitionTo"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}"
+                        aria-describedby="button-addon2" #dateofAlienation="bsDatepicker" bsDatepicker [ngClass]="{'is-invalid':  dateOfAli_showError[i] || dateValidation_showError[i]}">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-info btn-sm" type="button" (click)="dateofAlienation.toggle()">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                          </button>
+                        </div>
+                        <div class="invalid-feedback">
+                          <div><span *ngIf="dateOfAli_showError[i]">Date of Alienation is Required!</span><span *ngIf="dateValidation_showError[i]">The alienation date will always be greater than the acquisition date.</span></div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Sales Value/Fair Market Value</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="saleValueMarketValueTT" placement="top"></i>
+                    <ng-template #saleValueMarketValueTT> <div [innerHtml]="saleValueMarketValue"></div>
+                    </ng-template>
+                    <input type="text"  class="form-control"
+                      id="exampleFormControlInput9" (keyup)="sro_capital_gain_Calc(i,'salesValue')" placeholder=""
+                      formControlName="salesValue" [ngClass]="{'is-invalid':  saleMarketValue_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Sales Value/Fair Market Value is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Cost of Acquisition</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="costOfAcqTT" placement="top"></i>
+                    <ng-template #costOfAcqTT> <div [innerHtml]="costOfAcq"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      id="exampleFormControlInput9" (keyup)="sro_capital_gain_Calc(i,'costofAcquisition')" placeholder=""
+                      formControlName="costofAcquisition">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Transfer Related Expenses</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="relatedExpTT" placement="top"></i>
+                    <ng-template #relatedExpTT> <div [innerHtml]="relatedExp"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" class="form-control"
+                      id="exampleFormControlInput9" (keyup)="sro_capital_gain_Calc(i,'transferRelatedExpenses')" placeholder=""
+                      formControlName="transferRelatedExpenses">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Capital Gain</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="capitalGainTT" placement="top"></i>
+                    <ng-template #capitalGainTT> <div [innerHtml]="capitalGain"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder=""
+                      formControlName="capitalGain" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">SRO No</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="sroNoTT" placement="top"></i>
+                    <ng-template #sroNoTT> <div [innerHtml]="sroNo"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeSRO(i)"
+                      formControlName="sroNo" [ngClass]="{'is-invalid':  sroNo_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>SRO No is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-6">
+                        <label for="exampleFormControlInput16">Year</label>
+                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="sroYearTT" placement="top"></i>
+                        <ng-template #sroYearTT> <div [innerHtml]="sroYear"></div>
+                        </ng-template>
+                      </div>
+                      <div class="col-12 input-group mb-1">
+                        <input type="text" class="form-control" formControlName="year" id="year" placeholder=""  (bsValueChange)="initializeYear(i)"
+                          [minDate]="minDate" [maxDate]="maxDate" #year="bsDatepicker" bsDatepicker
+                          [bsConfig]="{ dateInputFormat: 'YYYY', containerClass: 'theme-dark-blue', minMode: 'year' }" [ngClass]="{'is-invalid':  year_showError[i]}">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-info btn-sm" type="button" (click)="year.toggle()">
+                              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </button>
+                          </div>
+                          <div class="invalid-feedback">
+                            <div>Year is Required!</div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Particular of the SRO</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="particularSROTT" placement="top"></i>
+                    <ng-template #particularSROTT> <div [innerHtml]="particularSRO"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="" (keyup)="initializeParticularSRO(i)"
+                      formControlName="particularofSro" [ngClass]="{'is-invalid':   particularSRO_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Particular of the SRO is Required!</div>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Income Exempted from Tax</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="taxExemptedIncomeTT" placement="top"></i>
+                    <ng-template #taxExemptedIncomeTT> <div [innerHtml]="taxExemptedIncome"></div>
+                    </ng-template>
+                    <input [readonly]="makeTaxExemptedIncReadOnly(form.value.salesValue)" type="text"  class="form-control"
+                      id="exampleFormControlInput9" placeholder="" formControlName="incomeExemptedfromTax" (keyup) = "calc_taxable_incm(i)"
+                      [ngClass]="{'is-invalid':   incomeExemptedTax_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Income Exempted from Tax is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput3">Taxable Income </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="taxableIncomeTT"></i>
+                    <ng-template #taxableIncomeTT> <div [innerHtml]="taxableIncome"></div>
+                    </ng-template>
+                    <input type="text"   class="form-control" id="exampleFormControlInput19" placeholder="" 
+                      formControlName="taxableIncome" readonly>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Applicable Tax as per SRO</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="applicableTaxTT" placement="top"></i>
+                    <ng-template #applicableTaxTT> <div [innerHtml]="applicableTax"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)" (keyup)="initializeaAppTax($event,i)" class="form-control"
+                      id="exampleFormControlInput9" placeholder="" formControlName="applicableTaxasperSro" [ngClass]="{'is-invalid':  applicableTax_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Applicable Tax as per SRO is Required!</div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- bottom button design start -->
+      <div class="row mt-4">
+        <div class="col-sm-6 pl-3">
+          <button type="button" class="btn btn-sm backBtn" (click)="onBackPage()">
+            <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left"
+              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+            </svg>&nbsp;
+            Back</button>
+        </div>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12 text-right">
+              <button type="button" class="btn btn-sm saveDraftBtn" (click)="saveDraft()">
+                Save Draft</button>
+              <button type="button" class="btn btn-sm saveContinueBtn" (click)="submittedData()">
+                <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em" viewBox="0 0 16 16"
+                  class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                </svg>
+                Save & Continue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- new button design end -->
+
+    </div>
+  </div>
+</div>
+<ngx-ui-loader></ngx-ui-loader>

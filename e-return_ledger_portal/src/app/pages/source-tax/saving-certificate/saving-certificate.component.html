@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Source Tax on Saving Certificate</title>
+</head>
+
+<!-- <div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Savings Certificate &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-6 mt-3">
+            <label class="float-right" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="row form-horizontal" [formGroup]="savingCertificateForm" aria-labelledby="title">
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="securitiesType" class="label col-8 form-control-label">Securities Type
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="securitiesType"></i>
+                            </label>
+                            <ng-template #securitiesType>
+                                <div [innerHtml]="securitiesTypeTooltip"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <select class="form-control" id="securitiesType" (change)="onChangeSecuritiesType()"
+                                    formControlName="securitiesType"
+                                    [ngClass]="{'is-invalid':savingCertificateForm.get('securitiesType').touched && savingCertificateForm.get('securitiesType').value=='0'}">
+                                    <option value="0">Select One</option>
+                                    <option value="Sanchayapatra (Other than Pensioners)">Sanchayapatra (Other than
+                                        Pensioners)</option>
+                                    <option value="Sanchayapatra (Pensioners)">Sanchayapatra (Pensioners)</option>
+                                </select>
+                                <div class="invalid-feedback ">
+                                    <div>Securities Type is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="regNo" class="label col-8 form-control-label">Registration No.
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="regNo"></i>
+                            </label>
+                            <ng-template #regNo>
+                                <div [innerHtml]="regNoTooltip"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Registration No." formControlName="regNo"
+                                    class="form-control" id="regNo" required
+                                    [ngClass]="{'is-invalid':savingCertificateForm.get('regNo').touched && savingCertificateForm.get('regNo').invalid}">
+                                <div class="invalid-feedback ">
+                                    <div>Registration No. is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="claimAmount" class="label col-8 form-control-label">TDS Claim
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="claimAmount"></i>
+                            </label>
+                            <ng-template #claimAmount>
+                                <div [innerHtml]="claimAmountTooltip"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Claim Amount" formControlName="claimAmount"
+                                    class="form-control" (keyup)="onValueChange($event)" (keypress)="numberOnly($event)"
+                                    id="claimAmount" required
+                                    [ngClass]="{'is-invalid':savingCertificateForm.get('claimAmount').touched && savingCertificateForm.get('claimAmount').invalid}">
+                                <div class="invalid-feedback ">
+                                    <div>TDS Claim is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-5 mt-4">
+                        <div class="form-group">
+
+                            <div class="col-12">
+                                <ng-template #resetBtn>
+                                    <div [innerHtml]="resetBtnTooltip"></div>
+                                </ng-template>
+                                <button type="button" id="resetBtn" class="btn btn-warning tooltip-350 reset"
+                                    (click)="reset()" [tooltip]="resetBtn">
+                                    Reset
+                                </button>
+
+                                <ng-template #searchBtn>
+                                    <div [innerHtml]="searchBtnTooltip"></div>
+                                </ng-template>
+
+                                <button type="button" id="searchBtn" class="btn searchBtn mr-2 tooltip-350"
+                                    [disabled]="savingCertificateForm.value.securitiesType==='0' || savingCertificateForm.value.regNo===''"
+                                    (click)="getVerifyCertificateData($event, searchModalShow)"
+                                    [tooltip]="searchBtn">
+                                    <i class="fa fa-search btnText" aria-hidden="true"></i>Search
+                                </button>
+
+                                <button type="button" [disabled]="!savingCertificateForm.valid" class="btn submitBtn"
+                                    (click)="submittedData($event, searchModalShow)">
+                                    <i class="fa fa-save btnText"></i>Save
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="savingCertificateGetDataLen > 0">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Savings Certificate TDS List &nbsp; &nbsp;
+            </span>
+        </div>
+    </div>
+
+    <div class="row mt-3" *ngIf="savingCertificateGetDataLen > 0">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="form-horizontal" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="savingCertificateTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th scope="col">Securities Type</th>
+                                    <th scope="col">Registration No.</th>
+                                    <th scope="col">TDS Claim</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of certificateGetData; let k = index">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row">{{ item.securityType }}</td>
+                                    <td scope="row">{{ item.registrationNo }}</td>
+                                    <td scope="row">{{ this.commonUtilService.commaSeperator(item.tdsClaim) }}</td>
+                                    <td scope="row">
+                                        <button type="button" class="btn btn-sm btn-danger" (click)="onDelete(item.id)">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #searchModalShow>
+    <div class="modal-header">
+        <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">Savings Certificate TDS Details</h5>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="close_Search()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" [formGroup]="certificateTDSForm" aria-labelledby="title">
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="assessmentYear" class="label form-control-label">Assessment Year
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="assessmentYear" class="form-control " readonly>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="securitiesType" class="label form-control-label">Securities Type
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="securitiesType" class="form-control " readonly>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="regNo" class="label form-control-label">Registration No.
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="regNo" class="form-control " readonly>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="tdsAmount" class="label form-control-label">TDS on SC Profit
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="tdsAmount" class="form-control " readonly>
+                </div>
+            </div>
+
+        </form>
+        <button type="button" class="btn btn-sm btn-outline-danger" style="float: right;width: 100px;"
+            (click)="close_Search()">close</button>
+    </div>
+</ng-template> -->
+
+<div class="col-md-12">
+    <div class="row centered">
+        <div class="col-12">
+          <span><b>Integration of this source tax is under process</b></span>
+        </div>
+    </div>
+</div>
+
+</html>
+
+<ngx-ui-loader></ngx-ui-loader>
+
+<!-- <pre>Form values: {{savingCertificateForm.value | json}}</pre> -->

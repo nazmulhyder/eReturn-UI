@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sign Up</title>
+</head>
+
+<div class="app-body">
+    <div class="col-md-12 px-0">
+        <div class="row pt-4">
+            <div class="col-md-12 mt-1">
+                <div class="form-group text-center mb-2">
+                    <h4><b>Sign Up</b></h4>
+                    <p class="font-13"><b>Please enter the information below for registration</b></p>
+                </div>
+                <form class="col-md-12" name="form" [formGroup]="signupForm">
+                    <fieldset class="the-fieldset">
+                        <legend class="the-legend">Withholder Details</legend>
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="font-14">Name</label>
+                                <div class="input-group mb-1">
+                                    <textarea type="text" class="form-control" rows="1" placeholder="Enter your Name"
+                                        formControlName="name"
+                                        [ngClass]="{'is-invalid':signupForm.get('name').touched && signupForm.get('name').invalid}"
+                                        required>
+                                    </textarea>
+                                    <div class="invalid-feedback">
+                                        <div>Name is required!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label class="font-14">TIN</label>
+                                <div class="input-group mb-1">
+                                    <input type="text" class="form-control" placeholder="Enter your TIN"
+                                        formControlName="tin" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="font-14">Address</label>
+                                <div class="input-group mb-1">
+                                    <textarea type="text" class="form-control" rows="1" placeholder="Enter your Address"
+                                        formControlName="address"
+                                        [ngClass]="{'is-invalid':signupForm.get('address').touched && signupForm.get('address').invalid}"
+                                        required>
+                                    </textarea>
+                                    <div class="invalid-feedback">
+                                        <div>Address is required!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="the-fieldset mt-2">
+                        <legend class="the-legend">Contact Person's Details</legend>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="font-14">Name</label>
+                                <div class="input-group mb-1">
+                                    <input type="text" class="form-control" placeholder="Enter name"
+                                        formControlName="contactPersonName"
+                                        [ngClass]="{'is-invalid':signupForm.get('contactPersonName').touched && signupForm.get('contactPersonName').invalid}"
+                                        required />
+                                    <div class="invalid-feedback">
+                                        <div>contact person's name is required!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label class="font-14">Mobile Number</label>
+                                <div class="input-group mb-1">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">+880</span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Mobile no"
+                                        formControlName="contactPersonMobile"
+                                        [ngClass]="{'is-invalid':signupForm.get('contactPersonMobile').touched && signupForm.get('contactPersonMobile').invalid}"
+                                        required />
+                                    <div class="invalid-feedback">
+                                        <div>contact Person's mobile number is required!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="font-14">Designation</label>
+                                <div class="input-group mb-1">
+                                    <input type="text" class="form-control" placeholder="Enter designation"
+                                        formControlName="contactPersonDesignation"
+                                        [ngClass]="{'is-invalid':signupForm.get('contactPersonDesignation').touched && signupForm.get('contactPersonDesignation').invalid}"
+                                        required />
+                                    <div class="invalid-feedback">
+                                        <div>contact person's designation is required!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label class="font-14">Email</label>
+                                <div class="input-group mb-1">
+                                    <input type="text" class="form-control" placeholder="Enter email"
+                                        formControlName="contactPersonEmail"
+                                        [ngClass]="{'is-invalid':signupForm.get('contactPersonEmail').touched && signupForm.get('contactPersonEmail').invalid}"
+                                        required />
+                                    <div class="invalid-feedback">
+                                        <div>contact person's email is required!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="font-14">Captcha</label>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" placeholder="" formControlName="captcha"
+                                    [ngClass]="{'is-invalid':signupForm.get('captcha').touched && signupForm.get('captcha').invalid}"
+                                    required />
+                                <div class="input-group-prepend">
+                                    <!-- <span class="input-group-text captchaStyle"><img [src]="captchaImg" width="70"
+                                            height="30" alt="" /></span> -->
+                                    <div class="input-group-prepend" id="captcha"
+                                        style="background-color: rgb(220, 220, 220)">
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-outline-dark captchaBtn" (click)="reloadCaptcha()"><span><i
+                                            class="fa fa-refresh" aria-hidden="true"></i></span></button>
+                                <div class="invalid-feedback">
+                                    <div>captcha is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2 mt-4">
+
+                                <button type="submit" (click)="onSubmit()" class="btn btn-block submitBtn"
+                                    [disabled]="!signupForm.valid">Submit</button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group mb-2 text-center justify-content-center pt-2">
+                            <div class="font-14 registeredText">Already registered?&nbsp;<a routerLink="/auth/sign-in"
+                                    class="sign-in">Sign in</a></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

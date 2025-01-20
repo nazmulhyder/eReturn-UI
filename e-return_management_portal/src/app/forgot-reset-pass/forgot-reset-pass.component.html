@@ -1,0 +1,106 @@
+<!--new design start-->
+<div class="app-body">
+    <div class="col-md-12 px-0">
+      <div class="row pt-5">
+        <div class="col-md-12 text-center py-2">
+          <!-- <button type="button" class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"><b>Guideline</b></button>                         
+          <button type="button" class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize mx-2"><b>Reference</b></button>
+          <button type="button" class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"><b>Contact Us</b></button> -->
+        </div>
+        <div class="col-md-12" style="padding-top: 100px;">
+          <div class="row" style="text-align: center;">
+            <div class="col-12">
+              <h6 style="color: #22223B;"><b>Congratulations!</b></h6>
+            </div>
+          </div>
+          <div class="row mb-2" style="text-align: center;">
+            <div class="col-12">
+              <H6 class="font-14" style="color: #22223B;">Your Account has been Successfully Verified.</H6>
+            </div>
+          </div>
+          <form class="col-md-8 offset-md-2" name="form" [formGroup]="otpSuccessGeneratePassForm" (ngSubmit)="onSubmit()"> 
+              <div class="row" style="text-align: center;">
+                <div class="col-12">
+                  <h6 class="font-12" style="color: #22223B;"><b>Now You can Choose a New Password.</b></h6>
+                <br>
+                </div>
+              </div>
+            <label class="font-14">New Password</label>
+            <div class="input-group mb-3 custom-tooltip" [tooltip]="passTemplate" placement="top"
+            [adaptivePosition]="false">
+              <input type="password" class="form-control" placeholder="Enter a new password" formControlName="password"
+              [ngClass]="{'is-invalid':otpSuccessGeneratePassForm.get('password').touched && otpSuccessGeneratePassForm.get('password').invalid}" required
+              />
+            </div>
+            <ng-template #passTemplate>
+              <div>
+                <p class="font-12" style="text-align: center; color: #22223B; font-weight: bold;">Password must have:
+                </p>
+                <label class="col font-11"
+                  [ngClass]="otpSuccessGeneratePassForm.controls['password'].hasError('required') || otpSuccessGeneratePassForm.controls['password'].hasError('minlength')  ? 'text-danger' : 'text-success'">
+                  <!-- <i class="material-icons"
+                    [class.material-icons-green]="!otpSuccessGeneratePassForm.controls['password'].hasError('required') && !otpSuccessGeneratePassForm.controls['password'].hasError('minlength')">{{
+                  otpSuccessGeneratePassForm.controls['password'].hasError('required') ||
+                  otpSuccessGeneratePassForm.controls['password'].hasError('minlength') ? 'cancel' :
+                  'check_circle' }}</i> -->
+                  At least 8 characters
+                </label>
+                <label class="col font-11"
+                  [ngClass]="otpSuccessGeneratePassForm.controls['password'].hasError('required') || otpSuccessGeneratePassForm.controls['password'].hasError('hasCapitalCase')  ? 'text-danger' : 'text-success'">
+                  <!-- <i class="material-icons"
+                    [class.material-icons-green]="!otpSuccessGeneratePassForm.controls['password'].hasError('required') && !otpSuccessGeneratePassForm.controls['password'].hasError('hasCapitalCase')">{{
+                  otpSuccessGeneratePassForm.controls['password'].hasError('required') ||
+                  otpSuccessGeneratePassForm.controls['password'].hasError('hasCapitalCase') ? 'cancel' :
+                  'check_circle' }}</i> -->
+                  At least 1 capital letter
+                </label>
+                <label class="col font-11"
+                [ngClass]="otpSuccessGeneratePassForm.controls['password'].hasError('required') || otpSuccessGeneratePassForm.controls['password'].hasError('hasSmallCase')  ? 'text-danger' : 'text-success'">
+                <!-- <i class="material-icons"
+                  [class.material-icons-green]="!otpSuccessGeneratePassForm.controls['password'].hasError('required') && !otpSuccessGeneratePassForm.controls['password'].hasError('hasSmallCase')">{{
+                    otpSuccessGeneratePassForm.controls['password'].hasError('required') ||
+                    otpSuccessGeneratePassForm.controls['password'].hasError('hasSmallCase') ? 'cancel' :
+                'check_circle' }}</i> -->
+                At least 1 small letter
+              </label>
+                <label class="col font-11"
+                  [ngClass]="otpSuccessGeneratePassForm.controls['password'].hasError('required') || otpSuccessGeneratePassForm.controls['password'].hasError('hasNumber')  ? 'text-danger' : 'text-success'">
+                  <!-- <i class="material-icons"
+                    [class.material-icons-green]="!otpSuccessGeneratePassForm.controls['password'].hasError('required') && !otpSuccessGeneratePassForm.controls['password'].hasError('hasNumber')">{{
+                  otpSuccessGeneratePassForm.controls['password'].hasError('required') ||
+                  otpSuccessGeneratePassForm.controls['password'].hasError('hasNumber') ? 'cancel' :
+                  'check_circle' }}</i> -->
+                  At least 1 number
+                </label>
+                <label class="col font-11"
+                  [ngClass]="otpSuccessGeneratePassForm.controls['password'].hasError('required') || otpSuccessGeneratePassForm.controls['password'].hasError('hasSpecialCharacters') ? 'text-danger' : 'text-success'">
+                  <!-- <i class="material-icons"
+                    [class.material-icons-green]="!otpSuccessGeneratePassForm.controls['password'].hasError('required') && !otpSuccessGeneratePassForm.controls['password'].hasError('hasSpecialCharacters')">{{
+                  otpSuccessGeneratePassForm.controls['password'].hasError('required') ||
+                  otpSuccessGeneratePassForm.controls['password'].hasError('hasSpecialCharacters') ? 'cancel' :
+                  'check_circle' }}</i> -->
+                  At least 1 special character(such as !@#$%^&*)
+                </label>
+              </div>
+            </ng-template>
+            <label class="font-14">Confirm New Password</label>
+            <div class="input-group mb-4">
+              <input type="password" class="form-control" placeholder="Re-enter the password" formControlName="confirmpassword"
+              [ngClass]="{'is-invalid':otpSuccessGeneratePassForm.get('confirmpassword').touched && otpSuccessGeneratePassForm.get('confirmpassword').invalid}" required
+              />
+              <div class="invalid-feedback">
+                <div>Re-enter new password is required!</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 text-center">
+                <button type="submit" class="btn btn-lg custom-signin-btn btn-pill rounded-pill" [disabled]="!otpSuccessGeneratePassForm.valid" style="background-color:#145DA0; color: white;">Sign in</button>  
+            </div>
+            </div>
+          </form> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--new design end-->
+  

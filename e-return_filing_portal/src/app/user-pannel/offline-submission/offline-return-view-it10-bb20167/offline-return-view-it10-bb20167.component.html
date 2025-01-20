@@ -1,0 +1,519 @@
+<div class="row custom-container" style="margin-top: 10px;page-break-before: always;">
+  <div class="col-sm-12">
+    <div class="content-background" style="height: 100%">
+      <!--portion 1-->
+      <div class="row px-2 pt-3">
+        <div class="col-sm-6 text-left">National Board of Revenue</div>
+        <div class="col-sm-6 text-right  font-weight-bolder">IT-10BB2016</div>
+      </div>
+      <!--portion 1-->
+      <div class="row">
+        <div class="col-sm-6 text-left ft-14" style="padding-left: 60px;">www.nbr.gov.bd</div>
+        <div class="col-sm-6 text-right ft-11 "></div>
+      </div>
+      <div class="row px-2 pt-2 text-center">
+        <div class="col-sm-12">
+          <h5 class="font-weight-bolder">STATEMENT OF EXPENSES RELATING TO LIFESTYLE</h5>
+          <h5>under section 80(2) of the Income Tax Ordinance, 1984 (XXXVI of 1984)</h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- row -1 -->
+          <div class="row border-top">
+            <div class="col-sm-1 border-left border-right">01</div>
+            <div class="col-sm-5 border-right">
+              <div class="row">
+                &nbsp;Assessment Year
+              </div>
+              <div class="row mb-2">
+                &nbsp;<input type="text" class="assessment-input-box-len text-center" value="{{assYr1}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr2}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr3}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr4}}" disabled>
+                <span class="mt-2 ">-</span>
+                <input class="assessment-input-box-len text-center" type="text" value="{{assYr5}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr6}}" disabled>
+              </div>
+            </div>
+            <div class="col-sm-1 border-right">02</div>
+            <div class="col-sm-5 border-right">
+              <div class="row">
+                &nbsp;Statement as on (DD-MM-YYYY)
+              </div>
+              <!-- <div class="row mb-2">
+                &nbsp;
+                <input class="assessment-input-box-len text-center" type="text" value="{{dd1}}" disabled>
+                <input class="assessment-input-box-len text-center" type="text"  value="{{dd2}}" disabled>
+
+                <input class="ml-1 assessment-input-box-len text-center" type="text"  value="{{mm1}}" disabled>
+                <input class="assessment-input-box-len text-center" type="text"  value="{{mm2}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center"  value="{{yy1}}" type="text" disabled>
+                <input class="assessment-input-box-len text-center" value="{{yy2}}" type="text" disabled>
+                <input class="assessment-input-box-len text-center" value="{{yy3}}" disabled>
+                <input class="assessment-input-box-len text-center" value="{{yy4}}" disabled>
+              </div> -->
+              <div class="row mb-2">
+                &nbsp;
+                <input class="assessment-input-box-len text-center" type="text" value="{{dd1}}" disabled>
+                <input class="assessment-input-box-len text-center" type="text"  value="{{dd2}}" disabled>
+
+                <input class="ml-1 assessment-input-box-len text-center" type="text"  value="{{mm1}}" disabled>
+                <input class="assessment-input-box-len text-center" type="text"  value="{{mm2}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center"  value="{{yy1}}" type="text" disabled>
+                <input class="assessment-input-box-len text-center" value="{{yy2}}" type="text" disabled>
+                <input class="assessment-input-box-len text-center" value="{{yy3}}" disabled>
+                <input class="assessment-input-box-len text-center" value="{{yy4}}" disabled>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- row -1 -->
+          <div class="row border-top border-bottom">
+            <div class="col-sm-1 border-left border-right" style="height: 50px;">03</div>
+            <div class="col-sm-5 border-right" style="height: 50px;">
+              <div class="row">
+                &nbsp;Name of the Assessee
+              </div>
+              <div class="row">
+                <label for="">&nbsp;{{taxPayerName}}</label>
+              </div>
+            </div>
+            <div class="col-sm-1 border-right" style="height: 50px;">04</div>
+            <div class="col-sm-5 border-right" style="height: 50px;">
+              <div class="row">
+                &nbsp;TIN
+              </div>
+              <div class="row">
+                <label for="">&nbsp;{{userTin}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row mt-4 border-top">
+        <div class="col-sm-6 border-left border-right">
+          <div class="row">&nbsp;Summary of Balance Sheet</div>
+        </div>
+        <div class="col-sm-3 border-right text-center">Amount ৳</div>
+        <div class="col-sm-3 border-right text-center">Comment</div>
+      </div>
+      <div class="row border-top">
+        <div class="col-sm-1 border-left border-right">05</div>
+        <div class="col-sm-5 border-right">
+          <div class="row">&nbsp;Expenses for food, clothing and other essentials</div>
+        </div>
+        <div class="col-sm-3 border-right text-right">
+          <div>{{ addComma(food_exp_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-right text-left">
+          <div>{{food_exp_cmt}}</div>
+        </div>
+      </div>
+      <div class="row border-top">
+        <div class="col-sm-1 border-left border-right">06</div>
+        <div class="col-sm-5 border-right">
+          <div class="row">&nbsp;Housing expense</div>
+        </div>
+        <div class="col-sm-3 border-right text-right">
+          <div>{{addComma(house_exp_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-right text-left">
+          <div>{{house_exp_cmt}}</div>
+        </div>
+      </div>
+
+      <!-- 7 START -->
+      <div class="row border-top">
+        <div class="col-sm-1 border-left border-right">07</div>
+        <div class="col-sm-5 border-right border-bottom">
+          <div class="row">&nbsp;Auto and transportation expenses (07A+07B)</div>
+        </div>
+        <div class="col-sm-3 border-right border-bottom text-right">
+          <div>{{ addComma(auto_and_transportation_expenses_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-right border-bottom text-left">
+          <div></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1 border-left border-right"></div>
+        <div class="col-sm-5 border-right">
+          <div class="row">
+            <div class="col-sm-1 border-right">
+              <div class="row">&nbsp;7A</div>
+            </div>
+            <div class="col-sm-11">
+              <div class="row">&nbsp;Driver’s salary, fuel and maintenance</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 border-right text-left">
+          <div>{{ addComma(te_driver_salary_fuel_maintenance_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-right text-left">
+          <div>{{te_driver_salary_fuel_maintenance_cmt}}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1 border-left border-right"></div>
+        <div class="col-sm-5 border-right">
+          <div class="row">
+            <div class="col-sm-1 border-top border-right">
+              <div class="row">&nbsp;7B</div>
+            </div>
+            <div class="col-sm-11 border-top">
+              <div class="row">&nbsp;Other transportation</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 border-right border-top text-left">
+          <div>{{ addComma(te_others_transportation_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-top border-right text-left">
+          <div>{{te_others_transportation_cmt}}</div>
+        </div>
+      </div>
+      <!-- 7 END -->
+      <!-- 8 START -->
+      <div class="row border-top">
+        <div class="col-sm-1 border-left border-right">08</div>
+        <div class="col-sm-5 border-right border-bottom">
+          <div class="row">&nbsp;Household and utility expenses (08A+08B+08C+08D)</div>
+        </div>
+        <div class="col-sm-3 border-right border-bottom text-right">
+          <div>{{ addComma(hue_expenses_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-right border-bottom text-left">
+          <div></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1 border-left border-right"></div>
+        <div class="col-sm-5 border-right">
+          <div class="row">
+            <div class="col-sm-1 border-right">
+              <div class="row">&nbsp;8A</div>
+            </div>
+            <div class="col-sm-11">
+              <div class="row">&nbsp;Electricity</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 border-right text-left">
+          <div>{{ addComma(hue_electricity_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-right text-left">
+          <div>{{hue_electricity_cmt}}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1 border-left border-right"></div>
+        <div class="col-sm-5 border-right">
+          <div class="row">
+            <div class="col-sm-1 border-top border-right">
+              <div class="row">&nbsp;8B</div>
+            </div>
+            <div class="col-sm-11 border-top">
+              <div class="row">&nbsp;Gas, water, sewer and garbage</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 border-right border-top text-left">
+          <div>{{ addComma(hue_gas_water_sewer_garbage_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-top border-right text-left">
+          <div>{{hue_gas_water_sewer_garbage_cmt}}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1 border-left border-right"></div>
+        <div class="col-sm-5 border-right">
+          <div class="row">
+            <div class="col-sm-1 border-top border-right">
+              <div class="row">&nbsp;8C</div>
+            </div>
+            <div class="col-sm-11 border-top">
+              <div class="row">&nbsp;Phone, internet, TV channels subscription</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 border-right border-top text-left">
+          <div>{{addComma(hue_phone_internet_tvchannel_sub_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-top border-right text-left">
+          <div>{{hue_phone_internet_tvchannel_sub_cmt}}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1 border-left border-right"></div>
+        <div class="col-sm-5 border-right">
+          <div class="row">
+            <div class="col-sm-1 border-top border-right">
+              <div class="row">&nbsp;8D</div>
+            </div>
+            <div class="col-sm-11 border-top">
+              <div class="row">&nbsp;Home-support staff and other expenses</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 border-right border-top text-left">
+          <div>{{addComma(hue_home_support_stuff_other_expense_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-top border-right text-left">
+          <div>{{hue_home_support_stuff_other_expense_cmt}}</div>
+        </div>
+      </div>
+      <!-- 8 END -->
+      <div class="row border-top">
+        <div class="col-sm-1 border-left border-right">09</div>
+        <div class="col-sm-5 border-right">
+          <div class="row">&nbsp;Children’s education expenses</div>
+        </div>
+        <div class="col-sm-3 border-right text-right">
+          <div>{{addComma(child_edu_exp_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-right text-left">
+          <div>{{child_edu_exp_cmt}}</div>
+        </div>
+      </div>
+      <!-- 10 START -->
+      <div class="row border-top">
+        <div class="col-sm-1 border-left border-right">10</div>
+        <div class="col-sm-5 border-right border-bottom">
+          <div class="row">&nbsp;Special expenses (10A+10B+10C+10D)</div>
+        </div>
+        <div class="col-sm-3 border-right border-bottom text-right">
+          <div>{{addComma(se_expenses_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-right border-bottom text-left">
+          <div></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1 border-left border-right"></div>
+        <div class="col-sm-5 border-right">
+          <div class="row">
+            <div class="col-sm-1 border-right">
+              <div class="row">&nbsp;10A</div>
+            </div>
+            <div class="col-sm-11">
+              <div class="row">&nbsp;Festival, party, events</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 border-right text-left">
+          <div>{{addComma(se_festival_party_expenses_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-right text-left">
+          <div>{{se_festival_party_expenses_cmt}}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1 border-left border-right"></div>
+        <div class="col-sm-5 border-right">
+          <div class="row">
+            <div class="col-sm-1 border-top border-right">
+              <div class="row">&nbsp;10B</div>
+            </div>
+            <div class="col-sm-11 border-top">
+              <div class="row">&nbsp;Domestic and overseas tour, holiday, etc.</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 border-right border-top text-left">
+          <div>{{addComma(se_domestic_overseas_tour_holiday_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-top border-right text-left">
+          <div>{{se_domestic_overseas_tour_holiday_cmt}}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1 border-left border-right"></div>
+        <div class="col-sm-5 border-right">
+          <div class="row">
+            <div class="col-sm-1 border-top border-right">
+              <div class="row">&nbsp;10C</div>
+            </div>
+            <div class="col-sm-11 border-top">
+              <div class="row">&nbsp;Philanthropy, etc.</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 border-right border-top text-left">
+          <div>{{addComma(se_philan_thropy_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-top border-right text-left">
+          <div>{{se_philan_thropy_cmt}}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1 border-left border-right"></div>
+        <div class="col-sm-5 border-right">
+          <div class="row">
+            <div class="col-sm-1 border-top border-right">
+              <div class="row">&nbsp;10D</div>
+            </div>
+            <div class="col-sm-11 border-top">
+              <div class="row">&nbsp;Other special expenses</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 border-right border-top text-left">
+          <div>{{addComma(se_other_social_expenses_amt)}}</div>
+        </div>
+        <div class="col-sm-3 border-top border-right text-left">
+          <div>{{se_other_social_expenses_cmt}}</div>
+        </div>
+      </div>
+      <!-- 10 END -->
+      <div class="row border-top">
+        <div class="col-sm-1 border-left border-right">11</div>
+        <div class="col-sm-5 border-right">
+          <div class="row">&nbsp;Any other expenses</div>
+        </div>
+        <div class="col-sm-3 border-right text-right">
+          <div>{{addComma(other_exp_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-right text-left">
+          <div>{{other_exp_cmt}}</div>
+        </div>
+      </div>
+      <div class="row border-top">
+        <div class="col-sm-1 border-left border-right">12</div>
+        <div class="col-sm-5 border-right">
+          <div class="row">&nbsp;Total expense relating to lifestyle <br>&nbsp; (05+06+07+08+09+10+11)</div>
+        </div>
+        <div class="col-sm-3 border-right text-right">
+          <div>{{addComma(total_expenses_relatingTo_lifestyle_amount) }}</div>
+        </div>
+        <div class="col-sm-3 border-right text-left">
+          <div></div>
+        </div>
+      </div>
+      <!-- 13 START -->
+      <div class="row border-top">
+        <div class="col-sm-1 border-left border-right">13</div>
+        <div class="col-sm-5 border-right border-bottom">
+          <div class="row">&nbsp;Payment of tax, charges, etc. (13A+13B)</div>
+        </div>
+        <div class="col-sm-3 border-right border-bottom text-right">
+          <div>{{addComma(payment_of_tax_charges_etc_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-right border-bottom text-left">
+          <div></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1 border-left border-right"></div>
+        <div class="col-sm-5 border-right">
+          <div class="row">
+            <div class="col-sm-1 border-right">
+              <div class="row">&nbsp;13A</div>
+            </div>
+            <div class="col-sm-11">
+              <div class="row">&nbsp;Payment of tax at source</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 border-right text-left">
+          <div>{{addComma(tcp_payment_of_tax_at_source_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-right text-left">
+          <div>{{tcp_payment_of_tax_at_source_cmt}}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1 border-left border-right"></div>
+        <div class="col-sm-5 border-right">
+          <div class="row">
+            <div class="col-sm-1 border-top border-right">
+              <div class="row">&nbsp;13B</div>
+            </div>
+            <div class="col-sm-11 border-top">
+              <div class="row">&nbsp;Payment of tax, surcharge or other amount</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 border-right border-top text-left">
+          <div>{{addComma(payment_of_taxsurcharge_OrOther_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-top border-right text-left">
+          <div>{{payment_of_taxsurcharge_OrOther_cmt}}</div>
+        </div>
+      </div>
+      <!-- 13 END -->
+      <div class="row border-top border-bottom">
+        <div class="col-sm-1 border-left border-right">14</div>
+        <div class="col-sm-5 border-right">
+          <div class="row">&nbsp;Total amount of expense and tax (12+13)</div>
+        </div>
+        <div class="col-sm-3 border-right text-right">
+          <div>{{addComma(total_amount_of_expense_and_tax_amt) }}</div>
+        </div>
+        <div class="col-sm-3 border-right text-left">
+          <div></div>
+        </div>
+      </div>
+
+
+      <div class="row px-2 pt-2 text-center mt-4">
+        <div class="col-sm-12">
+          <h5 class="font-weight-bolder">Verification and signature</h5>
+        </div>
+      </div>
+      <div class="row border-full">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-1 border-right">15</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h5>Verification</h5>
+                  <p>I solemnly declare that to the best of my knowledge and belief the information given in this
+                    statement and the schedule are correct and complete.</p>
+                </div>
+                <div class="col-sm-12">
+                  <div class="row border-top">
+                    <div class="col-sm-6 border-right">
+                      <div style="height: 100px;">
+                        <div>
+                          <label for="">&nbsp;Name</label>
+                        </div>
+                        <div>
+                          <label for="">&nbsp;{{taxPayerName}}</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div style="height: 100px;">
+                        <div>
+                          <label for="">&nbsp;Signature & Date</label>
+                        </div>
+                        <div>
+                          <label for="">
+                            <!-- &nbsp;No signature required -->
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

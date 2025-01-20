@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Pay Order Entry</title>
+</head>
+
+<!-- <div class="col-md-12 content-background">
+
+    <div class="row">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Pay Order Entry &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-6 mt-3">
+            <label class="float-right" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12 mt-2">
+            <form class="row form-horizontal" [formGroup]="payOrderEntryForm" aria-labelledby="title">
+                <div class="col-6">
+                    <div class="form-group">
+                        <div class="col-12">
+                            <input type="text" class="form-control" placeholder="Search TIN" formControlName="searchTIN"
+                                (keyup)="onSearch(payOrderEntryForm.value.searchTIN)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <div class="col-12">
+                            <input type="text" class="form-control" placeholder="Taxpayer Name"
+                                formControlName="taxpayerName" readonly required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="padding-left:45px!important; padding-right: 45px!important;">
+                    <div class="custom-content-background1" style="width: 47%;">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="col-12">
+                                        <label for=""><u><b>Pay Order Info</b></u></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="pobank" class="label col-8 form-control-label">Bank</label>
+                                    <div class="col-12">
+                                        <select class="form-control" id="pobank" formControlName="pobank"
+                                            [ngClass]="{'is-invalid':payOrderEntryForm.get('pobank').touched && payOrderEntryForm.get('pobank').value=='0'}">
+                                            <option value="0" selected>Select One</option>
+                                            <option value="Dhaka Bank">Dhaka Bank</option>
+                                            <option value="Eastern Bank">Eastern Bank</option>
+                                            <option value="Prime Bank">Prime Bank</option>
+                                            <option value="Sonali Bank">Sonali Bank</option>
+                                            <option value="Standard Chartered Bank">Standard Chartered Bank</option>
+                                            <option value="The City Bank">The City Bank</option>
+                                        </select>
+                                        <div class="invalid-feedback ">
+                                            <div>Bank is required!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="pobranch" class="label col-8 form-control-label">Branch</label>
+                                    <div class="col-12">
+                                        <select class="form-control" id="pobranch" formControlName="pobranch"
+                                            [ngClass]="{'is-invalid':payOrderEntryForm.get('pobranch').touched && payOrderEntryForm.get('pobranch').value=='0'}">
+                                            <option value="0" selected>Select One</option>
+                                            <option value="Dhaka">Dhaka</option>
+                                            <option value="Barisal">Barisal</option>
+                                            <option value="Rajshahi">Rajshahi</option>
+                                            <option value="Sylhet">Sylhet</option>
+                                            <option value="Chittagong">Chittagong</option>
+                                            <option value="Khulna">Khulna</option>
+                                        </select>
+                                        <div class="invalid-feedback ">
+                                            <div>Branch is required!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="podate" class="label col-8 form-control-label">Pay Order Date</label>
+                                    <div class="input-group col-12">
+                                        <input type="text" placeholder="Enter Date" formControlName="podate" required
+                                            class="form-control" bsDatepicker #podate="bsDatepicker"
+                                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }"
+                                            [ngClass]="{'is-invalid':payOrderEntryForm.get('podate').touched && payOrderEntryForm.get('podate').invalid}">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-info btn-sm" (click)="podate.toggle()"
+                                                type="button" id="button-addon2">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </button>
+                                        </div>
+                                        <div class="invalid-feedback ">
+                                            <div>Date is required!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="poNo" class="label col-8 form-control-label">Pay Order No</label>
+                                    <div class="col-12">
+                                        <input type="text" placeholder="Enter Pay Order No" formControlName="poNo"
+                                            class="form-control" id="poNo" required
+                                            [ngClass]="{'is-invalid':payOrderEntryForm.get('poNo').touched && payOrderEntryForm.get('poNo').invalid}">
+                                        <div class="invalid-feedback ">
+                                            <div>Pay Order No is required!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="poamount" class="label col-8 form-control-label">Amount</label>
+                                    <div class="col-12">
+                                        <input type="text" placeholder="Enter Amount" formControlName="poamount"
+                                            class="form-control" id="poamount" required
+                                            [ngClass]="{'is-invalid':payOrderEntryForm.get('poamount').touched && payOrderEntryForm.get('poamount').invalid}">
+                                        <div class="invalid-feedback ">
+                                            <div>Amount is required!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 6%;"></div>
+                    <div class="custom-content-background2" style="width: 47%;">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="col-12">
+                                        <label for=""><u><b>Challan Info</b></u></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="challandate" class="label col-8 form-control-label">Challan Date</label>
+                                    <div class="input-group col-12">
+                                        <input type="text" placeholder="Enter Date" formControlName="challandate"
+                                            required class="form-control" bsDatepicker #challandate="bsDatepicker"
+                                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }"
+                                            [ngClass]="{'is-invalid':payOrderEntryForm.get('challandate').touched && payOrderEntryForm.get('challandate').invalid}">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-info btn-sm" (click)="challandate.toggle()"
+                                                type="button" id="button-addon2">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </button>
+                                        </div>
+                                        <div class="invalid-feedback ">
+                                            <div>Date is required!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="position" class="label col-8 form-control-label">Deposited in</label>
+                                    <div class="col-12 mt-2" style="padding-right: 0%;">
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label">
+                                                <input selected class="form-check-input" type="radio"
+                                                    formControlName="depositedin" id="inlineRadio1" value="CASH">
+                                                Cash
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="radio"
+                                                    formControlName="depositedin" id="inlineRadio2" value="CHEQUE">
+                                                Cheque
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline" *ngIf="isShow">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="radio"
+                                                    formControlName="depositedin" id="inlineRadio3" value="TRANSFR">
+                                                Transfer
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="radio"
+                                                    formControlName="depositedin" id="inlineRadio4" value="E_PAYMENT">
+                                                e-Payment
+                                            </label>
+                                        </div>
+                                        <div class="invalid-feedback inputStyle">
+                                            <div>Deposited in is required!</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="challanbank" class="label col-8 form-control-label">Bank</label>
+                                    <div class="col-12">
+                                        <select class="form-control" id="challanbank" formControlName="challanbank" (change)="bankChange($event)"
+                                            [ngClass]="{'is-invalid':payOrderEntryForm.get('challanbank').touched && payOrderEntryForm.get('challanbank').value=='0'}">
+                                            <option value="0" selected>Select One</option>
+                                            <option value="Bangladesh Bank">Bangladesh Bank</option>
+                                            <option value="Sonali Bank">Sonali Bank</option>
+                                        </select>
+                                        <div class="invalid-feedback ">
+                                            <div>Bank is required!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12" *ngIf="isHidden">
+                                <div class="form-group">
+                                    <label for="challandistrict" class="label col-8 form-control-label">District</label>
+                                    <div class="col-12">
+                                        <select class="form-control" id="challandistrict" formControlName="challandistrict">
+                                            <option value="0" selected>Select One</option>
+                                            <option value="Dhaka">Dhaka</option>
+                                            <option value="Barisal">Barisal</option>
+                                            <option value="Rajshahi">Rajshahi</option>
+                                            <option value="Sylhet">Sylhet</option>
+                                            <option value="Chittagong">Chittagong</option>
+                                            <option value="Khulna">Khulna</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="challanbranch" class="label col-8 form-control-label">Branch</label>
+                                    <div class="col-12">
+                                        <select class="form-control" id="challanbranch" formControlName="challanbranch"
+                                            [ngClass]="{'is-invalid':payOrderEntryForm.get('challanbranch').touched && payOrderEntryForm.get('challanbranch').value=='0'}">
+                                            <option value="0" selected>Select One</option>
+                                            <option value="Dhaka">Dhaka</option>
+                                            <option value="Barisal">Barisal</option>
+                                            <option value="Rajshahi">Rajshahi</option>
+                                            <option value="Sylhet">Sylhet</option>
+                                            <option value="Chittagong">Chittagong</option>
+                                            <option value="Khulna">Khulna</option>
+                                        </select>
+                                        <div class="invalid-feedback ">
+                                            <div>Branch is required!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="challanNo" class="label col-8 form-control-label">Challan No</label>
+                                    <div class="col-12">
+                                        <input type="text" placeholder="Enter Challan No" formControlName="challanNo"
+                                            class="form-control" id="challanNo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6"></div>
+                <div class="col-6 mt-2">
+                    <div class="form-group">
+                        <div class="col-12">
+                            <button type="button" class="btn btn-warning reset" (click)="reset()">
+                                Reset
+                            </button>
+                            <button type="button"
+                                [disabled]="!payOrderEntryForm.valid || payOrderEntryForm.get('pobank').value=='0' || payOrderEntryForm.get('pobranch').value=='0'
+                                    || payOrderEntryForm.get('challanbank').value=='0' || payOrderEntryForm.get('challanbranch').value=='0'"
+                                class="btn submitBtn" (click)="submittedData()">
+                                <i class="fa fa-save btnText"></i>Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-12 col-sm-12 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Pay Order List &nbsp; &nbsp;
+            </span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mt-2">
+            <div class="content-background formSection">
+                <form class="form-horizontal" [formGroup]="payOrderEntryForm" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="payOrderEntryTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th scope="col">TIN No</th>
+                                    <th scope="col">Taxpayer Name</th>
+                                    <th scope="col">Pay Order No</th>
+                                    <th scope="col">Challan No</th>
+                                    <th scope="col">Pay Order Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of payOrderEntryGetData; let k = index">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row">{{ item.tinNo }}</td>
+                                    <td scope="row">{{ item.taxpayerName }}</td>
+                                    <td scope="row">{{ item.poNo }}</td>
+                                    <td scope="row">{{ item.challanNo }}</td>
+                                    <td scope="row">{{ item.amount }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+</html>
+
+<ngx-ui-loader text="Under Construction"></ngx-ui-loader>
+
+<!-- <pre>Form values: {{payOrderEntryForm.value | json}}</pre> -->

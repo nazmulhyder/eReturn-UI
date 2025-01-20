@@ -1,0 +1,55 @@
+.footer-bg {
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 1px 3px #0000001A;
+  border: 1px solid #E0E0E0;
+  opacity: 1;
+}
+
+/* .fontColor {
+  margin-left: 200px;
+  color: rgb(164,172,173);
+}
+
+.created-by{
+  float: right;
+}
+
+.img-fluid{
+  margin-top: 3px;
+  height: 90%;
+  float: left;
+  margin-left: -20px;
+} */
+
+.fontColor {
+  /* margin-left: 100px; */
+  color: rgb(164,172,173);
+}
+
+.nbrText{
+  margin-left: 180px;
+}
+
+.created-by{
+  float: right;
+}
+
+.synesis_logo{
+  margin-top: 3px;
+  height: 20px;
+  float: left;
+  margin-left: -20px;
+}
+
+.art_logo_section{
+  /* margin-left: 100px; */
+  color: rgb(164,172,173);
+}
+
+.art_logo{
+  margin-top: 3px;
+  height: 22px;
+  width: 27px;
+  float: left;
+  margin-left: -20px;
+}

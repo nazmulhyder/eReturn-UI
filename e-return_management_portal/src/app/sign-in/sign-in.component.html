@@ -1,0 +1,88 @@
+<div class="app-body">
+    <div class="col-md-12 px-0">
+        <div class="row pt-5">
+            <div class="col-md-12 text-center py-2">
+                <!-- <button type="button"
+                    class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"><b>Guideline</b></button>
+                <button type="button"
+                    class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize mx-2"><b>Reference</b></button>
+                <button type="button"
+                    class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"><b>Contact
+                        Us</b></button> -->
+            </div>
+            <div class="col-md-12" style="padding-top: 50px;">
+                <!-- <div class="alert alert-danger" role="alert" style="font-size: 14px;">
+                    <strong>Sign in failed!</strong> &nbsp; Your User Name & Password was Invalid!
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+                <form class="col-md-8 offset-md-2" name="form" [formGroup]="signinForm">
+                    <!-- <div class="form-group text-center pb-3">
+                        <h1 class="text-blue logo-text"><b>e-Return</b></h1>
+                    </div> -->
+                    <div class="form-group text-center">
+                        <h4><b>Welcome!</b></h4>
+                        <p class="font-13"><b>Sign in to your account</b></p>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <!-- <label class="font-14">User Name</label> -->
+                        <label class="font-14">User ID</label>
+                        <input type="text" class="form-control" placeholder="Enter your User ID"
+                            formControlName="userName"
+                            [ngClass]="{'is-invalid':signinForm.get('userName').touched && signinForm.get('userName').invalid}"
+                            required />
+                        <div class="invalid-feedback">
+                            <div>User ID is required!</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label class="font-14">Password</label>
+                        <input type="password" class="form-control" placeholder="Enter your password"
+                            formControlName="password"
+                            [ngClass]="{'is-invalid':signinForm.get('password').touched && signinForm.get('password').invalid}"
+                            required />
+                        <div class="invalid-feedback">
+                            <div>Password is required!</div>
+                        </div>
+                    </div>
+                    <label class="font-14">Captcha</label>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" placeholder="" formControlName="captcha"
+                            [ngClass]="{'is-invalid':signinForm.get('captcha').touched && signinForm.get('captcha').invalid}"
+                            required />
+                        <div class="input-group-prepend">
+                            <!-- <span class="input-group-text"
+                                style="height: 38px; background-color: rgb(169, 169, 169);"><img [src]="captchaImg"
+                                    width="100" height="30" alt="" /></span> -->
+                            <div class="input-group-prepend" id="captcha" style="background-color: rgb(220, 220, 220);">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-outline-dark " style="width: 50px;" (click)="reloadCaptcha()"><span><i
+                                    class="fa fa-refresh" aria-hidden="true"></i></span></button>
+                        <div class="invalid-feedback">
+                            <div>captcha is required!</div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-4">
+                        <button routerLink="/auth/forgot-pass-number" type="button" class="btn ml-auto text-right p-0"
+                            style="font-size: small;">Reset password?</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" (click)="submitData()" class="btn btn-primary btn-block"
+                                [disabled]="!signinForm.valid" style="background-color:#145DA0;">Sign in</button>
+                        </div>
+                    </div>
+                    <!-- <div class="input-group mb-4 text-center justify-content-center pt-3">
+                        <div class="font-14" style="font-style: normal;">Don't have any account? <a
+                                routerLink="/auth/sign-up" style="color: chocolate; cursor: pointer;">Registration</a>
+                        </div>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

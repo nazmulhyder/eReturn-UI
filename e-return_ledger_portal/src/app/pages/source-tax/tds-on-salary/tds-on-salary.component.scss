@@ -1,0 +1,161 @@
+.text-border{
+    border-left: 10px solid #01649A;
+    border-right: 0px solid #01649A;
+    border-top: 0px solid #01649A;
+    border-bottom: 0px solid #01649A;
+    padding: 5px 10px;
+    // font: normal normal normal 22px/42px Open Sans;
+    font-size:22px; 
+    font-weight: normal;
+    color: #000000;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 10px 10px 20px #00000029;
+    border-radius: 10px 37px 37px 10px;
+    opacity: 1;
+}
+
+.titleSection{
+    margin-top: 5px; 
+    margin-bottom: 5px;
+}
+
+.titleText{
+    margin-right: 10px; 
+    color: #01649A;
+}
+
+.btnText{
+    margin-right: 10px; 
+}
+
+.formSection{
+    margin-top: 10px;
+}
+
+.labelStyle{
+    margin-left: 38px; 
+    text-align: left;
+}
+
+.inputStyle{
+    margin-left: 38px; 
+}
+
+.buttonRowStyle{
+    margin-left: 38px; 
+    margin-right: 38px;
+}
+
+.submitBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    float: left;
+    width: 100px;
+}
+
+.searchBtn{
+  background-color: #01649A;
+  color: #ffffff;
+  width: 110px;
+//   margin-left: 35px;
+  float: right;
+
+//new
+//   background-color: #C0D8DE;
+//   color: #424548;
+}
+
+.reset{
+    // border: none; 
+    // background: none; 
+    // float: left;
+    // background-color: #01649A;
+    // color: red;
+    // color: #ffffff;
+    width: 110px;
+    margin-right: 20px !important;
+    margin-left: 50px !important;
+}
+
+.confirmBtn{
+    background-color: #01649A;
+    color: #ffffff;
+}
+
+.confirmBtnStyle{
+    margin-right: 10px; 
+    color: #FFFFFF;
+}
+
+#salaryTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+}
+
+#salaryTable th {
+    background-color: #C0D8DE;
+    color: #424548;
+}
+
+#salaryTable {
+    border: 1px solid #ddd;
+}
+
+.tableBgStyle {
+    background-color: #FFFFFF; 
+}
+
+#salaryTable tr:nth-child(even){background-color: #f2f2f2;}
+
+.addAnotherBtnStyle {
+    height: 25px;
+    width: 85px;
+    color: #01649A;
+    font-size: 14px;
+    float: left;
+    background: none;
+    border: 1px solid #01649A;
+    border-radius: 20px;
+    outline: none;
+}
+
+.confirmIcon{
+    color: green;
+}
+
+::ng-deep .tooltip-350 ~ .tooltip .tooltip-inner {
+    max-width: 380px;
+    min-width: 380px;
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    box-shadow: 1px 1px 10px 2px #00000029;
+    color: #0F0F0F;
+    font-size: 12px;
+    font-style: italic;
+    font-family: Helvetica;
+    font-weight: bold;
+    text-align: center;
+  
+}
+  
+.tooltip-350 {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.deleteBtnStyle {
+    background: none; 
+    outline: none; 
+    border: none;
+    // margin-top: 6px; 
+    color:red;
+}
+
+.editBtnStyle{
+    background: none; 
+    outline: none; 
+    border: none;
+    color: forestgreen;
+}
+  

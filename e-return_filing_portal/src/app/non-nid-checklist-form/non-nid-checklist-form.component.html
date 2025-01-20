@@ -1,0 +1,53 @@
+<!--new design start-->
+<div class="app-body">
+  <div class="col-md-12 px-0">
+    <div class="row pt-5">
+      <div class="col-md-12 text-center py-2">
+        <!-- <button type="button" class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"><b>Guideline</b></button>                         
+        <button type="button" class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize mx-2"><b>Reference</b></button>
+        <button type="button" class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"><b>Contact Us</b></button> -->
+      </div>
+      <div class="col-md-12" style="padding-top: 60px;">
+        <form class="col-md-8 offset-md-2" name="nonNidHolderform" [formGroup]="nonNidHolderform">
+          <h5><b>Enter your details here</b></h5>
+          <p class="uk-text-bold font-14">We're almost done</p>
+          <label class="font-14">Enter your passport number</label>                 
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Enter your passport no" formControlName="passportNumber" 
+            [ngClass]="{'is-invalid':nonNidHolderform.get('passportNumber').touched && nonNidHolderform.get('passportNumber').invalid}" required 
+            />
+            <div class="invalid-feedback">
+              <div>Passport number is required!</div>
+            </div>
+          </div>
+          <label class="font-14">Enter your active mobile number</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">+880</span>
+            </div>
+            <input type="text" (keypress)="numberOnly($event)" class="form-control" placeholder="Enter mobile number" formControlName="mobilenumber" id="mobilenumber" 
+            [ngClass]="{'is-invalid':nonNidHolderform.get('mobilenumber').touched && nonNidHolderform.get('mobilenumber').invalid}" required 
+            />
+            <div class="invalid-feedback">
+              <div>Registered Mobile No. must be 11 digits!</div>
+            </div>
+          </div>
+          <div class="input-group mb-4">
+            <div>
+              <div class="font-12"><strong>Bring your passport & registered mobile number and visit the Support Center</strong> </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <button type="button" (click)="onSubmit()"
+              class="btn btn-block" [disabled]="!nonNidHolderform.valid" style="background-color:#145DA0;color: white;">Submit</button>
+            </div>
+          </div>
+        </form>
+  
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-ui-loader></ngx-ui-loader>
+<!--new design end-->

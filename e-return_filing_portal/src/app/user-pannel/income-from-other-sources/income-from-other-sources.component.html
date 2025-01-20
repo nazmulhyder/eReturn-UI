@@ -1,0 +1,1431 @@
+<div class="row" *ngIf="isShow">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-12 col-sm-2">
+                <span class="incomeDetailsSpan">Income Details</span>
+            </div>
+            <div class="col-12 col-sm-10">
+                <div class="row buttonAllign">
+                    <button type="button"
+                        class="btn btn-pill rounded-pill btn-outline-dark btn-customize btn-sm main_nav"
+                        *ngFor="let head of selectedNavbar; let i = index" (click)="mainNavActiveSelect(head['id'])"
+                        [class.activeMainNav]="mainNavActive[head['id']]" routerLink="{{head['link']}}"
+                        style="float: right; margin-right: 5px;">{{head['name']}}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-12">
+                <ul class="nav nav-tabs nav_font" style="margin-top: 36px">
+                    <li class="nav-item" *ngFor="let head of headsOfIncome; let i = index">
+                        <a class="nav-link" [class.activeHead]="navActive[head['id']]" routerLink="{{head['link']}}"
+                            (click)="navActiveSelect(head['id'])">{{head['name']}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="multiple-section">
+            <div class="row">
+                <div class="col-sm-9">
+                    <button class="btn btn-sm btn-light capitalGainBtn" [hidden]="isVisibleTab[i]"
+                        [class.capital-gain-btn-active]="isVisibleForm == i"
+                        *ngFor="let item of formArray.controls; let i = index"
+                        (click)="selectedIncome(i)">{{incomeTypeName[i]}}
+                        <i class="fa fa-times-circle" (click)="onCloseTabClick(closetabpopup)" aria-hidden="true">
+                        </i>
+                        <ng-template #closetabpopup>
+                            <div class="modal-header">
+                                <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+                                <button type="button" class="close pull-right" aria-label="Close"
+                                    (click)="modalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>This action will remove all your unsaved data.</p>
+                                <p>Would you like to remove it?</p>
+                                <button type="button" class="btn btn-danger" style="float: right;"
+                                    (click)="close(i)">Remove</button>
+                                <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+                                    (click)="modalRef.hide()">Keep</button>
+                            </div>
+                        </ng-template>
+                        &nbsp;
+                    </button>
+                </div>
+                <div class="col-sm-3 addAnother">
+                    <button type="button" [disabled]="isDisableAddSalBtn" class="btn btn-sm btn-pill addAnotherCatBtn"
+                        (click)="insertFormGroupToArray()">
+                        <i class="fa fa-plus-square" aria-hidden="true">
+                        </i>&nbsp;Add Another Category
+                    </button>&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+
+        <div class="content-background">
+            <form [formGroup]="form" *ngFor="let form of formArray.controls; let i = index">
+                <div class="row">
+                    <div class="col-sm-6" [hidden]="i != isVisibleForm">
+                        <div>
+                            <div class="content-background">
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Income Type</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="incomeType"
+                                        style="padding-right: 5px"></i>
+                                    <ng-template #incomeType>
+                                        <div [innerHtml]="incomeTypeTooltip"></div>
+                                    </ng-template>
+                                    <select class="form-control" id="exampleFormControlSelect1"
+                                        formControlName="incomeType" (change)="incomeTypeChange($event,i)">
+                                        <option value="0" selected>Select One</option>
+                                        <option value="interest_profit_bank_fi">Interest/Profit (Bank & FI)</option>
+                                        <option value="dividend_from_listed_company">Dividend (From Listed Company)
+                                        </option>
+                                        <option value="dividend_others">Dividend (Other than Listed Company & Mutual/Unit Fund)</option>
+                                        <option value="income_from_mutual_unit_fund">Income from Mutual/Unit Fund
+                                        </option>
+                                        <option value="royalties">Royalties</option>
+                                        <option value="consultancy_service">Consultancy Service</option>
+                                        <option value="payment_from_wppf">Payment from WPPF</option>
+                                        <option value="lottery_puzzle_game__gambling_prize_bond">Lottery, Puzzle, Game,
+                                            Gambling, Prize Bond</option>
+                                        <option value="any_other_income">Any Other Income</option>
+                                        <option value="income_exempted_reduced_by_sro">Income Subject to Reduced Tax Rate</option>
+                                    </select>
+                                </div>
+
+                                <div *ngIf="form.value.incomeType === 'income_exempted_reduced_by_sro'">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput9">Particulars</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="sroParticulars"
+                                            style="padding-right: 5px"></i>
+                                        <ng-template #sroParticulars>
+                                            <div [innerHtml]="sroParticularsTooltip"></div>
+                                        </ng-template>
+                                        <input type="text" id="particulars{{i}}" class="form-control" placeholder=""
+                                            formControlName="particulars" (keyup)= "changeSRO(i,'particulars')" [ngClass]="{'is-invalid': sro_particulars_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Required field!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput9">Payment Authority</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                            [tooltip]="sroPaymentAuthority" style="padding-right: 5px"></i>
+                                        <ng-template #sroPaymentAuthority>
+                                            <div [innerHtml]="sroPaymentAuthorityTooltip"></div>
+                                        </ng-template>
+                                        <input type="text" id="paymentAuthority{{i}}" class="form-control" placeholder=""
+                                            formControlName="paymentAuthority" (keyup)= "changeSRO(i,'paymentAuthority')" [ngClass]="{'is-invalid': sro_paymentAuthority_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Required field!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput9">Reference No</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="sroRefNo"
+                                            style="padding-right: 5px"></i>
+                                        <ng-template #sroRefNo>
+                                            <div [innerHtml]="sroRefNoTooltip"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" placeholder=""
+                                            formControlName="referenceNo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput9">Date</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="sroDate"
+                                            style="padding-right: 5px"></i>
+                                        <ng-template #sroDate>
+                                            <div [innerHtml]="sroDateTooltip"></div>
+                                        </ng-template>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder=""
+                                                formControlName="date" aria-label="Recipient's username"
+                                                aria-describedby="button-addon2" bsDatepicker [minDate]="minDate"
+                                                [maxDate]="maxDate" #SRODate="bsDatepicker" (bsValueChange)= "changeSRO(i,'date')" [ngClass]="{'is-invalid': sro_date_showError[i]}"
+                                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-info btn-sm" type="button"
+                                                    id="button-addon2" (click)="SRODate.toggle()">
+                                                    <svg class="calenderDatePicker" width="1em" height="1em"
+                                                        viewBox="0 0 16 16" class="bi bi-calendar-week"
+                                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd"
+                                                            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                                                        <path
+                                                            d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                <div>Required field!</div>
+                                              </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput9">Gross Amount Received</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="sroGrossAmt"
+                                            style="padding-right: 5px"></i>
+                                        <ng-template #sroGrossAmt>
+                                            <div [innerHtml]="sroGrossAmtTooltip"></div>
+                                        </ng-template>
+                                        <input type="text" id="grossAmountReceived{{i}}" (keypress)="numberOnly($event)" (keyup)="initializeSro($event,i,'grossAmountReceived')"
+                                            (keyup)="calNetIncome(i)" class="form-control" placeholder=""
+                                            formControlName="grossAmountReceived" (keyup)= "changeSRO(i,'grossAmountReceived')" [ngClass]="{'is-invalid': sro_grossAmountReceived_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Required field!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput9">Related Expenses</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                            [tooltip]="sroRelatedExpenses" style="padding-right: 5px"></i>
+                                        <ng-template #sroRelatedExpenses>
+                                            <div [innerHtml]="sroRelatedExpensesTooltip"></div>
+                                        </ng-template>
+                                        <input type="text" (keypress)="numberOnly($event)"
+                                            (keyup)="calNetIncome(i)" (keyup)="initializeSro($event,i,'relatedExpenses')" class="form-control" placeholder=""
+                                            formControlName="relatedExpenses">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput9">Net Income</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="sroNetIncome"
+                                            style="padding-right: 5px"></i>
+                                        <ng-template #sroNetIncome>
+                                            <div [innerHtml]="sroNetIncomeTooltip"></div>
+                                        </ng-template>
+                                        <input type="text" id="netIncomeSro{{i}}" class="form-control" placeholder="" readonly
+                                            formControlName="netIncomeSro">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput9">SRO No</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="sroNo"
+                                            style="padding-right: 5px"></i>
+                                        <ng-template #sroNo>
+                                            <div [innerHtml]="sroNoTooltip"></div>
+                                        </ng-template>
+                                        <input type="text" id="sroNo{{i}}" class="form-control" (keyup)= "changeSRO(i,'sroNo')" [ngClass]="{'is-invalid': sro_sroNo_showError[i]}" placeholder="" formControlName="sroNo">
+                                        <div class="invalid-feedback">
+                                            <div>Required field!</div>
+                                          </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <label for="exampleFormControlInput16">Year</label>
+                                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="sroYear"
+                                                    style="padding-right: 5px"></i>
+                                                <ng-template #sroYear>
+                                                    <div [innerHtml]="sroYearTooltip"></div>
+                                                </ng-template>
+                                            </div>
+                                            <div class="col-12 input-group">
+                                                <input type="email" class="form-control" id="year{{i}}" formControlName="year"
+                                                    id="year" placeholder="" [minDate]="minYear" [maxDate]="maxYear"
+                                                    bsDatepicker #SROyear="bsDatepicker" (bsValueChange)= "changeSRO(i,'year')" [ngClass]="{'is-invalid': sro_year_showError[i]}"
+                                                    [bsConfig]="{ dateInputFormat: 'YYYY', containerClass: 'theme-dark-blue', minMode: 'year' }">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-info btn-sm" type="button"
+                                                        id="button-addon2" (click)="SROyear.toggle()">
+                                                        <span class="input-group-addon"><i
+                                                                class="fa fa-calendar"></i></span>
+                                                    </button>
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput9">Particular of the SRO</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="particularOfSRO"
+                                            style="padding-right: 5px"></i>
+                                        <ng-template #particularOfSRO>
+                                            <div [innerHtml]="particularOfSROTooltip"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="particularofSro{{i}}" placeholder=""
+                                            formControlName="particularofSro" (keyup)= "changeSRO(i,'particularofSro')" [ngClass]="{'is-invalid': sro_particularofSro_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Required field!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput9">Income Exempted from Tax</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                            [tooltip]="sroExemptedIncome" style="padding-right: 5px"></i>
+                                        <ng-template #sroExemptedIncome>
+                                            <div [innerHtml]="sroExemptedIncomeTooltip"></div>
+                                        </ng-template>
+                                        <input type="text" (keypress)="numberOnly($event)" (keyup)="initializeSro($event,i,'incomeExemptedfromTax')"
+                                            class="form-control" placeholder="" (keyup)="calTaxableIncome(i)"
+                                            formControlName="incomeExemptedfromTax"
+                                            [readonly]="isTaxExemptedReadonly[i]">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleRegistrationNo1">Taxable Income</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                            [tooltip]="sroTaxableIncome" style="padding-right: 5px"></i>
+                                        <ng-template #sroTaxableIncome>
+                                            <div [innerHtml]="sroTaxableIncomeTooltip"></div>
+                                        </ng-template>
+                                        <input type="text" id="taxableIncome{{i}}" (keypress)="numberOnly($event)"
+                                            class="form-control" formControlName="taxableIncome" placeholder=""
+                                            readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput9">Applicable Tax as per SRO</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                            [tooltip]="sroApplicableTax" style="padding-right: 5px"></i>
+                                        <ng-template #sroApplicableTax>
+                                            <div [innerHtml]="sroApplicableTaxTooltip"></div>
+                                        </ng-template>
+                                        <input type="text" id="applicableTaxasperSro{{i}}" (keypress)="numberOnly($event)" (keyup)="initializeSro($event,i,'applicableTaxasperSro')"
+                                            class="form-control" placeholder="" formControlName="applicableTaxasperSro" (keyup)= "changeSRO(i,'applicableTaxasperSro')" [ngClass]="{'is-invalid': sro_applicableTaxasperSro_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Required field!</div>
+                                              </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="form.value.incomeType === 'interest_profit_bank_fi'" [hidden]="i != isVisibleForm">
+                    <div class="row InterestOrProfit" *ngFor="let data of interestorProfitArray; index as j">
+                        <div class="col-12 addAnotherButtonClass" *ngIf="j<1">
+                            <button type="button" class="addAnotherBtnStyle" (click)="addInterestorProfitRow(j,i)">
+                                &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                Add &nbsp;
+                            </button>
+                        </div>
+                        <div class="table-responsive tableBgStyle" id="InterestorProfitTable">
+                            <table class="table">
+                                <thead *ngIf="j<1">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Bank Name
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="bankName"
+                                                style="padding-right: 5px"></i>
+                                            <ng-template #bankName>
+                                                <div [innerHtml]="bankNameTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Account No
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="accountNo"
+                                                style="padding-right: 5px"></i>
+                                            <ng-template #accountNo>
+                                                <div [innerHtml]="accountNoTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Gross Amount
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="grossAmount"
+                                                style="padding-right: 5px"></i>
+                                            <ng-template #grossAmount>
+                                                <div [innerHtml]="grossAmountTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <!-- <th scope="col">Tax Deducted at Source
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="tds"
+                                                style="padding-right: 5px"></i>
+                                            <ng-template #tds>
+                                                <div [innerHtml]="tdsTooltip"></div>
+                                            </ng-template>
+                                        </th> -->
+                                        <th scope="col">Related Fees/Charges
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="relatedFees"
+                                                style="padding-right: 5px"></i>
+                                            <ng-template #relatedFees>
+                                                <div [innerHtml]="relatedFeesTooltip"></div>
+                                            </ng-template>
+                                        </th>
+
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ j + 1 }}</td>
+                                        <td>
+                                            <input type="text" class="form-control" id="interestorProfitArraybankName{{j}}"
+                                                [(ngModel)]="interestorProfitArray[j].bankName" (keyup)="change_interest_profit_bank_fi(j,'bankName')"   [ngClass]="{'is-invalid': validate_interest_profit_bank_fi[j].bankName_showError}"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="interestorProfitArrayaccountNo{{j}}"
+                                                [(ngModel)]="interestorProfitArray[j].accountNo" (keyup)="change_interest_profit_bank_fi(j,'accountNo')"   [ngClass]="{'is-invalid': validate_interest_profit_bank_fi[j].accountNo_showError}"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td><input type="text" (keypress)="numberOnly($event)" id="interestorProfitArraygrossAmount{{j}}" class="form-control"
+                                                placeholder="" (keyup)="totalNetIncomeInterestorProfit($event,i)" (keyup)="change_interest_profit_bank_fi(j,'grossAmount')"   [ngClass]="{'is-invalid': validate_interest_profit_bank_fi[j].grossAmount_showError}"
+                                                (keyup)="interestorProfitArrayCommaSeparator($event,j,'grossAmount')"
+                                                [(ngModel)]="interestorProfitArray[j].grossAmount"
+                                                [ngModelOptions]="{standalone: true}">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <!-- <td><input type="text" (keypress)="numberOnly($event)" class="form-control"
+                                                placeholder="" [(ngModel)]="interestorProfitArray[j].sourceTaxDeducted"
+                                                (keyup)="interestorProfitArrayCommaSeparator($event,j,'sourceTaxDeducted')"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </td> -->
+                                        <td><input type="text" (keypress)="numberOnly($event)" class="form-control"
+                                                placeholder="" (keyup)="totalNetIncomeInterestorProfit($event,i)"
+                                                [(ngModel)]="interestorProfitArray[j].relatedFees"
+                                                (keyup)="interestorProfitArrayCommaSeparator($event,j,'relatedFees')"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </td>
+                                        <td *ngIf="isInterestorProfitDeleteActionShow">
+                                            <button class="deleteBtnStyle" (click)="deleteInterestorProfitRow(j,i)">
+                                                <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row netIncomeSection">
+                        <div class="col-9 netIncomeDivStyle">
+                            <label class="netIncomeLabel"><b>Net Income</b></label>
+                        </div>
+                        <div class="col-3 netIncomeDivStyle">
+                            <input type="text" class="form-control netIncomeInput"
+                                (keyup)="initializeNetIncome($event,i)" id="netIncome" formControlName="netIncome" (keyup)="onNetIncomeKeyUp(i)" [ngClass]="{'is-invalid': netIncome_showError[i]}">
+                                <div class="invalid-feedback">
+                                    <div>Required field!</div>
+                                  </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="form.value.incomeType === 'dividend_from_listed_company'" [hidden]="i != isVisibleForm">
+                    <div class="row InterestOrProfit" *ngFor="let data of dividendArray; index as j">
+                        <div class="col-12 addAnotherButtonClass" *ngIf="j<1">
+                            <button type="button" class="addAnotherBtnStyle" (click)="addDividendRow(j,i)">
+                                &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                Add &nbsp;
+                            </button>
+                        </div>
+                        <div class="table-responsive tableBgStyle" id="InterestorProfitTable">
+                            <table class="table">
+                                <thead *ngIf="j<1">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Name of the Company
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="dividendCompany" style="padding-right: 5px"></i>
+                                            <ng-template #dividendCompany>
+                                                <div [innerHtml]="dividendCompanyTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Gross Dividend Amount
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="grossDividendAmount" style="padding-right: 5px"></i>
+                                            <ng-template #grossDividendAmount>
+                                                <div [innerHtml]="grossDividendAmountTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Related Expenses
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="dividendRelatedExpense" style="padding-right: 5px"></i>
+                                            <ng-template #dividendRelatedExpense>
+                                                <div [innerHtml]="dividendRelatedExpenseTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <!-- <th scope="col">Tax Deducted at Source
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="dividendTDS"
+                                                style="padding-right: 5px"></i>
+                                            <ng-template #dividendTDS>
+                                                <div [innerHtml]="dividendTDSTooltip"></div>
+                                            </ng-template>
+                                        </th> -->
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ j + 1 }}</td>
+                                        <td>
+                                            <input type="text" class="form-control" id="dividendArrayNameoftheCompany{{j}}"
+                                                [(ngModel)]="dividendArray[j].nameoftheCompany" (keyup)="change_dividend_from_listed_company(j,'nameoftheCompany')"   [ngClass]="{'is-invalid': validate_dividend_from_listed_company[j].nameoftheCompany_showError}"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td>
+                                            <input type="text" (keypress)="numberOnly($event)" id="dividendArrayGrossDividendAmount{{j}}"
+                                                (keyup)="dividendArrayCommaSeparator($event,j,'grossDividendAmount')" (keyup)="change_dividend_from_listed_company(j,'grossDividendAmount')"   [ngClass]="{'is-invalid': validate_dividend_from_listed_company[j].grossDividendAmount_showError}"
+                                                (keyup)="totalNetIncomeDividend($event,i)" class="form-control"
+                                                [(ngModel)]="dividendArray[j].grossDividendAmount"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td><input type="text" (keypress)="numberOnly($event)"
+                                                (keyup)="dividendArrayCommaSeparator($event,j,'relatedExpenses')"
+                                                class="form-control" placeholder=""
+                                                (keyup)="totalNetIncomeDividend($event,i)"
+                                                [(ngModel)]="dividendArray[j].relatedExpenses"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </td>
+                                        <!-- <td><input type="text" (keypress)="numberOnly($event)"
+                                                (keyup)="dividendArrayCommaSeparator($event,j,'sourceTaxDeducted')"
+                                                class="form-control" placeholder=""
+                                                [(ngModel)]="dividendArray[j].sourceTaxDeducted"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </td> -->
+                                        <td *ngIf="isDividendDeleteActionShow">
+                                            <button class="deleteBtnStyle" (click)="deleteDividendRow(j,i)">
+                                                <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row netIncomeSection">
+                        <div class="col-9 netIncomeDivStyle2">
+                            <label class="netIncomeLabel"><b>Tax Exempted Income</b></label>
+                        </div>
+                        <div class="col-3 netIncomeDivStyle2">
+                            <input type="text" class="form-control netIncomeInput" id="netIncome"
+                                (keyup)="initializeTaxExemptedIncome($event,i)" formControlName="taxExemptedIncome">
+                        </div>
+                        <div class="col-12" style="padding: 0; margin: 0;">
+                            <hr>
+                        </div>
+                        <div class="col-9 netTaxExemptedIncomeDivStyle">
+                            <label class="netTaxExemptedIncomeLabel"><b>Net Income (Gross - Related Expense -
+                                    Exempted)</b></label>
+                        </div>
+                        <div class="col-3 netTaxExemptedIncomeDivStyle">
+                            <input type="text" (keyup)="initializeNetIncome($event,i)" (keyup)="onNetIncomeKeyUp(i)" [ngClass]="{'is-invalid': netIncome_showError[i]}"
+                                class="form-control netTaxExemptedIncomeInput" id="netIncome"
+                                formControlName="netIncome">
+                                <div class="invalid-feedback">
+                                    <div>Required field!</div>
+                                  </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="form.value.incomeType === 'dividend_others'" [hidden]="i != isVisibleForm">
+                    <div class="row InterestOrProfit" *ngFor="let data of dividendOthersArray; index as j">
+                        <div class="col-12 addAnotherButtonClass" *ngIf="j<1">
+                            <button type="button" class="addAnotherBtnStyle" (click)="addDividendOthersRow(j,i)">
+                                &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                Add &nbsp;
+                            </button>
+                        </div>
+                        <div class="table-responsive tableBgStyle" id="InterestorProfitTable">
+                            <table class="table">
+                                <thead *ngIf="j<1">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Name of the Company
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="dividendOthersCompany" style="padding-right: 5px"></i>
+                                            <ng-template #dividendOthersCompany>
+                                                <div [innerHtml]="dividendOthersCompanyTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Gross Dividend Amount
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="dividentOthersGrossDividendAmt"
+                                                style="padding-right: 5px"></i>
+                                            <ng-template #dividentOthersGrossDividendAmt>
+                                                <div [innerHtml]="dividentOthersGrossDividendAmtTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Related Expenses
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="dividendOthersRelatedExpense" style="padding-right: 5px"></i>
+                                            <ng-template #dividendOthersRelatedExpense>
+                                                <div [innerHtml]="dividendOthersRelatedExpenseTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <!-- <th scope="col">Tax Deducted at Source
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="dividendOthersTDS" style="padding-right: 5px"></i>
+                                            <ng-template #dividendOthersTDS>
+                                                <div [innerHtml]="dividendOthersTDSTooltip"></div>
+                                            </ng-template>
+                                        </th> -->
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ j + 1 }}</td>
+                                        <td>
+                                            <input type="text" class="form-control" id="dividendOthersArraynameoftheCompany{{j}}"
+                                                [(ngModel)]="dividendOthersArray[j].nameoftheCompany" (keyup)="change_dividend_others(j,'nameoftheCompany')"   [ngClass]="{'is-invalid': validate_dividend_others[j].nameoftheCompany_showError}"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td>
+                                            <input type="text" (keypress)="numberOnly($event)" id="dividendOthersArraygrossDividendAmount{{j}}"
+                                                (keyup)="dividendOthersArrayCommaSeparator($event,j,'grossDividendAmount')"
+                                                (keyup)="totalNetIncomeDividendOthers($event,i)" class="form-control" (keyup)="change_dividend_others(j,'grossDividendAmount')"   [ngClass]="{'is-invalid': validate_dividend_others[j].grossDividendAmount_showError}"
+                                                [(ngModel)]="dividendOthersArray[j].grossDividendAmount"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td><input type="text" (keypress)="numberOnly($event)"
+                                                (keyup)="dividendOthersArrayCommaSeparator($event,j,'relatedExpenses')"
+                                                class="form-control" placeholder=""
+                                                (keyup)="totalNetIncomeDividendOthers($event,i)"
+                                                [(ngModel)]="dividendOthersArray[j].relatedExpenses"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </td>
+                                        <!-- <td><input type="text" (keypress)="numberOnly($event)"
+                                                (keyup)="dividendOthersArrayCommaSeparator($event,j,'sourceTaxDeducted')"
+                                                class="form-control" placeholder=""
+                                                [(ngModel)]="dividendOthersArray[j].sourceTaxDeducted"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </td> -->
+                                        <td *ngIf="isDividendOthersDeleteActionShow">
+                                            <button class="deleteBtnStyle" (click)="deleteDividendOthersRow(j,i)">
+                                                <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row netIncomeSection">
+                        <div class="col-9 netIncomeDivStyle">
+                            <label class="netIncomeLabel"><b>Net Income</b></label>
+                        </div>
+                        <div class="col-3 netIncomeDivStyle">
+                            <input type="text" (keyup)="initializeNetIncome($event,i)" (keyup)="onNetIncomeKeyUp(i)" [ngClass]="{'is-invalid': netIncome_showError[i]}"
+                                class="form-control netIncomeInput" id="netIncome" formControlName="netIncome">
+                                <div class="invalid-feedback">
+                                    <div>Required field!</div>
+                                  </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="form.value.incomeType === 'income_from_mutual_unit_fund'" [hidden]="i != isVisibleForm">
+                    <div class="row InterestOrProfit" *ngFor="let data of mutualorUnitFundArray; index as j">
+                        <div class="col-12 addAnotherButtonClass" *ngIf="j<1">
+                            <button type="button" class="addAnotherBtnStyle" (click)="addMutualorUnitFundRow(j,i)">
+                                &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                Add &nbsp;
+                            </button>
+                        </div>
+                        <div class="table-responsive tableBgStyle" id="InterestorProfitTable">
+                            <table class="table">
+                                <thead *ngIf="j<1">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Name of the Mutual/Unit Fund
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="nameoftheMutualorUnitFund" style="padding-right: 5px"></i>
+                                            <ng-template #nameoftheMutualorUnitFund>
+                                                <div [innerHtml]="nameoftheMutualorUnitFundTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Gross Receipt
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="mutualFundGrossReceipt" style="padding-right: 5px"></i>
+                                            <ng-template #mutualFundGrossReceipt>
+                                                <div [innerHtml]="mutualFundGrossReceiptTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Related Expenses
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="mutualFundRelatedExpense" style="padding-right: 5px"></i>
+                                            <ng-template #mutualFundRelatedExpense>
+                                                <div [innerHtml]="mutualFundRelatedExpenseTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <!-- <th scope="col">Tax Deducted at Source
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="mutualFundTDS" style="padding-right: 5px"></i>
+                                            <ng-template #mutualFundTDS>
+                                                <div [innerHtml]="mutualFundTDSTooltip"></div>
+                                            </ng-template>
+                                        </th> -->
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ j + 1 }}</td>
+                                        <td width="25%">
+                                            <input type="text" class="form-control" id="mutualorUnitFundArraynameoftheMutualorUnitFund{{j}}"
+                                                [(ngModel)]="mutualorUnitFundArray[j].nameoftheMutualorUnitFund" (keyup)="change_income_from_mutual_unit_fund(j,'nameoftheMutualorUnitFund')"   [ngClass]="{'is-invalid': validate_income_from_mutual_unit_fund[j].nameoftheMutualorUnitFund_showError}"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td>
+                                            <input type="text" (keypress)="numberOnlyGrossReceipt($event)" id="mutualorUnitFundArraygrossReceipt{{j}}"
+                                                (keyup)="checkGrossReceiptValidation($event,j)"
+                                                (keyup)="mutualorUnitFundArrayCommaSeparator($event,j,'grossReceipt')"
+                                                (keyup)="totalNetIncomeMutualorUnitFund($event,i)" class="form-control" (keyup)="change_income_from_mutual_unit_fund(j,'grossReceipt')"   [ngClass]="{'is-invalid': validate_income_from_mutual_unit_fund[j].grossReceipt_showError}"
+                                                [(ngModel)]="mutualorUnitFundArray[j].grossReceipt"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td><input type="text" (keypress)="numberOnly($event)"
+                                                (keyup)="mutualorUnitFundArrayCommaSeparator($event,j,'relatedExpenses')"
+                                                class="form-control" placeholder=""
+                                                (keyup)="totalNetIncomeMutualorUnitFund($event,i)"
+                                                [(ngModel)]="mutualorUnitFundArray[j].relatedExpenses"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </td>
+                                        <!-- <td><input type="text" (keypress)="numberOnly($event)"
+                                                (keyup)="mutualorUnitFundArrayCommaSeparator($event,j,'sourceTaxDeducted')"
+                                                class="form-control" placeholder=""
+                                                [(ngModel)]="mutualorUnitFundArray[j].sourceTaxDeducted"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </td> -->
+                                        <td *ngIf="isMutualorUnitFundDeleteActionShow">
+                                            <button class="deleteBtnStyle" (click)="deleteMutualorUnitFundRow(j,i)">
+                                                <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row netIncomeSection">
+                        <div class="col-9 netIncomeDivStyle2">
+                            <label class="netIncomeLabel"><b>Tax Exempted Income</b></label>
+                        </div>
+                        <div class="col-3 netIncomeDivStyle2">
+                            <input type="text" (keyup)="initializeTaxExemptedIncome($event,i)"
+                                class="form-control netIncomeInput" id="netIncome" formControlName="taxExemptedIncome">
+                        </div>
+                        <div class="col-12" style="padding: 0; margin: 0;">
+                            <hr>
+                        </div>
+                        <div class="col-9 netTaxExemptedIncomeDivStyle">
+                            <label class="netTaxExemptedIncomeLabel"><b>Net Income (Gross - Related Expense -
+                                    Exempted)</b></label>
+                        </div>
+                        <div class="col-3 netTaxExemptedIncomeDivStyle">
+                            <input type="text" (keyup)="initializeNetIncome($event,i)" (keyup)="onNetIncomeKeyUp(i)" [ngClass]="{'is-invalid': netIncome_showError[i]}"
+                                class="form-control netTaxExemptedIncomeInput" id="netIncome"
+                                formControlName="netIncome">
+                                <div class="invalid-feedback">
+                                    <div>Required field!</div>
+                                  </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="form.value.incomeType === 'royalties'" [hidden]="i != isVisibleForm">
+                    <div class="row InterestOrProfit" *ngFor="let data of royaltiesArray; index as j">
+                        <div class="col-12 addAnotherButtonClass" *ngIf="j<1">
+                            <button type="button" class="addAnotherBtnStyle" (click)="addRoyaltiesRow(j,i)">
+                                &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                Add &nbsp;
+                            </button>
+                        </div>
+                        <div class="table-responsive tableBgStyle" id="InterestorProfitTable">
+                            <table class="table">
+                                <thead *ngIf="j<1">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Name of the Client
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="royaltiesNameOfClient" style="padding-right: 5px"></i>
+                                            <ng-template #royaltiesNameOfClient>
+                                                <div [innerHtml]="royaltiesNameOfClientTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Agreement No
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="royaltiesAgreementNo" style="padding-right: 5px"></i>
+                                            <ng-template #royaltiesAgreementNo>
+                                                <div [innerHtml]="royaltiesAgreementNoTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Date
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="royaltiesDate" style="padding-right: 5px"></i>
+                                            <ng-template #royaltiesDate>
+                                                <div [innerHtml]="royaltiesDateTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Gross Payment Amount
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="royaltiesGrossPayment" style="padding-right: 5px"></i>
+                                            <ng-template #royaltiesGrossPayment>
+                                                <div [innerHtml]="royaltiesGrossPaymentTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Related Expenses
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="royaltiesRelatedExpense" style="padding-right: 5px"></i>
+                                            <ng-template #royaltiesRelatedExpense>
+                                                <div [innerHtml]="royaltiesRelatedExpenseTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Tax Deducted/Collected at Source
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="royaltiesTDS" style="padding-right: 5px"></i>
+                                            <ng-template #royaltiesTDS>
+                                                <div [innerHtml]="royaltiesTDSTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="3%">{{ j + 1 }}</td>
+                                        <td width="20%">
+                                            <input type="text" class="form-control" id="royaltiesArraynameoftheClient{{j}}"
+                                                [(ngModel)]="royaltiesArray[j].nameoftheClient" (keyup)="change_royalties(j,'nameoftheClient')"   [ngClass]="{'is-invalid': validate_royalties[j].nameoftheClient_showError}"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td width="15%">
+                                            <input type="text" class="form-control"
+                                                [(ngModel)]="royaltiesArray[j].agreementNo"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                        </td>
+                                        <td width="15%">
+                                            <div class="input-group">
+                                                <input class="form-control" placeholder=""
+                                                    [(ngModel)]="royaltiesArray[j].date"
+                                                    [ngModelOptions]="{standalone: true}" bsDatepicker
+                                                    [maxDate]="maxDate"
+                                                    #royalitiesDate="bsDatepicker"
+                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-info btn-sm" type="button"
+                                                        id="button-addon2" (click)="royalitiesDate.toggle()">
+                                                        <span class="input-group-addon"><i
+                                                                class="fa fa-calendar"></i></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td width="13%"><input type="text" (keypress)="numberOnly($event)"
+                                                (keyup)="royaltiesArrayCommaSeparator($event,j,'grossPaymentAmount')"
+                                                class="form-control" placeholder="" id="royaltiesArraygrossPaymentAmount{{j}}"
+                                                [(ngModel)]="royaltiesArray[j].grossPaymentAmount" (keyup)="change_royalties(j,'grossPaymentAmount')"   [ngClass]="{'is-invalid': validate_royalties[j].grossPaymentAmount_showError}"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (keyup)="totalNetIncomeRoyalties($event,i)">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td width="14%"><input type="text" (keypress)="numberOnly($event)"
+                                                (keyup)="royaltiesArrayCommaSeparator($event,j,'relatedExpenses')"
+                                                class="form-control" placeholder=""
+                                                [(ngModel)]="royaltiesArray[j].relatedExpenses"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (keyup)="totalNetIncomeRoyalties($event,i)">
+                                        </td>
+                                        <td width="18%"><input type="text" (keypress)="numberOnly($event)"
+                                                (keyup)="royaltiesArrayCommaSeparator($event,j,'taxDeductedorCollected')"
+                                                class="form-control" placeholder="" id="royaltiesArraytaxDeductedorCollected{{j}}"
+                                                [(ngModel)]="royaltiesArray[j].taxDeductedorCollected" (keyup)="change_royalties(j,'taxDeductedorCollected')"   [ngClass]="{'is-invalid': validate_royalties[j].taxDeductedorCollected_showError}"
+                                                [ngModelOptions]="{standalone: true}">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td width="2%" *ngIf="isRoyaltiesDeleteActionShow">
+                                            <button class="deleteBtnStyle" (click)="deleteRoyaltiesRow(j,i)">
+                                                <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row netIncomeSection">
+                        <div class="col-9 netIncomeDivStyle">
+                            <label class="netIncomeLabel"><b>Net Income</b></label>
+                        </div>
+                        <div class="col-3 netIncomeDivStyle">
+                            <input type="text" (keyup)="initializeNetIncome($event,i)" (keyup)="onNetIncomeKeyUp(i)" [ngClass]="{'is-invalid': netIncome_showError[i]}"
+                                class="form-control netIncomeInput" id="netIncome" formControlName="netIncome">
+                                <div class="invalid-feedback">
+                                    <div>Required field!</div>
+                                  </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="form.value.incomeType === 'consultancy_service'" [hidden]="i != isVisibleForm">
+                    <div class="row InterestOrProfit" *ngFor="let data of consultancyServiceArray; index as j">
+                        <div class="col-12 addAnotherButtonClass" *ngIf="j<1">
+                            <button type="button" class="addAnotherBtnStyle" (click)="addConsultancyServiceRow(j,i)">
+                                &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                Add &nbsp;
+                            </button>
+                        </div>
+                        <div class="table-responsive tableBgStyle" id="InterestorProfitTable">
+                            <table class="table">
+                                <thead *ngIf="j<1">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Name of the Client
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="consultancyNameOfClient" style="padding-right: 5px"></i>
+                                            <ng-template #consultancyNameOfClient>
+                                                <div [innerHtml]="consultancyNameOfClientTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Agreement No
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="consultancyAgreementNo" style="padding-right: 5px"></i>
+                                            <ng-template #consultancyAgreementNo>
+                                                <div [innerHtml]="consultancyAgreementNoTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Date
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="consultancyDate" style="padding-right: 5px"></i>
+                                            <ng-template #consultancyDate>
+                                                <div [innerHtml]="consultancyDateTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Gross Payment Amount
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="consultancyGross" style="padding-right: 5px"></i>
+                                            <ng-template #consultancyGross>
+                                                <div [innerHtml]="consultancyGrossTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Related Expenses
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="consultancyRelatedExpense" style="padding-right: 5px"></i>
+                                            <ng-template #consultancyRelatedExpense>
+                                                <div [innerHtml]="consultancyRelatedExpenseTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Tax Deducted/Collected at Source
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="consultancyTDS" style="padding-right: 5px"></i>
+                                            <ng-template #consultancyTDS>
+                                                <div [innerHtml]="consultancyTDSTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="3%">{{ j + 1 }}</td>
+                                        <td width="20%">
+                                            <input type="text" class="form-control" id="consultancyServiceArraynameoftheClient{{j}}"
+                                                [(ngModel)]="consultancyServiceArray[j].nameoftheClient" (keyup)="change_consultancy_service(j,'nameoftheClient')"   [ngClass]="{'is-invalid': validate_consultancy_service[j].nameoftheClient_showError}"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td width="15%">
+                                            <input type="text" class="form-control"
+                                                [(ngModel)]="consultancyServiceArray[j].agreementNo"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                        </td>
+                                        <td width="15%">
+                                            <div class="input-group">
+                                                <input class="form-control" placeholder=""
+                                                    [(ngModel)]="consultancyServiceArray[j].date"
+                                                    [ngModelOptions]="{standalone: true}" bsDatepicker
+                                                    [maxDate]="maxDate"
+                                                    #consultancyDate="bsDatepicker"
+                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-info btn-sm" type="button"
+                                                        id="button-addon2" (click)="consultancyDate.toggle()">
+                                                        <span class="input-group-addon"><i
+                                                                class="fa fa-calendar"></i></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td width="13%"><input type="text" (keypress)="numberOnly($event)"
+                                                (keyup)="consultancyServiceArrayCommaSeparator($event,j,'grossPaymentAmount')"
+                                                class="form-control" placeholder="" id="consultancyServiceArraygrossPaymentAmount{{j}}"
+                                                [(ngModel)]="consultancyServiceArray[j].grossPaymentAmount"
+                                                [ngModelOptions]="{standalone: true}" (keyup)="change_consultancy_service(j,'grossPaymentAmount')"   [ngClass]="{'is-invalid': validate_consultancy_service[j].grossPaymentAmount_showError}"
+                                                (keyup)="totalNetIncomeConsultancyService($event,i)">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td width="14%"><input type="text" (keypress)="numberOnly($event)"
+                                                (keyup)="consultancyServiceArrayCommaSeparator($event,j,'relatedExpenses')"
+                                                class="form-control" placeholder=""
+                                                [(ngModel)]="consultancyServiceArray[j].relatedExpenses"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (keyup)="totalNetIncomeConsultancyService($event,i)">
+                                        </td>
+                                        <td width="18%"><input type="text" (keypress)="numberOnly($event)"
+                                                (keyup)="consultancyServiceArrayCommaSeparator($event,j,'taxDeductedorCollected')"
+                                                class="form-control" placeholder="" id="consultancyServiceArraytaxDeductedorCollected{{j}}"
+                                                [(ngModel)]="consultancyServiceArray[j].taxDeductedorCollected" (keyup)="change_consultancy_service(j,'taxDeductedorCollected')"   [ngClass]="{'is-invalid': validate_consultancy_service[j].taxDeductedorCollected_showError}"
+                                                [ngModelOptions]="{standalone: true}">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td width="2%" *ngIf="isConsultancyServiceDeleteActionShow">
+                                            <button class="deleteBtnStyle" (click)="deleteConsultancyServiceRow(j,i)">
+                                                <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row netIncomeSection">
+                        <div class="col-9 netIncomeDivStyle">
+                            <label class="netIncomeLabel"><b>Net Income</b></label>
+                        </div>
+                        <div class="col-3 netIncomeDivStyle">
+                            <input type="text" (keyup)="initializeNetIncome($event,i)" (keyup)="onNetIncomeKeyUp(i)" [ngClass]="{'is-invalid': netIncome_showError[i]}"
+                                class="form-control netIncomeInput" id="netIncome" formControlName="netIncome">
+                                <div class="invalid-feedback">
+                                    <div>Required field!</div>
+                                  </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="form.value.incomeType === 'payment_from_wppf'" [hidden]="i != isVisibleForm">
+                    <div class="row InterestOrProfit" *ngFor="let data of paymentFromWPPFArray; index as j">
+                        <div class="col-12 addAnotherButtonClass" *ngIf="j<1">
+                            <button type="button" class="addAnotherBtnStyle" (click)="addPaymentFromWPPFRow(j,i)">
+                                &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                Add &nbsp;
+                            </button>
+                        </div>
+                        <div class="table-responsive tableBgStyle" id="InterestorProfitTable">
+                            <table class="table">
+                                <thead *ngIf="j<1">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Name of the Company
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="wppfCompany"
+                                                style="padding-right: 5px"></i>
+                                            <ng-template #wppfCompany>
+                                                <div [innerHtml]="wppfCompanyTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Date of Payment
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="wppfPaymentDate" style="padding-right: 5px"></i>
+                                            <ng-template #wppfPaymentDate>
+                                                <div [innerHtml]="wppfPaymentDateTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Reference No.
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="wppfRefNo"
+                                                style="padding-right: 5px"></i>
+                                            <ng-template #wppfRefNo>
+                                                <div [innerHtml]="wppfRefNoTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Gross Amount
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="wppfGrossAmt" style="padding-right: 5px"></i>
+                                            <ng-template #wppfGrossAmt>
+                                                <div [innerHtml]="wppfGrossAmtTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ j + 1 }}</td>
+                                        <td>
+                                            <input type="text" class="form-control" id="paymentFromWPPFArraynameoftheCompany{{j}}"
+                                                [(ngModel)]="paymentFromWPPFArray[j].nameoftheCompany" (keyup)="change_payment_from_wppf(j,'nameoftheCompany')"   [ngClass]="{'is-invalid': validate_payment_from_wppf[j].nameoftheCompany_showError}"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group">
+                                                <input class="form-control" placeholder="" id="paymentFromWPPFArraydate{{j}}"
+                                                    [(ngModel)]="paymentFromWPPFArray[j].date" (bsValueChange)="change_payment_from_wppf(j,'date')"   [ngClass]="{'is-invalid': validate_payment_from_wppf[j].date_showError}"
+                                                    [ngModelOptions]="{standalone: true}" bsDatepicker
+                                                    [minDate]="minDate" [maxDate]="maxDate" #paymentDate="bsDatepicker"
+                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-info btn-sm" type="button"
+                                                        id="button-addon2" (click)="paymentDate.toggle()">
+                                                        <span class="input-group-addon"><i
+                                                                class="fa fa-calendar"></i></span>
+                                                    </button>
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control"
+                                                [(ngModel)]="paymentFromWPPFArray[j].referenceNo"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                        </td>
+                                        <td><input type="text" (keypress)="numberOnly($event)"
+                                            (keyup)="paymentFromWPPFArrayCommaSeparator($event,j,'grossAmount')"
+                                                class="form-control" placeholder="" id="paymentFromWPPFArraygrossAmount{{j}}"
+                                                (keyup)="totalNetIncomePaymentFromWPPF($event,i)" (keyup)="change_payment_from_wppf(j,'grossAmount')"   [ngClass]="{'is-invalid': validate_payment_from_wppf[j].grossAmount_showError}"
+                                                [(ngModel)]="paymentFromWPPFArray[j].grossAmount"
+                                                [ngModelOptions]="{standalone: true}">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td *ngIf="isPaymentFromWPPFArrayDeleteActionShow">
+                                            <button class="deleteBtnStyle" (click)="deletePaymentFromWPPFRow(j,i)">
+                                                <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row netIncomeSection">
+                        <div class="col-9 netIncomeDivStyle2">
+                            <label class="netIncomeLabel"><b>Tax Exempted Income</b></label>
+                        </div>
+                        <div class="col-3 netIncomeDivStyle2">
+                            <input type="text" (keyup)="initializeTaxExemptedIncome($event,i)"
+                                class="form-control netIncomeInput" id="netIncome" formControlName="taxExemptedIncome">
+                        </div>
+                        <div class="col-12" style="padding: 0; margin: 0;">
+                            <hr>
+                        </div>
+                        <div class="col-9 netTaxExemptedIncomeDivStyle">
+                            <label class="netTaxExemptedIncomeLabel"><b>Net Income (Gross - Exempted)</b></label>
+                        </div>
+                        <div class="col-3 netTaxExemptedIncomeDivStyle">
+                            <input type="text" (keyup)="initializeNetIncome($event,i)" (keyup)="onNetIncomeKeyUp(i)" [ngClass]="{'is-invalid': netIncome_showError[i]}"
+                                class="form-control netTaxExemptedIncomeInput" id="netIncome"
+                                formControlName="netIncome">
+                                <div class="invalid-feedback">
+                                    <div>Required field!</div>
+                                  </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="form.value.incomeType === 'lottery_puzzle_game__gambling_prize_bond'"
+                    [hidden]="i != isVisibleForm">
+                    <div class="row InterestOrProfit" *ngFor="let data of lotteryPuzzleArray; index as j">
+                        <div class="col-12 addAnotherButtonClass" *ngIf="j<1">
+                            <button type="button" class="addAnotherBtnStyle" (click)="addLotteryPuzzleRow(j,i)">
+                                &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                Add &nbsp;
+                            </button>
+                        </div>
+                        <div class="table-responsive tableBgStyle" id="InterestorProfitTable">
+                            <table class="table">
+                                <thead *ngIf="j<1">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Type of Winning
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="lotteryWinningType" style="padding-right: 5px"></i>
+                                            <ng-template #lotteryWinningType>
+                                                <div [innerHtml]="lotteryWinningTypeTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Payment Authority
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="lotteryPaymentAuthority" style="padding-right: 5px"></i>
+                                            <ng-template #lotteryPaymentAuthority>
+                                                <div [innerHtml]="lotteryPaymentAuthorityTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Reference No
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="lotteryRefNo" style="padding-right: 5px"></i>
+                                            <ng-template #lotteryRefNo>
+                                                <div [innerHtml]="lotteryRefNoTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Gross Winning Amount
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="lotteryGrossAmt" style="padding-right: 5px"></i>
+                                            <ng-template #lotteryGrossAmt>
+                                                <div [innerHtml]="lotteryGrossAmtTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Tax Deducted/Collected at Source
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="lotteryTDS"
+                                                style="padding-right: 5px"></i>
+                                            <ng-template #lotteryTDS>
+                                                <div [innerHtml]="lotteryTDSTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="2%">{{ j + 1 }}</td>
+                                        <td width="20%">
+                                            <input type="text" class="form-control" id="lotteryPuzzleArraytypeofWinning{{j}}"
+                                                [(ngModel)]="lotteryPuzzleArray[j].typeofWinning" (keyup)="change_lottery_puzzle_game__gambling_prize_bond(j,'typeofWinning')"   [ngClass]="{'is-invalid': validate_lottery_puzzle_game__gambling_prize_bond[j].typeofWinning_showError}"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td width="18%">
+                                            <input type="text" class="form-control" id="lotteryPuzzleArraypaymentAuthority{{j}}"
+                                                [(ngModel)]="lotteryPuzzleArray[j].paymentAuthority" (keyup)="change_lottery_puzzle_game__gambling_prize_bond(j,'paymentAuthority')"   [ngClass]="{'is-invalid': validate_lottery_puzzle_game__gambling_prize_bond[j].paymentAuthority_showError}"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td width="15%"><input type="text" class="form-control" placeholder=""
+                                                [(ngModel)]="lotteryPuzzleArray[j].referenceNo"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </td>
+                                        <td width="18%"><input type="text" (keypress)="numberOnly($event)" id="lotteryPuzzleArraygrossWinningAmount{{j}}"
+                                            (keyup)="lotteryPuzzleArrayCommaSeparator($event,j,'grossWinningAmount')" class="form-control"
+                                                placeholder="" [(ngModel)]="lotteryPuzzleArray[j].grossWinningAmount" (keyup)="change_lottery_puzzle_game__gambling_prize_bond(j,'grossWinningAmount')"   [ngClass]="{'is-invalid': validate_lottery_puzzle_game__gambling_prize_bond[j].grossWinningAmount_showError}"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (keyup)="totalNetIncomeLotteryPuzzle($event,i)">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td width="24%"><input type="text" (keypress)="numberOnly($event)"
+                                            (keyup)="lotteryPuzzleArrayCommaSeparator($event,j,'taxDeductedorCollected')" class="form-control"
+                                                placeholder="" id="lotteryPuzzleArraytaxDeductedorCollected{{j}}"
+                                                [(ngModel)]="lotteryPuzzleArray[j].taxDeductedorCollected" (keyup)="change_lottery_puzzle_game__gambling_prize_bond(j,'taxDeductedorCollected')"   [ngClass]="{'is-invalid': validate_lottery_puzzle_game__gambling_prize_bond[j].taxDeductedorCollected_showError}"
+                                                [ngModelOptions]="{standalone: true}">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td width="3%" *ngIf="isLotteryPuzzleDeleteActionShow">
+                                            <button class="deleteBtnStyle" (click)="deleteLotteryPuzzleRow(j,i)">
+                                                <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row netIncomeSection">
+                        <div class="col-9 netIncomeDivStyle">
+                            <label class="netIncomeLabel"><b>Income</b></label>
+                        </div>
+                        <div class="col-3 netIncomeDivStyle">
+                            <input type="text" (keyup)="initializeNetIncome($event,i)" (keyup)="onNetIncomeKeyUp(i)" [ngClass]="{'is-invalid': netIncome_showError[i]}"
+                                class="form-control netIncomeInput" id="netIncome" formControlName="netIncome">
+                                <div class="invalid-feedback">
+                                    <div>Required field!</div>
+                                  </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="form.value.incomeType === 'any_other_income'" [hidden]="i != isVisibleForm">
+                    <div class="row InterestOrProfit" *ngFor="let data of anyOtherIncomeArray; index as j">
+                        <div class="col-12 addAnotherButtonClass" *ngIf="j<1">
+                            <button type="button" class="addAnotherBtnStyle" (click)="addAnyOtherIncomeRow(j,i)">
+                                &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                Add &nbsp;
+                            </button>
+                        </div>
+                        <div class="table-responsive tableBgStyle" id="InterestorProfitTable">
+                            <table class="table">
+                                <thead *ngIf="j<1">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Particulars
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="anyIncomeParticulars" style="padding-right: 5px"></i>
+                                            <ng-template #anyIncomeParticulars>
+                                                <div [innerHtml]="anyIncomeParticularsTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Payment Authority
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="anyIncomePaymentAuthority" style="padding-right: 5px"></i>
+                                            <ng-template #anyIncomePaymentAuthority>
+                                                <div [innerHtml]="anyIncomePaymentAuthorityTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Date
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="anyIncomeDate" style="padding-right: 5px"></i>
+                                            <ng-template #anyIncomeDate>
+                                                <div [innerHtml]="anyIncomeDateTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Gross Amount Received
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="anyIncomeGrossAmt" style="padding-right: 5px"></i>
+                                            <ng-template #anyIncomeGrossAmt>
+                                                <div [innerHtml]="anyIncomeGrossAmtTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col">Related Expense
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                [tooltip]="anyIncomeRelatedExpense" style="padding-right: 5px"></i>
+                                            <ng-template #anyIncomeRelatedExpense>
+                                                <div [innerHtml]="anyIncomeRelatedExpenseTooltip"></div>
+                                            </ng-template>
+                                        </th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="2%">{{ j + 1 }}</td>
+                                        <td width="23%">
+                                            <input type="text" class="form-control" id="anyOtherIncomeArrayparticulars{{j}}"
+                                                [(ngModel)]="anyOtherIncomeArray[j].particulars" (keyup)="change_any_other_income(j,'particulars')"   [ngClass]="{'is-invalid': validate_any_other_income[j].particulars_showError}"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td width="18%">
+                                            <input type="text" class="form-control" id="anyOtherIncomeArraypaymentAuthority{{j}}"
+                                                [(ngModel)]="anyOtherIncomeArray[j].paymentAuthority" (keyup)="change_any_other_income(j,'paymentAuthority')"   [ngClass]="{'is-invalid': validate_any_other_income[j].paymentAuthority_showError}"
+                                                [ngModelOptions]="{standalone: true}" placeholder="">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td width="18%">
+                                            <div class="input-group">
+                                                <input class="form-control" placeholder=""
+                                                    [(ngModel)]="anyOtherIncomeArray[j].date" (bsValueChange)="change_any_other_income(j,'date')"   [ngClass]="{'is-invalid': validate_any_other_income[j].date_showError}"
+                                                    [ngModelOptions]="{standalone: true}" bsDatepicker
+                                                    [minDate]="minDate" [maxDate]="maxDate"
+                                                    #anyOtherIncomeDate="bsDatepicker" id="anyOtherIncomeArraydate{{j}}"
+                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-info btn-sm" type="button"
+                                                        id="button-addon2" (click)="anyOtherIncomeDate.toggle()">
+                                                        <span class="input-group-addon"><i
+                                                                class="fa fa-calendar"></i></span>
+                                                    </button>
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                            </div>
+                                        </td>
+                                        <td width="18%"><input type="text" (keypress)="numberOnly($event)"
+                                            (keyup)="anyOtherIncomeArrayCommaSeparator($event,j,'grossAmountReceived')" class="form-control"
+                                                placeholder="" [(ngModel)]="anyOtherIncomeArray[j].grossAmountReceived" (keyup)="change_any_other_income(j,'grossAmountReceived')"   [ngClass]="{'is-invalid': validate_any_other_income[j].grossAmountReceived_showError}"
+                                                [ngModelOptions]="{standalone: true}" id="anyOtherIncomeArraygrossAmountReceived{{j}}"
+                                                (keyup)="totalNetIncomeAnyOtherIncome($event,i)">
+                                                <div class="invalid-feedback">
+                                                    <div>Required field!</div>
+                                                  </div>
+                                        </td>
+                                        <td width="18%"><input type="text" (keypress)="numberOnly($event)"
+                                            (keyup)="anyOtherIncomeArrayCommaSeparator($event,j,'relatedExpenses')" class="form-control"
+                                                placeholder="" [(ngModel)]="anyOtherIncomeArray[j].relatedExpenses"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (keyup)="totalNetIncomeAnyOtherIncome($event,i)">
+                                        </td>
+                                        <td width="3%" *ngIf="isAnyOtherIncomeDeleteActionShow">
+                                            <button class="deleteBtnStyle" (click)="deleteAnyOtherIncomeRow(j,i)">
+                                                <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row netIncomeSection">
+                        <div class="col-9 netIncomeDivStyle">
+                            <label class="netIncomeLabel"><b>Net Income</b></label>
+                        </div>
+                        <div class="col-3 netIncomeDivStyle">
+                            <input type="text" (keyup)="initializeNetIncome($event,i)" (keyup)="onNetIncomeKeyUp(i)" [ngClass]="{'is-invalid': netIncome_showError[i]}"
+                                class="form-control netIncomeInput" id="netIncome" formControlName="netIncome">
+                                <div class="invalid-feedback">
+                                    <div>Required field!</div>
+                                  </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- bottom button design start -->
+            <div class="row mt-4">
+                <div class="col-sm-6 pl-3">
+                    <button type="button" class="btn btn-sm backBtn" (click)="onBackPage()">
+                        <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16"
+                            class="bi bi-arrow-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                        </svg>&nbsp;
+                        Back</button>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-12 text-right">
+                            <button type="button" class="btn btn-sm saveDraftBtn" (click)="saveDraft()">
+                                Save Draft</button>
+                            <button type="button" class="btn btn-sm saveContinueBtn" (click)="submittedData()">
+                                <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em"
+                                    viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                </svg>
+                                Save & Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- new button design end -->
+        </div>
+
+    </div>
+</div>
+
+<ngx-ui-loader></ngx-ui-loader>

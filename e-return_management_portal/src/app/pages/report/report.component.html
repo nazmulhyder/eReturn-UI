@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Report</title>
+</head>
+
+<div class="col-md-12 content-background">
+    <div class="row" type="button" style="width: 100%;" (click)="isReportCollapsed = !isReportCollapsed"
+        [attr.aria-expanded]="!isReportCollapsed" aria-controls="collapseExample">
+        <div class="col-4 col-sm-4 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left iconStyle">
+                </i>Report &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-4 mt-2">
+            <label class="float-right" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+        </div>
+        <div class="col-4 mt-2">
+            <p style="font-weight: bold; font-size: 15px; text-align: right; margin-left: 4px;">
+                <i *ngIf="isReportCollapsed" class="fa fa-chevron-circle-up" aria-hidden="true"
+                    style="font-size: 14px; text-align: right; color: indigo;"></i>
+                <i *ngIf="!isReportCollapsed" class="fa fa-chevron-circle-down" aria-hidden="true"
+                    style="font-size: 14px; text-align: right; color: indigo;"></i>
+            </p>
+        </div>
+    </div>
+
+    <div id="collapseBasic" [collapse]="!isReportCollapsed" [isAnimated]="true">
+        <div class="row content-background mt-4">
+            <!-- row 1 start -->
+            <div class="col-3">
+                <button type="button" [class.active]="isClickReturnRegister" (click)="clickReturnRegister()" class="col-12 btn btn-sm btnStyle">Return
+                    Register</button>
+            </div>
+            <div class="col-3">
+                <button type="button" [class.active]="isClickReturnSummary" (click)="clickReturnSummary()" class="col-12 btn btn-sm btnStyle">Return
+                    Summary</button>
+            </div>
+            <div class="col-3">
+                <button type="button" [class.active]="isClickNonFilerTaxPayersNo" (click)="clickNonFilerTaxPayersNo()" class="col-12 btn btn-sm btnStyle">No
+                    of Non-Filer Taxpayers</button>
+            </div>
+            <div class="col-3">
+                <button type="button" [class.active]="isClickNonFilerTaxPayersList" (click)="clickNonFilerTaxPayersList()"
+                    class="col-12 btn btn-sm btnStyle">List of Non-Filer Taxpayers</button>
+            </div>
+            <div class="col-12 mt-3"></div>
+    
+            <!-- row 2 start -->
+            <div class="col-3">
+                <button type="button" [class.active]="isClickTopIndividualTaxpayersByGrossWealthList" (click)="clickTopIndividualTaxpayersByGrossWealthList()"
+                    class="col-12 btn btn-sm btnStyle">List of Top Individual Taxpayers by Gross Wealth</button>
+            </div>
+            <div class="col-3">
+                <button type="button" [class.active]="isClickTopIndividualTaxpayersByNetWealthList" (click)="clickTopIndividualTaxpayersByNetWealthList()"
+                    class="col-12 btn btn-sm btnStyle">List of Top Individual Taxpayers by Net Wealth</button>
+            </div>
+            <div class="col-3">
+                <button type="button" [class.active]="isClickTopIndividualTaxpayersByGrossWealthLiabilityList" (click)="clickTopIndividualTaxpayersByGrossWealthLiabilityList()"
+                    class="col-12 btn btn-sm btnStyle">List of Top Individual Taxpayers by Gross Wealth
+                    Liability</button>
+            </div>
+            <div class="col-3">
+                <button type="button" [class.active]="isClickTopIndividualTaxpayersByTaxPaidList" (click)="clickTopIndividualTaxpayersByTaxPaidList()"
+                    class="col-12 btn btn-sm btnStyle">List of Top Individual Taxpayers by Tax Paid</button>
+            </div>
+            <div class="col-12 mt-3"></div>
+    
+            <!-- row 3 start -->
+            <div class="col-3">
+                <button type="button" [class.active]="isClickTopCompanyTaxpayersByTaxPaidList" (click)="clickTopCompanyTaxpayersByTaxPaidList()"
+                    class="col-12 btn btn-sm btnStyle">List of Top Company Taxpayers by Tax Paid</button>
+            </div>
+            <div class="col-3">
+                <button type="button" [class.active]="isClickTopFemaleTaxpayersByTaxPaidList" (click)="clickTopFemaleTaxpayersByTaxPaidList()"
+                    class="col-12 btn btn-sm btnStyle">List of Top Female Taxpayers by Tax Paid</button>
+            </div>
+            <div class="col-3">
+                <button type="button" [class.active]="isClickTopMaleTaxpayersByTaxPaidList" (click)="clickTopMaleTaxpayersByTaxPaidList()"
+                    class="col-12 btn btn-sm btnStyle">List of Top Male Taxpayers by Tax Paid</button>
+            </div>
+            <div class="col-3">
+                <button type="button" [class.active]="isClickTopSeniorCitizenTaxpayersByTaxPaidList" (click)="clickTopSeniorCitizenTaxpayersByTaxPaidList()"
+                    class="col-12 btn btn-sm btnStyle">List of Top Senior Citizen(65+) Taxpayers by Tax Paid</button>
+            </div>
+    
+        </div>
+    </div>
+
+</div>
+
+<div class="report_viewing_section">
+    <app-return-register *ngIf="isClickReturnRegister"></app-return-register>
+    <app-return-summary *ngIf="isClickReturnSummary"></app-return-summary>
+    <app-non-filer-taxpayer-no *ngIf="isClickNonFilerTaxPayersNo"></app-non-filer-taxpayer-no>
+    <app-non-filer-taxpayer-list *ngIf="isClickNonFilerTaxPayersList"></app-non-filer-taxpayer-list>
+    <app-top-individual-taxpayers-by-gross-wealth *ngIf="isClickTopIndividualTaxpayersByGrossWealthList"></app-top-individual-taxpayers-by-gross-wealth>
+    <app-top-individual-taxpayers-by-net-wealth *ngIf="isClickTopIndividualTaxpayersByNetWealthList"></app-top-individual-taxpayers-by-net-wealth>
+    <app-top-taxpayers-by-gross-wealth-liability *ngIf="isClickTopIndividualTaxpayersByGrossWealthLiabilityList"></app-top-taxpayers-by-gross-wealth-liability>
+    <app-top-individual-taxpayers-by-tax-paid *ngIf="isClickTopIndividualTaxpayersByTaxPaidList"></app-top-individual-taxpayers-by-tax-paid>
+    <app-top-company-taxpayers-by-tax-paid *ngIf="isClickTopCompanyTaxpayersByTaxPaidList"></app-top-company-taxpayers-by-tax-paid>
+    <app-top-female-taxpayers-by-tax-paid *ngIf="isClickTopFemaleTaxpayersByTaxPaidList"></app-top-female-taxpayers-by-tax-paid>
+    <app-top-male-taxpayers-by-tax-paid *ngIf="isClickTopMaleTaxpayersByTaxPaidList"></app-top-male-taxpayers-by-tax-paid>
+    <app-top-senior-citizen-taxpayers-by-tax-paid *ngIf="isClickTopSeniorCitizenTaxpayersByTaxPaidList"></app-top-senior-citizen-taxpayers-by-tax-paid>
+</div>
+
+</html>

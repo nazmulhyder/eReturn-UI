@@ -1,0 +1,605 @@
+<div class="row">
+  <!-- <iframe [src]='goToSource()' style="display: none;" id="ifr"></iframe> -->
+  <div class="col-sm-12">
+    <div style="margin-top: 10px;">
+      <div class="content-background">
+        <div class="row">
+          <div class="col-6 titleSection">
+            <span class="text-border">
+              <i class="fa fa-chevron-left titleText">
+              </i>Verified Tax Payment Status &nbsp; &nbsp;
+            </span>
+          </div>
+          <div class="col-6 mt-3">
+            <label class="float-right" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+          </div>
+        </div>
+
+        <div class="table-responsive tableBgStyle mt-4" id="particularsIncomeTable">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" width="70%">Particulars</th>
+                <th scope="col" width="25%">Amount</th>
+                <th scope="col" width="5%"></th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+
+        <div class="row mt-4" type="button" (click)="isSourceTaxCollapsed = !isSourceTaxCollapsed"
+          [attr.aria-expanded]="!isSourceTaxCollapsed" aria-controls="collapseExample">
+          <div class="col-sm-8">
+            <p style="font-weight: bold; font-size: 15px; margin-left: 10px;">
+              Source Tax
+            </p>
+          </div>
+          <div class="col-sm-4">
+            <div class="row">
+              <div class="col-sm-9" style="margin-left:20px;">
+                <!-- <input type="text" style="text-align: right;" class="col-sm-12 form-control"
+                  value="{{ commonUtilService.commaSeperator(total_Source_tax) }}" placeholder="" readonly> -->
+                <label for="" style="text-align: right;" class="col-sm-12">{{
+                  commonUtilService.commaSeperator(total_Source_tax)}}</label>
+              </div>
+              <div class="col-sm-2" style="text-align: end;">
+                <i *ngIf="isSourceTaxCollapsed" class="fa fa-chevron-circle-up" aria-hidden="true"
+                  style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                <i *ngIf="!isSourceTaxCollapsed" class="fa fa-chevron-circle-down" aria-hidden="true"
+                  style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-left: 50px; padding-right: 50px;">
+          <div class="table-responsive tableBgStyle mt-4" [collapse]="!isSourceTaxCollapsed"
+            id="particularsIncomeTable">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" width="73%">Source Tax</th>
+                  <th scope="col" width="25%">Amount</th>
+                  <th scope="col" width="5%"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td width="70%">
+                    <button class="custom-btn" title="go to the link"
+                      [routerLink]="['/pages/source-tax/tds-on-salary']">Salary</button>
+                  </td>
+                  <td width="25%">
+                    <!-- <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{ commonUtilService.commaSeperator(total_Salary) }}" placeholder="" readonly> -->
+                    <label for="" style="text-align: right;" class="col-sm-12">{{
+                      commonUtilService.commaSeperator(total_Salary) }}</label>
+                  </td>
+                  <td width="5%">
+                    <i class="fa fa-info-circle fa-lg" (click)="onTdsClick($event,tdsModalShow)"
+                      title="Click to view details" style="cursor: pointer;color: indigo;margin-right: 5px;"
+                      aria-hidden="true"></i>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="70%">
+                    <button class="custom-btn" title="go to the link"
+                      [routerLink]="['/pages/source-tax/bank']">Bank</button>
+                  </td>
+                  <td width="25%">
+                    <!-- <input type="text" class="form-control" style="text-align: right;"
+                    value="{{ commonUtilService.commaSeperator(total_Bank_amt) }}" placeholder="" readonly> -->
+                    <label for="" style="text-align: right;" class="col-sm-12">{{
+                      commonUtilService.commaSeperator(total_Bank_amt) }}</label>
+                  </td>
+                  <td width="5%">
+                    <i class="fa fa-info-circle fa-lg" (click)="onBankClick($event,bankModalShow)"
+                      title="Click to view details" style="cursor: pointer;color: indigo;margin-right: 5px;"
+                      aria-hidden="true"></i>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td width="70%">
+                    <button class="custom-btn" title="go to the link"
+                      [routerLink]="['/pages/source-tax/saving-certificate']">Saving Certificate</button>
+                  </td>
+                  <td width="25%">
+                    <!-- <input type="text" class="form-control" style="text-align: right;"
+                    value="{{ commonUtilService.commaSeperator(total_Certificate_amt) }}" placeholder="" readonly> -->
+                    <label for="" style="text-align: right;" class="col-sm-12">{{
+                      commonUtilService.commaSeperator(total_Certificate_amt) }}</label>
+                  </td>
+                  <td width="5%">
+                    <i class="fa fa-info-circle fa-lg" (click)="onSavingCertificateClick($event,SCModalShow)"
+                      title="Click to view details" style="cursor: pointer;color: indigo;margin-right: 5px;"
+                      aria-hidden="true"></i>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td width="70%">
+                    <button class="custom-btn" title="go to the link"
+                      [routerLink]="['/pages/source-tax/others']">Others</button>
+                  </td>
+                  <td width="25%">
+                    <!-- <input type="text" class="form-control" style="text-align: right;"
+                    value="{{ commonUtilService.commaSeperator(total_Others_amt) }}" placeholder="" readonly> -->
+                    <label for="" style="text-align: right;" class="col-sm-12">{{
+                      commonUtilService.commaSeperator(total_Others_amt) }}</label>
+                  </td>
+                  <td width="5%">
+                    <i class="fa fa-info-circle fa-lg" (click)="onOthersClick($event,othersModalShow)"
+                      title="Click to view details" style="cursor: pointer;color: indigo;margin-right: 5px;"
+                      aria-hidden="true"></i>
+                  </td>
+                </tr>
+
+                <tr class="totalIncome">
+                  <td width="70%">
+                    <label class="labelStyle"><b>Total</b></label>
+                  </td>
+                  <td width="25%">
+                    <!-- <input type="text" style="text-align: right;" class="form-control"
+                    value="{{ commonUtilService.commaSeperator(total_Source_tax) }}" placeholder="" readonly> -->
+                    <label for="" style="text-align: right;" class="col-sm-12">{{
+                      commonUtilService.commaSeperator(total_Source_tax) }}</label>
+                  </td>
+                  <td width="5%"></td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="row mt-4" type="button" (click)="isAdvanceTaxCollapsed = !isAdvanceTaxCollapsed"
+          [attr.aria-expanded]="!isAdvanceTaxCollapsed" aria-controls="collapseExample">
+          <div class="col-sm-8">
+            <p style="font-weight: bold; font-size: 15px; margin-left: 10px;">
+              Advance Income Tax (AIT)
+            </p>
+          </div>
+          <div class="col-sm-4">
+            <div class="row">
+              <div class="col-sm-9" style="margin-left:20px;">
+                <!-- <input type="text" style="text-align: right;" class="col-sm-12 form-control"
+                  value="{{ commonUtilService.commaSeperator(total_ait_amt) }}" placeholder="" readonly> -->
+                <label for="" style="text-align: right;" class="col-sm-12">{{
+                  commonUtilService.commaSeperator(total_ait_amt) }}</label>
+              </div>
+              <div class="col-sm-2" style="text-align: end;">
+                <i *ngIf="isAdvanceTaxCollapsed" class="fa fa-chevron-circle-up" aria-hidden="true"
+                  style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                <i *ngIf="!isAdvanceTaxCollapsed" class="fa fa-chevron-circle-down" aria-hidden="true"
+                  style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-left: 50px; padding-right: 50px;">
+          <div class="table-responsive tableBgStyle mt-4" [collapse]="!isAdvanceTaxCollapsed"
+            id="particularsIncomeTable">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" width="73%">Advance Income Tax (AIT)</th>
+                  <th scope="col" width="25%">Amount</th>
+                  <th scope="col" width="5%"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td width="70%">
+                    <button class="custom-btn" title="go to the link"
+                      [routerLink]="['/pages/AIT/paid-car-ownership']">AIT
+                      on Car</button>
+                  </td>
+                  <td width="25%">
+                    <!-- <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{ commonUtilService.commaSeperator(total_car_ait_amt) }}" placeholder="" readonly> -->
+                    <label for="" style="text-align: right;" class="col-sm-12">{{
+                      commonUtilService.commaSeperator(total_car_ait_amt) }}</label>
+                  </td>
+                  <td width="5%">
+                    <i class="fa fa-info-circle fa-lg" (click)="onPCOClick($event,pcoModalShow)"
+                      title="Click to view details" style="cursor: pointer;color: indigo;margin-right: 5px;"
+                      aria-hidden="true"></i>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="70%">
+                    <button class="custom-btn" title="go to the link" [routerLink]="['/pages/AIT/advance-tax-ait']">AIT
+                      U/S 64</button>
+                  </td>
+                  <td width="25%">
+                    <!-- <input type="text" class="form-control" style="text-align: right;"
+                    value="{{ commonUtilService.commaSeperator(total_us64_ait_amt) }}" placeholder="" readonly> -->
+                    <label for="" style="text-align: right;" class="col-sm-12">{{
+                      commonUtilService.commaSeperator(total_us64_ait_amt) }}</label>
+                  </td>
+                  <td width="5%">
+                    <i class="fa fa-info-circle fa-lg" (click)="onUS_64Click($event,us64ModalShow)"
+                      title="Click to view details" style="cursor: pointer;color: indigo;margin-right: 5px;"
+                      aria-hidden="true"></i>
+                  </td>
+                </tr>
+                <tr class="totalIncome">
+                  <td width="70%">
+                    <label class="labelStyle"><b>Total</b></label>
+                  </td>
+                  <td width="25%">
+                    <!-- <input type="text" style="text-align: right;" class="form-control"
+                    value="{{ commonUtilService.commaSeperator(total_ait_amt) }}" placeholder="" readonly> -->
+                    <label for="" style="text-align: right;" class="col-sm-12">{{
+                      commonUtilService.commaSeperator(total_ait_amt) }}</label>
+                  </td>
+                  <td width="5%"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-sm-8">
+            <p style="font-weight: bold; font-size: 15px; margin-left: 10px; cursor: pointer;" title="go to the link"
+              [routerLink]="['/pages/AIT/regular-tax-ait']">
+              Regular Tax before Filing
+            </p>
+          </div>
+          <div class="col-sm-4">
+            <div class="row">
+              <div class="col-sm-9" style="margin-left:20px;">
+                <!-- <input type="text" style="text-align: right;" class="col-sm-12 form-control"
+                  value="{{ commonUtilService.commaSeperator(total_us74_ait_amt) }}" placeholder="" readonly> -->
+                <label for="" style="text-align: right;" class="col-sm-12">{{
+                  commonUtilService.commaSeperator(total_us74_ait_amt) }}</label>
+              </div>
+              <div class="col-sm-2" style="text-align: end;">
+                <i class="fa fa-info-circle fa-md" (click)="onUS_74Click($event,us74ModalShow)"
+                  title="Click to view details" style="cursor: pointer;color: indigo;margin-right: 5px;"
+                  aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-sm-8">
+            <p style="font-weight: bold; font-size: 15px; margin-left: 10px;">
+              Regular Payment
+            </p>
+          </div>
+          <div class="col-sm-4">
+            <div class="row">
+              <div class="col-sm-9" style="margin-left:20px;">
+                <!-- <input type="text" style="text-align: right;" class="col-sm-12 form-control"
+                  value="{{ commonUtilService.commaSeperator(total_regular_payment) }}" placeholder="" readonly> -->
+                <label for="" style="text-align: right;" class="col-sm-12">{{
+                  commonUtilService.commaSeperator(total_regular_payment) }}</label>
+              </div>
+              <div class="col-sm-2" style="text-align: end;">
+                <i class="fa fa-info-circle fa-md" (click)="onRegularPaymentClick($event,regularPaymentModalShow)"
+                  title="Click to view details" style="cursor: pointer;color: indigo;margin-right: 5px;"
+                  aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive tableBgStyle mt-4" id="particularsIncomeTable">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" width="67%">Total</th>
+                <th scope="col" width="25%">
+                  <!-- <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{ commonUtilService.commaSeperator(total_amt) }}" placeholder="" readonly> -->
+                  <label for="" style="text-align: right;" class="col-sm-12">{{
+                    commonUtilService.commaSeperator(total_amt) }}</label>
+                </th>
+                <th scope="col" width="5%">
+                  <!-- <button type="button" class="addAnotherBtnStyle">
+                    <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
+                  </button> -->
+                </th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-sm-6">
+            <span>
+              <b>Tax payment made but not verified?</b>
+            </span>
+          </div>
+          <div class="col-sm-5 text-right">
+            <p style="font-weight: bold; font-size: 15px; margin-left: 10px;">
+              Done? &nbsp;<a (click)="goToEReturn()" style="color: #145DA0; font-weight: normal; cursor: pointer;">Go
+                to eReturn</a>
+            </p>
+          </div>
+          <div class="col-sm-1"></div>
+          <div class="col-12">
+            <span>Update tax payment using Menu in left</span>
+          </div>
+          <div class="col-12 mt-3 mb-3">
+            <div class="font-14">
+              <a routerLink="/pages/make-claim-message" style="color: #145DA0; font-weight: normal; cursor: pointer;">
+                Make a claim of source tax payment
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #tdsModalShow>
+  <div class="modal-header">
+    <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">Salary</h5>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close_Tds()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive tableBgStyle" id="dynamicTable">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S.L</th>
+            <th scope="col">Office Name</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of get_all_tds; let k = index">
+          <td scope="row">{{ k+1 }}</td>
+          <td scope="row">{{item.companyName}}</td>
+          <td scope="row">{{item.tdsClaim}}</td>
+          <!-- <td scope="row">{{item.assessmentYear}}</td>
+          <td scope="row">{{item.office}}</td>
+          <td scope="row">{{item.designation}}</td>
+          <td scope="row">{{ commonUtilService.commaSeperator(item.tdsClaim) }}</td> -->
+        </tbody>
+      </table>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger" style="float: right;width: 100px;"
+      (click)="close_Tds()">close</button>
+  </div>
+</ng-template>
+
+<ng-template #bankModalShow>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Bank</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close_Bank()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive tableBgStyle" id="dynamicTable">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S.L</th>
+            <th scope="col">Assessment Year</th>
+            <th scope="col">Bank Name</th>
+            <th scope="col">Account No</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of BankData; let k = index">
+          <td scope="row">{{ k+1 }}</td>
+          <td scope="row">{{item.assessmentYear}}</td>
+          <td scope="row">{{item.bankName}}</td>
+          <td scope="row">{{item.accountNo}}</td>
+          <td scope="row">{{ commonUtilService.commaSeperator(item.tdsClaim) }}</td>
+        </tbody>
+      </table>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger" style="float: right;width: 100px;"
+      (click)="close_Bank()">close</button>
+  </div>
+</ng-template>
+
+<ng-template #SCModalShow>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Saving Certificate</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close_SC()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive tableBgStyle" id="dynamicTable">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S.L</th>
+            <th scope="col">Assessment Year</th>
+            <th scope="col">Certificate Type</th>
+            <th scope="col">Registration No</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of CertificateData; let k = index">
+          <td scope="row">{{ k+1 }}</td>
+          <td scope="row">{{item.assessmentYear}}</td>
+          <td scope="row">{{item.securityType}}</td>
+          <td scope="row">{{item.registrationNo}}</td>
+          <td scope="row">{{ commonUtilService.commaSeperator(item.tdsClaim) }}</td>
+        </tbody>
+      </table>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger" style="float: right;width: 100px;"
+      (click)="close_SC()">close</button>
+  </div>
+</ng-template>
+
+<ng-template #othersModalShow>
+  <div class="modal-header">
+    <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">Others</h5>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close_Others()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive tableBgStyle" id="dynamicTable">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S.L</th>
+            <th scope="col">Assessment Year</th>
+            <th scope="col">Challan No</th>
+            <th scope="col">Reference No</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of OthersData; let k = index">
+          <td scope="row">{{ k+1 }}</td>
+          <td scope="row">{{item.assessmentYear}}</td>
+          <td scope="row">{{item.challanNo}}</td>
+          <td scope="row">{{item.referenceNo}}</td>
+          <td scope="row">{{ commonUtilService.commaSeperator(item.tdsClaim) }}</td>
+        </tbody>
+      </table>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger" style="float: right;width: 100px;"
+      (click)="close_Others()">close</button>
+  </div>
+</ng-template>
+
+<ng-template #pcoModalShow>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">AIT on Car</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close_PCO()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive tableBgStyle" id="dynamicTable">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S.L</th>
+            <th scope="col">Assessment Year</th>
+            <th scope="col">Brand Name</th>
+            <th scope="col">Registration No</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of CarAitData; let k = index">
+          <td scope="row">{{ k+1 }}</td>
+          <td scope="row">{{item.assessmentYr}}</td>
+          <td scope="row">{{item.brandName}}</td>
+          <td scope="row">{{item.registrationNo}}</td>
+          <td scope="row">{{ commonUtilService.commaSeperator(item.tdsClaimAmount) }}</td>
+        </tbody>
+      </table>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger" style="float: right;width: 100px;"
+      (click)="close_PCO()">close</button>
+  </div>
+</ng-template>
+
+<ng-template #us64ModalShow>
+  <div class="modal-header">
+    <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">AIT U/S 64</h5>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close_US_64()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive tableBgStyle" id="dynamicTable">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S.L</th>
+            <th scope="col">Assessment Year</th>
+            <th scope="col">Challan No</th>
+            <th scope="col">Bank</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of US64AitData; let k = index">
+          <td scope="row">{{ k+1 }}</td>
+          <td scope="row">{{item.assessmentYr}}</td>
+          <td scope="row">{{item.challanNo}}</td>
+          <td scope="row">{{item.bank}}</td>
+          <td scope="row">{{ commonUtilService.commaSeperator(item.challanAmount) }}</td>
+        </tbody>
+      </table>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger" style="float: right;width: 100px;"
+      (click)="close_US_64()">close</button>
+  </div>
+</ng-template>
+
+<ng-template #us74ModalShow>
+  <div class="modal-header">
+    <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">Regular Tax U/S 74</h5>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close_US_74()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive tableBgStyle" id="dynamicTable">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S.L</th>
+            <th scope="col">Assessment Year</th>
+            <th scope="col">Challan No</th>
+            <th scope="col">Bank</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of US74AitData; let k = index">
+          <td scope="row">{{ k+1 }}</td>
+          <td scope="row">{{item.assessmentYr}}</td>
+          <td scope="row">{{item.challanNo}}</td>
+          <td scope="row">{{item.bank}}</td>
+          <td scope="row">{{ commonUtilService.commaSeperator(item.challanAmount) }}</td>
+        </tbody>
+      </table>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger" style="float: right;width: 100px;"
+      (click)="close_US_74()">close</button>
+  </div>
+</ng-template>
+
+<ng-template #regularPaymentModalShow>
+  <div class="modal-header">
+    <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">Regular Payment</h5>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close_RegularPayment()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive tableBgStyle" id="dynamicTable">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S.L</th>
+            <th scope="col">Date of Payment</th>
+            <th scope="col">Reference</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of allRegularPayments; let k = index">
+          <td scope="row">{{ k+1 }}</td>
+          <td scope="row">{{item.dateOfPayment}}</td>
+          <td scope="row">{{item.paymentRef}}</td>
+          <td scope="row">{{ commonUtilService.commaSeperator(item.amount) }}</td>
+        </tbody>
+      </table>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger" style="float: right;width: 100px;"
+      (click)="close_RegularPayment()">close</button>
+  </div>
+</ng-template>
+
+<ngx-ui-loader></ngx-ui-loader>

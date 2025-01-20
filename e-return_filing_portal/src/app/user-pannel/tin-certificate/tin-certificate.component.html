@@ -1,0 +1,13 @@
+<div class="row" *ngIf="tinCertificateImg != undefined">
+    <div class="col-12 bg_image">
+        <embed [attr.src]="tinCertificateImg"
+            content="initial-scale=1.0, maximum-scale=1.0"
+         [attr.title]="fileName" type="application/pdf" width="100%" height="100%">
+    </div>
+    <div class="col-12 download_section">
+        <button class="btn btn-success btn-sm float-right download_btn" (click)="download()">
+            <i class="fa fa-download mr-1" aria-hidden="true"></i>Download
+        </button>
+    </div>
+</div>
+<ngx-ui-loader></ngx-ui-loader>

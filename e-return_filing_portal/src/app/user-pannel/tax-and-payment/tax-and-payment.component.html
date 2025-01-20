@@ -1,0 +1,1364 @@
+<div class="row" [formGroup]="taxAndPaymentForm" ngxUiLoaderBlurred *ngIf="isShow">
+  <!-- <iframe [src]='goToSource()' style="display: none;" id="ifr"></iframe> -->
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-12 col-sm-2">
+        <span class="taxPaymentSpan">Tax & Payment</span>
+      </div>
+      <div class="col-12 col-sm-10">
+        <div class="row buttonAllign">
+          <button type="button" class="btn btn-pill rounded-pill btn-outline-dark btn-customize btn-sm main_nav"
+            *ngFor="let head of selectedNavbar; let i = index" (click)="mainNavActiveSelect(head['id'])"
+            [class.active]="mainNavActive[head['id']]" routerLink="{{head['link']}}"
+            style="float: right; margin-right: 5px;">{{head['name']}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 30px;">
+      <div class="content-background">
+        <div class="table-responsive tableBgStyle" id="particularsIncomeTable">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" width="60%">Particulars of Total Income</th>
+                <th scope="col" width="38%">Amount</th>
+                <th scope="col" width="2%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td width="65%">
+                  <!-- <label class="labelStyle" (click)="goToSalaryPage()">Salaries</label> -->
+                  <button class="custom-btn" (click)="goToSalaryPage()">Salaries</button>
+                </td>
+                <td width="35%">
+                  <!-- <input type="text" class="form-control" #salaryTaxAmount placeholder=""> -->
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{ totalSalaryAmt }}" placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+
+              </tr>
+              <tr>
+                <td width="65%">
+                  <!-- <label class="labelStyle">Interest on securities</label> -->
+                  <button class="custom-btn" (click)="goToIOSPage()">Interest on Securities</button>
+                </td>
+                <!-- {{totalInterestSecurityAmt | currency:'৳':true:'0.0':''}} -->
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" (keypress)="numberOnly($event)"
+                    value="{{totalInterestSecurityAmt }}" id="interestOnSecurities" placeholder="" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <tr>
+                <td width="65%">
+                  <!-- <label class="labelStyle">Income from house property</label> -->
+                  <button class="custom-btn" (click)="goToIFHPPage()">Income from House Property</button>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" (keypress)="numberOnly($event)"
+                    value="{{totalHousePropertyAmt }}" id="houseProperty" placeholder="" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <tr>
+                <td width="65%">
+                  <!-- <label class="labelStyle">Agriculture income</label> -->
+                  <button class="custom-btn" (click)="goToAIPage()">Agricultural Income</button>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" (keypress)="numberOnly($event)"
+                    value="{{ totalAgriculture }}" id="agricultureIncome" placeholder="" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <tr>
+                <td width="65%">
+                  <!-- <label class="labelStyle">Income from business or profession</label> -->
+                  <button class="custom-btn" (click)="goToIFBPPage()">Income from Business or Profession</button>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" id="businessorprofession" style="text-align: right;"
+                    value="{{totalBusinessOrProfession }}" placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <tr>
+                <td width="65%">
+                  <!-- <label class="labelStyle">Capital gains</label> -->
+                  <button class="custom-btn" (click)="goToCGPage()">Capital Gains</button>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" (keypress)="numberOnly($event)"
+                    value="{{totalCapitalGainAmt }}" id="capitalGain" placeholder="" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <tr>
+                <td width="65%">
+                  <!-- <label class="labelStyle">Income from other sources</label> -->
+                  <button class="custom-btn" (click)="goToIFOSPage()">Income from Other Sources</button>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" (keypress)="numberOnly($event)"
+                    value="{{totalIncomeFromOtherSourcesAmt }}" id="incomefromothersources" placeholder="" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <tr>
+                <td width="65%">
+                  <!-- <label class="labelStyle">Share of income from firm or AoP</label> -->
+                  <button class="custom-btn" (click)="goToFirmEtcPage()">Share of Income from Firm or AoP</button>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" id="firmOrAopShare" style="text-align: right;"
+                    value="{{totalFirm_AoP }}" placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <tr>
+                <td width="65%">
+                  <!-- <label class="labelStyle">Income from minor or spouse under section</label> -->
+                  <button class="custom-btn" (click)="goToFirmEtcPage()">Income of Minor or Spouse</button>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" id="incomeFromMinororSpouse" style="text-align: right;"
+                    value="{{totalSpouse_Income}}" placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <tr>
+                <td width="65%">
+                  <!-- <label class="labelStyle">Foreign Income</label> -->
+                  <button class="custom-btn" (click)="goToFirmEtcPage()">Foreign Income</button>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" id="foreignIncome" style="text-align: right;"
+                    value="{{totalForeign_Income}}" placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+
+              <tr class="totalIncome">
+                <td width="65%">
+                  <label class="labelStyle"><b>Total Income</b></label>
+                </td>
+                <td width="33%">
+                  <input type="text" style="text-align: right;" class="form-control" id="totalIncome"
+                    value="{{total_Income_Amt }}" placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <tr (click)="isTaxExemptedIncomeCollapsed = !isTaxExemptedIncomeCollapsed">
+                <td width="65%">
+                  <label class="labelStyle"><b>Tax Exempted Income</b></label>
+                </td>
+                <td width="33%">
+                  <input type="text" class="form-control" style="text-align: right;" id="taxExemptedIncome"
+                    value="{{total_Tax_Exempted_Income_Amt}}" placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%" *ngIf="taxExemptedBreakdownList.length == 0"></td>
+                <td width="2%" *ngIf="taxExemptedBreakdownList.length > 0">
+                  <i *ngIf="!isTaxExemptedIncomeCollapsed" class="fa fa-chevron-circle-up" aria-hidden="true"
+                    style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                  <i *ngIf="isTaxExemptedIncomeCollapsed" class="fa fa-chevron-circle-down" aria-hidden="true"
+                    style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                </td>
+              </tr>
+              <td width="100%" colspan="3" style="padding: 0;"
+                *ngIf="!isTaxExemptedIncomeCollapsed && taxExemptedBreakdownList.length > 0">
+                <tr width="100%" *ngFor="let item of taxExemptedBreakdownList">
+                  <td width="62%" class="force-padding">
+                    <label class="form-check-label" for="{{item.title}}" style="margin-right: 40px;">
+                      {{item.title}}
+                    </label>
+                  </td>
+                  <td width="35%">
+                    <input type="text" class="form-control" style="text-align: right; width:96%"
+                      value="{{addComma(item.amount)}}" placeholder="" (keypress)="numberOnly($event)" readonly>
+                  </td>
+                  <td width="2%"></td>
+                </tr>
+              </td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 30px;" *ngIf="isSetOffShown">
+      <div class="content-background">
+        <div class="table-responsive tableBgStyle tax-computation" id="taxComputationTable">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Set Off of Losses</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="table-responsive tableBgStyle" id="taxComputationTable">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" width="30%">Head of Income</th>
+                <th scope="col" width="23%">Amount before Set Off</th>
+                <!-- <th scope="col" width="23%">Amount after Set Off</th> -->
+                <th scope="col" width="23%">Included in Total Income</th>
+                <th scope="col" width="24%">Loss Not Set Off</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="isSetOffSalShown">
+                <td>
+                  <label class="labelStyle"><b>Salaries</b></label>
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" value="{{totalSalaryAmt}}"
+                    placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Sal_After_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Sal_Loss_Not_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+              </tr>
+              <tr *ngIf="isSetOffIosShown">
+                <td>
+                  <label class="labelStyle"><b>Interest on Securities</b></label>
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{totalInterestSecurityAmt}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Ios_After_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Ios_Loss_Not_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+              </tr>
+              <tr *ngIf="isSetOffIfhpShown">
+                <td>
+                  <label class="labelStyle"><b>Income from House Property</b></label>
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{totalHousePropertyAmt}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Ifhp_After_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Ifhp_Loss_Not_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+              </tr>
+              <tr *ngIf="isSetOffAiShown">
+                <td>
+                  <label class="labelStyle"><b>Agricultural Income</b></label>
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{totalAgriculture}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Ai_After_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Ai_Loss_Not_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+              </tr>
+              <tr *ngIf="isSetOffIfbpShown">
+                <td>
+                  <label class="labelStyle"><b>Income from Business or Profession</b></label>
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{totalBusinessOrProfession}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Ifbp_After_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Ifbp_Loss_Not_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+              </tr>
+              <tr *ngIf="isSetOffCgShown">
+                <td>
+                  <label class="labelStyle"><b>Capital Gains</b></label>
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{totalCapitalGainAmt}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Cg_After_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Cg_Loss_Not_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+              </tr>
+              <tr *ngIf="isSetOffIfosShown">
+                <td>
+                  <label class="labelStyle"><b>Income from Other Sources</b></label>
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{totalIncomeFromOtherSourcesAmt}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Ifos_After_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Ifos_Loss_Not_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+              </tr>
+              <tr *ngIf="isSetOffFirm_AopShown">
+                <td>
+                  <label class="labelStyle"><b>Share of Income from Firm or AoP</b></label>
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" value="{{totalFirm_AoP}}" readonly
+                    placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Firm_Aop_After_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Firm_Aop_Loss_Not_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+              </tr>
+              <tr *ngIf="isSetOffMinor_SpouseShown">
+                <td>
+                  <label class="labelStyle"><b>Income from Minor or Spouse</b></label>
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{totalSpouse_Income}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Minor_Spouse_After_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_Minor_Spouse_Loss_Not_Set_Off}}" placeholder=""
+                    (keypress)="numberOnly($event)">
+                </td>
+              </tr>
+              <tr *ngIf="isSetOffAIShown">
+                <td>
+                  <label class="labelStyle"><b>Foreign Income</b></label>
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{totalForeign_Income}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_FI_After_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{Set_Off_Head_FI_Loss_Not_Set_Off}}" placeholder="" (keypress)="numberOnly($event)">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 30px;" [formGroup]="taxComputationForm">
+      <div class="content-background">
+        <div class="table-responsive tableBgStyle tax-computation" id="taxComputationTable">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Tax Computation</th>
+                <th width="2%"></th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="table-responsive tableBgStyle" id="taxComputationTable">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Particular of Tax Computation</th>
+                <th scope="col">Calculation Detail</th>
+                <th scope="col" width="20%">Amount</th>
+                <th width="2%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <label class="labelStyle">Gross Tax before Tax Rebate</label>
+                </td>
+                <td>
+                  <div>
+                    <div class="row form-group">
+                      <label class="col-md-5 labelStyle">Tax on Regular Income:</label>
+                      <!-- <input class="ml-minus-12 col-md-4 form-control" type="text" value="{{TC_GTBTR_Tax_on_Regular_Income}}" disabled> -->
+                      <input [readonly]="!wantEditCalDetail_grossTaxB4TaxRebate"
+                        (keyup)="changeGrossTaxBeforeTaxRebate($event,'tax_on_regular_income')"
+                        class="ml-minus-12 col-md-4 form-control" type="text" formControlName="tax_on_regular_income">
+                      <div class="col-md-3"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <!-- <label class="labelStyle">Tax on Income u/s 82C : {{TC_GTBTR_Tax_on_Income_us_82c }}</label> -->
+                    <div class="row form-group">
+                      <label class="col-md-5 labelStyle">Tax on Income u/s 82C:</label>
+                      <input [readonly]="!wantEditCalDetail_grossTaxB4TaxRebate"
+                        (keyup)="changeGrossTaxBeforeTaxRebate($event,'tax_on_income_82c')"
+                        class="ml-minus-12 col-md-4 form-control" type="text" formControlName="tax_on_income_82c">
+                      <div class="col-md-3"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <!-- <label class="labelStyle">Tax on SRO Income : {{TC_GTBTR_Tax_on_SRO_Income}}</label> -->
+                    <div class="row form-group">
+                      <label class="col-md-5 labelStyle">Tax on SRO Income:</label>
+                      <input [readonly]="!wantEditCalDetail_grossTaxB4TaxRebate"
+                        (keyup)="changeGrossTaxBeforeTaxRebate($event,'tax_on_sro_income')"
+                        class="ml-minus-12 col-md-4 form-control" type="text" formControlName="tax_on_sro_income">
+                      <div class="col-md-3"></div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <!-- <input type="text" style="text-align: right;" class="form-control" id="grossTaxbeforeTaxrebate"
+                    placeholder="" value="{{total_Gross_Tax_Before_Tax_Rebate_Amt}}"
+                    readonly> -->
+                  <input type="text" style="text-align: right;" class="form-control" placeholder=""
+                    formControlName="summery_GrossTaxbeforeTaxRebate" [attr.disabled]="true">
+                </td>
+                <td *ngIf="!wantEditCalDetail_grossTaxB4TaxRebate" width="2%"><button class="editBtn"
+                    (click)="editGrossTaxBeforeTaxRebate()"><i class="fa fa-pencil fa-lg"
+                      aria-hidden="true"></i></button>
+                <td *ngIf="wantEditCalDetail_grossTaxB4TaxRebate" width="2%"><button class="editBtn"
+                    (click)="editDoneGrossTaxBeforeTaxRebate()"><i class="fa fa-check fa-lg"
+                      aria-hidden="true"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="labelStyle">Tax Rebate</label>
+                </td>
+                <td>
+                  <div>
+                    <!-- <label class="labelStyle">On Investment : {{TC_Total_Investment_Rebate}}</label> -->
+                    <div class="row form-group">
+                      <label class="col-md-5 labelStyle">On Investment:</label>
+                      <input [readonly]="!wantEditCalDetail_TaxRebate" (keyup)="changeTaxRebate($event,'on_investment')"
+                        class="ml-minus-12 col-md-4 form-control" type="text" formControlName="on_investment">
+                      <div class="col-md-3"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <!-- <label class="labelStyle">On Firm/AoP Share : {{TC_TR_on_Firm_AoP_Share}}</label> -->
+                    <div class="row form-group">
+                      <label class="col-md-5 labelStyle">On Firm/AoP Share:</label>
+                      <input [readonly]="!wantEditCalDetail_TaxRebate"
+                        (keyup)="changeTaxRebate($event,'on_firm_aop_share')" class="ml-minus-12 col-md-4 form-control"
+                        type="text" formControlName="on_firm_aop_share">
+                      <div class="col-md-3"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <!-- <label class="labelStyle">Foreign Tax Relief : {{TC_TR_on_Foreign_Tax_Relief}}</label> -->
+                    <div class="row form-group">
+                      <label class="col-md-5 labelStyle">Foreign Tax Relief:</label>
+                      <input [readonly]="!wantEditCalDetail_TaxRebate"
+                        (keyup)="changeTaxRebate($event,'foreign_tax_relief')" class="ml-minus-12 col-md-4 form-control"
+                        type="text" formControlName="foreign_tax_relief">
+                      <div class="col-md-3"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <!-- <label class="labelStyle">Other Rebate : {{TC_TR_Other_Rebate}}</label> -->
+                    <div class="row form-group">
+                      <label class="col-md-5 labelStyle">Other Rebate:</label>
+                      <input [readonly]="!wantEditCalDetail_TaxRebate" (keyup)="changeTaxRebate($event,'other_rebate')"
+                        class="ml-minus-12 col-md-4 form-control" type="text" formControlName="other_rebate">
+                      <div class="col-md-3"></div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" placeholder=""
+                    formControlName="summery_TaxRebate" readonly>
+                </td>
+                <td *ngIf="!wantEditCalDetail_TaxRebate" width="2%"><button class="editBtn" (click)="editTaxRebate()"><i
+                      class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
+                <td *ngIf="wantEditCalDetail_TaxRebate" width="2%"><button class="editBtn"
+                    (click)="editDoneTaxRebate()"><i class="fa fa-check fa-lg" aria-hidden="true"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="labelStyle">Net Tax after Tax Rebate</label>
+                </td>
+                <td></td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" placeholder=""
+                    formControlName="netTaxAfterTaxRebate" readonly>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="labelStyle">Minimum Tax</label>
+                </td>
+                <td>
+                  <div>
+                    <!-- <label class="labelStyle">For Income u/s 82C(2) : {{TC_MT_for_Income_us_82c_2 }}</label> -->
+                    <div class="row form-group">
+                      <label class="col-md-5 labelStyle">For Income u/s 82C(2):</label>
+                      <input [readonly]="!wantEditCalDetail_MinimumTax"
+                        (keyup)="changeMinimumTax($event,'for_income_us_82c')" class="ml-minus-12 col-md-4 form-control"
+                        type="text" formControlName="for_income_us_82c">
+                      <div class="col-md-3"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <!-- <label class="labelStyle">On Gross Receipt : {{TC_MT_for_Income_us_82c_4 }}</label> -->
+                    <div class="row form-group">
+                      <label class="col-md-5 labelStyle">On Gross Receipt:</label>
+                      <input [readonly]="!wantEditCalDetail_MinimumTax"
+                        (keyup)="changeMinimumTax($event,'on_gross_receipt')" class="ml-minus-12 col-md-4 form-control"
+                        type="text" formControlName="on_gross_receipt">
+                      <div class="col-md-3"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <!-- <label class="labelStyle">For Location of Income : {{TC_MT_for_Location_of_Income }}</label> -->
+                    <div class="row form-group">
+                      <label class="col-md-5 labelStyle">For Location of Income:</label>
+                      <input [readonly]="!wantEditCalDetail_MinimumTax"
+                        (keyup)="changeMinimumTax($event,'for_location_of_income')"
+                        class="ml-minus-12 col-md-4 form-control" type="text" formControlName="for_location_of_income">
+                      <div class="col-md-3"></div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;"
+                    formControlName="summery_MinimumTax" placeholder="" readonly>
+                </td>
+                <td *ngIf="!wantEditCalDetail_MinimumTax" width="2%"><button class="editBtn"
+                    (click)="editMinimumTax()"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
+                <td *ngIf="wantEditCalDetail_MinimumTax" width="2%"><button class="editBtn"
+                    (click)="editDoneMinimumTax()"><i class="fa fa-check fa-lg" aria-hidden="true"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="labelStyle">Surcharge</label>
+                </td>
+                <td>
+                  <div>
+                    <!-- <label class="labelStyle">Net Wealth Surcharge : {{TC_S_Net_Wealth_Surcharge }}</label> -->
+                    <div class="row form-group">
+                      <label class="col-md-5 labelStyle">Net Wealth Surcharge:</label>
+                      <input [readonly]="!wantEditCalDetail_Surcharge"
+                        (keyup)="changeSurcharge($event,'net_wealth_surcharge')"
+                        class="ml-minus-12 col-md-4 form-control" type="text" formControlName="net_wealth_surcharge">
+                      <div class="col-md-3"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <!-- <label class="labelStyle">Tobacco Surcharge : {{TC_S_Tobacco_Surcharge }}</label> -->
+                    <div class="row form-group">
+                      <label class="col-md-5 labelStyle">Tobacco Surcharge:</label>
+                      <input [readonly]="!wantEditCalDetail_Surcharge"
+                        (keyup)="changeSurcharge($event,'tobacco_surcharge')" class="ml-minus-12 col-md-4 form-control"
+                        type="text" formControlName="tobacco_surcharge">
+                      <div class="col-md-3"></div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <!-- <input type="text" class="form-control" style="text-align: right;" id="surcharge"
+                    value="{{total_Net_Wealth_Surcharge_Amt}}" placeholder="" (keypress)="numberOnly($event)" readonly> -->
+                  <input type="text" class="form-control" style="text-align: right;" formControlName="summery_Surcharge"
+                    placeholder="" readonly>
+                </td>
+                <td *ngIf="!wantEditCalDetail_Surcharge" width="2%"><button class="editBtn" (click)="editSurcharge()"><i
+                      class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
+                <td *ngIf="wantEditCalDetail_Surcharge" width="2%"><button class="editBtn"
+                    (click)="editDoneSurcharge()"><i class="fa fa-check fa-lg" aria-hidden="true"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="labelStyle">Any Other Amount</label>
+                </td>
+                <td></td>
+                <td>
+                  <!-- <input type="text" class="form-control" id="interestOrAnyOtherAmount" placeholder="" style="text-align: right;" value="{{total_Interest_or_Any_Other_Amt}}"
+                    (keypress)="numberOnly($event)" readonly> -->
+                  <input [readonly]="!wantEditCalDetail_anyOtherAmount" (keyup)="changeAnyOtherAmount($event)"
+                    type="text" class="form-control" placeholder="" formControlName="summery_any_other_amount"
+                    style="text-align: right;" (keypress)="numberOnly($event)">
+                </td>
+                <td *ngIf="!wantEditCalDetail_anyOtherAmount" width="2%"><button class="editBtn"
+                    (click)="editAnyOtherAmount()"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
+                <td *ngIf="wantEditCalDetail_anyOtherAmount" width="2%"><button class="editBtn"
+                    (click)="editDoneAnyOtherAmount()"><i class="fa fa-check fa-lg" aria-hidden="true"></i></button>
+                </td>
+              </tr>
+              <tr class="AmountPayable">
+                <td>
+                  <label class="labelStyle"><b>Total Amount Payable</b></label>
+                </td>
+                <td></td>
+                <td>
+                  <input type="text" class="form-control" style="text-align: right;" placeholder=""
+                    formControlName="total_amount_payable" readonly>
+                </td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row col-md-12 pb-2">
+            <div class="col-md-6"></div>
+            <div class="col-md-6">
+              <div class="col-12 text-right">
+                <button type="button" class="btn btn-sm btn-warning" (click)="resetTaxComputation()">
+                  Reset Calculation</button>
+                <button type="button" class="btn btn-sm taxComputationSave ml-1 mr-1"
+                  (click)="saveTaxComputationChanges()">
+                  Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Initial query taxpayer start -->
+    <div style="margin-top: 30px;">
+      <div class="content-background" [formGroup]="basicQuestionForm">
+        <div class="row">
+
+          <div class="col-12 mt-3">
+            <div class="row">
+              <div class="col-12">
+                <label>Have you paid any source tax, advance tax, or any regular tax for 2021-2022 Assessment
+                  Year?</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="haveSrcTaxTT"></i>
+                <ng-template #haveSrcTaxTT>
+                  <div [innerHtml]="haveSrcTaxHtml"></div>
+                </ng-template>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 input-group mb-2">
+                <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                  <input class="form-check-input" type="radio" value="1" formControlName="haveSrcTax"
+                    (change)="haveSrcTax($event)">
+                  <label class="form-check-label" for="defaultCheck1" style="margin-right: 40px;">
+                    Yes
+                  </label>
+                  <input class="form-check-input" type="radio" value="0" formControlName="haveSrcTax"
+                    (change)="haveSrcTax($event)">
+                  <label class="form-check-label" for="defaultCheck2">
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 mt-1" *ngIf="isHaveSrcTax">
+            <div class="row">
+              <div class="col-12">
+                <label>Do you need to update your tax payment status?</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="updateLedgerTT"></i>
+                <ng-template #updateLedgerTT>
+                  <div [innerHtml]="updateLedgerHtml"></div>
+                </ng-template>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 input-group mb-2">
+                <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                  <input class="form-check-input" type="radio" value="1" formControlName="updateLedger"
+                    (change)="updateLedger($event,confirmationPopup)">
+                  <label class="form-check-label" for="defaultCheck1" style="margin-right: 40px;">
+                    Yes
+                  </label>
+                  <input class="form-check-input" type="radio" value="0" formControlName="updateLedger"
+                    (change)="updateLedger($event,confirmationPopup)">
+                  <label class="form-check-label" for="defaultCheck2">
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Initial query taxpayer end -->
+
+    <!-- BankTdsClaimSection start -->
+    <!-- <div style="margin-top: 30px;" *ngIf="isShowBankClaimSection">
+      <div class="content-background">
+        <div class="table-responsive tableBgStyle tax-computation" id="taxComputationTable">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Bank TDS</th>
+                <th width="2%"></th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="table-responsive tableBgStyle" id="taxComputationTable">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Bank Name</th>
+                <th scope="col">Account No</th>
+                <th scope="col">Interest Amount</th>
+                <th scope="col" width="17%"> Claim Amount</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of BankClaimData; index as k">
+                <td>{{k+1}}</td>
+                <td>
+                  <input type="text" [(ngModel)]="data.bankName" [ngModelOptions]="{standalone: true}"
+                    class="form-control" style="text-align: left;" readonly>
+                </td>
+                <td>
+                  <input type="text" [(ngModel)]="data.accountNo" [ngModelOptions]="{standalone: true}"
+                    class="form-control" style="text-align: left;" readonly>
+                </td>
+                <td>
+                  <input type="text" [(ngModel)]="data.tdsAvailable" [ngModelOptions]="{standalone: true}"
+                    class="form-control" style="text-align: left;" readonly>
+                </td>
+                <td width="17%">
+                  <input type="text" (keyup)="onTdsClaim($event,k)" (keypress)="numberOnly($event)"
+                    [(ngModel)]="data.tdsClaim" [ngModelOptions]="{standalone: true}" class="form-control"
+                    style="text-align: right;"
+                    [ngClass]="{'is-invalid': hasError[k]}">
+                  <div class="invalid-feedback">
+                    <div>This field is Required!</div>
+                  </div>
+                </td>
+                <td *ngIf="dataLength>1">
+                  <button (click)="onDeleteBankTdsClaimData(k,deleteBankTdsPopup)" class="deleteBtnStyle">
+                    <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr class="totalIncome">
+                <td></td>
+                <td><b>Total Claim Amount</b></td>
+                <td></td>
+                <td></td>
+                <td width="17%"><input type="text" class="form-control" [(ngModel)]="totalBankTdsAmt"
+                    [ngModelOptions]="{standalone: true}" style="text-align: right;" readonly>
+                </td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-12">
+            <div class="col-6"></div>
+            <div class="col-6 float-right p-0">
+              <button type="button" class="btn btn-sm bankTdsClaimSave float-right mb-2"
+                (click)="saveBankTdsClaimData()">
+                Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <!-- BankTdsClaimSection end -->
+
+
+    <!-- new design start -->
+    <div style="margin-top: 30px;">
+      <div class="content-background">
+        <div class="table-responsive tableBgStyle" id="verifiedPaymentTable">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" width="60%">Verified Payment</th>
+                <th scope="col" width="38%">Amount</th>
+                <th scope="col" width="2%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Source Tax Start -->
+              <tr (click)="isSourceTaxCollapsed = !isSourceTaxCollapsed" [attr.aria-expanded]="!isSourceTaxCollapsed">
+                <td width="65%">
+                  <label class="form-check-label" for="sourceTax" style="margin-right: 40px;">
+                    Source Tax
+                  </label>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" value="{{sourceTax}}"
+                    id="sourceTax" placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%">
+                  <i *ngIf="isSourceTaxCollapsed" class="fa fa-chevron-circle-up" aria-hidden="true"
+                    style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                  <i *ngIf="!isSourceTaxCollapsed" class="fa fa-chevron-circle-down" aria-hidden="true"
+                    style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                </td>
+              </tr>
+
+              <tr *ngIf="isSourceTaxCollapsed" (click)="isSalaryCollapsed = !isSalaryCollapsed" [attr.aria-expanded]="!isSalaryCollapsed">
+                <td width="65%" class="force-padding">
+                  <label class="form-check-label" for="salary" style="margin-right: 40px;">
+                    Salary
+                  </label>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" value="{{salaryTDS}}" id="salary"
+                    placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%">
+                  <i *ngIf="isSalaryCollapsed" class="fa fa-chevron-circle-up" aria-hidden="true"
+                  style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                <i *ngIf="!isSalaryCollapsed" class="fa fa-chevron-circle-down" aria-hidden="true"
+                  style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                </td>
+              </tr>
+      
+              <ng-container *ngIf = "isSalaryCollapsed && isSourceTaxCollapsed">
+                <tr *ngFor="let obj of get_all_tds">
+                  <td width="65%" class="force-padding-salary">
+                    <label class="form-check-label" for="bank" style="margin-right: 40px;">
+                      {{obj.companyName}}
+                    </label>
+                  </td>
+                  <td width="35%">
+                    <input type="text" class="form-control" style="text-align: right;" value="{{this.commaseparator.currencySeparatorBD(obj.tdsClaim)}}" id="bank"
+                      placeholder="" (keypress)="numberOnly($event)" readonly>
+                  </td>
+                  <td width="2%"></td>
+                </tr>
+              </ng-container>
+            
+              <!-- <tr *ngIf="isSalaryCollapsed">
+                <td width="65%" class="force-padding-salary">
+                  <label class="form-check-label" for="bank" style="margin-right: 40px;">
+                    Synesis IT Limited
+                  </label>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" value="{{1000}}" id="bank"
+                    placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr> -->
+              <!-- <tr *ngIf="isSalaryCollapsed">
+                <td width="65%" class="force-padding-salary">
+                  <label class="form-check-label" for="bank" style="margin-right: 40px;">
+                    Brain Station 23 Limited
+                  </label>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" value="{{1500}}" id="bank"
+                    placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr> -->
+
+              <tr *ngIf="isSourceTaxCollapsed">
+                <td width="65%" class="force-padding">
+                  <label class="form-check-label" for="bank" style="margin-right: 40px;">
+                    Bank
+                  </label>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" value="{{bankTDS}}" id="bank"
+                    placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+
+              <tr *ngIf="isSourceTaxCollapsed">
+                <td width="65%" class="force-padding">
+                  <label class="form-check-label" for="certificate" style="margin-right: 40px;">
+                    Saving Certificate
+                  </label>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" value="{{savingTDS}}"
+                    id="certificate" placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+
+              <tr *ngIf="isSourceTaxCollapsed">
+                <td width="65%" class="force-padding">
+                  <label class="form-check-label" for="others" style="margin-right: 40px;">
+                    Others
+                  </label>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" value="{{othersTDS}}" id="others"
+                    placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <!-- Source Tax end -->
+
+              <!-- Advance Income Tax Start -->
+              <tr (click)="isAdvanceIncomeTaxCollapsed = !isAdvanceIncomeTaxCollapsed"
+                [attr.aria-expanded]="!isAdvanceIncomeTaxCollapsed">
+                <td width="65%">
+                  <label class="form-check-label" for="ait" style="margin-right: 40px;">
+                    Advance Income Tax (AIT)
+                  </label>
+                </td>
+                <td width="35%">
+                  <input type="text" style="text-align: right;" class="form-control" (keypress)="numberOnly($event)"
+                    value="{{advanceIncomeTax}}" id="advanceTax" placeholder="" readonly>
+                </td>
+                <td width="2%">
+                  <i *ngIf="isAdvanceIncomeTaxCollapsed" class="fa fa-chevron-circle-up" aria-hidden="true"
+                    style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                  <i *ngIf="!isAdvanceIncomeTaxCollapsed" class="fa fa-chevron-circle-down" aria-hidden="true"
+                    style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                </td>
+              </tr>
+
+              <tr *ngIf="isAdvanceIncomeTaxCollapsed">
+                <td width="65%" class="force-padding">
+                  <label class="form-check-label" for="carAit" style="margin-right: 40px;">
+                    AIT on Car
+                  </label>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" value="{{carAitTds}}" id="aitCar"
+                    placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+
+              <tr *ngIf="isAdvanceIncomeTaxCollapsed">
+                <td width="65%" class="force-padding">
+                  <label class="form-check-label" for="us64" style="margin-right: 40px;">
+                    AIT U/S 64
+                  </label>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" value="{{aitUS64Tds}}" id="us64"
+                    placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+
+              <!-- Advance Income Tax End -->
+
+              <tr>
+                <td width="65%">
+                  <label class="form-check-label" for="regularTax" style="margin-right: 40px;">
+                    Regular Tax before Filing
+                  </label>
+                </td>
+                <td width="35%">
+                  <input type="text" style="text-align: right;" class="form-control" (keypress)="numberOnly($event)"
+                    value="{{regularTax}}" id="regularTax" placeholder="" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <tr>
+                <td width="65%">
+                  <label class="form-check-label" for="defaultCheck8" style="margin-right: 40px;">
+                    <!-- Regular Payment -->
+                    Payment with Return
+                  </label>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" value="{{regularPayment}}"
+                    id="regularPayment" placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%">
+                  <i class="fa fa-info-circle fa-lg" title="Click to view details"
+                    style="margin-top: 10px; cursor: pointer;color: indigo;margin-right: 5px;" aria-hidden="true"
+                    (click)="onRegularPaymentClick($event,regularPaymentModalShow)"></i>
+                </td>
+              </tr>
+
+              <!-- <tr>
+                <td width="65%">
+                  <label class="form-check-label" for="defaultCheck8" style="margin-right: 40px;">
+                    Refund Adjustment
+                  </label>
+                </td>
+                <td width="33%">
+                  <input type="text" class="form-control" style="text-align: right;"
+                    value="{{refundAdjustment | number}}" id="refundAdjustment" placeholder=""
+                    (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr> -->
+              <tr class="VerifiedAmount">
+                <td width="65%">
+                  <label class="labelStyle"><b>Total Verified Payment</b></label>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" readonly
+                    value="{{ totalVerifiedAmt }}" id="totalVerifiedPayment" placeholder=""
+                    (keypress)="numberOnly($event)">
+                </td>
+                <td width="2%"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- <div class="row verifyandClaim">
+          <div class="col-7">
+            <label for="" class="verifyandClaimLabel"><b>Payment made but missing here?</b></label>
+          </div>
+
+          <div class="col-5">
+            <div class="row">
+              <div class="col-7">
+              </div>
+              <div class="col-5" style="padding: 0;">
+                <button class="btn btn-sm claimBtn" (click)="goToEledger()" type="button">Go to eReturnLedger</button>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+      </div>
+    </div>
+    <!-- new design end -->
+
+    <div style="margin-top: 30px; margin-bottom: 5px;">
+      <div class="content-background">
+        <div class="table-responsive tableBgStyle" id="finalPayableTable">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" width="60%">Final Payable</th>
+                <th scope="col" width="38%">Amount</th>
+                <th scope="col" width="2%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td width="65%">
+                  <label class="labelStyle">Total Amount Payable</label>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" value="{{total_Payable_Amt}}"
+                    id="totalAmountPayable2" placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <tr>
+                <td width="65%">
+                  <label class="labelStyle">Total Verified Payment</label>
+                </td>
+                <td width="35%">
+                  <input type="text" class="form-control" style="text-align: right;" value="{{totalVerifiedAmt}}"
+                    id="totalVerifiedPayment2" placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <tr>
+                <td width="65%">
+                  <label class="labelStyle">Refundable</label>
+                </td>
+                <td width="35%">
+                  <!-- <input type="text" class="form-control" style="text-align: right;" value="{{refundableAmt | number}}"
+                    id="refundable" placeholder="" (keypress)="numberOnly($event)"> -->
+                  <input type="text" class="form-control" style="text-align: right;" value="{{R}}" id="refundable"
+                    placeholder="" (keypress)="numberOnly($event)" readonly>
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <tr>
+                <td width="65%">
+                  <!-- <label class="labelStyle"><b>Payable</b></label> -->
+                  <label class="labelStyle">Payable</label>
+                </td>
+                <td width="35%">
+                  <input [class.warning-red-border]="isPayableAmountEmpty==true"
+                    [class.border-clear]="isPayableAmountEmpty==false" style="text-align: right;" class="form-control"
+                    id="payable" placeholder="" formControlName="payable_Amount"
+                    [value]="taxAndPaymentForm.value.payable_Amount" (keyup)="onPayableAmount()"
+                    (keypress)="numberOnly($event)">
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <tr>
+                <td width="65%">
+                </td>
+                <td width="35%">
+                  <button *ngIf="!isRefundBtnActive" [disabled]="isPayNowBtnDisabled"
+                    (click)="onCloseTabClick(closetabpopup)" class="btn btn-sm makePaymentBtn" type="button">Pay
+                    Now</button>
+                  <!-- <button *ngIf="!isRefundBtnActive" [disabled]="isPayNowBtnDisabled"
+                    (click)="makePayNowTestingPurpose()" class="btn btn-sm makePaymentBtn" type="button">Pay
+                    Now</button> -->
+
+                  <!-- <button *ngIf="isRefundBtnActive" (click)="gotoClaimRefundPage()" class="btn btn-sm makePaymentBtn"
+                    type="button">Get Refund through Bank</button> -->
+
+                  <div class="row" *ngIf="isRefundBtnActive">
+                    <div class="col-sm-12">
+                      <div class="float-right" style="font-style: bold;">Claim bank transfer of refund?&nbsp;<a
+                          routerLink="/user-panel/get-refund"
+                          style="color: #145DA0; font-weight: normal; cursor: pointer;">Click here</a></div>
+                    </div>
+                  </div>
+
+                </td>
+                <td width="2%"></td>
+              </tr>
+              <!-- <tr>
+                <td width="65%">
+                </td>
+                <td width="35%">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="float-right" style="font-style: bold;">Want to Submit Offline?&nbsp;<a
+                          routerLink="/user-panel/thanks-giving-offline"
+                          style="color: #145DA0; font-weight: normal; cursor: pointer;">Click here</a></div>
+                    </div>
+                  </div>
+                </td>
+                <td width="2%"></td>
+              </tr> -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row mt-4 mb-2">
+          <div class="col-6">
+            <button type="button" [tooltip]="offline" class="btn btn-sm float-left btn-warning proceedOfflineBtn tooltip-350"
+              routerLink="/user-panel/thanks-giving-offline">
+              <i class="fa fa-paper-plane" aria-hidden="true"></i>
+              Proceed to offline (paper) return
+              <ng-template #offline>
+                <div class="text-left" [innerHtml]="offlineTooltip">
+                </div>
+              </ng-template>
+            </button>
+          </div>
+          <div class="col-6">
+            <button type="button" [tooltip]="online" class="btn btn-sm float-right proceedOnlineBtn tooltip-350" (click)="gotoReturnView()">
+              <i class="fa fa-paper-plane" aria-hidden="true"></i>
+              Proceed to online return
+              <ng-template #online>
+                <div class="text-left" [innerHtml]="onlineTooltip">
+                </div>
+              </ng-template>              
+            </button>
+          </div>
+        </div>
+
+        <div class="row mt-5 mb-2">
+          <div class="col-6">
+            <button type="button" class="btn btn-sm backBtn" (click)="onBackPage()">
+              <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left"
+                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+              </svg>&nbsp;
+              Back</button>
+          </div>
+          <div class="col-6"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- <div class="content-background" style="margin-bottom: 5px;">
+      <div class="row mt-0">
+        <div class="col-sm-6 pl-3">
+          <button type="button" class="btn btn-sm backBtn" (click)="onBackPage()">
+            <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left"
+              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+            </svg>&nbsp;
+            Back</button>
+        </div>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12 text-right">
+              <button type="button" class="btn btn-sm saveContinueBtn" (click)="gotoReturnView()">
+                <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em" viewBox="0 0 16 16"
+                  class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                </svg>
+                View Return</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+  </div>
+</div>
+
+<ng-template #closetabpopup>
+  <div class="modal-bg-img">
+    <div class="modal-header" style="border: none;">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">
+          <i class="fa fa-times-circle" aria-hidden="true" style="margin-left: 10px;"></i>
+        </span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="col-sm-12 text-center">
+        <h5 style="font-weight: bolder;">Select Payment Method</h5>
+      </div>
+      <div class="col-sm-12 pt-4" [formGroup]="taxAndPaymentForm">
+        <div class="row" style="display: flex; justify-content: center;">
+          <div class="card gateway-1-img" style="width: 12rem; height: 90px; border: 1px solid cornflowerblue;">
+            <div class="row ml-2 mt-2">
+              <input type="checkbox" formControlName="ePaymentGateway" (change)="onCheckePaymentGateway($event)">
+            </div>
+          </div>
+
+          <div class="card ml-2 gateway-2-img" style="width: 12rem; height: 90px; border: 1px solid cornflowerblue;">
+            <div class="row ml-2 mt-2"><input type="checkbox" formControlName="aChalanGateway"
+                (change)="onCheckaChalanGateway($event)"></div>
+          </div>
+
+          <div class="card ml-2 gateway-3-img" style="width: 12rem; height: 90px; border: 1px solid cornflowerblue;">
+            <div class="row ml-2 mt-2"><input type="checkbox" formControlName="otherGateway"
+                (change)="onCheckOtherGateway($event)"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 text-center pt-4 pb-4">
+        <button type="button" class="btn btn-sm continuePaymentBtn" (click)="continuePayment()">
+          <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em" viewBox="0 0 16 16"
+            class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+          </svg>
+          Continue to Payment</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #regularPaymentModalShow>
+  <div class="modal-header">
+    <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">Payment with Return</h5>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close_RegularPayment()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive tableBgStyle" id="paymentListTable">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S.L</th>
+            <th scope="col">Date of Payment</th>
+            <th scope="col">Reference</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of allRegularPayments; let k = index">
+          <td scope="row">{{ k+1 }}</td>
+          <td scope="row">{{item.dateOfPayment}}</td>
+          <td scope="row">{{item.paymentRef}}</td>
+          <td scope="row">{{addComma(item.amount)}}</td>
+        </tbody>
+      </table>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger" style="float: right;width: 100px;"
+      (click)="close_RegularPayment()">close</button>
+  </div>
+</ng-template>
+
+<!-- popup for Delete Bank TDS -->
+<ng-template #deleteBankTdsPopup>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeBankTdsClaim()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete it?</p>
+    <button type="button" class="btn btn-success" style="float: right;" (click)="deleteRow(deleteIndex)">Yes</button>
+    <button type="button" class="btn btn-danger" style="float: right; margin-right: 10px;"
+      (click)="closeBankTdsClaim()">No</button>
+  </div>
+</ng-template>
+
+<ng-template #confirmationPopup>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="font-size: 16px; color: red;">Credit mechanism of source and advance tax
+      will be introduced soon and will be notified by NBR.
+    </h4>
+    <button type="button" title="Close" class="close pull-right" aria-label="Close"
+      (click)="onClickContinueWithEreturn()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>However, your offline (paper) return is ready based on your input.</p>
+    <div>
+      <p>What you want to do?</p>
+      <ul>
+        <li><a [routerLink]="['/user-panel/tax-and-payment']" (click)="onClickViewPrintReturn()">View
+            offline return, fill in payment part, and
+            print</a></li>
+        <li><a [routerLink]="['/user-panel/tax-and-payment']" (click)="onClickContinueWithEreturn()">Continue with
+            eReturn</a></li>
+        <li><a [routerLink]="['/user-panel/home']" (click)="onClickExitEreturn()">Exit eReturn</a></li>
+      </ul>
+    </div>
+    <!-- <button type="button" class="btn btn-success" style="float: right;" (click)="onYesConfirmation()">Yes</button>
+    <button type="button" class="btn btn-danger" style="float: right; margin-right: 10px;"
+      (click)="closeConfirmation()">No</button> -->
+  </div>
+</ng-template>
+
+
+
+<!-- <ngx-ui-loader *ngIf="!isContinuePayment"></ngx-ui-loader>
+<ngx-ui-loader *ngIf="isContinuePayment" text="Requesting Transaction ID"></ngx-ui-loader> -->
+<ngx-ui-loader></ngx-ui-loader>
+
+<!-- <pre>Form values: {{submitForm.value | json}}</pre> -->

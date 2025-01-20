@@ -1,0 +1,73 @@
+.backBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 100px;
+}
+textarea:focus { 
+    outline: none !important;
+    border: 1px solid #dadde1 !important;
+}
+
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+}
+.tableBgStyle {
+    background-color: #FFFFFF;
+  }
+
+  .titleSection{
+    margin-top: 5px; 
+    margin-bottom: 5px;
+}
+
+.titleText{
+    margin-right: 10px; 
+    color: #01649A;
+}
+.text-border{
+    border-left: 10px solid #01649A;
+    border-right: 0px solid #01649A;
+    border-top: 0px solid #01649A;
+    border-bottom: 0px solid #01649A;
+    padding: 5px 10px;
+    font-size:19px; 
+    font-weight: normal;
+    color: #000000;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 10px 10px 20px #00000029;
+    border-radius: 10px 37px 37px 10px;
+    opacity: 1;
+}
+
+#extensionDetailsTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+    border: 1px solid #ddd;
+}
+
+#extensionDetailsTable th {
+    background-color: #C0D8DE;
+    color: #424548;
+}
+
+.page-default-height{
+    min-height: 80vh !important;
+}
+
+::ng-deep .tooltip-350 ~ .tooltip .tooltip-inner {
+    max-width: 380px;
+    min-width: 380px;
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    box-shadow: 1px 1px 10px 2px #00000029;
+    color: #0F0F0F;
+    text-align: left !important;
+  }
+  
+  .tooltip-350{
+    margin-left: 3px;
+  }

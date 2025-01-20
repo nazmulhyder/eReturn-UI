@@ -1,0 +1,834 @@
+<div class="row custom-container" style="margin-top: 10px">
+  <div class="col-sm-12">
+    <div class="content-background" style="height: 100%">
+      <!--portion 1-->
+      <div class="row px-2 pt-3">
+        <div class="col-sm-6 text-left  font-weight-bolder">National Board of Revenue</div>
+        <div class="col-sm-6 text-right  font-weight-bolder">IT-11GA2016</div>
+      </div>
+      <!--portion 1-->
+      <div class="row">
+        <div class="col-sm-6 text-left ft-14" style="padding-left: 60px;">www.nbr.gov.bd</div>
+        <div class="col-sm-6 text-right ft-11 "></div>
+      </div>
+      <div class="row px-2 pt-2">
+        <!-- <div class="col-sm-12"> -->
+        <div class="col-sm-12 text-center">
+          <h5 class="font-weight-bolder">RETURN OF INCOME</h5>
+          <h5 >For an Individual Assessee</h5>
+        </div>
+        <div class="col-sm-12 text-left customMargin">
+          <label for="">Reference No: <span style="font-weight: bold;">{{referenceNo}}</span></label>
+        </div>
+        <div class="col-sm-12 text-right customMargin">
+          <img src="assets\img\logo\eReturn_Logo.svg" class="eReturn-logo" alt="logo">
+        </div>
+        <!-- </div> -->
+      </div>
+    <!-- </div>  -->
+    <div class="row mt-3">
+      <div class="col-sm-8">
+        <!-- <div class="row">
+              <div class="col-sm-12">
+                The following schedules shall be the integral part of this return and must be annexed to return in the
+                following cases:
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 font-italic">Schedule 24A</div>
+              <div class="col-sm-9 font-italic">if you have income from Salaries</div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 font-italic">Schedule 24B</div>
+              <div class="col-sm-9 font-italic">if you have income from house property</div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 font-italic">Schedule 24C</div>
+              <div class="col-sm-9 font-italic">if you have income from business or profession</div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 font-italic">Schedule 24D</div>
+              <div class="col-sm-9 font-italic">if you claim tax rebate</div>
+            </div> -->
+      </div>
+    </div>
+
+    <!-- 94_1 Part - 1 : START -->
+    <!-- PART - 2 -->
+    <div class="row px-2 pt-2 text-center">
+      <div class="col-sm-12">
+        <h5 class="font-weight-bolder">PART I</h5>
+        <h5>Basic information</h5>
+      </div>
+    </div>
+    <!-- portion - 3 -->
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- row -1 -->
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">01</div>
+          <div class="col-sm-5 border-right">
+            <div class="row mt-2">
+              &nbsp;Assessment Year
+            </div>
+            <div class="row mb-2">
+              &nbsp;<input type="text" class="assessment-input-box-len text-center" value="{{assYr1}}" disabled>
+              <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr2}}" disabled>
+              <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr3}}" disabled>
+              <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr4}}" disabled>
+              <span class="mt-2">-</span>
+              <input class="assessment-input-box-len text-center" type="text" value="{{assYr5}}" disabled>
+              <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr6}}" disabled>
+            </div>
+          </div>
+          <div class="col-sm-1 border-right">02</div>
+          <div class="col-sm-5 border-right">
+            <div class="row border-bottom">&nbsp;Return submitted under section 82BB? </div>
+            <div class="row" style="height: 70%">
+              <div class="col-sm-6 border-right">
+                <div class="row mt-2">
+                  &nbsp;Yes
+                  <input class="ml-4 mt-1 custom-checkbox" type="checkbox" style="width: 30px;" disabled
+                    [checked]="return_submit_under_82bb">
+                </div>
+              </div>
+              <div class="col-sm-6 mt-2">
+                <div class="row">
+                  &nbsp;No
+                  <input class="ml-4 mt-1 custom-checkbox" type="checkbox" style="width: 30px;" disabled
+                    [checked]="!return_submit_under_82bb">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- row -2 -->
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">03</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">&nbsp;Name of the Assessee</div>
+            <div class="row">&nbsp;<strong>{{nameOfAssessee}}</strong></div>
+          </div>
+          <div class="col-sm-1 border-right">04</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="row"> &nbsp;Gender </div>
+              </div>
+              <div class="col-sm-6 mt-2 mb-2">
+                <div class="row">
+                  <input class="ml-1 chkbox-custom-input text-center" type="text" value="M" disabled>
+                  <input class="ml-1 custom-checkbox" type="checkbox" disabled [checked]="isMgender">
+                  <input class="ml-3 chkbox-custom-input text-center" type="text" value="F" disabled>
+                  <input class="ml-1 custom-checkbox" type="checkbox" disabled [checked]="!isMgender">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- row -3 -->
+        <div class="row border-top" style="height: 50px;">
+          <div class="col-sm-1 border-left border-right">05</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">&nbsp;TIN</div>
+            <div class="row">&nbsp;<strong>{{twelveDigitTIN}}</strong></div>
+          </div>
+          <div class="col-sm-1 border-right">06</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">
+              &nbsp;Old TIN
+            </div>
+            <div class="row">&nbsp;{{oldTIN}}</div>
+          </div>
+        </div>
+        <!-- row -4 -->
+        <div class="row border-top" style="height: 50px;">
+          <div class="col-sm-1 border-left border-right">07</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">&nbsp;Circle</div>
+            <div class="row">&nbsp;{{circle}}</div>
+          </div>
+          <div class="col-sm-1 border-right">08</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">
+              &nbsp;Zone
+            </div>
+            <div class="row">&nbsp;{{zone}}</div>
+          </div>
+        </div>
+        <!-- row -5-->
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">09</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">&nbsp;Resident Status </div>
+          </div>
+          <div class="col-sm-6 border-right">
+            <div class="row" style="height: 70%">
+              <div class="col-sm-6 pb-3 border-right">
+                <div class="row mt-2">
+                  &nbsp;Resident
+                  <input class="ml-4 mt-1 custom-checkbox" type="checkbox" style="width: 30px;" disabled
+                    [checked]="this.isResident">
+                </div>
+              </div>
+              <div class="col-sm-6 pb-3 mt-2">
+                <div class="row">
+                  &nbsp;Non-resident
+                  <input class="ml-4 mt-1 custom-checkbox" type="checkbox" style="width: 30px;" disabled
+                    [checked]="!this.isResident">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- row -6 -->
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">10</div>
+          <div class="col-sm-11 border-right">
+            <!-- <div class="row">&nbsp;Tick on the box(es) below if you are:</div> -->
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="row">
+                  <div class="col-sm-1 border-right py-2" style="height: 60px;">
+                    <div class="row">10A</div>
+                  </div>
+                  <div class="col-sm-8 py-2" style="margin-right: -4px; height: 60px;">
+                    <div class="row">
+                      &nbsp;A gazetted war-wounded
+                      freedom fighter
+                    </div>
+                  </div>
+                  <div class="col-sm-2 py-2 border-right">
+                    <input class="ml-1 custom-checkbox" type="checkbox" disabled [checked]="gazzetedWarWondedFF">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="row">
+                  <div class="col-sm-1 border-right py-2" style="margin-left: 4px; height: 60px;">
+                    <div class="row">10B</div>
+                  </div>
+                  <div class="col-sm-8 py-2" style="height: 60px;">
+                    <div class="row">
+                      &nbsp;A person with disability
+                    </div>
+                  </div>
+                  <div class="col-sm-2 py-2" style="height: 60px;">
+                    <input class="ml-1 custom-checkbox" type="checkbox" disabled [checked]="personWithDisablilty">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row border-top">
+              <div class="col-sm-6">
+                <div class="row">
+                  <div class="col-sm-1 border-right py-2" style="height: 60px;">
+                    <div class="row">10C</div>
+                  </div>
+                  <div class="col-sm-8 py-2" style="margin-right: -4px;height: 60px;">
+                    <div class="row">
+                      &nbsp;Aged 65 years or more
+                    </div>
+                  </div>
+                  <div class="col-sm-2 py-2 border-right" style="height: 60px;">
+                    <input class="ml-1 custom-checkbox" type="checkbox" disabled [checked]="age65OrMore">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="row">
+                  <div class="col-sm-1 border-right py-2" style="margin-left: 4px; height: 60px;">
+                    <div class="row">10D</div>
+                  </div>
+                  <div class="col-sm-8 py-2" style="height: 60px;">
+                    <div class="row">
+                      &nbsp;A parent/legal guardian of a person
+                      with &nbsp;disability
+                    </div>
+                  </div>
+                  <div class="col-sm-2 py-2" style="height: 60px;">
+                    <input class="ml-1 custom-checkbox" type="checkbox" disabled
+                      [checked]="parent_legal_of_person_with_disability">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- row -11 -->
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">11</div>
+          <div class="col-sm-5 border-right">
+            <div class="row mt-2">
+              &nbsp;Date of birth (DD-MM-YYYY)
+            </div>
+            <div class="row mb-2">
+              &nbsp;
+              <input class="assessment-input-box-len text-center" type="text" value="{{d1}}" disabled>
+              <input class="assessment-input-box-len text-center" type="text" value="{{d2}}" disabled>
+
+              <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{m1}}" disabled>
+              <input class="assessment-input-box-len text-center" type="text" value="{{m2}}" disabled>
+              <input class="ml-1 assessment-input-box-len text-center" value="{{y1}}" type="text" disabled>
+              <input class="assessment-input-box-len text-center" value="{{y2}}" type="text" disabled>
+              <input class="assessment-input-box-len text-center" type="text" value="{{y3}}" disabled>
+              <input class="assessment-input-box-len text-center" type="text" value="{{y4}}" disabled>
+            </div>
+          </div>
+          <div class="col-sm-1 border-right">12</div>
+          <div class="col-sm-5 border-right">
+            <div class="row mt-2">
+              &nbsp;Income Year
+            </div>
+            <div class="row mb-2">
+              &nbsp;
+              <input class="mr-1" type="text" value="{{startingIncYr}}" disabled>
+              to
+              <input class="ml-1" type="text" value="{{endingIncYr}}" disabled>
+            </div>
+          </div>
+        </div>
+
+        <!-- row -13 -->
+        <div class="row border-top" style="height: 50px;">
+          <div class="col-sm-1 border-left border-right">13</div>
+          <div class="col-sm-11 border-right">
+            <div class="row">&nbsp;If employed, employer’s name</div>
+            <div class="row">&nbsp;{{employerName}}</div>
+          </div>
+        </div>
+
+        <!-- row -14 -->
+        <div class="row border-top" style="height: 50px;">
+          <div class="col-sm-1 border-left border-right">14</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">&nbsp;Spouse Name</div>
+            <div class="row">&nbsp;{{spouseName}}</div>
+          </div>
+          <div class="col-sm-1 border-right">15</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">
+              &nbsp;Spouse TIN (if any)
+            </div>
+            <div class="row">&nbsp;{{spouseTIN}}</div>
+          </div>
+        </div>
+
+        <!-- row -15 -->
+        <div class="row border-top" style="height: 50px;">
+          <div class="col-sm-1 border-left border-right">16</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">&nbsp;Father’s Name</div>
+            <div class="row">&nbsp;{{fatherName}}</div>
+          </div>
+          <div class="col-sm-1 border-right">17</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">
+              &nbsp;Mother’s Name
+            </div>
+            <div class="row">&nbsp;{{motherName}}</div>
+          </div>
+        </div>
+        <!-- row -16 -->
+        <div class="row border-top" style="height: 80px;">
+          <div class="col-sm-1 border-left border-right">18</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">&nbsp;Present Address</div>
+            <div class="row">&nbsp;{{presentAdd}}</div>
+          </div>
+          <div class="col-sm-1 border-right">19</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">
+              &nbsp;Permanent Address
+            </div>
+            <div class="row">&nbsp;{{permanentAdd}}</div>
+          </div>
+        </div>
+
+        <!-- row -17 -->
+        <div class="row border-top" style="height: 50px;">
+          <div class="col-sm-1 border-left border-right">20</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">&nbsp;Contact Telephone</div>
+            <div class="row">&nbsp;{{contact}}</div>
+          </div>
+          <div class="col-sm-1 border-right">21</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">
+              &nbsp;E-mail
+            </div>
+            <div class="row">&nbsp;{{email}}</div>
+          </div>
+        </div>
+        <!-- row -18 -->
+        <div class="row border-top border-bottom" style="height: 50px;">
+          <div class="col-sm-1 border-left border-right">22</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">&nbsp;National Identification Number</div>
+            <div class="row">&nbsp;{{nid}}</div>
+          </div>
+          <div class="col-sm-1 border-right">23</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">
+              &nbsp;Business Identification Number(s)
+            </div>
+            <div class="row">&nbsp;{{bid}}</div>
+          </div>
+        </div>
+        <!-- 94_1 Part - 1 : END -->
+
+        <!-- 94_1 Part - 2 : START -->
+        <div class="row px-2 text-center margin-4">
+          <!-- <div  class="col-sm-12"> -->
+          <div class="col-sm-12 text-center">
+            <h5 class="font-weight-bolder mr-170">PART II</h5>
+            <h5 class="mr-70">Particulars of Income and Tax</h5>
+            TIN: &nbsp;
+            <input *ngFor="let x of storeSplittedTin" class="assessment-input-box-len text-center ml-1" type="text"
+              value="{{x}}" disabled>
+          </div>
+          <!-- <div class="col-sm-4 text-right">
+            <img src="assets\img\background\eReturn-logo.png" alt="" style="width:30%;height:50px;">
+          </div> -->
+        </div>
+
+        <!-- part:2 - 1 -->
+        <div class="row mt-4">
+          <div class="col-sm-10">
+            <div class="row">&nbsp;Particulars of Total Income ৳</div>
+          </div>
+          <div class="col-sm-2">Amount ৳</div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">24</div>
+          <div class="col-sm-7 border-right">
+            <div class="row">&nbsp;Salaries</div>
+          </div>
+          <div class="col-sm-1 border-right">S.21</div>
+          <div class="col-sm-3 border-right text-right"> {{this.totalSalaryAmt }}
+          </div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">25</div>
+          <div class="col-sm-7 border-right">
+            <div class="row">&nbsp;Interest on securities</div>
+          </div>
+          <div class="col-sm-1 border-right">S.22</div>
+          <div class="col-sm-3 border-right text-right">{{this.totalInterestSecurityAmt }}
+          </div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">26</div>
+          <div class="col-sm-7 border-right">
+            <div class="row">&nbsp;Income from house property</div>
+          </div>
+          <div class="col-sm-1 border-right">S.24</div>
+          <div class="col-sm-3 border-right text-right">{{this.totalHousePropertyAmt }}
+          </div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">27</div>
+          <div class="col-sm-7 border-right">
+            <div class="row">&nbsp;Agricultural income</div>
+          </div>
+          <div class="col-sm-1 border-right">S.26</div>
+          <div class="col-sm-3 border-right text-right">{{this.totalAgriculture }}
+          </div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">28</div>
+          <div class="col-sm-7 border-right">
+            <div class="row">&nbsp;Income from business or profession</div>
+          </div>
+          <div class="col-sm-1 border-right">S.28</div>
+          <div class="col-sm-3 border-right text-right"> {{totalBusinessOrProfession }}
+          </div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">29</div>
+          <div class="col-sm-7 border-right">
+            <div class="row">&nbsp;Capital gains</div>
+          </div>
+          <div class="col-sm-1 border-right">S.31</div>
+          <div class="col-sm-3 border-right text-right">{{totalCapitalGainAmt }}
+          </div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">30</div>
+          <div class="col-sm-7 border-right">
+            <div class="row">&nbsp;Income from other sources</div>
+          </div>
+          <div class="col-sm-1 border-right">S.33</div>
+          <div class="col-sm-3 border-right text-right">{{totalIncomeFromOtherSourcesAmt }}
+          </div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">31</div>
+          <div class="col-sm-7 border-right">
+            <div class="row">&nbsp;Share of income from firm or AoP</div>
+          </div>
+          <div class="col-sm-1 border-right"></div>
+          <div class="col-sm-3 border-right text-right"> {{totalFirm_AoP }}
+          </div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">32</div>
+          <div class="col-sm-7 border-right">
+            <div class="row">&nbsp;Income of minor or spouse under section 43(4)</div>
+          </div>
+          <div class="col-sm-1 border-right">S.43</div>
+          <div class="col-sm-3 border-right text-right">{{totalSpouse_Income }}
+          </div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">33</div>
+          <div class="col-sm-7 border-right">
+            <div class="row">&nbsp;Foreign income</div>
+          </div>
+          <div class="col-sm-1 border-right"></div>
+          <div class="col-sm-3 border-right text-right"> {{totalForeign_Income }}
+          </div>
+        </div>
+        <div class="row border-top border-bottom">
+          <div class="col-sm-1 border-left border-right">34</div>
+          <div class="col-sm-7 border-right">
+            <div class="row">&nbsp;Total income (aggregate of 24 to 33)</div>
+          </div>
+          <div class="col-sm-1 border-right"></div>
+          <div class="col-sm-3 border-right text-right"> {{total_Income_Amt }}
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-sm-10">
+            <div class="row">&nbsp;Tax Computation and Payment ৳</div>
+          </div>
+          <div class="col-sm-2">Amount ৳</div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">35</div>
+          <div class="col-sm-8 border-right">
+            <div class="row">&nbsp;Gross tax before tax rebate</div>
+          </div>
+          <div class="col-sm-3 border-right text-right">{{total_Gross_Tax_Before_Tax_Rebate_Amt}}</div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">36</div>
+          <div class="col-sm-8 border-right">
+            <div class="row">&nbsp;Tax rebate </div>
+          </div>
+          <div class="col-sm-3 border-right text-right">{{total_Tax_Rebate_Amt }}</div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">37</div>
+          <div class="col-sm-8 border-right">
+            <div class="row">&nbsp;Net tax after tax rebate</div>
+          </div>
+          <div class="col-sm-3 border-right text-right">{{total_Net_Tax_After_Tax_Rebate_Amt }}</div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">38</div>
+          <div class="col-sm-8 border-right">
+            <div class="row">&nbsp;Minimum tax</div>
+          </div>
+          <div class="col-sm-3 border-right text-right">{{total_Min_Tax_Amt }}</div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">39</div>
+          <div class="col-sm-8 border-right">
+            <div class="row">&nbsp;Net wealth surcharge</div>
+          </div>
+          <div class="col-sm-3 border-right text-right">{{ total_Net_Wealth_Surcharge_Amt }}</div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">40</div>
+          <div class="col-sm-8 border-right">
+            <div class="row">&nbsp;Interest or any other amount under the Ordinance</div>
+          </div>
+          <div class="col-sm-3 border-right text-right">{{total_Interest_or_Any_Other_Amt }}</div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">41</div>
+          <div class="col-sm-8 border-right">
+            <div class="row">&nbsp;Total amount payable</div>
+          </div>
+          <div class="col-sm-3 border-right text-right">{{total_Payable_Amt }}</div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">42</div>
+          <div class="col-sm-8 border-right">
+            <div class="row">&nbsp;Tax deducted or collected at source</div>
+          </div>
+          <div class="col-sm-3 border-right text-right">{{tax_deducted_or_collected_at_source}}</div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">43</div>
+          <div class="col-sm-8 border-right">
+            <div class="row">&nbsp;Advance tax paid</div>
+          </div>
+          <div class="col-sm-3 border-right text-right">{{adv_tax_paid}}</div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">44</div>
+          <div class="col-sm-8 border-right">
+            <div class="row">&nbsp;Adjustment of tax refund</div>
+          </div>
+          <div class="col-sm-3 border-right text-right">{{adj_tax_refund}}</div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">45</div>
+          <div class="col-sm-8 border-right">
+            <div class="row">&nbsp;Amount paid with return</div>
+          </div>
+          <div class="col-sm-3 border-right text-right">{{amt_paid_return}}</div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">46</div>
+          <div class="col-sm-8 border-right">
+            <div class="row">&nbsp;Total amount paid and adjusted (42+43+44+45)</div>
+          </div>
+          <div class="col-sm-3 border-right text-right">{{total_amt_paid_adjusted}}</div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">47</div>
+          <div class="col-sm-8 border-right">
+            <div class="row">&nbsp;Deficit or excess (refundable) (41-46)</div>
+          </div>
+          <div class="col-sm-3 border-right text-right">{{refundable }}</div>
+        </div>
+        <div class="row border-top border-bottom">
+          <div class="col-sm-1 border-left border-right">48</div>
+          <div class="col-sm-8 border-right">
+            <div class="row">&nbsp;Tax exempted income</div>
+          </div>
+          <div class="col-sm-3 border-right text-right">{{total_Tax_Exempted_Income }}</div>
+        </div>
+        <!-- 94_1 Part - 2 : END -->
+        <!-- 94_1 Part - 3 : START -->
+        <div class="row px-2 margin-4 text-center">
+          <div class="col-sm-12">
+            <h5 class="mr-170 font-weight-bolder">PART III</h5>
+            <h5 class="mr-22">Instruction, Enclosures and Verification</h5>
+            TIN: &nbsp;
+            <input *ngFor="let x of storeSplittedTin" class="assessment-input-box-len text-center ml-1" type="text"
+              value="{{x}}" disabled>
+          </div>
+          <!-- <div class="col-sm-4 text-right">
+            <img src="assets\img\background\eReturn-logo.png" alt="" style="width:30%;height:50px;">
+          </div> -->
+        </div>
+
+
+        <div class="row border-top mt-4">
+          <div class="col-sm-1 border-left border-right">49</div>
+          <div class="col-sm-11 border-right">
+            <div class="row">
+              &nbsp;<b>Instructions</b>
+            </div>
+            <div class="row">
+              &nbsp;1. Statement of assets, liabilities and expenses (IT-10B2016) and statement of life style expense
+              (IT-10BB2016) must be furnished <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with the return unless you are exempted from furnishing such statement(s)
+              under section 80.
+            </div>
+            <div class="row">
+              &nbsp;2. Proof of payments of tax, including advance tax and withholding tax and the proof of investment
+              for tax rebate must be <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;provided along with return.
+            </div>
+            <div class="row">
+              &nbsp;3. Attach account statements and other documents where applicable
+            </div>
+          </div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">50</div>
+          <div class="col-sm-7 border-right">
+            <div class="row">
+              &nbsp;If you are a parent of a person with disability, has your spouse availed the &nbsp;extended tax
+              exemption threshold?
+            </div>
+          </div>
+          <div class="col-md-2 border-right">
+            <div class="row py-2">
+              &nbsp;Yes
+              <input class="ml-4 custom-checkbox" type="checkbox" style="width: 30px;" disabled [checked]="parent_legal_of_person_with_disability">
+            </div>
+          </div>
+          <div class="col-md-2 border-right">
+            <div class="row py-2">
+              &nbsp;No
+              <input class="ml-4 custom-checkbox" type="checkbox" style="width: 30px;" disabled [checked]="!parent_legal_of_person_with_disability">
+            </div>
+          </div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">51</div>
+          <div class="col-sm-7 border-right">
+            <div class="row">
+              &nbsp;Are you required to submit a statement of assets, liabilities and expenses <br>
+              &nbsp;&nbsp;&nbsp;(IT-10B2016) under section 80(1)?
+            </div>
+          </div>
+          <div class="col-md-2 border-right">
+            <div class="row py-2">
+              &nbsp;Yes
+              <input class="ml-4 custom-checkbox" type="checkbox" style="width: 30px;" disabled [checked]="isIT10B_applicable">
+            </div>
+          </div>
+          <div class="col-md-2 border-right">
+            <div class="row py-2">
+              &nbsp;No
+              <input class="ml-4 custom-checkbox" type="checkbox" style="width: 30px;" disabled [checked]="!isIT10B_applicable">
+            </div>
+          </div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">52</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">
+              &nbsp;Schedules annexed
+            </div>
+          </div>
+          <div class="col-sm-6 border-right">
+            <div class="row mb-2">
+              <input class="ml-4 mt-2 input_51" type="text" value="24A" disabled>
+              <input class="mt-2 custom-checkbox" type="checkbox" disabled [checked]="is24A">
+
+              <input class="ml-4 mt-2 input_51" type="text" value="24B" disabled>
+              <input class="mt-2 custom-checkbox" type="checkbox" disabled [checked]="is24B">
+
+              <input class="ml-4 mt-2 input_51" type="text" value="24C" disabled>
+              <input class="mt-2 custom-checkbox" type="checkbox" disabled [checked]="is24C">
+
+              <input class="ml-4 mt-2 input_51" type="text" value="24D" disabled>
+              <input class="mt-2 custom-checkbox" type="checkbox" disabled [checked]="is24D">
+
+            </div>
+          </div>
+        </div>
+        <div class="row border-top">
+          <div class="col-sm-1 border-left border-right">53</div>
+          <div class="col-sm-5 border-right">
+            <div class="row">
+              &nbsp;Statements annexed
+            </div>
+          </div>
+          <div class="col-sm-6 border-right">
+            <div class="row mb-2">
+              <input class="ml-4 mt-2 input_52" type="text" value="IT-10B2016" disabled>
+              <input class="mt-2 custom-checkbox" type="checkbox" disabled [checked]="is_still_want_IT10B">
+
+              <input class="ml-4 mt-2 input_52" type="text" value="IT-10BB2016" disabled>
+              <input class="mt-2 custom-checkbox" type="checkbox" disabled [checked]="isIT10BB_mandatory">
+
+            </div>
+          </div>
+        </div>
+        <div class="row border-top border-bottom">
+          <div class="col-sm-1 border-left border-right">54</div>
+          <div class="col-sm-11 border-right" style="height: 200px;">
+            <div class="row">
+              &nbsp;Other statements, documents, etc.
+            </div>
+          </div>
+        </div>
+        <!-- Verification and signature -->
+        <div class="row mt-4">
+          <div class="col-sm-12 text-center"><b>Verification and signature</b></div>
+        </div>
+        <div class="row border-top border-bottom mt-1">
+          <div class="col-sm-1 border-left border-right">55</div>
+          <div class="col-sm-11 border-right">
+            <div class="row">
+              &nbsp;<b>Verification</b>
+            </div>
+            <div class="row text-justify mr-1">
+              &nbsp;I solemnly declare that to the best of my knowledge and belief the information given in this return
+              and statements and documents are correct and complete.
+            </div>
+            <div class="row border-top">
+              <div class="col-sm-6 border-right" style="height: 80px;">
+                <div class="row">&nbsp; Name <br>
+                  &nbsp; {{nameOfAssessee}}</div>
+              </div>
+              <div class="col-sm-6" style="height: 80px;">
+                <div class="row">
+                  &nbsp; Signature
+                </div>
+                <div class="row">
+                  <i>&nbsp; This is a system generated document. No signature is required.</i>
+                </div>
+              </div>
+            </div>
+            <div class="row border-top">
+              <div class="col-sm-6 border-right" style="height: 80px;">
+                <div class="row mt-2">
+                  &nbsp;Date of Signature (DD-MM-YYYY)
+                </div>
+                <div class="row mb-2">
+                  &nbsp;
+                  <input class="assessment-input-box-len text-center" type="text" value="{{dd1}}" disabled>
+                  <input class="assessment-input-box-len text-center" type="text" value="{{dd2}}" disabled>
+
+                  <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{mm1}}" disabled>
+                  <input class="assessment-input-box-len text-center" type="text" value="{{mm2}}" disabled>
+                  <input class="ml-1 assessment-input-box-len text-center" value="{{yy1}}" type="text" disabled>
+                  <input class="assessment-input-box-len text-center" value="{{yy2}}" type="text" disabled>
+                  <input class="assessment-input-box-len text-center" value="{{yy3}}" disabled>
+                  <input class="assessment-input-box-len text-center" value="{{yy4}}" disabled>
+                </div>
+              </div>
+              <div class="col-sm-6" style="height: 80px;">
+                <div class="row">&nbsp; Place of Signature <br>
+                  &nbsp; Dhaka
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- for office use only -->
+        <!-- <div class="row mt-4">
+          <div class="col-sm-12 text-center"><b>For official use only</b></div>
+          <div class="col-sm-12 text-center">Return Submission Information</div>
+        </div>
+
+        <div class="row border-top border-bottom">
+          <div class="col-sm-6 border-right border-left" style="height: 100px;">
+            <div class="row mt-2 ml-4">
+              &nbsp;Date of Signature (DD-MM-YYYY)
+            </div>
+            <div class="row mb-2 ml-4">
+              &nbsp;
+              <input class="assessment-input-box-len text-center" type="text" value="{{dd1}}" disabled>
+              <input class="assessment-input-box-len text-center" type="text" value="{{dd2}}" disabled>
+
+              <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{mm1}}" disabled>
+              <input class="assessment-input-box-len text-center" type="text" value="{{mm2}}" disabled>
+              <input class="ml-1 assessment-input-box-len text-center" value="{{yy1}}" type="text" disabled>
+              <input class="assessment-input-box-len text-center" value="{{yy2}}" type="text" disabled>
+              <input class="assessment-input-box-len text-center" value="{{yy3}}" disabled>
+              <input class="assessment-input-box-len text-center" value="{{yy4}}" disabled>
+            </div>
+          </div>
+          <div class="col-sm-6 border-right" style="height: 100px;">
+            <div class="row mt-2  ml-4">
+              &nbsp;Tax Office Entry Number
+            </div>
+            <div class="row mb-2  ml-4">
+              &nbsp;
+              <input *ngFor="let x of storeOfficeRegisterNo" class="assessment-input-box-len text-center ml-1"
+                type="text" value="{{x}}" disabled>
+
+            </div>
+          </div>
+        </div> -->
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>

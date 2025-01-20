@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Time Extension Pending Request List</title>
+</head>
+
+<div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-6 col-sm-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left iconStyle">
+                </i> Time Extension Pending Request List &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-6 mt-3">
+            <label class="float-right" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="form-horizontal" [formGroup]="timeExtensionListForm" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="timeExtensionListTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th scope="col">Ticket No</th>
+                                    <th scope="col">TIN</th>
+                                    <th scope="col">Taxpayer Name</th>
+                                    <th scope="col">Application Date</th>
+                                    <th scope="col">Requested Upto</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of timeExtensionGetData; let k = index">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row">{{ item.TICKET_NO }}</td>
+                                    <td scope="row">{{ item.TIN }}</td>
+                                    <td scope="row">{{ item.TAXPAYER_NAME }}</td>
+                                    <td scope="row">{{ item.APPLICATION_DATE }}</td>
+                                    <td scope="row">{{ item.EXTENSION_REQ_DATE }}</td>
+                                    <td width="22%">
+                                        <button
+                                            (click)="ontimeExtensionApproveClick($event,item.TICKET_NO,item.TIN,item.EXTENSION_REQ_DATE,item.REMARKS,extensionModalShow)"
+                                            type="button" class="btn btn-sm uploadBtn mr-1">
+                                            <i class="fa fa-check titleText"></i>Approve
+                                        </button>
+                                        <button (click)="timeExtensionReject(item.TICKET_NO)" type="button"
+                                            class="btn btn-sm btn-danger">
+                                            <i class="fa fa-ban titleText"></i>Reject
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row" *ngIf="isExtendedShow">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="form-horizontal" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="timeExtensionListTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th scope="col">TIN</th>
+                                    <th scope="col">Taxpayer Name</th>
+                                    <th scope="col">Extension Upto</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of timeExtensionExtendedGetData; let k = index">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row">{{ item.tin }}</td>
+                                    <td scope="row">{{ item.taxpayerName }}</td>
+                                    <td scope="row">{{ item.extensionUpto }}</td>
+                                    <td *ngIf="isForwardShow">
+                                        <button (click)="timeExtensionExtendedForward(k)" type="button"
+                                            class="btn btn-sm uploadBtn">
+                                            Forward
+                                        </button>
+                                    </td>
+                                    <td *ngIf="isCircleOfficer">
+                                        <button
+                                            (click)="ontimeExtendedExtensionApproveClick($event,k,item.tin,item.extensionUpto,extendedExtensionModalShow)"
+                                            type="button" class="btn btn-sm uploadBtn">
+                                            <i class="fa fa-check titleText"></i>Approve
+                                        </button>
+                                        <button (click)="timeExtensionExtendedReject(k)" type="button"
+                                            class="btn btn-sm btn-warning">
+                                            <i class="fa fa-ban titleText"></i>Reject
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> -->
+</div>
+
+<ng-template #extensionModalShow>
+    <div class="modal-header">
+        <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">Extension Details</h5>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="close_extension()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" [formGroup]="extensionApproveForm" aria-labelledby="title">
+            <input type="text" formControlName="ticket_no" class="form-control " hidden>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="tinNo" class="label form-control-label">TIN
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="tinNo" class="form-control " readonly>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="tinNo" class="label form-control-label">Remarks
+                    </label>
+                </div>
+                <div class="col-8">
+                    <textarea type="text" formControlName="remarks" rows="3" class="form-control " readonly></textarea>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="requestedUpto" class="label form-control-label">Requested Upto
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="requestedUpto" class="form-control " readonly>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="approvedUpto" class="label form-control-label">Approved Upto
+                    </label>
+                </div>
+                <div class="col-8">
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="approvedUpto" class="form-control " bsDatepicker
+                            #approvedUpto="bsDatepicker" [maxDate]="maxApprovedDate"
+                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-info btn-sm" (click)="approvedUpto.toggle()" type="button"
+                                id="button-addon2">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <button type="button" class="btn btn-sm btn-outline-danger mr-1" style="float: right;width: 100px;"
+            (click)="close_extension()">close</button>
+        <button type="button" class="btn btn-sm btn-outline-success" style="float: right;width: 100px;"
+            (click)="timeExtensionConfirmation(extensionApproveForm.value.approvedUpto,extensionApproveForm.value.ticket_no)">Approve</button>
+    </div>
+</ng-template>
+
+<ng-template #extendedExtensionModalShow>
+    <div class="modal-header">
+        <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">Extension Details</h5>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="close_extended_extension()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" [formGroup]="extendedExtensionApproveForm" aria-labelledby="title">
+            <input type="text" formControlName="extId" class="form-control " hidden>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="extTinNo" class="label form-control-label">TIN
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="extTinNo" class="form-control " readonly>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="extRequestedUpto" class="label form-control-label">Requested Upto
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="extRequestedUpto" class="form-control " readonly>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="extApprovedUpto" class="label form-control-label">Approved Upto
+                    </label>
+                </div>
+                <div class="col-8">
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="extApprovedUpto" class="form-control " bsDatepicker
+                            #extApprovedUpto="bsDatepicker"
+                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-info btn-sm" (click)="extApprovedUpto.toggle()" type="button"
+                                id="button-addon2">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <button type="button" class="btn btn-sm btn-outline-danger mr-1" style="float: right;width: 100px;"
+            (click)="close_extended_extension()">close</button>
+        <button type="button" class="btn btn-sm btn-outline-success" style="float: right;width: 100px;"
+            (click)="timeExtensionExtendedConfirmation(extendedExtensionApproveForm.value.extId)">Approve</button>
+    </div>
+</ng-template>
+
+</html>
+
+<!-- <ngx-ui-loader text="Under Construction"></ngx-ui-loader> -->
+<!-- <pre>Form values: {{extensionApproveForm.value | json}}</pre> -->
+<ngx-ui-loader></ngx-ui-loader>

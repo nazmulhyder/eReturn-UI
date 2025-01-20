@@ -1,0 +1,846 @@
+<div class="row" ngxUiLoaderBlurred *ngIf="isShow">
+  <div class="col-sm-12 container-cover-shadow">
+    <div class="row custom-container" style="margin-top: 36px">
+      <div class="col-sm-6">
+        <div class="content-background" style="height: 100%">
+          <span class="headline">Assessment Information</span>
+          <form style="margin-top: 25px" [formGroup]="formGroup">
+            <div class="form-group">
+              <label for="returnScheme">Return Scheme</label>
+              <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="returnScheme"></i>
+              <ng-template #returnScheme>
+                <div style="text-align: left;" [innerHtml]="returnSchemeTooltip"></div>
+              </ng-template>
+              <select class="form-control" id="returnScheme" formControlName="returnScheme">
+                <option value="Universal Self">Universal Self</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="assessmentYear">Assessment Year</label>
+              <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="assessmentYear"></i>
+              <ng-template #assessmentYear>
+                <div style="text-align: left;" [innerHtml]="assessmentYearTooltip"></div>
+              </ng-template>
+              <select class="form-control" id="assessmentYear" formControlName="assessmentYear">
+                <option value="2021-2022">2021-2022</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Income Year</label>
+              <div class="row" style="margin-top: 10px;">
+                <div class="col-md-6 col-sm-12">
+                  <div class="row">
+                    <div class="col-md-2 col-sm-12">
+                      <label class="labelFrom" style="margin-top: 5px;">From</label>
+                    </div>
+                    <div class="col-md-10 col-sm-12 input-group mb-3">
+                      <input type="text" class="form-control dateInputField" formControlName="fromIncomeYear" bsDatepicker
+                        [minDate]="minDate" [maxDate]="maxDate" aria-label="Recipient's username"
+                        aria-describedby="button-addon2" #fromIncomeYear="bsDatepicker"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }">
+                      <div class="input-group-append calendarBoxClass">
+                        <button class="btn btn-outline-info btn-sm calendarIconBtnClass" type="button" (click)="fromIncomeYear.toggle()">
+                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <div class="row">
+                    <div class="col-md-2 col-sm-12 labelDivClass">
+                      <label class="labelTo">To</label>
+                      <!-- <label class="labelTo" style="margin-top: 5px; padding-left: 20px;">To</label> -->
+                    </div>
+                    <div class="col-md-10 col-sm-12 input-group mb-3">
+                      <input type="text" class="form-control dateInputField" formControlName="toIncomeYear" bsDatepicker
+                        [minDate]="minDate" [maxDate]="maxDate" aria-label="Recipient's username"
+                        aria-describedby="button-addon2" #toIncomeYear="bsDatepicker"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }">
+                      <div class="input-group-append calendarBoxClass">
+                        <button class="btn btn-outline-info btn-sm calendarIconBtnClass" type="button" (click)="toIncomeYear.toggle()">
+                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Any taxable income in the above-mentioned income year?
+                 <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="anyTaxableIncomeTT"></i>
+              </label>
+              <!-- <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="anyTaxableIncomeTT"></i> -->
+              <ng-template #anyTaxableIncomeTT>
+                <div style="text-align: left;" [innerHtml]="anyTaxableIncome"></div>
+              </ng-template>
+              <div class="row">
+                <div class="col-md-6 input-group mb-2">
+                  <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                    <input class="form-check-input" type="radio" (change)="onRadioChangeIncomeYesByMentionedYr($event)"
+                      formControlName="anyIncome" value="1">
+                    <label class="form-check-label" for="defaultCheck1" style="margin-right: 40px;">
+                      Yes
+                    </label>
+                    <input class="form-check-input" type="radio"
+                      (change)="onRadioChangeIncomeNotByMentionedYr($event,anyIncomeNo)" formControlName="anyIncome"
+                      value="0">
+                    <label class="form-check-label">
+                      No
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Any income which is fully exempted from tax?
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="haveTaxExemptedIncomeTT"></i>
+              </label>
+              
+              <ng-template #haveTaxExemptedIncomeTT> <div [innerHtml]="taxExmpIncome"></div>
+              </ng-template>
+              <div class="row">
+                <div class="col-md-6 input-group mb-2">
+                  <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                    <input class="form-check-input" type="radio" value="1" name="haveTaxExemptedInc"
+                      formControlName="haveTaxExemptedInc" (change)="onChange_Have_Tax_Exempted_Income($event, removeTEI)">
+
+                    <label class="form-check-label" for="defaultCheck1" style="margin-right: 40px;">
+                      Yes
+                    </label>
+                    <input class="form-check-input" type="radio" value="0" name="haveTaxExemptedInc"
+                      formControlName="haveTaxExemptedInc" (change)="onChange_Have_Tax_Exempted_Income($event, removeTEI)">
+                    <label class="form-check-label" for="defaultCheck2">
+                      No
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Resident Status</label>
+              <div class="row">
+                <div class="col-12 input-group mb-2">
+                  <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                    <input class="form-check-input" type="radio" (change)="isResidencePerson($event)"
+                      formControlName="residentStatus" value="1">
+                    <label class="form-check-label" for="defaultCheck3" style="margin-right: 40px;">
+                      Resident
+                    </label>
+                    <input class="form-check-input" type="radio" (change)="isNotResidencePerson($event)"
+                      formControlName="residentStatus" value="0">
+                    <label class="form-check-label" for="defaultCheck4">
+                      Non Resident
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group" [hidden]="!NotResident">
+              <label for="firmInput2">Country of Residence</label>
+
+              <select class="form-control" formControlName="countryResidence">
+                <option value="0" selected>Select</option>
+                <option value="Afganistan">Afghanistan</option>
+                <option value="Albania">Albania</option>
+                <option value="Algeria">Algeria</option>
+                <option value="American Samoa">American Samoa</option>
+                <option value="Andorra">Andorra</option>
+                <option value="Angola">Angola</option>
+                <option value="Anguilla">Anguilla</option>
+                <option value="Antigua & Barbuda">Antigua & Barbuda</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Armenia">Armenia</option>
+                <option value="Aruba">Aruba</option>
+                <option value="Australia">Australia</option>
+                <option value="Austria">Austria</option>
+                <option value="Azerbaijan">Azerbaijan</option>
+                <option value="Bahamas">Bahamas</option>
+                <option value="Bahrain">Bahrain</option>
+                <option value="Barbados">Barbados</option>
+                <option value="Belarus">Belarus</option>
+                <option value="Belgium">Belgium</option>
+                <option value="Belize">Belize</option>
+                <option value="Benin">Benin</option>
+                <option value="Bermuda">Bermuda</option>
+                <option value="Bhutan">Bhutan</option>
+                <option value="Bolivia">Bolivia</option>
+                <option value="Bonaire">Bonaire</option>
+                <option value="Bosnia & Herzegovina">Bosnia & Herzegovina</option>
+                <option value="Botswana">Botswana</option>
+                <option value="Brazil">Brazil</option>
+                <option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
+                <option value="Brunei">Brunei</option>
+                <option value="Bulgaria">Bulgaria</option>
+                <option value="Burkina Faso">Burkina Faso</option>
+                <option value="Burundi">Burundi</option>
+                <option value="Cambodia">Cambodia</option>
+                <option value="Cameroon">Cameroon</option>
+                <option value="Canada">Canada</option>
+                <option value="Canary Islands">Canary Islands</option>
+                <option value="Cape Verde">Cape Verde</option>
+                <option value="Cayman Islands">Cayman Islands</option>
+                <option value="Central African Republic">Central African Republic</option>
+                <option value="Chad">Chad</option>
+                <option value="Channel Islands">Channel Islands</option>
+                <option value="Chile">Chile</option>
+                <option value="China">China</option>
+                <option value="Christmas Island">Christmas Island</option>
+                <option value="Cocos Island">Cocos Island</option>
+                <option value="Colombia">Colombia</option>
+                <option value="Comoros">Comoros</option>
+                <option value="Congo">Congo</option>
+                <option value="Cook Islands">Cook Islands</option>
+                <option value="Costa Rica">Costa Rica</option>
+                <option value="Cote DIvoire">Cote DIvoire</option>
+                <option value="Croatia">Croatia</option>
+                <option value="Cuba">Cuba</option>
+                <option value="Curaco">Curacao</option>
+                <option value="Cyprus">Cyprus</option>
+                <option value="Czech Republic">Czech Republic</option>
+                <option value="Denmark">Denmark</option>
+                <option value="Djibouti">Djibouti</option>
+                <option value="Dominica">Dominica</option>
+                <option value="Dominican Republic">Dominican Republic</option>
+                <option value="East Timor">East Timor</option>
+                <option value="Ecuador">Ecuador</option>
+                <option value="Egypt">Egypt</option>
+                <option value="El Salvador">El Salvador</option>
+                <option value="Equatorial Guinea">Equatorial Guinea</option>
+                <option value="Eritrea">Eritrea</option>
+                <option value="Estonia">Estonia</option>
+                <option value="Ethiopia">Ethiopia</option>
+                <option value="Falkland Islands">Falkland Islands</option>
+                <option value="Faroe Islands">Faroe Islands</option>
+                <option value="Fiji">Fiji</option>
+                <option value="Finland">Finland</option>
+                <option value="France">France</option>
+                <option value="French Guiana">French Guiana</option>
+                <option value="French Polynesia">French Polynesia</option>
+                <option value="French Southern Ter">French Southern Ter</option>
+                <option value="Gabon">Gabon</option>
+                <option value="Gambia">Gambia</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Germany">Germany</option>
+                <option value="Ghana">Ghana</option>
+                <option value="Gibraltar">Gibraltar</option>
+                <option value="Great Britain">Great Britain</option>
+                <option value="Greece">Greece</option>
+                <option value="Greenland">Greenland</option>
+                <option value="Grenada">Grenada</option>
+                <option value="Guadeloupe">Guadeloupe</option>
+                <option value="Guam">Guam</option>
+                <option value="Guatemala">Guatemala</option>
+                <option value="Guinea">Guinea</option>
+                <option value="Guyana">Guyana</option>
+                <option value="Haiti">Haiti</option>
+                <option value="Hawaii">Hawaii</option>
+                <option value="Honduras">Honduras</option>
+                <option value="Hong Kong">Hong Kong</option>
+                <option value="Hungary">Hungary</option>
+                <option value="Iceland">Iceland</option>
+                <option value="Indonesia">Indonesia</option>
+                <option value="India">India</option>
+                <option value="Iran">Iran</option>
+                <option value="Iraq">Iraq</option>
+                <option value="Ireland">Ireland</option>
+                <option value="Isle of Man">Isle of Man</option>
+                <option value="Israel">Israel</option>
+                <option value="Italy">Italy</option>
+                <option value="Jamaica">Jamaica</option>
+                <option value="Japan">Japan</option>
+                <option value="Jordan">Jordan</option>
+                <option value="Kazakhstan">Kazakhstan</option>
+                <option value="Kenya">Kenya</option>
+                <option value="Kiribati">Kiribati</option>
+                <option value="Korea North">Korea North</option>
+                <option value="Korea Sout">Korea South</option>
+                <option value="Kuwait">Kuwait</option>
+                <option value="Kyrgyzstan">Kyrgyzstan</option>
+                <option value="Laos">Laos</option>
+                <option value="Latvia">Latvia</option>
+                <option value="Lebanon">Lebanon</option>
+                <option value="Lesotho">Lesotho</option>
+                <option value="Liberia">Liberia</option>
+                <option value="Libya">Libya</option>
+                <option value="Liechtenstein">Liechtenstein</option>
+                <option value="Lithuania">Lithuania</option>
+                <option value="Luxembourg">Luxembourg</option>
+                <option value="Macau">Macau</option>
+                <option value="Macedonia">Macedonia</option>
+                <option value="Madagascar">Madagascar</option>
+                <option value="Malaysia">Malaysia</option>
+                <option value="Malawi">Malawi</option>
+                <option value="Maldives">Maldives</option>
+                <option value="Mali">Mali</option>
+                <option value="Malta">Malta</option>
+                <option value="Marshall Islands">Marshall Islands</option>
+                <option value="Martinique">Martinique</option>
+                <option value="Mauritania">Mauritania</option>
+                <option value="Mauritius">Mauritius</option>
+                <option value="Mayotte">Mayotte</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Midway Islands">Midway Islands</option>
+                <option value="Moldova">Moldova</option>
+                <option value="Monaco">Monaco</option>
+                <option value="Mongolia">Mongolia</option>
+                <option value="Montserrat">Montserrat</option>
+                <option value="Morocco">Morocco</option>
+                <option value="Mozambique">Mozambique</option>
+                <option value="Myanmar">Myanmar</option>
+                <option value="Nambia">Nambia</option>
+                <option value="Nauru">Nauru</option>
+                <option value="Nepal">Nepal</option>
+                <option value="Netherland Antilles">Netherland Antilles</option>
+                <option value="Netherlands">Netherlands (Holland, Europe)</option>
+                <option value="Nevis">Nevis</option>
+                <option value="New Caledonia">New Caledonia</option>
+                <option value="New Zealand">New Zealand</option>
+                <option value="Nicaragua">Nicaragua</option>
+                <option value="Niger">Niger</option>
+                <option value="Nigeria">Nigeria</option>
+                <option value="Niue">Niue</option>
+                <option value="Norfolk Island">Norfolk Island</option>
+                <option value="Norway">Norway</option>
+                <option value="Oman">Oman</option>
+                <option value="Pakistan">Pakistan</option>
+                <option value="Palau Island">Palau Island</option>
+                <option value="Palestine">Palestine</option>
+                <option value="Panama">Panama</option>
+                <option value="Papua New Guinea">Papua New Guinea</option>
+                <option value="Paraguay">Paraguay</option>
+                <option value="Peru">Peru</option>
+                <option value="Phillipines">Philippines</option>
+                <option value="Pitcairn Island">Pitcairn Island</option>
+                <option value="Poland">Poland</option>
+                <option value="Portugal">Portugal</option>
+                <option value="Puerto Rico">Puerto Rico</option>
+                <option value="Qatar">Qatar</option>
+                <option value="Republic of Montenegro">Republic of Montenegro</option>
+                <option value="Republic of Serbia">Republic of Serbia</option>
+                <option value="Reunion">Reunion</option>
+                <option value="Romania">Romania</option>
+                <option value="Russia">Russia</option>
+                <option value="Rwanda">Rwanda</option>
+                <option value="St Barthelemy">St Barthelemy</option>
+                <option value="St Eustatius">St Eustatius</option>
+                <option value="St Helena">St Helena</option>
+                <option value="St Kitts-Nevis">St Kitts-Nevis</option>
+                <option value="St Lucia">St Lucia</option>
+                <option value="St Maarten">St Maarten</option>
+                <option value="St Pierre & Miquelon">St Pierre & Miquelon</option>
+                <option value="St Vincent & Grenadines">St Vincent & Grenadines</option>
+                <option value="Saipan">Saipan</option>
+                <option value="Samoa">Samoa</option>
+                <option value="Samoa American">Samoa American</option>
+                <option value="San Marino">San Marino</option>
+                <option value="Sao Tome & Principe">Sao Tome & Principe</option>
+                <option value="Saudi Arabia">Saudi Arabia</option>
+                <option value="Senegal">Senegal</option>
+                <option value="Seychelles">Seychelles</option>
+                <option value="Sierra Leone">Sierra Leone</option>
+                <option value="Singapore">Singapore</option>
+                <option value="Slovakia">Slovakia</option>
+                <option value="Slovenia">Slovenia</option>
+                <option value="Solomon Islands">Solomon Islands</option>
+                <option value="Somalia">Somalia</option>
+                <option value="South Africa">South Africa</option>
+                <option value="Spain">Spain</option>
+                <option value="Sri Lanka">Sri Lanka</option>
+                <option value="Sudan">Sudan</option>
+                <option value="Suriname">Suriname</option>
+                <option value="Swaziland">Swaziland</option>
+                <option value="Sweden">Sweden</option>
+                <option value="Switzerland">Switzerland</option>
+                <option value="Syria">Syria</option>
+                <option value="Tahiti">Tahiti</option>
+                <option value="Taiwan">Taiwan</option>
+                <option value="Tajikistan">Tajikistan</option>
+                <option value="Tanzania">Tanzania</option>
+                <option value="Thailand">Thailand</option>
+                <option value="Togo">Togo</option>
+                <option value="Tokelau">Tokelau</option>
+                <option value="Tonga">Tonga</option>
+                <option value="Trinidad & Tobago">Trinidad & Tobago</option>
+                <option value="Tunisia">Tunisia</option>
+                <option value="Turkey">Turkey</option>
+                <option value="Turkmenistan">Turkmenistan</option>
+                <option value="Turks & Caicos Is">Turks & Caicos Is</option>
+                <option value="Tuvalu">Tuvalu</option>
+                <option value="Uganda">Uganda</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="Ukraine">Ukraine</option>
+                <option value="United Arab Erimates">United Arab Emirates</option>
+                <option value="United States of America">United States of America</option>
+                <option value="Uraguay">Uruguay</option>
+                <option value="Uzbekistan">Uzbekistan</option>
+                <option value="Vanuatu">Vanuatu</option>
+                <option value="Vatican City State">Vatican City State</option>
+                <option value="Venezuela">Venezuela</option>
+                <option value="Vietnam">Vietnam</option>
+                <option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
+                <option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
+                <option value="Wake Island">Wake Island</option>
+                <option value="Wallis & Futana Is">Wallis & Futana Is</option>
+                <option value="Yemen">Yemen</option>
+                <option value="Zaire">Zaire</option>
+                <option value="Zambia">Zambia</option>
+                <option value="Zimbabwe">Zimbabwe</option>
+              </select>
+
+            </div>
+
+          </form>
+        </div>
+      </div>
+      <div class="headsOfIncomeCls col-sm-6">
+        <div class="content-background">
+          <span class="headline">Heads of Income</span>
+          <form style="margin-top: 25px" [formGroup]="formGroup">
+            <div class="input-group mb-3">
+              <div class="form-check" style="padding-right: 5px">
+                <input [attr.disabled]="!isAnyIncomeInAssessmentYr ? true : null" class="form-check-input"
+                  (change)="onSalaryChange($event,removeSalary)" type="checkbox" value="" id="salaries"
+                  formControlName="salaries">
+                <label class="form-check-label" for="salaries">
+                  Salaries
+                </label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="salaries" placement="top"></i>
+                <ng-template #salaries>
+                  <div style="text-align: left;" [innerHtml]="salaryTooltip">
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="form-check" style="padding-right: 5px">
+                <input [attr.disabled]="!isAnyIncomeInAssessmentYr ? true : null" class="form-check-input"
+                  (change)="onSecurityChange($event,removeIOS)" type="checkbox" value="" id="security"
+                  formControlName="security">
+                <label class="form-check-label" for="security">
+                  Interest on Securities
+                </label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="interestOnSecurity" placement="top"></i>
+                <ng-template #interestOnSecurity>
+                  <div style="text-align: left;" [innerHtml]="interestOnSecurityTooltip">
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="form-check" style="padding-right: 5px">
+                <input [attr.disabled]="!isAnyIncomeInAssessmentYr ? true : null" class="form-check-input"
+                  (change)="onHousePropertyChange($event,removeHP)" type="checkbox" value="" id="houseProperty"
+                  formControlName="houseProperty">
+                <label class="form-check-label" for="houseProperty">
+                  Income from House Property
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="houseProperty" placement="top"></i>
+                  <ng-template #houseProperty>
+                    <div style="text-align: left;" [innerHtml]="housePropertyTooltip"></div>
+                  </ng-template>
+                </label>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="form-check" style="padding-right: 5px">
+                <input [attr.disabled]="!isAnyIncomeInAssessmentYr ? true : null" class="form-check-input"
+                  (change)="onAgricultureChange($event,removeAgriculture)" type="checkbox" value="" id="agriculture"
+                  formControlName="agriculture">
+                <label class="form-check-label" for="agriculture">
+                  Agricultural Income
+                </label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="agriculture" placement="top"></i>
+                <ng-template #agriculture>
+                  <div style="text-align: left;" [innerHtml]="agricultureTooltip"></div>
+                </ng-template>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="form-check" style="padding-right: 5px">
+                <input [attr.disabled]="!isAnyIncomeInAssessmentYr ? true : null" class="form-check-input"
+                  (change)="onBusinessProfessionChange($event,removeBusiness)" type="checkbox" value=""
+                  id="businessProfession" formControlName="businessProfession">
+                <label class="form-check-label" for="businessProfession">
+                  Income from Business or Profession
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="businessProfession" placement="top"></i>
+                  <ng-template #businessProfession>
+                    <div style="text-align: left;" [innerHtml]="businessOrProfessionTooltip"></div>
+                  </ng-template>
+                </label>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="form-check" style="padding-right: 5px">
+                <input [attr.disabled]="!isAnyIncomeInAssessmentYr ? true : null" class="form-check-input"
+                  (change)="onCapitalChange($event,removeCapitalGain)" type="checkbox" value="" id="capital"
+                  formControlName="capital">
+                <label class="form-check-label" for="capital">
+                  Capital Gains
+                </label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="capital" placement="top"></i>
+                <ng-template #capital>
+                  <div style="text-align: left;" [innerHtml]="capitalgainTooltip"></div>
+                </ng-template>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="form-check" style="padding-right: 5px">
+                <input [attr.disabled]="!isAnyIncomeInAssessmentYr ? true : null" class="form-check-input"
+                  (change)="onOthersChange($event,removeIFOS)" type="checkbox" value="" id="others"
+                  formControlName="others" [checked]="isOtherschecked">
+                <label class="form-check-label" for="others">
+                  Income from Other Sources
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="others" placement="top"></i>
+                <ng-template #others>
+                  <div style="text-align: left;" [innerHtml]="incomeFromOtherSourcesTooltip"></div>
+                </ng-template>
+                </label>
+                
+              </div>
+            </div>
+          </form>
+        </div>
+
+
+        <div class="content-background" style="margin-top: 20px">
+          <span>Any income from the following sources?</span>
+          <form style="margin-top: 25px" [formGroup]="formGroup">
+            <div class="input-group mb-3">
+              <div class="form-check" style="padding-right: 5px">
+                <input [attr.disabled]="!isAnyIncomeInAssessmentYr ? true : null" class="form-check-input"
+                  (change)="onFirmChange($event,removeFirm)" type="checkbox" value="" id="firm" formControlName="firm">
+                <label class="form-check-label" for="firm">
+                  As a Partner of a Firm
+                </label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="firm" placement="top"></i>
+                <ng-template #firm>
+                  <div style="text-align: left;" [innerHtml]="firmTooltip"></div>
+                </ng-template>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="form-check" style="padding-right: 5px">
+                <input [attr.disabled]="!isAnyIncomeInAssessmentYr ? true : null" class="form-check-input"
+                  (change)="onAopChange($event,removeAoP)" type="checkbox" value="" id="aop" formControlName="aop"
+                  [checked]="isAopchecked">
+                <label class="form-check-label" for="aop">
+                  As a Member of an AoP
+                </label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="aop" placement="top"></i>
+                <ng-template #aop>
+                  <div style="text-align: left;" [innerHtml]="aopTooltip"></div>
+                </ng-template>
+              </div>
+            </div>
+
+            <div class="input-group mb-3" *ngIf="isStatusOfResident">
+              <div class="form-check" style="padding-right: 5px">
+                <input [attr.disabled]="!isAnyIncomeInAssessmentYr ? true : null" class="form-check-input"
+                  (change)="onOutsideIncomeChange($event,removeFI)" type="checkbox" value="" id="outsideIncome"
+                  formControlName="outsideIncome">
+                <label class="form-check-label" for="outsideIncome">
+                  Income Earned outside Bangladesh
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="outsideIncome" placement="top"></i>
+                </label>
+                <ng-template #outsideIncome>
+                  <div style="text-align: left;" [innerHtml]="incomeOutsideTooltip"></div>
+                </ng-template>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="form-check" style="padding-right: 5px">
+                <input [attr.disabled]="!isAnyIncomeInAssessmentYr ? true : null" class="form-check-input"
+                  (change)="onSpouseChildChange($event,removeSI)" type="checkbox" value="" id="spouseChild"
+                  formControlName="spouseChild">
+                <label class="form-check-label" for="spouseChild">
+                  Income Earned by the Spouse or Minor Children
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="spouseChild" placement="top"></i>
+                  <ng-template #spouseChild>
+                    <div style="text-align: left;" [innerHtml]="spouseOrMinorChildTooltip"></div>
+                  </ng-template>
+                  <label class="form-check-label">(Not Assessed Separately)</label>
+                </label>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row mt-4 mb-4">
+      <div class="col-sm-12 text-right">
+        <button type="button" class="btn btn-sm saveDraftBtn" (click)="saveDraft()">
+          Save Draft</button>
+        <button type="button" class="btn btn-sm saveContinueBtn" (click)="onNextPage()">
+          <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em" viewBox="0 0 16 16"
+            class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+          </svg>
+          Save & Continue</button>
+      </div>
+    </div> -->
+      <!-- bottom button design start -->
+      <div class="row mt-4 mb-4">
+        <div class="col-sm-4 pl-3">
+          <!-- <button type="button" class="btn btn-sm backBtn" (click)="onBackPage()">
+            <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left"
+              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+            </svg>&nbsp;
+            Back</button> -->
+        </div>
+        <div class="col-sm-8">
+          <div class="row">
+            <div class="col-sm-12 text-right">
+              <button type="button" class="btn btn-sm saveDraftBtn" (click)="saveDraft()">
+                Save Draft</button>
+              <button type="button" class="btn btn-sm saveContinueBtn" (click)="onNextPage()">
+                <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em" viewBox="0 0 16 16"
+                  class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                </svg>
+                Save & Continue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- ANY INCOME -->
+<ng-template #anyIncomeNo>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchangeAnyIncome()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Disable All Your Income Section.</p>
+    <p>Still want to change any Income?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="no_Income_selected()">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchangeAnyIncome()">No</button>
+  </div>
+</ng-template>
+
+
+<!-- DELETE ALL Salary -->
+<ng-template #removeSalary>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_Salary()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Salary Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="remove_Salary()">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_Salary()">No</button>
+  </div>
+</ng-template>
+
+<!-- DELETE ALL IOS -->
+<ng-template #removeIOS>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_IOS()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Interest on Security Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="remove_IOS()">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_IOS()">No</button>
+  </div>
+</ng-template>
+
+<!-- DELETE ALL House Property -->
+<ng-template #removeHP>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_HP()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your House Property Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="remove_HP()">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_HP()">No</button>
+  </div>
+</ng-template>
+
+<!-- DELETE ALL Agriculture -->
+<ng-template #removeAgriculture>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_Agriculture()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Agriculture Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="remove_Agriculture()">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_Agriculture()">No</button>
+  </div>
+</ng-template>
+
+<!-- DELETE ALL Business -->
+<ng-template #removeBusiness>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_Business()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Business or Profession Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="remove_Business()">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_Business()">No</button>
+  </div>
+</ng-template>
+
+<!-- DELETE ALL CAPITAL GAIN -->
+<ng-template #removeCapitalGain>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_CG()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Capital Gain Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="remove_CG()">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_CG()">No</button>
+  </div>
+</ng-template>
+
+<!-- DELETE ALL IFOS -->
+<ng-template #removeIFOS>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_IFOS()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Income from Other Source Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="remove_IFOS()">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_IFOS()">No</button>
+  </div>
+</ng-template>
+
+<!-- DELETE ALL Firm -->
+<ng-template #removeFirm>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_Firm()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Firm Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="remove_Firm()">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_Firm()">No</button>
+  </div>
+</ng-template>
+
+<!-- DELETE ALL AoP -->
+<ng-template #removeAoP>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_AoP()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your AoP Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="remove_AoP()">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_AoP()">No</button>
+  </div>
+</ng-template>
+
+<!-- DELETE ALL Foreign Income-->
+<ng-template #removeFI>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_FI()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Foreign Income Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="remove_FI()">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_FI()">No</button>
+  </div>
+</ng-template>
+
+<!-- DELETE ALL spouse income-->
+<ng-template #removeSI>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_SI()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Spouse/Minor Income Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="remove_SI()">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_SI()">No</button>
+  </div>
+</ng-template>
+
+<!-- DELETE ALL Full Tax Exempted Income -->
+<ng-template #removeTEI>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_TEI()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Tax Exempted Income Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="remove_TEI()">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_TEI()">No</button>
+  </div>
+</ng-template>
+
+<ngx-ui-loader></ngx-ui-loader>
+<!-- <pre>{{formGroup.value | json}}</pre> -->

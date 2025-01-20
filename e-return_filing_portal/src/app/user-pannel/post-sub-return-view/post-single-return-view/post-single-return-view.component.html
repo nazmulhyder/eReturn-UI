@@ -1,0 +1,338 @@
+<div class="row custom-container-single-rv" style="margin-top: 10px">
+    <div class="col-sm-12">
+        <!-- <div class="content-background" style="height: 100%"> -->
+        <!--portion 1-->
+        <div class="row px-2 pt-3">
+            <div class="col-sm-6 text-left ft-13 font-weight-bolder">National Board of Revenue</div>
+            <div class="col-sm-6 text-right ft-13 font-weight-bolder">IT-GHA2020</div>
+        </div>
+        <!--portion 2-->
+        <div class="row px-2 pt-2 text-center">
+            <div class="col-sm-12 mt-3">
+                <h5 class="font-weight-bolder">Return of Income under Income-Tax Ordinance,1984 (Ord. XXXVI of
+                    1984)</h5>
+                <p class="ft-13">Applicable for individual taxpayers having taxable income and gross wealth not
+                    exceeding
+                    tk.
+                    4,00,000/- and
+                    tk. 40,00,000/- respectively</p>
+            </div>
+            <div class="col-sm-12 text-right customMargin">
+                <img src="assets\img\logo\eReturn_Logo.svg" class="eReturn-logo" alt="logo">
+            </div>
+        </div>
+        <!--portion 3-->
+        <div class="row custom-container-single-rv">
+            <div class="col-sm-12">
+                <div class="content-background" style="height: 100%">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <div class="form-group row">
+                                <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bolder">Office
+                                    Register
+                                    No.</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="custom-input" value="{{office_register_no}}" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword"
+                                    class="col-sm-2 col-form-label font-weight-bolder">1.Name:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="custom-input" value="{{name}}" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword"
+                                    class="col-sm-2 col-form-label font-weight-bolder">2.TIN:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="custom-input" value="{{tin}}" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword"
+                                    class="col-sm-2 col-form-label font-weight-bolder">3.Circle:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="custom-input" value="{{circle}}" readonly>
+                                </div>
+                                <label for="inputPassword"
+                                    class="col-sm-2 col-form-label pl-4 font-weight-bolder">4.Zone:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="custom-input" value="{{zone}}" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword"
+                                    class="col-sm-2 col-form-label font-weight-bolder">5.Resident:</label>
+                                <div class="col-sm-4">
+                                    <input type="checkbox" class="pull-left" [checked]="isResidentChecked"
+                                        style="margin-top: 8px;">
+
+                                    <input type="checkbox" class="pull-right" [checked]="isNonResidentChecked"
+                                        style="margin-top: 8px;">
+                                    <label for="inputPassword"
+                                        class="col-form-label pull-right mr-5 font-weight-bolder">6.Non
+                                        Resident:</label>
+                                </div>
+                                <label for="inputPassword"
+                                    class="col-sm-2 col-form-label pl-2 font-weight-bolder">7.Assessment
+                                    Year:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="custom-input" value="{{Assessment_year}}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group col-md-12 px-2">
+                                <button class="btn w-100 text-black bg-white font-weight-bolder ft-11"
+                                    style="border: 1px solid #145da0;">Universal Self</button>
+                            </div>
+                            <div class="form-group col-md-12 px-2">
+                                <img src="{{taxpayerProfileImg}}" alt=""
+                                    style="width:100%;height:145px;border: 1px solid #145da0;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--portion 4-->
+        <div class="row custom-container-single-rv" style="margin-top: 10px">
+            <div class="col-sm-6">
+                <div class="content-background" style="height: 100%">
+                    <div class="row">
+                        <div class="col-sm-12 mb-2 ft-12 font-weight-bolder">
+                            <label for="">8.Present Address and Mobile No.</label>
+                        </div>
+                        <div class="col-sm-12" style="border-top: 1px solid #bbb;height: 2px;width: 100%;">
+                        </div>
+                        <div class="col-sm-12 pt-2">
+                            <address class="ft-12">
+                                {{present_address}}
+                            </address>
+                            <address class="ft-12">
+                                {{mobile}}
+                            </address>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="content-background" style="height: 100%">
+                    <div class="row">
+                        <div class="col-sm-12 mb-2 ft-12 font-weight-bolder">
+                            <label for="">9.Permanent Address and NID No.</label>
+                        </div>
+                        <div class="col-sm-12" style="border-top: 1px solid #bbb;height: 2px;width: 100%;">
+                        </div>
+                        <div class="col-sm-12 pt-2">
+                            <address class="ft-12">
+                                {{permanent_address}}
+                            </address>
+                            <address class="ft-12">
+                                {{nid}}
+                            </address>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--portion 5-->
+        <div class="row custom-container-single-rv" style="margin-top: 10px">
+            <div class="col-sm-12">
+                <div class="content-background" style="height: 100%">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-2 col-form-label font-weight-bolder">10.Taxable
+                                    Income:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="custom-input" value="{{taxable_income}}" readonly>
+                                </div>
+                                <label for="inputPassword"
+                                    class="col-sm-2 col-form-label pl-5 font-weight-bolder">11.Gross
+                                    Wealth:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="custom-input" value="{{gross_wealth | number}}" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-2 col-form-label font-weight-bolder">12.Account
+                                    of
+                                    Tax:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="custom-input" value="{{amount_of_tax}}" readonly>
+                                </div>
+                                <label for="inputPassword"
+                                    class="col-sm-2 col-form-label px-0 font-weight-bolder">13.Source
+                                    of
+                                    Income:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="custom-input" value="{{source_of_income}}" readonly>
+                                </div>
+                                <label for="inputPassword" class="col-sm-2 px-0 font-weight-bolder"
+                                    style="font-size: 11px !important;">14.Bank &
+                                    Challan No.
+                                    & Date:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="custom-input" value="{{bank_and_challan_no}}" readonly>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--portion 6-->
+        <!-- <div class="row custom-container-single-rv" style="margin-top: 10px">
+            <div class="col-sm-12">
+                <div class="content-background" style="height: 100%">
+                    <div class="row ft-11">
+                        <div class="col-md-2 font-weight-bolder ft-12">15.Verifcation:</div>
+                        <div class="col-md-10">
+                            <div class="col-md-12 ft-12">
+                                I <b><u>{{name}}</u></b>.Father/Spouse
+                                <b><u>{{father_name}}</u></b>, <b>TIN
+                                    <u>{{tin}}</u></b> do
+                                solemnly declare that
+                                i am eligible for this Return form and information given here is correct and
+                                complete.I
+                                don't have any
+                                motor car and investment in house property
+                                or in apartment in any city corporation area.
+                            </div>
+
+                            <div class="col-md-12 pt-5">
+                                <div class="row px-0">
+                                    <div class="col-md-6 font-weight-bolder">
+                                        Date : {{currentDate}}
+                                    </div>
+                                    <div class="col-md-6 font-weight-bolder">
+                                        Signature : <i>No signature required</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!--portion 7-->
+        <!-- <div class="row pb-2">
+            <div class="col-sm-12 text-center font-weight-bolder ft-11">
+                * Please show tax computation ,name list of documents attach herewidth and give brief descrition
+                of your
+                wealth
+                and liabilities overleaf.
+            </div>
+        </div> -->
+        <!--portion 8-->
+        <!-- <div class="row custom-container-single-rv" style="margin-top: 10px">
+            <div class="col-sm-12">
+                <div class="content-background" style="height: 100%">
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <button
+                                class="btn w-100 text-black bg-white font-weight-bolder ft-11 form-control universalSelf"
+                                style="border: 1px solid #145da0;">Universal Self</button>
+                        </div>
+                        <div class="form-group col-md-6 text-center">
+                            <h5 class="font-weight-bolder">Acknowledgment Receipt</h5>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <button
+                                class="btn w-100 text-black bg-white font-weight-bolder ft-11 form-control registerNo"
+                                style="border: 1px solid #145da0;">Register No. {{office_register_no}}</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group row">
+                                <label for="inputPassword"
+                                    class="col-sm-2 col-form-label font-weight-bolder">Name:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="custom-input" value="{{name}}" readonly>
+                                </div>
+                                <label for="inputPassword" class="col-sm-2 col-form-label font-weight-bolder">Assessment
+                                    year:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="custom-input" value="{{Assessment_year}}" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword"
+                                    class="col-sm-2 col-form-label font-weight-bolder">TIN:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="custom-input" value="{{tin}}" readonly>
+                                </div>
+                                <label for="inputPassword"
+                                    class="col-sm-2 col-form-label font-weight-bolder">Circle:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="custom-input" value="{{circle}}" readonly>
+                                </div>
+                                <label for="inputPassword"
+                                    class="col-sm-2 col-form-label font-weight-bolder">Zone:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="custom-input" value="{{zone}}" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-2 col-form-label font-weight-bolder">Taxable
+                                    Income:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="custom-input" value="{{taxable_income}}" readonly>
+                                </div>
+                                <label for="inputPassword" class="col-sm-2 col-form-label font-weight-bolder">Gross
+                                    Wealth:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="custom-input" value="{{gross_wealth | number}}" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-2 col-form-label font-weight-bolder">Amount
+                                    of
+                                    Tax:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="custom-input" value="{{amount_of_tax}}" readonly>
+                                </div>
+                                <label for="inputPassword"
+                                    class="col-sm-2 col-form-label font-weight-bolder">Bank/Mobile
+                                    No.:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="custom-input" value="{{mobile}}" readonly>
+                                </div>
+                                <label for="inputPassword" class="col-sm-2 col-form-label font-weight-bolder">Challan
+                                    No.:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="custom-input" value="{{bank_and_challan_no}}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" style="padding-top:150px;">
+                                <div class="col-sm-12 text-right ft-12">
+                                    <i>No signature required</i>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6 text-left col-form-label font-weight-bolder ft-12">
+                                        <div class="row">
+                                            <div class="col-sm-3">Date:</div>
+                                            <div class="col-sm-5 text-left">
+                                                <input type="text" class="custom-input ft-12" value="{{currentDate}}"
+                                                    readonly>
+                                            </div>
+                                            <div class="col-sm-4"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 text-right col-form-label font-weight-bolder ft-12">Signature
+                                        of the receiving office with seal</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- </div> -->
+    </div>
+</div>

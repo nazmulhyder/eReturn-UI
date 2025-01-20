@@ -1,0 +1,130 @@
+<div ngxUiLoaderBlurred *ngIf="isShow && isCompletePatchValue">
+  <div class="row parent">
+    <!-- <div class="col-sm-12" style="padding:0;"> -->
+    <div class="col-sm-12">
+      <div class="row mb-4">
+        <div class="col-12 col-sm-2">
+          <!-- <span style="font-size:20px; font-weight: bold; color: #22223B;">Post Submission Return View</span> -->
+          <span class="spanText">Return View</span>
+        </div>
+        <div class="col-12 col-sm-10">
+          <div class="row navBarSection">
+            <button type="button" class="btn btn-pill rounded-pill btn-outline-dark btn-customize btn-sm main_nav"
+              *ngFor="let head of selectedNavbar; let i = index" (click)="mainNavActiveSelect(head['id'])"
+              [class.active]="mainNavActive[head['id']]" routerLink="{{head['link']}}"
+              style="float: right; margin-right: 5px;">{{head['name']}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row scrollSection">
+    <div class="col-sm-12 container-cover-shadow scrollSectionMargin">
+      <app-post-single-return-view *ngIf="singleReturnViewVisible"></app-post-single-return-view>
+      <app-post-return-view941 *ngIf="commonReturnView_941Visible"></app-post-return-view941>
+      <app-post-return-view922 *ngIf="salaryReturnView_922Visible"></app-post-return-view922>
+      <app-post-return-view903 *ngIf="housePropertyView_903Visible && isHPDataExists"></app-post-return-view903>
+      <app-post-return-view884 *ngIf="businessReturnView_884Visible && isBusinessDataExists"></app-post-return-view884>
+      <app-post-return-view865 *ngIf="rebateReturnView_865Visible"></app-post-return-view865>
+      <app-post-return-view846 *ngIf="assetsReturnView_846Visible"></app-post-return-view846>
+      <!-- <app-post-return-view-it10-bb20167 *ngIf="it10bb20167ReturnViewVisible"></app-post-return-view-it10-bb20167> -->
+      <app-post-return-view-it10-bb20167 *ngIf="isExpenditureExists"></app-post-return-view-it10-bb20167>
+
+      <div class="col-sm-12" style="padding-left: 10px; padding-right: 10px;">
+        <div class="content-background" style="margin-bottom: 10px;">
+          <div class="row px-2 pt-2 text-center mt-2">
+            <div class="col-sm-12">
+              <h5 class="font-weight-bolder">Verification and signature</h5>
+            </div>
+          </div>
+          <div class="row border-full">
+            <div class="col-sm-12">
+              <div class="row">
+                <!-- <div class="col-sm-1">
+              <input type="checkbox" name="" id="">
+            </div> -->
+                <div class="col-sm-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h5>Verification</h5>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-1">
+                        <!-- <input class="largerCheckbox" [disabled]="isReturnSubmissionSuccessful==true" type="checkbox" [checked]="verificaionChecked" (change)="onVerificationChange($event)"> -->
+                        <input class="largerCheckbox" type="checkbox" [checked]="verificaionChecked"
+                          (change)="onVerificationChange($event)">
+                      </div>
+                      <div class="col-md-11 text-justify">
+                        I solemnly declare that to the best of my knowledge and belief, the information given in this
+                        return, statements, schedules, and online forms are correct and complete.
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="row border-top">
+                        <div class="col-sm-6 border-right">
+                          <div class="row">&nbsp;Name</div>
+                          <div class="row mb-2">&nbsp;{{taxPayerName}}</div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="row">&nbsp;Signature & Date</div>
+                          <div class="row mb-2">
+                            <i>
+                              &nbsp;This is a system generated document. No signature is required.
+                            </i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-sm-12" *ngIf="isShowSubmitButton"> -->
+      <div class="col-sm-12" style="padding-left: 10px; padding-right: 10px;">
+        <div class="mt-3 mb-3">
+          <!-- bottom button design start -->
+          <div class="row">
+            <div class="col-sm-12 text-right">
+              <button type="button" class="btn btn-sm saveContinueBtn"
+                (click)="gotoThanksGivingPage(returnSubmissionPopup)">
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                <!-- <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em" viewBox="0 0 16 16"
+                class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+              </svg> -->
+                Submit Return
+              </button>
+            </div>
+          </div>
+          <!-- new button design end -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<ngx-ui-loader text="Loading Return View"></ngx-ui-loader>
+
+<!-- popup for return submission -->
+<ng-template #returnSubmissionPopup>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="No_Submission()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Do you want to submit return?</p>
+    <button type="button" class="btn btn-success" style="float: right;" (click)="Submission_Yes()">Yes</button>
+    <button type="button" class="btn btn-danger" style="float: right; margin-right: 10px;"
+      (click)="No_Submission()">No</button>
+  </div>
+</ng-template>

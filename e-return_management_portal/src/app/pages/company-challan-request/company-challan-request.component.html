@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Company TDS List</title>
+</head>
+
+<!-- <div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-6 col-sm-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left iconStyle">
+                </i> Company TDS List &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-6 mt-3">
+            <label class="float-right" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="form-horizontal" [formGroup]="challanListForm" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="challanListTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th scope="col">WIN No.</th>
+                                    <th scope="col">Company Name</th>
+                                    <th scope="col">Challan No</th>
+                                    <th scope="col">Challan Date</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col" width="20%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of companyChallanGetData; let k = index">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row">{{ item.winNo }}</td>
+                                    <td scope="row">{{ item.companyName }}</td>
+                                    <td scope="row">{{ item.challanNo }}</td>
+                                    <td scope="row">{{ item.challanDate }}</td>
+                                    <td scope="row">{{ item.amount }}</td>
+                                    <td width="20%">
+                                        <button
+                                            (click)="onClickCompanyChallanConfirmation($event,k,confirmationModalShow)"
+                                            type="button" class="btn btn-sm uploadBtn">
+                                            <i class="fa fa-check titleText"></i>Verify & Approve
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #confirmationModalShow>
+    <div class="modal-header">
+        <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">Details</h5>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="close_confirmation()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" [formGroup]="ApproveForm" aria-labelledby="title">
+            <div class="row">
+                <input type="text" formControlName="id" class="form-control " hidden>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="companyName" class="label col-8 form-control-label">Name</label>
+                        <div class="col-12">
+                            <input type="text" placeholder="Enter Your Name" formControlName="companyName"
+                                class="form-control" id="companyName" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="winNo" class="label col-8 form-control-label">WIN</label>
+                        <div class="col-12">
+                            <input type="text" placeholder="Enter WIN" formControlName="winNo" class="form-control"
+                                id="winNo" readonly>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="assessmentYear" class="label col-8 form-control-label">Assessment Year</label>
+                        <div class="col-12">
+                            <input type="text" placeholder="Enter Your Name" formControlName="assessmentYear"
+                                class="form-control" id="assessmentYear" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="challanDate" class="label col-8 form-control-label ">Challan
+                            Date</label>
+                        <div class="col-12">
+                            <input type="text" placeholder="Enter Challan Date" formControlName="challanDate"
+                                class="form-control" id="challanDate" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="challanNo" class="label col-8 form-control-label">Challan
+                            No.</label>
+                        <div class="col-12">
+                            <input type="text" placeholder="Enter Challan No." formControlName="challanNo"
+                                class="form-control" id="challanNo" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="section" class="label col-8 form-control-label">Section</label>
+                        <div class="col-12">
+                            <input type="text" placeholder="Enter Your Section" formControlName="section"
+                                class="form-control" id="section" readonly>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="codeNo" class="label col-8 form-control-label ">Code No.</label>
+                        <div class="col-12">
+                            <input type="text" placeholder="Enter Code No." formControlName="codeNo"
+                                class="form-control" id="codeNo" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="amount" class="label col-8 form-control-label">Amount</label>
+                        <div class="col-12">
+                            <input type="text" placeholder="Enter Amount" formControlName="amount" class="form-control"
+                                id="amount" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="details" class="label col-8 form-control-label">Breakdown Details</label>
+                        <div class="col-12">
+                            <div class="table-responsive tableBgStyle" id="chalanDetailsTable">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">S.L</th>
+                                            <th scope="col">Person Name</th>
+                                            <th scope="col">Person Tin</th>
+                                            <th scope="col">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of detailsData; let k = index">
+                                            <td scope="row">{{ k+1 }}</td>
+                                            <td scope="row">{{ item.personName }}</td>
+                                            <td scope="row">{{ item.personTin }}</td>
+                                            <td scope="row">{{ item.challanAmount }}</td>
+                                        </tr>                                
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <button type="button" class="btn btn-sm btn-outline-danger mr-3" style="float: right;width: 100px;"
+            (click)="close_confirmation()">close</button>
+        <button type="button" class="btn btn-sm btn-outline-success" style="float: right;width: 100px;"
+            (click)="companyChallanConfirmation(ApproveForm.value.id)">Verify</button>
+    </div>
+</ng-template> -->
+
+</html>
+
+<ngx-ui-loader text="Under Construction"></ngx-ui-loader>

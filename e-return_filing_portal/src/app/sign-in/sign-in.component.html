@@ -1,0 +1,242 @@
+<div class="app-body">
+  <div class="col-md-12 px-0">
+    <div class="row pt-5">
+      <div class="col-md-12 text-center py-2">
+        <button type="button" [routerLink]="['/faq']" class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"><b>FAQ</b></button>
+        <button type="button" [routerLink]="['/auth/guideline']" class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize mx-2"><b>Guideline</b></button>                         
+        <button type="button" [routerLink]="['/auth/contact-us']" class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"><b>Contact Us</b></button>
+      </div>
+      <div class="col-md-12" style="padding-top: 10px;">
+        <div *ngIf="failedAlert" class="alert alert-danger" role="alert" style="font-size: 14px;">
+          <strong>Sign in failed!</strong> &nbsp; Your TIN & Password was Invalid!
+          <button (click) = "closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form class="col-md-8 offset-md-2" name="form" [formGroup]="signinForm">
+          <div class="form-group text-center pb-3">
+            <!-- <h1 class="text-blue logo-text"><b>e-Return</b></h1> -->
+            <img src="assets\img\logo\eReturn_Logo.svg" class="logo-text returnLogo">
+          </div>
+          <div class="form-group text-center">
+          <h4><b>Welcome!</b></h4>
+          <p class="font-13"><b>Sign in to your account</b></p>
+          </div>
+          
+          <div class="form-group mb-2">
+            <label class="font-14">Taxpayer's Identification Number (TIN)</label>
+            <input type="text" (keypress)="numberOnly($event)" class="form-control" placeholder="Enter your TIN" formControlName="etin"
+            [ngClass]="{'is-invalid':signinForm.get('etin').touched && signinForm.get('etin').invalid}" required
+            />
+            <div class="invalid-feedback">
+              <div>12 Digit TIN No. is required!</div>
+            </div>
+          </div>
+          
+          <div class="form-group mb-2">
+            <label class="font-14">Password</label>
+            <input type="password" class="form-control" placeholder="Enter your password" formControlName="password"
+            [ngClass]="{'is-invalid':signinForm.get('password').touched && signinForm.get('password').invalid}" required
+            />
+            <div class="invalid-feedback">
+              <div>Password is required!</div>
+            </div>
+          </div>
+          <label class="font-14">Captcha</label>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="" formControlName="captcha"
+              [ngClass]="{'is-invalid':signinForm.get('captcha').touched && signinForm.get('captcha').invalid}"
+              required />
+            <!-- <div class="input-group-prepend">
+              <span class="input-group-text" style="height: 38px; background-color: rgb(220, 220, 220);">
+                <img [src]="captchaImg" width="110" height="30" alt="" />
+              </span>
+            </div> -->
+            <div class="input-group-prepend" id="captcha" style="background-color: rgb(220, 220, 220);">
+            </div>
+            <button type="button" class="btn btn-outline-dark " style="width: 50px;" (click)="reloadCaptcha()"><span><i
+                  class="fa fa-refresh"></i></span></button>
+            <div class="invalid-feedback">
+              <div>captcha is required!</div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-12">
+              <button type="submit" (click)="onSubmit(userProfilePopup)" class="btn btn-primary btn-block"  [disabled]="!signinForm.valid" style="background-color:#145DA0;">Sign in</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 mb-2 text-center">
+              <button routerLink="/auth/forget-pass-mobile" type="button" class="btn text-center p-0 font-14">Forgot password?</button>
+          </div>
+          </div>
+          <div class="input-group mb-3 text-center" style="border-top: 1px solid #dadde1">
+            
+         </div>
+        
+         <div class="row">
+          <div class="col-12">
+            <button type="button" class="btn btn-primary btn-block" style="background-color:#145DA0;" [routerLink]="'/auth/sign-up'">Registration</button>
+          </div>
+        </div>
+          <!-- <div class="input-group mb-4 text-center justify-content-center pt-3">
+              <div class="font-14" style="font-style: normal;">Don't have any account? <a routerLink="/auth/sign-up"  style="color: chocolate; cursor: pointer;">Registration</a></div>
+        </div> -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- user profile pop up -->
+<ng-template #userProfilePopup>
+  <div class="modal-header content-background">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Profile Information</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_UserProfile()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+   <!-- START -->
+   <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="row" style="margin-top: 2px">
+          <div class="col-md-12 content-background mb-2">
+            <div class="col-md-12">
+              <h6><b>Basic Information</b></h6>
+              <p class="bt-black"></p>
+              <table class="table table-borderless">
+                <tr>
+                  <td width="30%" class="fs-13 pl-0 py-2"><b>Taxpayer Name</b></td>
+                  <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                  <td width="65%" class="text-left fs-13 py-2">{{taxpayerName}}</td>
+                </tr>
+                <tr>
+                  <td width="30%" class="fs-13 pl-0 py-2"><b>TIN</b></td>
+                  <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                  <td width="65%" class="text-left fs-13 py-2">{{taxpayerTIN}}</td>
+                </tr>
+                <tr>
+                  <td width="30%" class="fs-13 pl-0 py-2"><b>Email</b></td>
+                  <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                  <td width="65%" class="text-left fs-13 py-2">
+                    <input class="customEmail" type="text" aria-describedby="basic-addon1" value="{{taxpayerEmail}}"
+                      [disabled]="isEmailEditDone" id="email">
+                    <button *ngIf="!isEmailEditDone" (click)="saveEmail()" class="defaultBtnStyle"><i class="fa fa-check"
+                      style="color: green;"></i></button>
+                  <button *ngIf="isEmailEditDone" (click)="editEmail()" class="defaultBtnStyle"><i class="fa fa-pencil ml-2"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="30%" class="fs-13 pl-0 py-2"><b>Present Address</b></td>
+                  <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                  <td width="65%" class="text-left fs-13 py-2"> <textarea class="customAddress" cols="56" rows="2" aria-describedby="basic-addon1"
+                    value="{{taxpayerPresentAddress}}" [disabled]="isAddressEditDone" id="address"></textarea>
+                    <button *ngIf="!isAddressEditDone" class="defaultBtnStyle" (click)="saveAddress()"><i
+                      class="fa fa-check" style="color: green;"></i></button>
+                  <button *ngIf="isAddressEditDone" class="defaultBtnStyle" (click)="editAddress()"><i class="fa fa-pencil ml-2 mb-1"></i></button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-12 content-background">
+            <div class="row">
+              <div class="col-md-6">
+                <h6><b>NID Information</b></h6>
+                <p class="bt-black"></p>
+                <table class="table table-borderless">
+                  <tr>
+                    <td width="30%" class="fs-13 pl-0 py-2"><b>Father Name</b></td>
+                    <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                    <td width="65%" class="text-left fs-13 py-2">{{taxpayerFatherName}}</td>
+                  </tr>
+                  <tr>
+                    <td width="30%" class="fs-13 pl-0 py-2"><b>Mother Name</b></td>
+                    <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                    <td width="65%" class="text-left fs-13 py-2">{{taxpayerMotherName}}</td>
+                  </tr>
+                  <tr>
+                    <td width="30%" class="fs-13 pl-0 py-2"><b>Date of Birth</b></td>
+                    <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                    <td width="65%" class="text-left fs-13 py-2">{{taxpayerDOB}}</td>
+                  </tr>
+                  <tr>
+                    <td width="30%" class="fs-13 pl-0 py-2"><b>Phone No.</b></td>
+                    <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                    <td width="65%" class="text-left fs-13 py-2">{{taxpayerPhone}}</td>
+                  </tr>
+                  <tr>
+                    <td width="30%" class="fs-13 pl-0 py-2"><b>Permanent Address</b></td>
+                    <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                    <td width="65%" class="text-left fs-13 py-2">{{taxpayerPermanentAddress}}</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-md-6">
+                <h6><b>TIN Information</b></h6>
+                <p class="bt-black"></p>
+                <table class="table table-borderless">
+                  <tr>
+                    <td width="30%" class="fs-13 pl-0 py-2"><b>TIN</b></td>
+                    <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                    <td width="65%" class="text-left fs-13 py-2">{{taxpayerTIN}}</td>
+                  </tr>
+                  <tr>
+                    <td width="30%" class="fs-13 pl-0 py-2"><b>Tax Zone</b></td>
+                    <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                    <td width="65%" class="text-left fs-13 py-2">{{taxpayerZone}}</td>
+                  </tr>
+                  <tr>
+                    <td width="30%" class="fs-13 pl-0 py-2"><b>Tax Circle</b></td>
+                    <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                    <td width="65%" class="text-left fs-13 py-2">{{taxpayerCircle}}</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-md-6">
+                <h6><b>Other Information</b></h6>
+                <p class="bt-black"></p>
+                <table class="table table-borderless">
+                  <tr>
+                    <td width="30%" class="fs-13 pl-0 py-2"><b>Spouse Name</b></td>
+                    <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                    <td width="65%" class="text-left fs-13 py-2">
+                      <input class="customSopuse" type="text" aria-describedby="basic-addon1" value="{{taxpayerSpouse}}"
+                        [disabled]="isSpouseNameEditDone" id="spouse">
+                      <button *ngIf="!isSpouseNameEditDone" class="defaultBtnStyle" (click)="saveSpouseName()"><i
+                          class="fa fa-check" style="color: green;"></i></button>
+                      <button class="defaultBtnStyle" (click)="editSpouseName()"><i
+                          class="fa fa-pencil ml-2"></i></button>
+  
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="30%" class="fs-13 pl-0 py-2"><b>Spouse TIN</b></td>
+                    <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                    <td width="65%" class="text-left fs-13 py-2">
+                      <input class="customSopuse" type="text" aria-describedby="basic-addon1" value=""
+                        [disabled]="isSpouseTinEditDone" id="sp_tin">
+                      <button *ngIf="!isSpouseTinEditDone" class="defaultBtnStyle" (click)="saveSpouseTin()"><i
+                          class="fa fa-check" style="color: green;"></i></button>
+                      <button class="defaultBtnStyle" (click)="editSpouseTin()"><i class="fa fa-pencil ml-2"></i></button>
+                    </td>
+                    <!-- <td width="65%" class="text-left fs-13 py-2">{{data.spouseName}}<i class="fa fa-pencil ml-2"></i></td> -->
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="row" style="float: right;">
+              <button type="button" class="btn" style="background-color:#145DA0;color: white;float: right;" (click)="onNextPage()">Save & Continue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!-- END -->
+  </div>
+</ng-template>
+
+<ngx-ui-loader></ngx-ui-loader>

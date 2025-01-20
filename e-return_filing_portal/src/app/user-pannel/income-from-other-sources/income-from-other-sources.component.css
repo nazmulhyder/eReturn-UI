@@ -1,0 +1,227 @@
+.assets_liabilities:hover {
+    float: right;
+    background-color: #01649A;
+    color: white;
+}
+
+.incomeBtn {
+    float: right; 
+    background: #1350ac; 
+    color: white;
+}
+.buttonAllign {
+    float: right;
+    padding-right: 5px;
+}
+.multiple-section {
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 10px #00000029;
+    opacity: 1;
+    padding: 20px 30px 20px 30px!important;
+    border: 1px solid #E0E0E0;
+}
+
+.capitalGainBtn {
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    /* box-shadow: 0px 3px 6px #707070; */
+    border-radius: 4px;
+    margin-right: 10px;
+    color: #01649A;
+    border-color: #01649A;
+}
+
+.capital-gain-btn-active {
+    background-color:#01649A;
+    color: white;
+    border: 0px;
+}
+
+.fa-times-circle:hover {
+    color: red;
+}
+.fa-times-circle {
+    margin-left: 10px;
+}
+
+.incomeDetailsSpan {
+    /* font: normal normal bold 24px/28px Ubuntu; */
+    font-size:20px; 
+    font-weight: bold;
+    color: #22223B;
+}
+
+.headMargin {
+    margin-top: 36px
+}
+
+.addAnother {
+    text-align: right;
+    padding: 0;
+}
+
+.addAnotherCatBtn {
+    margin-right: 5px;
+    border-radius: 50px;
+    background-color: #01649A; 
+    color: white;
+}
+
+.fa-question-circle {
+    padding-right: 5px;
+}
+
+.calenderDatePicker {
+    font-size: 14px;
+}
+
+.lavelStyle {
+    margin-right: 40px;
+}
+
+.backBtn {
+    font-size: 14px;
+}
+
+.nextContinueBtnAlign {
+    text-align: right;
+}
+
+.nextContinueBtn {
+    font-size: 14px;
+    vertical-align: sub;
+}
+
+#InterestorProfitTable th {
+    background-color: #C0D8DE;
+    color: #424548;
+}
+
+.tableBgStyle {
+    background-color: #FFFFFF; 
+    margin-top: 5px;
+}
+
+.InterestOrProfit {
+    /* margin-top: 15px;  */
+    margin-left: 3px; 
+    /* margin-bottom: 30px;  */
+    font-size: 12px;
+}
+
+.addAnotherButtonClass {
+    float: right; 
+    padding: 0; 
+    margin-bottom: 5px;
+}
+
+.addAnotherBtnStyle {
+    width: 75px;
+    color: #01649A; 
+    font-size: 14px; 
+    float: right; 
+    background: none; 
+    border: 1px solid #01649A; 
+    border-radius: 20px;
+    outline: none;
+}
+
+.netIncomeSection {
+    background-color: #E1EAEC;
+    margin-top: 70px; 
+    margin-left: 3px;                    
+    margin-bottom: 30px; 
+    /* border: 1px solid #01649A;  */
+    border-radius: 5px;
+}
+
+.netIncomeDivStyle {
+    margin-top: 10px; 
+    margin-bottom: 10px;
+}
+.netIncomeDivStyle2 {
+    margin-top: 10px; 
+    /* margin-bottom: 10px; */
+}
+.netIncomeLabel {
+    margin-top: 10px;
+}
+
+.netIncomeInput {
+    height: 35px; 
+    margin-top: 5px;
+}
+
+.netTaxExemptedIncomeDivStyle {
+    margin-top: -10px; 
+    margin-bottom: 10px;
+}
+
+.netTaxExemptedIncomeLabel {
+    margin-top: 10px;
+}
+
+.netTaxExemptedIncomeInput {
+    height: 35px; 
+    margin-top: 5px;
+}
+
+
+.main_nav:hover {
+    float: right;
+    background-color: #01649A;
+    color: white;
+}
+  
+.activeMainNav{
+    background-color: #01649A !important;
+    color: white;
+    border: 0px;
+}
+
+label,input,select,option,p{
+    font-size: 14px !important;
+}
+  
+.saveContinueBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 200px;
+}
+  
+.backBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 100px;
+}
+
+.activeHead{
+    background-color: #01649A !important;
+    color: white;
+    border: 0px;
+}
+
+.deleteBtnStyle {
+    background: none; 
+    outline: none; 
+    border: none;
+}
+
+.saveDraftBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 100px;
+    margin-right: 3px;
+}
+
+::ng-deep .tooltip-350 ~ .tooltip .tooltip-inner {
+    max-width: 380px;
+    min-width: 380px;
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    box-shadow: 1px 1px 10px 2px #00000029;
+    color: #0F0F0F;
+    /* border: 1px solid; */
+}
+
+.tooltip-350{
+    margin-left: 3px;
+}

@@ -1,0 +1,58 @@
+<div class="row content-background page-default-height">
+  <div class="col-sm-12">
+    <div class="row">
+        <div class="row">
+          <div class="titleSection">
+            <span class="text-border">
+              <i class="fa fa-history titleText">
+              </i>Challan&nbsp; &nbsp;
+            </span>
+          </div>
+        </div>
+
+        <div class="row col-12 content-background mt-4">
+          <div class="table-responsive tableBgStyle" id="extensionDetailsTable">
+            <table class="table">
+              <thead *ngIf = "tableLen != 0">
+                <tr>
+                  <th>SL.</th>
+                  <th class="text-center">Transaction Id</th>
+                  <th class="text-center">Challan No</th>
+                  <th class="text-center">Challan Date</th>
+                  <th class="text-center">Amount</th>
+                  <th class="text-center">Challan Copy</th>
+                </tr>
+              </thead>
+              <thead *ngIf = "tableLen == 0">
+                <tr>
+                  <th>SL.</th>
+                  <th class="text-center">Transaction Id</th>
+                  <th class="text-center">Challan No</th>
+                  <th class="text-center">Challan Date</th>
+                  <th class="text-center">Amount</th>
+                  <th class="text-center">Challan Copy</th>
+                </tr>
+              </thead>
+              <tbody *ngIf = "tableLen == 0">
+                <tr>
+                  <td class="text-center" colspan="6" style="color: red; font-style: italic;">No Data Found!</td>
+                </tr>
+              </tbody>
+              <tbody *ngFor="let item of challanList; let k=index;">       
+                  <tr *ngIf = "tableLen > 0">
+                    <td>{{k+1}}</td>
+                    <td class="text-center">{{item.transactionId}}</td>
+                    <td class="text-center">{{item.chalanNo}}</td>
+                    <td class="text-center">{{item.dateTime}}</td>
+                    <td class="text-right">{{commaSeparator(item.amount)}}</td>
+                    <td class="text-center"><a href="{{item.chalanCopyURL}}" onclick="window.open(this.href,'_blank'); return false;">Click here</a></td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
+  <ngx-ui-loader></ngx-ui-loader>
+  

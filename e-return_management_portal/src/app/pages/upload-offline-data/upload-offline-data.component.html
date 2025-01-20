@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Upload Offline Return Data</title>
+</head>
+<div class="col-12 content-background">
+    <div class="row">
+        <div class="col-12 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left iconStyle">
+                </i>Upload Offline Return Data &nbsp; &nbsp;
+            </span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="content-background formSection">
+                <form class="row form-horizontal" [formGroup]="dataUploadForm" aria-labelledby="title">
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label for="dataUploadFile" class="label col-8 form-control-label">Upload data</label>
+                            <div class="col-12">
+                                <input type="file" class="form-control customHeight" accept=".xlsx"
+                                    formControlName="dataUploadFile" multiple="false" (change)="onFileChange($event)"
+                                    required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 mt-4">
+                        <button type="button" class="btn reset" (click)="reset()">
+                            Reset
+                        </button>
+                        <button type="button" class="btn submitBtn"
+                            (click)="submittedData()">
+                            <i class="fa fa-upload mr-1" aria-hidden="true"></i>Upload
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-8 col-sm-8 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left iconStyle">
+                </i>Uploaded Data &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-4 mt-4">
+            <label class="float-right" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="form-horizontal" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="seniorCitizenTbl">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Tin</th>
+                                    <th>AssesName</th>
+                                    <th colspan="4">DOB</th>
+                                    <th>SubmissionDate</th>
+                                    <th>SubmissionSection</th>
+                                    <th>TotalIncome</th>
+                                    <th>TotalSourceTax</th>
+                                    <th>TotalAdvanceTax</th>
+                                    <th>TotalCarAit</th>
+                                    <th>TotalRegularTax</th>
+                                    <th>TotalTaxPaid</th>
+                                    <th>TotalSurcharge</th>
+                                    <th>TotalAsset</th>
+                                    <th>TotalLiabilities</th>
+                                    <th>NetAsset</th>
+                                    <th>FamilyExpenditure</th>
+                                    <th>ETinCircleNo</th>
+                                    <th>ETinZoneNo</th>
+        
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let dynamic of dynamicRes; let i = index;">
+                                    <td>{{dynamic.tin}}</td>
+                                    <td>{{dynamic.assesName}}</td>
+                                    <td colspan="4">{{dynamic.dob | date : 'dd-MM-yyyy'}}</td>
+                                    <td>{{dynamic.submissionDate | date : 'dd-MM-yyyy'}}</td>
+                                    <td>{{dynamic.submissionSection}}</td>
+                                    <td>{{dynamic.totalIncome == null ? 0 : dynamic.totalIncome}}</td>
+                                    <td>{{dynamic.totalSourceTax == null ? 0 : dynamic.totalSourceTax}}</td>
+                                    <td>{{dynamic.totalAdvanceTax == null ? 0 : dynamic.totalAdvanceTax}}</td>
+                                    <td>{{dynamic.totalCarAit == null ? 0 : dynamic.totalCarAit}}</td>
+                                    <td>{{dynamic.totalRegularTax == null ? 0 : dynamic.totalRegularTax}}</td>
+                                    <td>{{dynamic.totalTaxPaid == null ? 0 : dynamic.totalTaxPaid}}</td>
+                                    <td>{{dynamic.totalSurcharge == null ? 0 : dynamic.totalSurcharge}}</td>
+                                    <td>{{dynamic.totalAsset == null ? 0 : dynamic.totalAsset}}</td>
+                                    <td>{{dynamic.totalLiabilities == null ? 0 : dynamic.totalLiabilities}}</td>
+                                    <td>{{dynamic.netAsset == null ? 0 : dynamic.netAsset}}</td>
+                                    <td>{{dynamic.familyExpenditure == null ? 0 : dynamic.familyExpenditure}}</td>
+                                    <td>{{dynamic.etinCircleNo}}</td>
+                                    <td>{{dynamic.etinZoneNo}}</td>
+                            
+                            
+                                </tr>
+                        
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+<ngx-ui-loader></ngx-ui-loader>

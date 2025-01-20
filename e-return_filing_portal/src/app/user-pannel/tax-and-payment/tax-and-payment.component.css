@@ -1,0 +1,391 @@
+.taxPaymentSpan {
+    /* font: normal normal bold 24px/28px Ubuntu; */
+    font-size:20px; 
+    font-weight: bold;
+    color: #22223B;
+}
+
+.buttonAllign {
+    float: right;
+    padding-right: 5px;
+}
+
+.assets_liabilities:hover {
+    float: right;
+    background-color: #01649A;
+    color: white;
+}
+
+.taxPaymentBtn {
+    float: right; 
+    background-color: #1350ac; 
+    color: white;
+}
+
+#particularsIncomeTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+}
+
+#particularsIncomeTable th {
+    background-color: #C0D8DE;
+    color: #424548;
+}
+
+#particularsIncomeTable {
+    border: 1px solid #ddd;
+}
+
+.tableBgStyle {
+    background-color: #FFFFFF; 
+}
+
+#particularsIncomeTable tr:nth-child(even){background-color: #f2f2f2;}
+
+.editBtn{
+    height: 38px; 
+    background: none; 
+    border: 1px solid #ddd; 
+    border-radius: 5px;
+}
+
+.totalIncome {
+    background-color: #E1EAEC;
+}
+
+.labelStyle {
+    margin-top: 10px;
+}
+
+#taxComputationTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+#taxComputationTable th {
+    background-color: #C0D8DE;
+    color: #424548;
+}
+
+#taxComputationTable tr:nth-child(even){background-color: #f2f2f2;}
+
+.AmountPayable {
+    background-color: #E1EAEC;
+}
+
+.VerifiedAmount {
+    background-color: #E1EAEC;
+}
+#verifiedPaymentTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+#verifiedPaymentTable th {
+    background-color: #C0D8DE;
+    color: #424548;
+}
+#verifiedPaymentTable tr:nth-child(even){background-color: #f2f2f2;}
+
+.Style {
+    margin-top: 10px;
+}
+
+#finalPayableTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+#finalPayableTable th {
+    background-color: #C0D8DE;
+    color: #424548;
+}
+
+#dynamicTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    margin-left: 20px; 
+    width: 167%;
+    font-size: 14px;
+}
+
+#dynamicTable th {
+    background-color: #E1EAEC;
+    color: #424548;
+}
+
+#dynamicTable {
+    border: 1px solid #ddd;
+}
+
+.verifyandClaim {
+    border: 1px solid #ddd;
+    margin-top: 20px;
+    margin-left: 1px;
+    margin-right: 1px;
+    height: 50px;
+    background-color: #F4F9FA;
+}
+
+.verifyandClaimLabel {
+    margin-top: 10px;
+}
+
+.claimBtn {
+    margin-top: 10px;
+    margin-left: -10px;
+    background-color: #01649A;
+    color: #FFFFFF;
+}
+
+.verifyBtn {
+    margin-top: 10px;
+    margin-left: 10px;
+    background-color: #01649A;
+    color: #FFFFFF;
+}
+
+.back-btn-style {
+    background: #3F85ED 0% 0% no-repeat padding-box!important;
+    border-radius: 4px!important;
+    opacity: 1!important;
+    color: #FFFFFF!important;
+    font: normal normal 600 16px/14px Open Sans!important;
+    width: 198px!important;
+    height: 40px!important;
+    margin-left: 30px;
+}
+
+.save-continue-btn-style {
+    background: #BEBEBE 0% 0% no-repeat padding-box!important;
+    border-radius: 4px!important;
+    opacity: 1!important;
+    color: #FFFFFF!important;
+    font: normal normal 600 16px/14px Open Sans!important;
+    width: 198px!important;
+    height: 40px!important;
+    margin-right: 30px;
+}
+
+.paidCarOwnershipStyle {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 20px; 
+    width: 167%;
+}
+
+.main_nav:hover {
+    float: right;
+    background-color: #01649A;
+    color: white;
+}
+
+.active{
+    background-color: #01649A !important;
+    color: white;
+    border: 0px;
+}
+
+label,input,select,option,p{
+    font-size: 14px !important;
+}
+  
+.saveContinueBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 200px;
+}
+
+.makePaymentBtn {
+    width: 100%;
+    background-color: #C0D8DE;
+    color: #424548;
+    font-weight: bold;
+}
+
+.proceedOfflineBtn {
+    width: 66%;
+}
+
+.proceedOnlineBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 66%;
+    margin-right: 35px;
+}
+
+.bankTdsClaimSave {
+    background-color: #01649A;
+    color: #ffffff;
+    margin-right: -5px !important;
+    width: 30%;
+}
+
+.deleteBtnStyle {
+    background: none; 
+    outline: none; 
+    border: none;
+}
+
+.taxComputationSave {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 150px;
+}
+
+.taxComputationReset {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 200px;
+}
+
+.backBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 100px;
+}
+
+.custom-btn{
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.modal-bg-img
+{
+    background-color:white ;
+}
+
+.continuePaymentBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 200px;
+}
+
+.fa-times-circle:hover {
+    color: red;
+}
+
+.modal-bg-img{
+    background-image: url("assets\img\background\bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 50vh;
+}
+
+.gateway-1-img
+{
+    background-image: url("assets/img/payment-gateway-img/SBL_LOGO_new.jpg");
+    background-repeat: no-repeat;
+    background-size: 130px 80px;
+    /* min-height: 5vh; */
+    max-width: 200px;
+    max-height: 100px;
+    background-position: center;
+}
+.gateway-2-img
+{
+    background-image: url("assets/img/payment-gateway-img/pay_gateway_2.JPG");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 5vh;
+}
+.gateway-3-img
+{
+    background-image: url("assets/img/payment-gateway-img/pay_gateway_3.JPG");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 5vh;
+}
+/* .box-1,.box-2,.box-3{
+    transition: all .2s ease-in-out;
+  }
+
+.box-1:hover,.box-2:hover,.box-3:hover{
+    transform: scale(1.1);
+} */
+
+.warning-red-border{
+   border: 1px solid red;
+}
+.border-clear{
+    border: 1px solid #ddd;
+}
+
+.tax-computation{
+    margin-bottom: -20px;
+}
+
+.force-padding{
+    padding-left: 30px !important;
+}
+
+.force-padding-salary{
+    padding-left: 50px !important;
+}
+
+#paymentListTable th {
+    background-color: #C0D8DE;
+    color: #424548;
+}
+ 
+.ml-minus-12
+{
+  margin-left: -2vw !important;
+}
+
+/* @media (max-width: 768px){
+    .ml-minus-12
+    {
+      margin-left: -2vw !important;
+    }
+}
+
+@media (min-width: 769px){
+    .ml-minus-12
+    {
+      margin-left: -4vw !important;
+    }
+} */
+
+::ng-deep .tooltip-350 ~ .tooltip .tooltip-inner {
+    max-width: 380px;
+    min-width: 380px;
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    box-shadow: 1px 1px 10px 2px #00000029;
+    color: #0F0F0F;
+    text-align: left !important;
+}
+  
+.tooltip-350{
+    margin-left: 3px;
+}
+
+@media (min-width: 1650px){
+    .proceedOfflineBtn {
+        width: 67%;
+    }
+    
+    .proceedOnlineBtn {
+        background-color: #01649A;
+        color: #ffffff;
+        width: 67%;
+        margin-right: 35px;
+    }
+}

@@ -1,0 +1,624 @@
+<div class="row" ngxUiLoaderBlurred *ngIf="isShow">
+  <div class="col-sm-12 container-cover-shadow">
+    <div class="row custom-container" style="margin-top: 10px">
+      <div class="col-sm-6">
+        <div class="row-12" *ngIf = "hasAnyIncome">
+          <div class="content-background" style="height: 100%">
+            <span class="headline">Additional Information</span>
+            <form style="margin-top: 25px" [formGroup]="additionalInformationForm">
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Location of Main Source of Income
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="locationTT"></i>
+                <ng-template #locationTT>
+                  <div  [innerHtml]="locationTooltip"></div>
+                </ng-template>
+              </label>
+                <select class="dropdownClass form-control col-10" formControlName="returnSchemeType">
+                  <option value="0">Select One</option>
+                  <!-- <option value="DHK_NORTH">Dhaka North City Corporation</option>
+                  <option value="DHK_SOUTH">Dhaka South City Corporation</option>
+                  <option value="CTG">Chattogram City Corporation</option>
+                  <option value="OTR">Other City Corporation</option>
+                  <option value="ANY">Any Other Area</option> -->
+                  <option value="DHK_NORTH">{{ dhakaNorthCity }}</option>
+                  <option value="DHK_SOUTH">{{ dhakaSouthCity }}</option>
+                  <option value="CTG">{{ chattogramCity }}</option>
+                  <option value="OTR">{{ otherCity }}</option>
+                  <option value="ANY">{{ anyOther }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="form-check"  placement="right" style="padding-right: 5px">
+                    <input class="form-check-input" type="checkbox" (change)="onCheckboxLeft1($event)"
+                      formControlName="isWarWoundedGazettedFreedomFighter">
+                    <label class="form-check-label" for="defaultCheck1">
+                      War-wounded Gazetted Freedom Fighter
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="WWGFF"></i>
+                    <ng-template #WWGFF> <div [innerHtml]="war_wonded_GazettedFF"></div>
+                    </ng-template>
+                  </label>
+                  </div>
+                </div>
+              </div>
+              <div class="hiddenFiled" *ngIf="isChkWarWondedFF">
+                <div class="form-group" >
+                  <label for="exampleFormControlInput15">Gazette No.</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="gazetteNo"></i>
+                  <ng-template #gazetteNo> <div [innerHtml]="WWGFF_gazetted_No"></div>
+                  </ng-template>
+                  <input type="email" class="form-control col-8" formControlName="gazetteNo" placeholder="">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="form-check" placement="right" style="padding-right: 5px">
+                    <input class="form-check-input" type="checkbox" (change)="onCheckboxLeft2($event)"
+                      formControlName="isPersonWithDisability" value="">
+                    <label class="form-check-label" for="defaultCheck1">
+                      Person with Disability
+                    </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="PWD"></i>
+                    <ng-template #PWD> <div [innerHtml]="personWithDisability"></div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              <div class="hiddenFiled" *ngIf="isChkPersonWithDisablity">
+                <div class="form-group">
+                  <label for="exampleFormControlInput15">Reference No.</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="pwdRef"></i>
+                  <ng-template #pwdRef> <div [innerHtml]="PWD_RefNo"></div>
+                  </ng-template>
+                  <input type="text" class="form-control col-8" formControlName="referenceNo" placeholder="">
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput15">Date.</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350"  [tooltip]="pwdDATE"></i>
+                  <ng-template #pwdDATE> <div [innerHtml]="PWD_Date"></div>
+                  </ng-template>
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="input-group mb-2">
+                        <input type="text" placeholder="" class="form-control childInputFieldClass" formControlName="referenceDate"
+                         bsDatepicker [maxDate]="maxDateLen" #referenceDate="bsDatepicker"
+                          [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }">
+                        <div class="input-group-append calendarBoxClass">
+                          <button class="btn btn-outline-info btn-sm calendarIconBtnClass" (click)="referenceDate.toggle()" type="button" id="button-addon2">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="form-check"  placement="right">
+                    <input class="form-check-input" type="checkbox" formControlName="isClaimBenefitAsAParent"
+                      (change)="onCheckboxLeft3($event)">
+                    <label class="form-check-label" for="defaultCheck1">
+                      Claim Benefit as a Parent/Legal Guardian of a Person with Disability
+                      <!-- <i class="fa fa-question-circle-o fa-md tooltip-350" style="margin-left: -4px;" [tooltip]="popTemplate"></i> -->
+                      <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="claimBenefit"></i>
+                    </label>
+                    <ng-template #claimBenefit> <div [innerHtml]="claimBenefit_PWD"></div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              <div class="hiddenFiled" *ngIf="isChkGuardianPersonWithDisability">
+                <div class="row">
+                  <div class="col-sm-6"></div>
+                  <div class="col-sm-6">
+                    <button  *ngIf="isDisableSecondCld" type="button" class="removeBtnStyle ml-1"  (click)="disableSecondChild()">
+                      &nbsp; <i class="fa fa-minus-square" aria-hidden="true"></i>
+                      Remove
+                    </button> 
+                    <button *ngIf="!isDisableSecondCld" type="button" class="addAnotherBtnStyle"  (click)="enableSecondChild()">
+                      &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                      Add
+                    </button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput15">Name of the Child (1)</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="pwdChildName"></i>
+                  <ng-template #pwdChildName> <div [innerHtml]="CB_PWD_ChildName"></div>
+                  </ng-template>
+                  <input type="text" class="form-control col-8" formControlName="firstDisableChildName" placeholder="">
+                </div>
+                <div class="form-group" >
+                  <label for="exampleFormControlInput15">Disability Reference No.</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="pwdDisbility"></i>
+                  <ng-template #pwdDisbility> <div [innerHtml]="CB_PWD_DisabilityRef"></div>
+                  </ng-template>
+                  <input type="text" class="form-control col-8" formControlName="firstChildDisabilityReference" placeholder="">
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput15">Date.</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="pwdDate"></i>
+                  <ng-template #pwdDate> <div [innerHtml]="CB_PWD_Date"></div>
+                  </ng-template>
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="input-group mb-2">
+                        <input type="text" placeholder="" formControlName="firstChildDisabilityDate" class="form-control childInputFieldClass"
+                          bsDatepicker  [maxDate]="maxDateLen" #firstChildDisabilityDate="bsDatepicker"
+                          [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }">
+                        <div class="input-group-append calendarBoxClass">
+                          <button class="btn btn-outline-info btn-sm calendarIconBtnClass" (click)="firstChildDisabilityDate.toggle()" type="button" id="button-addon2">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Child 2 -->
+                <div *ngIf="isDisableSecondCld">
+                <div class="mt-2 mb-3" style=" border-top: 1px solid #738e9c;"></div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput15">Name of the Child (2)</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="popTemplate"></i>
+                  <ng-template #popTemplate> <div [innerHtml]="html"></div>
+                  </ng-template>
+                  <input type="text" class="form-control col-8" formControlName="secondDisableChildName" placeholder="">
+                </div>
+                <div class="form-group" >
+                  <label for="exampleFormControlInput15">Disability Reference No.</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="popTemplate"></i>
+                  <ng-template #popTemplate> <div [innerHtml]="html"></div>
+                  </ng-template>
+                  <input type="text" class="form-control col-8" formControlName="secondChildDisabilityReference" placeholder="">
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput15">Date.</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="popTemplate"></i>
+                  <ng-template #popTemplate> <div [innerHtml]="html"></div>
+                  </ng-template>
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="input-group mb-2">
+                        <input type="text" placeholder="" formControlName="secondChildDisabilityDate" class="form-control childInputFieldClass"
+                          bsDatepicker [maxDate]="maxDateLen" #secondChildDisabilityDate="bsDatepicker"
+                          [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }">
+                        <div class="input-group-append">
+                          <button class="calendarIconBtnClass btn btn-outline-info btn-sm" (click)="secondChildDisabilityDate.toggle()" type="button" id="button-addon2">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <!-- Child 2 end -->
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row-12" [class.mt-20]="hasAnyIncome">
+          <div class="content-background" style="height: 100%">
+            <span class="headline" *ngIf = "!hasAnyIncome">Additional Information</span>
+            <form style="margin-top: 25px" [formGroup]="additionalInformationForm">
+              <div class="form-group">
+                <label>Claim tax rebate for investment?
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="claimTaxInvestment"></i>
+                  <ng-template #claimTaxInvestment> <div [innerHtml]="CTR_Investment"></div>
+                  </ng-template>
+                </label>
+               
+                <div class="row">
+                  <div class="col-md-6 input-group mb-2">
+                    <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                      <input class="form-check-input" type="radio" formControlName="isInvestmentforTaxRebate" value="1" [attr.disabled]="isDisableRebate===true?'':null">
+                      <label class="form-check-label" style="margin-right: 40px;">
+                        Yes
+                      </label>
+                      <input class="form-check-input" type="radio" (change)="noRebate($event,removeRebate)" formControlName="isInvestmentforTaxRebate" value="0" [attr.disabled]="isDisableRebate===true?'':null">
+                      <label class="form-check-label">
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Shareholder director of a company?
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="shareHolderDirector"></i>
+                <ng-template #shareHolderDirector> <div [innerHtml]="shareholderDirector"></div>
+                </ng-template>
+                </label>
+                <div class="row">
+                  <div class="col-md-6 input-group mb-2">
+                    <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                      <input class="form-check-input" type="radio" value="1" name="isShareholderDirectorofCompany" (change)="shareholder_director_of_company_yes($event)"
+                        formControlName="isShareholderDirectorofCompany">
+
+                      <label class="form-check-label" for="defaultCheck1" style="margin-right: 40px;">
+                        Yes
+                      </label>
+                      <input class="form-check-input" type="radio" value="0" name="isShareholderDirectorofCompany"  (change)="shareholder_director_of_company_no($event)"
+                        formControlName="isShareholderDirectorofCompany">
+                      <label class="form-check-label" for="defaultCheck2">
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" [hidden]="true">
+                <label>Have Tax Exempted Income?
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="haveTaxExemptedIncome"></i>
+                <ng-template #haveTaxExemptedIncome> <div [innerHtml]="html"></div>
+                </ng-template>
+              </label>
+                <div class="row">
+                  <div class="col-md-6 input-group mb-2">
+                    <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                      <input class="form-check-input" type="radio" value="1" name="haveTaxExemptedInc" 
+                        formControlName="haveTaxExemptedInc" (change)="onChange_Have_Tax_Exempted_Income($event)">
+
+                      <label class="form-check-label" for="defaultCheck1" style="margin-right: 40px;">
+                        Yes
+                      </label>
+                      <input class="form-check-input" type="radio" value="0" name="haveTaxExemptedInc"  
+                        formControlName="haveTaxExemptedInc" (change)="onChange_Have_Tax_Exempted_Income($event)">
+                      <label class="form-check-label" for="defaultCheck2">
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="it10bClass col-sm-6">
+        <!-- <div class="row-12">
+          <div class="content-background" style="height: 100%">
+            <span class="headline"> IT10BB (Statement of Life-Style Related Expense)</span>
+            <form style="margin-top: 25px" [formGroup]="additionalInformationForm">
+              <div class="form-group">
+                <label>Income Exceeding 4 Lakhs?</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="incomeExceed4Lakh"></i>
+                <ng-template #incomeExceed4Lakh> <div [innerHtml]="incomeExceed4Lakhs"></div>
+                </ng-template>
+                <div class="row">
+                  <div class="col-md-6 input-group mb-2">
+                    <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                      <input class="form-check-input" type="radio" value="1" name="isIncomeExceeding4Lakhs" (change)="incomeExceed_four_lakhs_yes($event)"
+                        formControlName="isIncomeExceeding4Lakhs" [attr.disabled]="isDisableIncomeExc4Lks===true?'':null">
+                      <label class="form-check-label" for="defaultCheck1" style="margin-right: 40px;">
+                        Yes
+                      </label>
+                      <input class="form-check-input" type="radio" value="0" name="isIncomeExceeding4Lakhs" (change)="incomeExceed_four_lakhs_no($event,removeExpenditure_1)"
+                        formControlName="isIncomeExceeding4Lakhs" [attr.disabled]="isDisableIncomeExc4Lks===true?'':null">
+                      <label class="form-check-label" for="defaultCheck2">
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Shareholder Director of Company?</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="shareHolderDirector"></i>
+                <ng-template #shareHolderDirector> <div [innerHtml]="shareholderDirector"></div>
+                </ng-template>
+                <div class="row">
+                  <div class="col-md-6 input-group mb-2">
+                    <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                      <input class="form-check-input" type="radio" value="1" name="isShareholderDirectorofCompany" (change)="shareholder_director_of_company_yes($event)"
+                        formControlName="isShareholderDirectorofCompany">
+
+                      <label class="form-check-label" for="defaultCheck1" style="margin-right: 40px;">
+                        Yes
+                      </label>
+                      <input class="form-check-input" type="radio" value="0" name="isShareholderDirectorofCompany"  (change)="shareholder_director_of_company_no($event,removeExpenditure_2)"
+                        formControlName="isShareholderDirectorofCompany">
+                      <label class="form-check-label" for="defaultCheck2">
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div> -->
+        <div class="row-12">
+          <div class="content-background" style="height: 100%">
+            <span class="headline">IT10B Requirements</span>
+            <form style="margin-top: 25px" [formGroup]="additionalInformationForm">
+              <div class="form-group">
+                <!-- <label>Gross Wealth over 40,00,000? -->
+                <label>Gross Wealth over {{ this.grossWealth}}?
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="grossWealth40Lakhs"></i>
+                <ng-template #grossWealth40Lakhs> <div [innerHtml]="grossWealthOver40Lakhs"></div>
+                </ng-template>
+              </label>
+                <div class="row">
+                  <div class="col-md-6 input-group mb-2">
+                    <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                      <input class="form-check-input" type="radio" (change)="grossWealthOver40LakhTrue($event)"
+                        value="1" name="isGrossWealthOver4Lakhs" formControlName="isGrossWealthOver4Lakhs">
+                      <label class="form-check-label" for="defaultCheck1" style="margin-right: 40px;">
+                        Yes
+                      </label>
+                      <input class="form-check-input" type="radio" (change)="GrossWealthOver40LakhFalse($event,removeAssetLiabilities_GW_40Lkhs)"
+                        name="isGrossWealthOver4Lakhs" formControlName="isGrossWealthOver4Lakhs" value="0">
+                      <label class="form-check-label" for="defaultCheck2">
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Own Motor Car?
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="ownMotorCar"></i>
+                <ng-template #ownMotorCar> <div [innerHtml]="ownedMotorCar"></div>
+                </ng-template>
+              </label>
+                <div class="row">
+                  <div class="col-md-6 input-group mb-2">
+                    <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                      <input class="form-check-input" type="radio" (change)="ownMotorCarTrue($event)"
+                        name="isOwnmotorCar" formControlName="isOwnmotorCar" value="1">
+                      <label class="form-check-label" for="defaultCheck1" style="margin-right: 40px;">
+                        Yes
+                      </label>
+                      <input class="form-check-input" type="radio" (change)="ownMotorCarFalse($event,removeAssetLiabilities_Own_motor_car)"
+                        name="isOwnmotorCar" formControlName="isOwnmotorCar" value="0">
+                      <label class="form-check-label" for="defaultCheck2">
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Have House Property in any City Corporation?
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="hpAnyCC"></i>
+                <ng-template #hpAnyCC> <div [innerHtml]="housePropertyAnyCC"></div>
+                </ng-template>
+              </label>
+                <div class="row">
+                  <div class="col-md-6 input-group mb-2">
+                    <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                      <input class="form-check-input" type="radio" (change)="haveHousePropertyTrue($event)"
+                        name="isHaveHouseProperty" formControlName="isHaveHouseProperty" value="1">
+                      <label class="form-check-label" for="defaultCheck1" style="margin-right: 40px;">
+                        Yes
+                      </label>
+                      <input class="form-check-input" type="radio" (change)="haveHousePropertyFalse($event,removeAssetLiabilities_HP)"
+                        name="isHaveHouseProperty" formControlName="isHaveHouseProperty" value="0">
+                      <label class="form-check-label" for="defaultCheck2">
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" *ngIf="isHouseInCC"
+              >
+              <label for="exampleFormControlInput15">Area of House Property in City Corporation (Sq. Ft.)
+              <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="areaHpAnyCC"></i>
+              <ng-template #areaHpAnyCC> <div [innerHtml]="areaOfHPAnyCC"></div>
+              </ng-template>
+            </label>
+              <input type="text" (keypress)="numberOnly($event)"  (keyup)="initializeAreaOfHP($event,i)" class="form-control col-8" formControlName="areaOfCityCorporation"
+                id="exampleFormControlInput15" placeholder="">
+            </div>
+              <div class="form-group" *ngIf="!isGrossWealthOver40Lakh && !isOwnMotorCar && !isHaveHouseProperty"
+               >
+                <label>IT10B is not mandatory. Still want to submit?
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="it10bMandatory"></i>
+                <ng-template #it10bMandatory> <div [innerHtml]="it10b_mandatory"></div>
+                </ng-template>
+              </label>
+                <div class="row">
+                  <div class="col-md-6 input-group mb-2">
+                    <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                      <input class="form-check-input" type="radio" (change)="onRadioChangeIT10B1($event)"
+                        name="isIT10BNotMandatory" formControlName="isIT10BNotMandatory" value="1">
+                      <label class="form-check-label" for="defaultCheck1" style="margin-right: 40px;">
+                        Yes
+                      </label>
+                      <input class="form-check-input" type="radio" (change)="onRadioChangeIT10B2($event,removeAssetLiabilities_IT10B)"
+                        name="isIT10BNotMandatory" formControlName="isIT10BNotMandatory" value="0">
+                      <label class="form-check-label" for="defaultCheck2">
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group"
+                *ngIf="!isGrossWealthOver40Lakh && !isOwnMotorCar && !isHaveHouseProperty && !isIT1OBChecked"
+                >
+                <label for="exampleFormControlInput15">Amount of Gross Wealth
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="amtGrossWealth"></i>
+                <ng-template #amtGrossWealth> <div [innerHtml]="amountGrossWealth"></div>
+                </ng-template>
+              </label>
+                <input type="text" (keypress)="numberOnly($event)" (keyup)="initializeGrossWealth($event,i); checkForGrossWealth($event,exceedFortyLakh)"  class="form-control col-8" formControlName="amountOfGrossWealth"
+                  id="exampleFormControlInput15" placeholder="">
+              </div>
+              <div *ngIf="isExceedFortyLakh"><span><i class="fa fa-comments" aria-hidden="true"></i><i class="text-info"> IT10B is Activated.</i></span></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+      <!-- bottom button design start -->
+      <div class="d-flex justify-content-between mt-4 mb-4">
+        <div>
+          <button type="button" class="btn btn-sm backBtn" (click)="onBackPage()">
+            <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left arrowBack"
+              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+            </svg>&nbsp;
+            Back</button>
+        </div>
+        <!-- <div> -->
+          <!-- <div> -->
+            <div class="d-flex">
+              <button type="button" class="btn btn-sm saveDraftBtn" (click)="saveDraft()">
+                Save Draft</button>
+              <button style="margin-left: 5px;" type="button" class="btn btn-sm saveContinueBtn" (click)="onNextPage()">
+                <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em" viewBox="0 0 16 16"
+                  class="bi bi-arrow-right arrowSaveContinue" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                </svg>
+                Save & Continue</button>
+            </div>
+          <!-- </div> -->
+        <!-- </div> -->
+      </div>
+  </div>
+</div>
+<!-- all delete rebate -->
+<ng-template #removeRebate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchangeRebate()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Rebate Data.</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="remove_All_Rebate()">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchangeRebate()">No</button>
+  </div>
+</ng-template>
+
+<!-- DELETE ALL expenditure-->
+<ng-template #removeExpenditure_1>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_Expenditure('1','0')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Expenditure Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="removeExpenditure('1','0')">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_Expenditure('1','0')">No</button>
+  </div>
+</ng-template>
+<!-- DELETE ALL expenditure-->
+<ng-template #removeExpenditure_2>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_Expenditure('0','1')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Expenditure Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="removeExpenditure('0','1')">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_Expenditure('0','1')">No</button>
+  </div>
+</ng-template>
+
+<!-- DELETE ALL assets and liabilities START-->
+<ng-template #removeAssetLiabilities_GW_40Lkhs>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_AssetAndLiabilities('1','0','0','0')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Assets and Liabilities Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="removeAssetAndLiabilities('1','0','0','0')">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_AssetAndLiabilities('1','0','0','0')">No</button>
+  </div>
+</ng-template>
+
+
+<ng-template #removeAssetLiabilities_Own_motor_car>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_AssetAndLiabilities('0','1','0','0')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Assets and Liabilities Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="removeAssetAndLiabilities('0','1','0','0')">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_AssetAndLiabilities('0','1','0','0')">No</button>
+  </div>
+</ng-template>
+
+
+<ng-template #removeAssetLiabilities_HP>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_AssetAndLiabilities('0','0','1','0')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Assets and Liabilities Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="removeAssetAndLiabilities('0','0','1','0')">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_AssetAndLiabilities('0','0','1','0')">No</button>
+  </div>
+</ng-template>
+
+
+<ng-template #removeAssetLiabilities_IT10B>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_AssetAndLiabilities('0','0','0','1')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This Action will Remove All Your Assets and Liabilities Data!</p>
+    <p>Still Want to Remove?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="removeAssetAndLiabilities('0','0','0','1')">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="unchange_AssetAndLiabilities('0','0','0','1')">No</button>
+  </div>
+</ng-template>
+
+<!-- Amount of Gross Wealth exceed 40,00,000 -->
+<ng-template #exceedFortyLakh>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="changeGrossWealthAboveForty('0')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This action will set gross wealth over 40,00,000 BDT!</p>
+    <p>Still Want to Set?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="changeGrossWealthAboveForty('1')">Yes</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="changeGrossWealthAboveForty('0')">No</button>
+  </div>
+</ng-template>
+
+
+<ngx-ui-loader></ngx-ui-loader>
+<!-- <pre>{{additionalInformationForm.value | json}}</pre> -->

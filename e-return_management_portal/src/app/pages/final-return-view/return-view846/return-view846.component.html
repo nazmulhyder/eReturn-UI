@@ -1,0 +1,652 @@
+<div class="row custom-container" style="margin-top: 10px; page-break-before: always;">
+  <div class="col-sm-12">
+    <div class="content-background" style="height: 100%">
+      <!--portion 1-->
+      <div class="row px-2 pt-3">
+        <div class="col-sm-6 text-left">National Board of Revenue</div>
+        <div class="col-sm-6 text-right  font-weight-bolder">IT-10B2016</div>
+      </div>
+      <!--portion 1-->
+      <div class="row">
+        <div class="col-sm-6 text-left ft-14" style="padding-left: 60px;">www.nbr.gov.bd</div>
+        <div class="col-sm-6 text-right ft-11 "></div>
+      </div>
+
+      <div class="row px-2 pt-2 text-center">
+        <div class="col-sm-12">
+          <h5 class="font-weight-bolder">STATEMENT OF ASSETS, LIABILITIES AND EXPENSES</h5>
+          <h5>under section 80(1) of the Income Tax Ordinance, 1984 (XXXVI of 1984)</h5>
+        </div>
+        <div class="col-sm-12 text-right customMargin">
+          <img src="assets\img\logo\eReturn_Logo.svg" class="eReturn-logo" alt="logo">
+        </div>
+        <div class="col-sm-12 text-left customMargin">
+          <label for="">Reference No: <span style="font-weight: bold;">{{referenceNo}}</span></label>
+        </div>
+      </div>
+      <!-- <div class="row border-full">
+          <ol class="font-italic text-align-justify">
+            <li>Mention the amount of assets and liabilities that you have at the last date of the income year.
+              All items shall be at cost value include legal, registration and all other related costs;</li>
+            <li>If your spouse or minor children and dependent(s) are not assessee, you have to include their
+              assets and liabilities in your statement;</li>
+            <li>Schedule 25 is the integral part of this Statement if you have business capital or agriculture or
+              non-agricultural property. Provide additional papers if necessary.</li>
+          </ol>
+        </div> -->
+
+      <div class="row my-4">
+        <div class="col-sm-12">
+          <!-- row -1 -->
+          <div class="row border-full">
+            <div class="col-sm-1 border-right">01</div>
+            <div class="col-sm-5 border-right">
+              <div class="row">
+                &nbsp;Assessment Year
+              </div>
+              <div class="row mb-2">
+                &nbsp;<input type="text" class="assessment-input-box-len text-center" value="{{assYr1}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr2}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr3}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr4}}" disabled>
+                <span class="mt-2">-</span>
+                <input class="assessment-input-box-len text-center" type="text" value="{{assYr5}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr6}}" disabled>
+              </div>
+            </div>
+            <div class="col-sm-1" style="border-right: 1px solid black;">02</div>
+            <div class="col-sm-5">
+              <div class="row">
+                &nbsp;Statement as on (DD-MM-YYYY)
+              </div>
+              <div class="row mb-2">
+                &nbsp;
+                <input class="assessment-input-box-len text-center" type="text" value="{{dd1}}" disabled>
+                <input class="assessment-input-box-len text-center" type="text"  value="{{dd2}}" disabled>
+
+                <input class="ml-1 assessment-input-box-len text-center" type="text"  value="{{mm1}}" disabled>
+                <input class="assessment-input-box-len text-center" type="text"  value="{{mm2}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center"  value="{{yy1}}" type="text" disabled>
+                <input class="assessment-input-box-len text-center" value="{{yy2}}" type="text" disabled>
+                <input class="assessment-input-box-len text-center" value="{{yy3}}" disabled>
+                <input class="assessment-input-box-len text-center" value="{{yy4}}" disabled>
+              </div>
+            </div>
+
+            <div class="col-sm-1 border-right border-top">03</div>
+            <div class="col-sm-5 border-right border-top">
+              <div class="row">
+                &nbsp;Name of the Assessee
+              </div>
+              <div class="row mb-2" style="height: 50px;">
+                &nbsp;{{taxPayerName}}
+              </div>
+            </div>
+            <div class="col-sm-1 border-top" style="border-right: 1px solid black;">04</div>
+            <div class="col-sm-5 border-top">
+              <div class="row">
+                &nbsp;TIN
+              </div>
+              <div class="row mb-2" style="height: 50px;">
+                &nbsp;{{userTin}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- row-3-->
+      <div class="row border-top border-bottom mb-3">
+        <div class="col-sm-12">
+          <div class="row border-left border-right border-bottom">
+            <div class="border-right" style="width: 77.1%;">&nbsp;Particulars</div>
+            <div class="text-center" style="width: 22.9%">&nbsp;Amount ৳</div>
+          </div>
+
+          <div class="row border-left border-right border-bottom">
+            <div class="col-sm-1 border-right">05</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Business capital (05A+05B)</div>
+                <div class="col-sm-3 text-right">{{addComma(businessCapitalTotal)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">05A </div>
+                <div class="col-sm-8 border-right">&nbsp;Business capital other than 05B </div>
+                <div class="col-sm-3 text-left">{{addComma(businessDirectorOtherTotal)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">05B </div>
+                <div class="col-sm-8 border-right">&nbsp;Director’s shareholdings in limited companies </div>
+                <div class="col-sm-3 text-left">{{addComma(businessDirectorTotal)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right">
+            <div class="col-sm-1 border-right">06</div>
+            <div class="col-sm-11">
+              <div class="row ">
+                <div class="col-sm-1 border-right">06A </div>
+                <div class="col-sm-8 border-right">&nbsp;Non-agricultural property </div>
+                <div class="col-sm-3 text-right">{{addComma(nonAgriPropertyTotal)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">06B </div>
+                <div class="col-sm-8 border-right">&nbsp;Advance made for non-agricultural property </div>
+                <div class="col-sm-3 text-right">{{addComma(advanceMadeNonAgriPropertyTotal)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right border-bottom border-top">
+            <div class="col-sm-1 border-right">07</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Agricultural property</div>
+                <div class="col-sm-3 text-right">{{addComma(agriPropertyTotal)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right border-bottom">
+            <div class="col-sm-1 border-right">08</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Financial assets value (08A+08B+08C+08D+08E)</div>
+                <div class="col-sm-3 text-right">{{addComma(totalFinancialAssets)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">08A </div>
+                <div class="col-sm-8 border-right">&nbsp;Share, debentures etc. </div>
+                <div class="col-sm-3 text-left">{{addComma(shareDebenturesTotal)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">08B </div>
+                <div class="col-sm-8 border-right">&nbsp;Savings certificate, bonds and other government securities
+                </div>
+                <div class="col-sm-3 text-left">{{addComma(savingsCertificateTotal)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">08C </div>
+                <div class="col-sm-8 border-right">&nbsp;Fixed deposit, Term deposits and DPS</div>
+                <div class="col-sm-3 text-left">{{addComma(financialDepositTotal)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right" style="height: 100px;">08D </div>
+                <div class="col-sm-8 border-right">&nbsp;Loans given to others</div>
+                <div class="col-sm-3 text-left">{{addComma(financialLoanTotal)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">08E </div>
+                <div class="col-sm-8 border-right">&nbsp;Other financial assets</div>
+                <div class="col-sm-3 text-left">{{addComma(financialOtherAssetsTotal)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right border-bottom print-margin" style="page-break-before: always;">
+            <div class="col-sm-1 border-right">09</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Motor car (s)
+                  <!-- (use additional papers if more than two cars) -->
+                </div>
+                <div class="col-sm-3 text-right">{{addComma(motorCarTotal)}}</div>
+              </div>
+              <div class="row">
+                <div class="col-sm-1 border-right border-top">Sl. </div>
+                <div class="col-sm-2 border-right text-center border-top">&nbsp;Brand name </div>
+                <div class="col-sm-3 border-right text-center border-top">&nbsp;Engine (CC/KW) </div>
+                <div class="col-sm-3 border-right text-center border-top">&nbsp;Registration No. </div>
+                <div class="col-sm-3 "></div>
+              </div>
+              <div class="row border-top" *ngFor="let data of motorCarArray; let i = index">
+                <div class="col-sm-1 border-right">{{i+1}}</div>
+                <div class="col-sm-2 border-right text-center">{{data.motorCarBrand}}</div>
+                <div class="col-sm-3 border-right text-center">{{data.motorCarEngine}}</div>
+                <div class="col-sm-3 border-right text-center">{{data.motorCarRegistration}}</div>
+                <div class="col-sm-3 text-left">{{addComma(data.motorCarAmount)}}</div>
+              </div>
+              <!-- <div class="row border-top">
+                  <div class="col-sm-1 border-right">2</div>
+                  <div class="col-sm-2 border-right"></div>
+                  <div class="col-sm-3 border-right"></div>
+                  <div class="col-sm-3 border-right"> </div>
+                  <div class="col-sm-3 "></div>
+                </div> -->
+            </div>
+          </div>
+
+          <div class="row border-left border-right">
+            <div class="col-sm-1 border-right">10</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Gold, diamond, gems and other items ({{goldDiamondQtyTotal}})</div>
+                <div class="col-sm-3 text-right">{{addComma(goldDiamondTotal)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right border-top">
+            <div class="col-sm-1 border-right">11</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Furniture, equipment and electronic items</div>
+                <div class="col-sm-3 text-right">{{addComma(furnitureTotal)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right border-top">
+            <div class="col-sm-1 border-right">12</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Other assets of significant value</div>
+                <div class="col-sm-3 text-right">{{addComma(otherAssetsTotal)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right border-top">
+            <div class="col-sm-1 border-right">13</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Cash and fund outside business (13A+13B+13C+13D)</div>
+                <div class="col-sm-3 text-right">{{addComma(totalCashandFundoutsideBusiness)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">13A </div>
+                <div class="col-sm-8 border-right">&nbsp;Notes and currencies </div>
+                <div class="col-sm-3 text-left">{{addComma(notesCurrenciesTotal)}}</div>
+              </div>
+              <div class="row">
+                <div class="col-sm-1 border-right border-top">13B </div>
+                <div class="col-sm-8 border-right border-top">&nbsp;Banks, cards and other electronic cash</div>
+                <!-- <div class="col-sm-3 text-right">{{electronicCashTotal | number}}</div> -->
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">13C </div>
+                <div class="col-sm-8 border-right">&nbsp;Provident fund and other fund</div>
+                <div class="col-sm-3 text-left">{{addComma(providentFundTotal)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">13D </div>
+                <div class="col-sm-8 border-right">&nbsp;Other deposits, balance and advance (other than 08)</div>
+                <div class="col-sm-3 text-left">{{addComma(otherDepositTotal)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right border-top">
+            <div class="col-sm-1 border-right">14</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Gross wealth (aggregate of 05 to 13)</div>
+                <div class="col-sm-3 text-right">{{addComma(totalgrossWealth)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right border-top">
+            <div class="col-sm-1 border-right">15</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Liabilities outside business (15A+15B+15C)</div>
+                <div class="col-sm-3 text-right">{{addComma(totalLiabilities)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">15A </div>
+                <div class="col-sm-8 border-right">&nbsp;Borrowings from banks and other financial institutions </div>
+                <div class="col-sm-3 text-left">{{addComma(borrowingFromBank)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">15B </div>
+                <div class="col-sm-8 border-right">&nbsp;Unsecured loan (mention name and TIN)</div>
+                <div class="col-sm-3 text-left">{{addComma(unsecuredLoan)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">15C </div>
+                <div class="col-sm-8 border-right">&nbsp;Other loans or overdrafts</div>
+                <div class="col-sm-3 text-left">{{addComma(otherLoans)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right border-top">
+            <div class="col-sm-1 border-right">16</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Net wealth (14-15)</div>
+                <div class="col-sm-3 text-right">{{addComma(totalNetWealth)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right border-top">
+            <div class="col-sm-1 border-right">17</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Net wealth at the last date of the previous income year</div>
+                <div class="col-sm-3 text-right">{{addComma(PreviousIncomeYearNetWealth)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right border-top">
+            <div class="col-sm-1 border-right">18</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Change in net wealth (16-17)</div>
+                <div class="col-sm-3 text-right">{{addComma(totalChangeInNetWealth)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right border-top">
+            <div class="col-sm-1 border-right">19</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Other fund outflow during the income year (19A+19B+19C)</div>
+                <div class="col-sm-3 text-right">{{addComma(totalOtherFundOutFlow)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">19A </div>
+                <div class="col-sm-8 border-right">&nbsp;Annual living expenditure and tax payments (as IT-10BB2016)
+                </div>
+                <div class="col-sm-3 text-left">{{addComma(outflowLivingExpenseValue)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">19B </div>
+                <div class="col-sm-8 border-right">&nbsp;Loss, deductions, expenses, etc. not mentioned in IT-10BB2016
+                </div>
+                <div class="col-sm-3 text-left">{{addComma(loss_deduction_other_expense)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">19C </div>
+                <div class="col-sm-8 border-right">&nbsp;Gift, donation and contribution (mention name of recipient)
+                </div>
+                <div class="col-sm-3 text-left">{{addComma(gift_donation)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right border-top">
+            <div class="col-sm-1 border-right">20</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Total fund outflow in the income year (18+19)</div>
+                <div class="col-sm-3 text-right">{{addComma(totalFundOutFlow)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right border-top">
+            <div class="col-sm-1 border-right">21</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-9 border-right">Sources of fund (21A+21B+21C)</div>
+                <div class="col-sm-3 text-right">{{addComma(totalSourcesOfFund)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">21A </div>
+                <div class="col-sm-8 border-right">&nbsp;Income shown in the return </div>
+                <div class="col-sm-3 text-left">{{addComma(sourceFundIncomeValue)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">21B </div>
+                <div class="col-sm-8 border-right">&nbsp;Tax exempted income and allowance</div>
+                <div class="col-sm-3 text-left">{{addComma(tax_exempted_income_and_allowances)}}</div>
+              </div>
+              <div class="row border-top">
+                <div class="col-sm-1 border-right">21C </div>
+                <div class="col-sm-8 border-right">&nbsp;Other receipts and sources</div>
+                <div class="col-sm-3 text-left">{{addComma(other_receipts)}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row border-left border-right border-top">
+            <div class="col-sm-1 border-right">22</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <!-- <div class="col-sm-9 border-right">Shortage of fund, if any (21-20)</div> -->
+                <div class="col-md-9 border-right">Difference, if any (21-20)</div>
+                <div class="col-sm-3 text-right">{{addComma(shortageOfFund)}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="row px-2 pt-2 text-center mt-4">
+        <div class="col-sm-12">
+          <h5 class="font-weight-bolder">Verification and signature</h5>
+        </div>
+      </div>
+      <div class="row border-full">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-1 border-right">23</div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h5>Verification</h5>
+                  <p>I solemnly declare that to the best of my knowledge and belief the information given in this
+                    statement and the schedule are correct and complete.</p>
+                </div>
+                <div class="col-sm-12">
+                  <div class="row border-top">
+                    <div class="col-sm-6 border-right">
+                      <div class="row">&nbsp;Name</div>
+                      <div class="row mb-2">&nbsp;{{taxPayerName}}</div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="row">&nbsp;Signature & Date</div>
+                      <div class="row mb-2">
+                        <i>
+                          &nbsp;This is a system generated document. No signature is required.
+                        </i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div> -->
+
+      <div *ngIf="is_SCHEDULE25_Present">
+        <div class="row px-2 pt-2 text-center mt-4">
+          <div class="col-sm-12" style="margin-top: 20px;">
+            <h5 class="font-weight-bolder">SCHEDULE 25</h5>
+            <!-- <h5>to be annexed to the Statement of Assets, Liabilities and Expenses (IT-10B2016)</h5> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <!-- row -1 -->
+            <div class="row border-full">
+              <div class="col-sm-1 border-right">01</div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Assessment Year</div>
+                <div class="row mb-2">
+                  &nbsp;<input type="text" class="assessment-input-box-len text-center" value="{{assYr1}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr2}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr3}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr4}}" disabled>
+                <span class="mt-2">-</span>
+                <input class="assessment-input-box-len text-center" type="text" value="{{assYr5}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr6}}" disabled>
+                </div>
+              </div>
+              <div class="col-sm-1 border-right">02</div>
+              <div class="col-sm-5">
+                <div class="row">
+                  &nbsp;TIN
+                </div>
+                <div class="row mb-2" style="height: 50px;">
+                  &nbsp;{{userTin}}
+                </div>
+              </div>
+            </div>
+
+
+            <!-- row-2-->
+            <div class="row border-top border-bottom my-4">
+              <div class="col-sm-12">
+                <div class="row border-left border-right ">
+                  <div class="col-sm-1 border-right">03</div>
+                  <div class="col-sm-11">
+                    <div class="row">
+                      <div class="col-sm-8 border-right">&nbsp;Shareholdings in limited companies as director</div>
+                      <div class="col-sm-2 border-right">No. of shares</div>
+                      <div class="col-sm-2">Value ৳</div>
+                    </div>
+                    <div class="row" *ngFor="let data of businessDirectorArray; let i = index">
+                      <div class="col-sm-8 border-right">
+                        <div class="row border-top">
+                          <div class="col-sm-1 border-right">{{i+1}}</div>
+                          <div class="col-sm-11">{{data.businessDirectorCompany}}</div>
+                        </div>
+                      </div>
+                      <div class="col-sm-2 border-top border-right text-right">{{data.businessDirectorShares}}</div>
+                      <div class="col-sm-2 border-top text-right">{{addComma(data.businessDirectorValue)}}</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- row-3-->
+            <div class="row border-top border-bottom mt-4">
+              <div class="col-sm-12">
+                <div class="row border-left border-right ">
+                  <div class="col-sm-1 border-right">04</div>
+                  <div class="col-sm-11">
+                    <div class="row">
+                      <div class="col-sm-6 border-right">&nbsp;Non-agricultural property at cost value or any advance made
+                        for such property</div>
+                      <div class="col-sm-2 border-right">Value at the start of income year৳</div>
+                      <div class="col-sm-2 border-right">increased/ decreased during the income year ৳</div>
+                      <div class="col-sm-2">Value at the last date of income year ৳</div>
+                    </div>
+                    <div class="row" *ngFor="let data of nonAgriPropertyArray; let i = index">
+                      <div class="col-sm-6 border-right">
+                        <div class="row border-top">
+                          <div class="col-sm-1 border-right">{{i+1}}</div>
+                          <div class="col-sm-11">{{data.nonAgriPropertyLocation}}</div>
+                        </div>
+                      </div>
+                      <div class="col-sm-2 border-top border-right text-right">{{addComma(data.nonAgriPropertyValueStart)}}
+                      </div>
+                      <div class="col-sm-2 border-top border-right text-right">
+                        {{addComma((data.nonAgriPropertyValueEnd)-(data.nonAgriPropertyValueStart))}}</div>
+                      <div class="col-sm-2 border-top text-right">{{addComma(data.nonAgriPropertyValueEnd)}}</div>
+                    </div>
+                    <div class="row" *ngFor="let data of advanceNonAgriPropertyArray; let i = index">
+                      <div class="col-sm-6 border-right">
+                        <div class="row border-top">
+                          <div class="col-sm-1 border-right">{{i+k+1}}</div>
+                          <div class="col-sm-11">{{data.advanceNonAgriPropertyLocation}}</div>
+                        </div>
+                      </div>
+                      <div class="col-sm-2 border-top border-right text-right">{{addComma(data.advanceNonAgriPropertyValueStart)}}</div>
+                      <div class="col-sm-2 border-top border-right text-right">
+                        {{addComma((data.advanceNonAgriPropertyValueEnd)-(data.advanceNonAgriPropertyValueStart))}}</div>
+                      <div class="col-sm-2 border-top text-right">{{addComma(data.advanceNonAgriPropertyValueEnd)}}</div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-sm-6 border-right">
+                          <div class="row border-top">
+                            <div class="col-sm-1 border-right">3</div>
+                            <div class="col-sm-11"></div>
+                            <div class="col-sm-11"></div>
+                          </div>
+                        </div>
+                        <div class="col-sm-2 border-top border-right"></div>
+                        <div class="col-sm-2 border-top border-right"></div>
+                        <div class="col-sm-2 border-top"></div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6 border-right">
+                          <div class="row border-top">
+                            <div class="col-sm-1 border-right">4</div>
+                            <div class="col-sm-11"></div>
+                          </div>
+                        </div>
+                        <div class="col-sm-2 border-top border-right"></div>
+                        <div class="col-sm-2 border-top border-right"></div>
+                        <div class="col-sm-2 border-top"></div>
+                      </div> -->
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- row-4-->
+            <div class="row border-top border-bottom mt-4">
+              <div class="col-sm-12">
+                <div class="row border-left border-right ">
+                  <div class="col-sm-1 border-right">05</div>
+                  <div class="col-sm-11">
+                    <div class="row">
+                      <div class="col-sm-6 border-right">&nbsp;Agricultural property at cost value (description, location
+                        and size)</div>
+                      <div class="col-sm-2 border-right">Value at the start of income year৳</div>
+                      <div class="col-sm-2 border-right">increased/ decreased during the income year ৳</div>
+                      <div class="col-sm-2">Value at the last date of income year ৳</div>
+                    </div>
+                    <div class="row" *ngFor="let data of agriPropertyArray; let i = index">
+                      <div class="col-sm-6 border-right">
+                        <div class="row border-top">
+                          <div class="col-sm-1 border-right">{{i+1}}</div>
+                          <div class="col-sm-11">{{data.agriPropertyLocation}}</div>
+                        </div>
+                      </div>
+                      <div class="col-sm-2 border-top border-right text-right">{{addComma(data.agriPropertyValueStart)}}
+                      </div>
+                      <div class="col-sm-2 border-top border-right text-right">
+                        {{addComma((data.agriPropertyValueEnd)-(data.agriPropertyValueStart))}}</div>
+                      <div class="col-sm-2 border-top text-right">{{addComma(data.agriPropertyValueEnd)}}</div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- <div class="row">
+                <div class="col-sm-12">
+                  <p>(Provide additional paper if necessary)</p>
+                </div>
+              </div> -->
+
+            <!-- row-24 -->
+            <div class="row border-top border-bottom mt-4 mb-4" style="height: 100px;">
+              <div class="col-sm-6  border-left border-right">
+                <div class="row">&nbsp;Name</div>
+                <div class="row">&nbsp;{{taxPayerName}}</div>
+              </div>
+              <div class="col-sm-6 border-right">
+                <div class="row">&nbsp;Signature & Date</div>
+                <div class="row">
+                  <i>&nbsp;This is a system generated document. No signature is required.</i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>

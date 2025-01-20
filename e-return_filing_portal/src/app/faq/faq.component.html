@@ -1,0 +1,101 @@
+<div class="bg_image">
+    <div class="row">
+        <div class="col-md-6 mt-5">
+            <img src="assets\img\background\NBR_logo.jpg" class="nbr_logo">
+        </div>
+        <div class="col-md-6 mt-4">
+            <img src="assets\img\logo\mujib_borsho.svg" class="mujib100_logo">
+        </div>
+    </div>
+    <div class="container">
+        <div class="main_section">
+            <div class="row">
+                <div class="col-6" style="padding-left: 0;">
+                    <div *ngFor="let language of languageList" class="float-left">
+                        <button (click)="languageClick(language.code)" [class.activeLan]="getSelectedLanguagesCode()===language.code"
+                            class="btn btn-sm btn-outline-dark mr-2">{{language.label}}</button>
+                    </div>
+                </div>
+                <div class="col-6 p-0">
+                    <label class="label float-right custom mt-2"><b>{{content('eReturn FAQs')}}</b></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <label class="label"><b>{{content('Can I use mobile device for eReturn?')}}</b></label>
+        </div>
+        <div class="row">
+            <label class="label"><b>{{content('Answer')}} : </b>{{content('For best experience and performance, use a laptop or a desktop computer. Mobile devices may not display all user-friendly features.')}}</label>
+        </div>
+
+        <div class="row mt-2">
+            <label class="label"><b>{{content('How can I sign in eReturn?')}}</b></label>
+        </div>
+        <div class="row">
+            <label class="label"><b>{{content('Answer')}} : </b>{{content('You will need your TIN and a password for sign in. You will set your own password at the time of registration, and can sign in any time using your TIN and password.')}}</label>
+        </div>
+
+        <div class="row mt-2">
+            <label class="label"><b>{{content('What I need for registration?')}}</b></label>
+        </div>
+        <div class="row">
+            <label class="label"><b>{{content('Answer')}} : </b>{{content('For registration, your will need a biometrically verified phone number. To know whether your phone number is biometrically verified or not, you may dial *16001# from your phone.')}}</label>
+        </div>
+
+        <div class="row mt-2">
+            <label class="label"><b>{{content('I no longer use the phone number that was used at the time of TIN registration. Will it be a problem?')}}</b></label>
+        </div>
+        <div class="row">
+            <label class="label"><b>{{content('Answer')}} : </b>{{content('Not at all. Just use your present biometrically verified phone number.')}}</label>
+        </div>
+
+        <div class="row mt-2">
+            <label class="label"><b>{{content('Is there any password rule?')}}</b></label>
+        </div>
+        <div class="row">
+            <label class="label"><b>{{content('Answer')}} : </b>{{content('Yes. Your password will be minimum 8 characters, having at least 1 lower case character, 1 upper case character, 1 digit and 1 special character (such as @, #, %. & and &). When using a laptop or a desktop computer, you will find password checker.')}}</label>
+        </div>
+
+        <div class="row mt-2">
+            <label class="label"><b>{{content('How can I attach supporting documents?')}}</b></label>
+        </div>
+        <div class="row">
+            <label class="label"><b>{{content('Answer')}} : </b>{{content('You do not need to attach any documents. Just fill in relevant fields. Just this will do. Your assessment will be completed in system, and you will instantly get system generated acknowledgment slip. You may also print tax certificate and a copy of your return by clicking ‘Tax Records’ menu at the left of the home page.')}}</label>
+        </div>
+
+        <div class="row mt-2">
+            <label class="label"><b>{{content('Do I need to present support documents to tax office for getting my assessment done?')}}</b></label>
+        </div>
+        <div class="row">
+            <label class="label"><b>{{content('Answer')}} : </b>{{content('No. You do not need. Your assessment will be completed in system as soon as you make online submission of your return.')}}</label>
+        </div>
+
+        <div class="row mt-2">
+            <label class="label"><b>{{content('I have paid source tax (and/or advance tax). Can I use eReturn?')}}</b></label>
+        </div>
+        <div class="row">
+            <label class="label"><b>{{content('Answer')}} : </b>{{content('You can prepare your paper return using eReturn system, make a print copy and submit in the tax office. Online verification of source tax and advance tax requires a number of APIs. The process is ongoing. Online filing option for taxpayers, who paid source tax/advance tax, will be opened gradually.')}}</label>
+        </div>
+
+        <div class="row mt-2">
+            <label class="label"><b>{{content('If I need to pay any tax with return, can I make online payment?')}}</b></label>
+        </div>
+        <div class="row">
+            <label class="label"><b>{{content('Answer')}} : </b>{{content('Yes. You can make online payment using eReturn system at the time of filing online return.')}}</label>
+        </div>
+
+    </div>
+    <div class="row mt-3">
+        <div class="col-12">
+            <button type="button" class="btn btn-sm backBtn mb-3" (click)="onBacktoMainPage()">
+                <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left"
+                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                </svg>&nbsp;
+                Back &nbsp;&nbsp;&nbsp;</button>
+        </div>
+    </div>
+</div>
+<ngx-ui-loader></ngx-ui-loader>

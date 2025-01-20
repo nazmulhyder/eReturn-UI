@@ -1,0 +1,719 @@
+<div class="row" ngxUiLoaderBlurred *ngIf="isShow">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-12 col-sm-2">
+        <!-- <span style="font: normal normal bold 24px/28px Ubuntu;color: #22223B;">Income Details</span>  -->
+        <span style="font-size:20px; font-weight: bold; color: #22223B;">Income Details</span>
+      </div>
+      <div class="col-12 col-sm-10">
+        <div class="row" style="float: right; padding-right: 5px;">
+          <button type="button" class="btn btn-pill rounded-pill btn-outline-dark btn-customize btn-sm main_nav"
+            *ngFor="let head of selectedNavbar; let i = index" (click)="mainNavActiveSelect(head['id'])"
+            [class.activeMainNav]="mainNavActive[head['id']]" routerLink="{{head['link']}}"
+            style="float: right; margin-right: 5px;">{{head['name']}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-12">
+        <ul class="nav nav-tabs nav_font" style="margin-top: 36px">
+          <li class="nav-item" *ngFor="let head of headsOfIncome; let i = index">
+            <a class="nav-link" [class.activeHead]="navActive[head['id']]" routerLink="{{head['link']}}"
+              (click)="navActiveSelect(head['id'])">{{head['name']}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="multiple-section">
+      <div class="row">
+        <div class="col-sm-9">
+          <button [hidden]="isVisibleIncomeTab" class="btn btn-sm btn-light agriculture-btn font-14"
+            [class.salary-btn-active]="isVisibleForm == i" *ngFor="let item of formArray.controls; let i = index"
+            (click)="selectedAgriculture(i)">{{agricultureTypeName[i]}}
+            <i (click)="onCloseTabClick(closetabpopup)" class="fa fa-times-circle" aria-hidden="true"
+              style="margin-left: 10px;"></i>
+
+            <ng-template #closetabpopup>
+              <div class="modal-header">
+                <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>This action will remove all your unsaved data.</p>
+                <p>Would you like to remove it?</p>
+                <button type="button" class="btn btn-danger" style="float: right;" (click)="close(i, 0)">Remove</button>
+                <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+                  (click)="modalRef.hide()">Keep</button>
+              </div>
+            </ng-template>
+            &nbsp;
+          </button>
+        </div>
+        <div class="col-sm-3" style="text-align: right">
+          <button [disabled]="isDisableAddSalBtn" type="button" class="btn btn-sm btn-pill"
+            style="border-radius: 50px; background-color: #01649A; color: white;" (click)="insertFormGroupToArray()"><i
+              class="fa fa-plus-square" aria-hidden="true"></i>&nbsp;Add Another Type</button>&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+    <div class="content-background">
+      <div [formGroup]="form" class="row" *ngFor="let form of formArray.controls; let i = index">
+        <div class="col-sm-6" [hidden]="i != isVisibleForm">
+          <div>
+            <div class="content-background">
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Agriculture Type</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350 tooltip-350" [tooltip]="agriTypeTT"></i>
+                <ng-template #agriTypeTT><div [innerHtml]="agri_type"></div>
+                </ng-template>
+                <select class="form-control" id="id_agriType" formControlName="agricultureType"
+                  (change)="agricultureTypeChange($event,i)" [ngClass]="{'is-invalid': agriType_showError[i]}">
+                  <option value="0" selected>Select</option>
+                  <option value="cultivation">Cultivation</option>
+                  <option [attr.data-hidden]="IS_TEA_RUBBER_PRESENT_IN_BUSINESS" value="prod_of_tea_rubber">Production of Tea or Rubber</option>
+                  <option value="prod_of_corn_sugar_beet">Production of Corn or Sugar-beet</option>
+                  <option value="other_agricultural_income">Other Agricultural Income (Including Livestock)</option>
+                  <option value="income_form_barga_adhi">Income from Barga/Adhi/Bhag</option>
+                  <option value="income_exp_reduced_by_sro">Income Subject to Reduced Tax Rate</option>
+                </select>
+                <div class="invalid-feedback">
+                  <div>Agriculture Type is Required!</div>
+                </div>
+              </div>
+              <div *ngIf="form.value.agricultureType !== '0'">
+                <div *ngIf="form.value.agricultureType != '0'">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <label for="exampleFormControlInput9">Total Cultivation Area </label>
+                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="totalCulAreaTT"></i>
+                        <ng-template #totalCulAreaTT> <div [innerHtml]="totalCulArea"></div>
+                        </ng-template>
+                        <input type="text" (keyup)="initializeTotalArea($event,i)" (keyup)="acceptAreasFloatingPoints($event,i)" class="form-control" id="id_totalCulArea" placeholder=""
+                          formControlName="totalCultivationArea" [ngClass]="{'is-invalid': totalCulArea_showError[i]}">
+                          <div class="invalid-feedback">
+                            <div>Total Cultivation Area is Required!</div>
+                          </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <label for="totalCulAreaUnit"></label>
+                          <select class="form-control mt-8" id="exampleFormControlSelect1" formControlName="unitOfTotalCulArea">
+                          <option value="Decimal">Decimal</option>
+                          <option value="Acre">Acre</option>
+                        </select>
+                      </div>
+                    </div>
+                  
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Particular of Produces </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="particularProducesTT"></i>
+                    <ng-template #particularProducesTT> <div [innerHtml]="particularOfProduces"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="id_particularOfProduces" placeholder="" (keyup)="validateParticularOfProduces($event,i)"
+                      formControlName="particularOfProduces" [ngClass]="{'is-invalid': particularOfProduces_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Particular of Produces is Required!</div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="form.value.agricultureType == 'cultivation' || form.value.agricultureType == 'prod_of_corn_sugar_beet' || form.value.agricultureType == 'other_agricultural_income'|| form.value.agricultureType == 'income_exp_reduced_by_sro'" class="content-background" style="margin-top: 20px">
+              <div class="col-sm-12 p-0">
+                    <label>Maintain Books of Accounts?</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350 tooltip-350" [tooltip]="maintainBooksTT"></i>
+                    <ng-template #maintainBooksTT> <div [innerHtml]="html"></div>
+                    </ng-template>
+                    <div class="row">
+                      <div class="col-md-6 input-group">
+                        <div class="form-check" placement="right" style="padding-right: 5px">
+                          <input class="form-check-input" type="radio" formControlName="isMaintainedBookOfAC"
+                             value="1">
+                          <label class="form-check-label" for="chkisMaintainedBookOfACYes" style="margin-right: 40px;">
+                            Yes
+                          </label>
+                          <input class="form-check-input" type="radio"  formControlName="isMaintainedBookOfAC"
+                            value="0">
+                          <label class="form-check-label" for="chkisMaintainedBookOfACNo">
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+            </div>
+
+            <div *ngIf="form.value.agricultureType != '0'" style="margin-top: 20px">
+              <div class="content-background mb-2">
+                <div class="col-sm-12 p-0">
+                  <span for="defaultCheck1" style="margin-right: 40px; font-size: 17px;">
+                    <b>Income Summary</b>
+                  </span>
+                </div>
+              </div>
+              <div class="content-background">
+                <!--(selection2=>Type--1,2,4)-->
+                <div
+                  *ngIf="form.value.agricultureType === 'cultivation' || form.value.agricultureType === 'other_agricultural_income'">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Sales Proceed</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="salesProceedTT"></i>
+                    <ng-template #salesProceedTT> <div [innerHtml]="salesProceed"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" class="form-control" id="id_salesProceed" placeholder="" (keyup)="netIncome_Calc_1(i,'salesProceed')" 
+                      formControlName="salesProceed" [ngClass]="{'is-invalid': salesProceed_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Sales Proceed is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput2">Cost of Production </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="costOfProductionTT"></i>
+                    <ng-template #costOfProductionTT> <div [innerHtml]="costOfProduction"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput13" placeholder="" (keyup)="netIncome_Calc_1(i,'costOfProduction')" 
+                      formControlName="costOfProduction" [ngClass]="{'is-invalid': costOfProduction_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Cost of Production is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput3">Other Allowable Deduction </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="otherAlwableDeductionTT"></i>
+                    <ng-template #otherAlwableDeductionTT> <div [innerHtml]="otherAlwableDeduction"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput14" placeholder="" (keyup)="netIncome_Calc_1(i,'otherAllowableDeduction')" 
+                      formControlName="otherAllowableDeduction">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput3">Net Income </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="netIncomeTT"></i>
+                    <ng-template #netIncomeTT> <div [innerHtml]="netIncome"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput15" placeholder=""
+                      formControlName="netIncome" readonly>
+                  </div>
+                </div>
+                <div
+                *ngIf="form.value.agricultureType === 'prod_of_tea_rubber'">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Sales Proceed</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="salesProceedTT"></i>
+                  <ng-template #salesProceedTT> <div [innerHtml]="salesProceed"></div>
+                  </ng-template>
+                  <input type="text" (keypress)="numberOnly($event)"  class="form-control" id="id_salesProceed" placeholder="" (keyup)="netIncome_Calc_1(i,'salesProceed')" 
+                    formControlName="salesProceed" [ngClass]="{'is-invalid': salesProceed_showError[i]}">
+                    <div class="invalid-feedback">
+                      <div>Sales Proceed is Required!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput2">Cost of Production </label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="costOfProductionTT"></i>
+                  <ng-template #costOfProductionTT> <div [innerHtml]="costOfProduction"></div>
+                  </ng-template>
+                  <input type="text" (keypress)="numberOnly($event)"  class="form-control" id="exampleFormControlInput13" placeholder="" (keyup)="netIncome_Calc_1(i,'costOfProduction')" 
+                    formControlName="costOfProduction" [ngClass]="{'is-invalid': costOfProduction_showError[i]}">
+                    <div class="invalid-feedback">
+                      <div>Cost of Production is Required!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput3">Other Allowable Deduction </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="otherAlwableDeductionTT"></i>
+                    <ng-template #otherAlwableDeductionTT> <div [innerHtml]="otherAlwableDeduction"></div>
+                    </ng-template>
+                  <input type="text" (keypress)="numberOnly($event)"  class="form-control" id="exampleFormControlInput14" placeholder="" (keyup)="netIncome_Calc_1(i,'otherAllowableDeduction')" 
+                    formControlName="otherAllowableDeduction">
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput3">Net Income </label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="netIncomeTT"></i>
+                  <ng-template #netIncomeTT> <div [innerHtml]="netIncome"></div>
+                  </ng-template>
+                  <input type="text" (keypress)="numberOnly($event)"  class="form-control" id="exampleFormControlInput15" placeholder=""
+                    formControlName="netIncome" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput3">Agricultural Income </label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="agriIncomeTT"></i>
+                  <ng-template #agriIncomeTT> <div [innerHtml]="agri_income"></div>
+                  </ng-template>
+                  <input type="text"  class="form-control" id="exampleFormControlInput25" placeholder=""
+                    formControlName="agriculturalIncome" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput3">Income from Business or Profession </label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="businessIncomeTT"></i>
+                  <ng-template #businessIncomeTT> <div [innerHtml]="business_income"></div>
+                  </ng-template>
+                  <input type="text"  class="form-control" id="exampleFormControlInput26" placeholder=""
+                    formControlName="incomeFromBusinessOrProfession" readonly>
+                </div>
+              </div>
+                <!--(selection2=>Type--3)-->
+                <div *ngIf="form.value.agricultureType === 'prod_of_corn_sugar_beet'">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Sales Proceed</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="salesProceedTT"></i>
+                    <ng-template #salesProceedTT> <div [innerHtml]="salesProceed"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)"  class="form-control" id="id_salesProceed" placeholder="" (keyup)="sugar_beet_net_income_calc(i,'salesProceed')"
+                      formControlName="salesProceed" [ngClass]="{'is-invalid': salesProceed_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Sales Proceed is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput2">Cost of Production </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="costOfProductionTT"></i>
+                    <ng-template #costOfProductionTT> <div [innerHtml]="costOfProduction"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)"  class="form-control" id="exampleFormControlInput13" placeholder="" (keyup)="sugar_beet_net_income_calc(i,'costOfProduction')"
+                      formControlName="costOfProduction" [ngClass]="{'is-invalid': costOfProduction_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Cost of Production is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput3">Other Allowable Deduction </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="otherAlwableDeductionTT"></i>
+                    <ng-template #otherAlwableDeductionTT> <div [innerHtml]="otherAlwableDeduction"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)"  class="form-control" id="exampleFormControlInput14" placeholder="" (keyup)="sugar_beet_net_income_calc(i,'otherAllowableDeduction')"
+                      formControlName="otherAllowableDeduction">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput3">Net Income </label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="netIncomeTT"></i>
+                  <ng-template #netIncomeTT> <div [innerHtml]="netIncome"></div>
+                  </ng-template>
+                    <input type="text"  class="form-control"   id="exampleFormControlInput15" placeholder=""
+                      formControlName="netIncome" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput3">Tax Exempted Income</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="taxExemptedIncomeTT"></i>
+                    <ng-template #taxExemptedIncomeTT> <div [innerHtml]="taxExemptedIncome"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput19" placeholder=""
+                      formControlName="taxExemptedIncome" readonly>
+                  </div>
+                </div>
+                <!--(selection2=>Type--5)-->
+                <div *ngIf="form.value.agricultureType === 'income_form_barga_adhi'">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Total Receipt to the Taxpayer</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="totalReceiptTT"></i>
+                    <ng-template #totalReceiptTT> <div [innerHtml]="totalReceipt"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)"  class="form-control" id="exampleFormControlInput12" placeholder="" (keyup)="income_from_adhi_barga_calc(i,'totalRecipt')"
+                      formControlName="totalRecipt" [ngClass]="{'is-invalid': totalReceipt_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Total Receipt is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput3">Other Allowable Deduction </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="otherAlwableDeductionTT"></i>
+                    <ng-template #otherAlwableDeductionTT> <div [innerHtml]="otherAlwableDeduction"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)"  class="form-control" id="exampleFormControlInput14" placeholder="" (keyup)="income_from_adhi_barga_calc(i,'otherAllowableDeduction')"
+                      formControlName="otherAllowableDeduction">
+                  </div>
+                  <div class="form-group">
+                  <label for="exampleFormControlInput3">Net Income </label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="netIncomeTT"></i>
+                  <ng-template #netIncomeTT> <div [innerHtml]="netIncome"></div>
+                  </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput15" placeholder=""
+                      formControlName="netIncome" readonly>
+                  </div>
+                </div>
+                <!--(selection2=>Type--6)-->
+                <div *ngIf="form.value.agricultureType === 'income_exp_reduced_by_sro'">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Sales Proceed</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="salesProceedTT"></i>
+                    <ng-template #salesProceedTT> <div [innerHtml]="salesProceed"></div>
+                    </ng-template>
+                    <input type="text"  class="form-control" id="id_salesProceed" placeholder="" (keyup) = "sro_calc(i,'salesProceed')"
+                      formControlName="salesProceed" [ngClass]="{'is-invalid': salesProceed_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Sales Proceed is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput2">Cost of Production </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="costOfProductionTT"></i>
+                    <ng-template #costOfProductionTT> <div [innerHtml]="costOfProduction"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput13" placeholder="" (keyup) = "sro_calc(i,'costOfProduction')"
+                      formControlName="costOfProduction" [ngClass]="{'is-invalid': costOfProduction_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Cost of Production is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput3">Other Allowable Deduction </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="otherAlwableDeductionTT"></i>
+                    <ng-template #otherAlwableDeductionTT> <div [innerHtml]="otherAlwableDeduction"></div>
+                    </ng-template>
+                    <input type="text"  (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput14" placeholder="" (keyup) = "sro_calc(i,'otherAllowableDeduction')"
+                      formControlName="otherAllowableDeduction">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput3">Net Income </label>
+                   <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="netIncomeTT"></i>
+                   <ng-template #netIncomeTT> <div [innerHtml]="netIncome"></div>
+                   </ng-template>
+                    <input type="text"  class="form-control" id="exampleFormControlInput15" placeholder=""
+                      formControlName="netIncome" readonly>
+                  </div>
+                  <div class="form-group" >
+                    <label for="exampleFormControlInput3">SRO No./Reference </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="sroTT"></i>
+                    <ng-template #sroTT> <div [innerHtml]="sroNo"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)" (keyup)="initializeSRORef($event,i)" class="form-control" id="exampleFormControlInput16" placeholder=""
+                      formControlName="sroNoReference" [ngClass]="{'is-invalid': sroNo_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>SRO No./Reference is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-6">
+                        <label for="exampleFormControlInput16">Year</label>
+                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="sroYearTT"></i>
+                        <ng-template #sroYearTT> <div [innerHtml]="sroYear"></div>
+                        </ng-template>
+                      </div>
+                      <div class="col-12 input-group">
+                        <input type="email" class="form-control" formControlName="year" id="year" placeholder="" (bsValueChange)="initializeYear(i)"
+                          [minDate]="minDate" [maxDate]="maxDate" #year="bsDatepicker" bsDatepicker
+                          [bsConfig]="{ dateInputFormat: 'YYYY', containerClass: 'theme-dark-blue', minMode: 'year' }" [ngClass]="{'is-invalid': year_showError[i]}">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-info btn-sm" type="button" (click)="year.toggle()">
+                              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </button>
+                          </div>
+                          <div class="invalid-feedback">
+                            <div>Year is Required!</div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput3">Particular </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="particularTT"></i>
+                    <ng-template #particularTT> <div [innerHtml]="sroParticular"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="exampleFormControlInput18" placeholder="" (keyup)="initializeParticular($event,i)"
+                      formControlName="particular" [ngClass]="{'is-invalid': particular_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Particular is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput3">Tax Exempted Income </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="taxExemptedIncomeTT"></i>
+                    <ng-template #taxExemptedIncomeTT> <div [innerHtml]="taxExemptedIncome"></div>
+                    </ng-template>
+                    <input [readonly]="makeTaxExemptedIncReadOnly(form.value.salesProceed)" type="text"  (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput19" placeholder=""
+                      formControlName="taxExemptedIncome" (keyup)="calc_taxable_incm(i)">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput3">Taxable Income </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="taxableIncomeTT"></i>
+                    <ng-template #taxableIncomeTT> <div [innerHtml]="taxableIncome"></div>
+                    </ng-template>
+                    <input  type="text"  (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput19" placeholder="" readonly
+                      formControlName="taxableIncome">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput3">Tax Applicable </label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="taxApplicableTT"></i>
+                    <ng-template #taxApplicableTT> <div [innerHtml]="taxApplicable"></div>
+                    </ng-template>
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput20" placeholder="" (keyup)="initializeTaxApplicable($event,i)"
+                      formControlName="taxApplicable" [ngClass]="{'is-invalid': taxApplicable_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Tax Applicable is Required!</div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div [hidden]="i != isVisibleForm" class="col-sm-6">
+          <div *ngIf="form.value.agricultureType === 'prod_of_tea_rubber'">
+            <div class="content-background">
+              <!-- <div class="col-sm-12 p-0">
+                <p style="color: darkorange;font-weight: bold;">Notice: </p>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                  when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries
+                </p>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                  when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+              </div> -->
+              <div class="col-sm-12 p-0">
+                <label>Maintain Books of Accounts?</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350 tooltip-350" [tooltip]="maintainBooksTT"></i>
+                <ng-template #maintainBooksTT> <div [innerHtml]="html"></div>
+                </ng-template>
+                <div class="row">
+                  <div class="col-md-6 input-group">
+                    <div class="form-check" placement="right" style="padding-right: 5px">
+                      <input class="form-check-input" type="radio" formControlName="isMaintainedBookOfAC"
+                         value="1">
+                      <label class="form-check-label" for="chkisMaintainedBookOfACYes" style="margin-right: 40px;">
+                        Yes
+                      </label>
+                      <input class="form-check-input" type="radio" (change)="isMaintainedBookOfACFalse(form.value.agricultureType, i)"  formControlName="isMaintainedBookOfAC"
+                        value="0">
+                      <label class="form-check-label" for="chkisMaintainedBookOfACNo">
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+          </div>
+            </div>
+            <div *ngIf="form.value.isMaintainedBookOfAC==='1'"  class="content-background mt-3" >
+              <div class="col-sm-12 p-0">
+                <span for="defaultCheck1" style="margin-right: 40px; font-size: 17px;">
+                  <b>Balance Sheet Summary</b>
+                </span>
+              </div>
+            </div>
+            <div *ngIf="form.value.isMaintainedBookOfAC==='1'" class="content-background mt-2">            
+              <div class="form-group">
+                <label for="exampleFormControlInput3">Cash in Hand & at Bank </label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="cashInHandTT"></i>
+                <ng-template #cashInHandTT> <div [innerHtml]="cashInHand"></div>
+                </ng-template>
+                <input type="text" (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput27" placeholder="" (keyup) = "prod_of_tea_rubber_calc(i,'cashInHandandAtBank')"
+                  formControlName="cashInHandandAtBank" [ngClass]="{'is-invalid': cashInHand_showError[i]}">
+                  <div class="invalid-feedback">
+                    <div>Cash in Hand & at Bank is Required!</div>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput3">Inventories</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="inventoriesTT"></i>
+                <ng-template #inventoriesTT> <div [innerHtml]="inventories"></div>
+                </ng-template>
+                <input type="text" (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput28" placeholder="" (keyup) = "prod_of_tea_rubber_calc(i,'inventories')"
+                  formControlName="inventories" [ngClass]="{'is-invalid': inventories_showError[i]}">
+                  <div class="invalid-feedback">
+                    <div>Inventories is Required!</div>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput3">Fixed Assets</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="fixedAssetsTT"></i>
+                <ng-template #fixedAssetsTT> <div [innerHtml]="fixedAsset"></div>
+                </ng-template>
+                <input type="text" (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput29" placeholder="" (keyup) = "prod_of_tea_rubber_calc(i,'fixedAssets')"
+                  formControlName="fixedAssets" [ngClass]="{'is-invalid': fixedAsset_showError[i]}">
+                  <div class="invalid-feedback">
+                    <div>Fixed Assets is Required!</div>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput3">Other Assets</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="otherAssetTT"></i>
+                <ng-template #otherAssetTT> <div [innerHtml]="otherAsset"></div>
+                </ng-template>
+                <input type="text" (keypress)="numberOnly($event)" class="form-control"  placeholder="" (keyup) = "prod_of_tea_rubber_calc(i,'otherAssets')"
+                  formControlName="otherAssets" [ngClass]="{'is-invalid': otherAsset_showError[i]}">
+                  <div class="invalid-feedback">
+                    <div>Other Assets is Required!</div>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput3">Total Assets</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="totalAssetTT"></i>
+                <ng-template #totalAssetTT> <div [innerHtml]="totalAsset"></div>
+                </ng-template>
+                <input type="text" class="form-control" id="exampleFormControlInput30" placeholder=""
+                  formControlName="totalAssets" readonly>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput3">Opening Capital</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="openingCapitalTT"></i>
+                <ng-template #openingCapitalTT> <div [innerHtml]="openingCapital"></div>
+                </ng-template>
+                <input type="text" (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput211" placeholder=""
+                  formControlName="openingCapital" (keyup)="cc_tcl_calc(i,'openingCapital')" [ngClass]="{'is-invalid': openingCapital_showError[i]}">
+                  <div class="invalid-feedback">
+                    <div>Opening Capital is Required!</div>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput3">Net Profit</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="netProfitTT"></i>
+                <ng-template #netProfitTT> <div [innerHtml]="netProfit"></div>
+                </ng-template>
+                <input type="text" class="form-control" id="exampleFormControlInput" placeholder=""
+                  formControlName="netProfit" readonly>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput3">Withdrawals in the income Year</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="withdrawalIncomeYearTT"></i>
+                <ng-template #withdrawalIncomeYearTT> <div [innerHtml]="withdrawalsIncome"></div>
+                </ng-template>
+                <input  type="text" (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput212" placeholder=""
+                  formControlName="withdrawalIncomeYear" (keyup)="cc_tcl_calc(i,'withdrawalIncomeYear')" [ngClass]="{'is-invalid': withdrawals_showError[i]}">
+                  <div class="invalid-feedback">
+                    <div>Withdrawals in the income Year is Required!</div>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput3">Closing Capital</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="closingCapitalTT"></i>
+                <ng-template #closingCapitalTT> <div [innerHtml]="closingCapital"></div>
+                </ng-template>
+                <input type="text" class="form-control" id="exampleFormControlInput213" placeholder=""
+                  formControlName="closingCapital" readonly>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput3">Liabilities</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="liabilitiesTT"></i>
+                <ng-template #liabilitiesTT> <div [innerHtml]="liabilities"></div>
+                </ng-template>
+                <input  type="text" (keypress)="numberOnly($event)" class="form-control" id="exampleFormControlInput214" placeholder="" (keyup) = "cc_tcl_calc(i,'liabilities')"
+                  formControlName="liabilities" [ngClass]="{'is-invalid': liabilities_showError[i]}">
+                  <div class="invalid-feedback">
+                    <div>Liabilities is Required!</div>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput3">Total Capital and Liabilities</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="totalCapitalandLiabilitiesTT"></i>
+                <ng-template #totalCapitalandLiabilitiesTT> <div [innerHtml]="totalCpAndLiabilities"></div>
+                </ng-template>
+                <input type="text" class="form-control" id="exampleFormControlInput215" placeholder=""
+                  formControlName="totalCapitalandLiabilities" readonly>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="form.value.agricultureType === 'income_form_barga_adhi'">
+            <div class="content-background">
+              <div class="col-sm-12 p-0">
+                <span for="defaultCheck1" style="margin-right: 40px; font-size: 17px;">
+                  <b>Leasing Particular</b>
+                </span>
+              </div>
+            </div>
+            <div class="content-background" style="margin-top: 20px">
+              <div class="col-sm-12 p-0">
+                <div style="margin-top: 5px;margin-left: -15px;">
+                  <div class="hiddenFiled">
+                    <div class="form-group">
+                      <label for="exampleFormControlInput15">Name of the Leasing Person/Authority</label>
+                      <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="leasingPersonTT"></i>
+                      <ng-template #leasingPersonTT> <div [innerHtml]="leasingPersonName"></div>
+                      </ng-template>
+                      <input type="text" class="form-control" id="exampleFormControlInput15" (keyup)="initializeNameOfLeasingPerson($event,i)" placeholder="" formControlName="nameOfLeasingPerson" [ngClass]="{'is-invalid': leasingPersonName_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>Name of the Leasing Person is Required!</div>
+                      </div>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                        <input class="form-check-input" type="radio" (change)="isNID($event,i)" value="1" name="chkTinOrNid"  
+                         formControlName="chkTinOrNid">
+                        <label class="form-check-label" for="defaultCheck1" style="margin-right: 40px;">
+                          NID
+                        </label>
+                        <input class="form-check-input" type="radio"  (change)="isTIN($event,i)" value="0" name="chkTinOrNid" formControlName="chkTinOrNid">
+                        <label class="form-check-label" for="defaultCheck2">
+                          TIN
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="exampleFormControlInput31" placeholder="" (keypress)="numberOnly($event)"
+                        formControlName="nidOrTIN"  [ngClass]="{'is-invalid': nidOrTin_showError[i]}">
+                        <div class="invalid-feedback">
+                          <div>Invalid TIN/NID.(hint:TIN must be 12 digit and NID must be 10/13/17 digit)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput17">Farmer's ID</label>
+                      <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="farmersIDTT"></i>
+                      <ng-template #farmersIDTT> <div [innerHtml]="farmersID"></div>
+                      </ng-template>
+                      <input type="text" class="form-control" id="exampleFormControlInput32" placeholder=""
+                        formControlName="farmersID">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <!-- bottom button design start -->
+       <div class="row  mt-4">
+        <div class="col-sm-6 pl-3">
+          <button type="button" class="btn btn-sm backBtn" (click)="onBackPage()">
+            <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left"
+              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+            </svg>&nbsp;
+            Back</button>
+        </div>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12 text-right">
+              <button type="button" class="btn btn-sm saveDraftBtn" (click)="saveDraft()">
+                Save Draft</button>
+              <button type="button" class="btn btn-sm saveContinueBtn" (click)="submittedData()">
+                <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em" viewBox="0 0 16 16"
+                  class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                </svg>
+                Save & Continue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- new button design end -->
+
+    </div>
+  </div>
+</div>
+<ng-template #popup>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: red; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Do you want to remove this field?</p>
+    <button type="button" class="btn btn-danger" style="float: right;" (click)="popupRemoveOnClick()">Remove</button>
+    <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+      (click)="popupKeepOnClick()">Keep</button>
+  </div>
+</ng-template>
+<ngx-ui-loader></ngx-ui-loader>
+<!-- {{agricultureTypeName | json}} -->

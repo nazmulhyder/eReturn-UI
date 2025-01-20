@@ -1,0 +1,17 @@
+.table>tr{
+    line-height: 20px !important;
+}
+
+.custom-logo-width
+{
+  width:110px !important;
+}
+
+.btn-customize {
+  background-color: white;
+  font-size: 12px;
+}
+.btn-customize:hover {
+  background-color: black !important;
+  color:  white;
+}

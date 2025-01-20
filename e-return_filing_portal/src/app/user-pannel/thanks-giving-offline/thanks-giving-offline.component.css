@@ -1,0 +1,106 @@
+.bg_image{
+    background-image: url('assets/img/background/bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@media (max-height: 767px){
+    .bg_image{
+        height: 79vh;
+    }
+}
+@media (min-height: 768px){
+    .bg_image{
+        height: 87vh;
+    }
+}
+
+.content-bg{
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029!important;
+    border-radius: 5px!important;
+    opacity: 1!important;
+    padding: 20px 30px 20px 30px!important;
+}
+
+.customTop{
+    margin-top: 50px!important;
+}
+
+.nbr_logo{
+    float: left;
+    margin-left: 100px;
+    width:15vw;
+    height:7vh;
+}
+
+.mujib100_logo{
+    float: right;
+    margin-top: 10px!important;
+    margin-right: 100px;
+    width:7vw;
+    height:11vh;
+}
+
+.customMargin{
+    margin-top: 60px;
+}
+
+.main_section{
+    font-size: 18px;
+}
+
+.site_link{
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.link_Btn {
+    background-color: #01649A;
+    color: #ffffff;
+    outline: none;
+}
+
+.fontColor {
+    color: rgb(164,172,173);
+}
+  
+.created-by{
+    float: right;
+}
+  
+.synesis_logo{
+    margin-top: 3px;
+    height: 20px;
+    float: left;
+    margin-left: -20px;
+}
+
+.art_logo_section{
+    color: rgb(164,172,173);
+}
+
+.art_logo{
+    margin-top: 3px;
+    height: 22px;
+    width: 27px;
+    float: left;
+    margin-left: -20px;
+}
+
+.custom_top{
+    margin-top: 60px;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 55px!important;
+    width: 100%;
+}
+
+.nbrText{
+    margin-left: 180px;
+}
+  

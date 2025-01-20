@@ -1,0 +1,129 @@
+
+<div style="margin-top: 30px;">
+  <div class="content-background">
+    <form [formGroup]="managementConfigForm">
+    <!-- <div style="margin-left: 5px;"> -->
+      <div class="investmentCategory">
+        <p><b>Management Configuration</b></p>
+        <hr>
+      </div>
+      <div class="form-group" style="margin-left: 5px;">
+        <div class="main">
+          <div class="col-12 addAnotherButtonClass">
+            <button type="button" class="addAnotherBtnStyle" (click)="add_row_table_1()">
+              &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+              Add&nbsp;
+            </button>
+          </div>
+          <div class="table-responsive tableBgStyle" id="dynamicTable">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" width="2%"></th>
+                  <th scope="col" width="10%">Label Name</th>
+                  <th scope="col" width="10%">Type</th>
+                  <th scope="col" width="10%">Value</th>
+                  <th scope="col" width="5%">Nullable</th>
+                  <th scope="col" width="5%">Validity</th>
+                  <th scope="col" width="10%">Valid From</th>
+                  <th scope="col" width="10%">Valid To</th>
+                  <th scope="col" width="3%"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of table_1_List.controls; let k = index" [formGroup]="item">
+                  <td scope="row" width="2%">{{k+1}}</td>
+                  <td width="10%">
+                    <input type="text" class="form-control" formControlName="Lbl_Name"  placeholder="" (keyup)="rowCheckingError(k, 'Lbl_Name')"
+                    [ngClass]="{'is-invalid': filing_showError[k].level_showError}">
+                    <div class="invalid-feedback">
+                      <div>Level Name is Required!</div>
+                    </div>
+                  </td>
+                  <td width="10%">
+                    <select class="form-control" formControlName="type" (change)="rowCheckingError(k, 'type')" [ngClass]="{'is-invalid': filing_showError[k].type_showError}">
+                      <option value="0" selected>Select One</option>
+                      <option value="NUM">NUM</option>
+                      <option value="TEXT">TEXT</option>
+                      <option value="NUM_MUL">NUM_MUL</option>
+                      <option value="NUM_SINGLE">NUM_SINGLE</option>
+                      <option value="TEXT_MUL">TEXT_MUL</option>
+                      <option value="TEXT_MUL">TEXT_SINGLE</option>
+                      <option value="BOOL">BOOL</option>
+                      <option value="INACTIVE">INACTIVE</option>
+                      <option value="DATE">DATE</option>
+                      </select>
+                    <div class="invalid-feedback">
+                      <div>Type is Required!</div>
+                    </div>
+                  </td>
+                  <td width="10%">
+                    <input type="text" class="form-control" formControlName="value" placeholder="" (keyup)="rowCheckingError(k, 'value')"
+                    [ngClass]="{'is-invalid': filing_showError[k].value_showError}">
+                    <div class="invalid-feedback">
+                      <div>Value is Required!</div>
+                    </div>
+                  </td>
+                  <td width="5%" class="checkbox-align-center">
+                    <input type="checkbox" class="text-center" formControlName="is_nullable" placeholder="">
+                  </td>
+                  <td width="5%" class="checkbox-align-center">
+                    <input type="checkbox" class="text-center" formControlName="has_validity" placeholder="" (change)="changeHasValidity($event,k)">
+                  </td>
+                  <td width="10%">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="" formControlName="valid_from" (bsValueChange) ="rowCheckingError(k, 'valid_from')"
+                      aria-label="Recipient's username" aria-describedby="button-addon2" #valid_from="bsDatepicker" bsDatepicker
+                      [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}" [ngClass]="{'is-invalid': filing_showError[k].validFrom_showError}">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-info btn-sm" type="button" (click)="valid_from.toggle()">
+                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </button>
+                      </div>
+                      <div class="invalid-feedback">
+                        <div>Valid from is Required!</div>
+                      </div>
+                    </div>                 
+                  </td>
+                  <td width="10%">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="" formControlName="valid_to" (bsValueChange) ="rowCheckingError(k, 'valid_to')"
+                      aria-label="Recipient's username" aria-describedby="button-addon2" #valid_to="bsDatepicker" bsDatepicker
+                      [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}" [ngClass]="{'is-invalid': filing_showError[k].validTo_showError}">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-info btn-sm" type="button" (click)="valid_to.toggle()">
+                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </button>
+                      </div>
+                      <div class="invalid-feedback">
+                        <div>Valid to is Required!</div>
+                      </div>
+                    </div>
+
+                  </td>
+                  <td width="3%">
+                    <button *ngIf="isDeleteBtnShow" class="deleteBtnStyle" (click)="delete_table_1_row(k,item.value.id)">
+                      <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      </form>
+      <div class="row mt-4">
+        <div class="col-sm-6 pl-3">
+        </div>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12 text-right">
+              <button type="button" class="btn btn-sm saveContinueBtn" (click)="saveData()">
+                Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

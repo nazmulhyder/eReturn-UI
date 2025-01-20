@@ -1,0 +1,76 @@
+<div class="text-center bg_image" *ngIf="isShow">
+    <div class="row">
+        <div class="col-md-6 customTop">
+            <img src="assets\img\background\NBR_logo.jpg" class="nbr_logo">
+        </div>
+        <div class="col-md-6">
+            <img src="assets\img\logo\mujib100_logo.png" class="mujib100_logo">
+        </div>
+    </div>
+    <div class="row main_section">
+        <div class="col-sm-8 offset-sm-2 customMargin">
+            <div class="row">
+                <div class="col-sm-12 text-left">
+                    <label>Dear <b>{{name}}</b></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 text-left">
+                    <p>Thank you for visiting eReturn. <br>We appreciate your time and efforts in preparing the tax
+                        return.</p>
+                    <p>Your return has been prepared based on your input.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 text-left">
+                    <p>What you want to do?</p>
+                    <ul>
+                        <li><a [routerLink]="" (click)="onClickgotoOffline()">Go to offline return</a></li>
+                        <li><a [routerLink]="['/user-panel/tax-and-payment']">Need editing, go
+                                back to eReturn</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="row">
+            <div class="col-sm-5">
+                <footer class="fontColor nbrText">&copy;{{year}} - National Board of Revenue(NBR)</footer>
+            </div>
+            <div class="col-sm-3">
+                <footer class="art_logo_section">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <span class="created-by">
+                                Graphic
+                            </span>
+                        </div>
+                        <div class="col-sm-3">
+                            <img style="display: block;" src="../../../../assets/img/logo/art_logo.jpg"
+                                class="img-fluid art_logo" alt="Responsive image" />
+                        </div>
+                    </div>
+                </footer>
+            </div>
+            <div class="col-sm-4">
+                <footer class="fontColor">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <span class="created-by">
+                                Managed by
+                            </span>
+                        </div>
+                        <div class="col-sm-5">
+                            <img style="display: block;" src="../../../../assets/img/logo/synesisIT_logo.png"
+                                class="img-fluid synesis_logo" alt="Responsive image" />
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-ui-loader></ngx-ui-loader>

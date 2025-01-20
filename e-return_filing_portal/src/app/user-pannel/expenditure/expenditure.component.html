@@ -1,0 +1,391 @@
+<div class="row" *ngIf="isShow">
+  <div class="col-sm-12">
+    <div class="row mb-4">
+      <div class="col-12 col-sm-2">
+        <span style="font-size:20px; font-weight: bold; color: #22223B;">Expenditure</span>
+      </div>
+      <div class="col-12 col-sm-10">
+        <div class="row" style="float: right; padding-right: 5px;">
+          <button type="button" class="btn btn-pill rounded-pill btn-outline-dark btn-customize btn-sm main_nav"
+            *ngFor="let head of selectedNavbar; let i = index" (click)="mainNavActiveSelect(head['id'])"
+            [class.activeMainNav]="mainNavActive[head['id']]" routerLink="{{head['link']}}"
+            style="float: right; margin-right: 5px;">{{head['name']}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="isShow">
+  <div class="col-sm-12 container-cover-shadow">
+    <div class="row custom-container" style="margin-top: 10px">
+      <div class="col-sm-12">
+        <div class="form-group content-background" [formGroup]="expenditureForm" *ngIf="load_IT10BRegion">
+          <label class="font-weight-bold">IT10BB is not mandatory for you. Still want to submit?</label>
+          <div class="row">
+            <div class="col-md-6 input-group mb-2">
+              <div class="form-check custom-form-check-padding" placement="right" style="padding-right: 5px">
+                <input class="form-check-input" type="radio" (change)="onRadioChangeYes()" formControlName="chkIT10B"
+                  value="1">
+                <label class="form-check-label" for="defaultCheck1" style="margin-right: 40px;">
+                  Yes
+                </label>
+                <input class="form-check-input" type="radio" (change)="onRadioChangeNo()" formControlName="chkIT10B"
+                  value="0">
+                <label class="form-check-label">
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content-background">
+          <form [formGroup]="expenditureForm">
+            <table class="table" id="dynamicTable">
+              <thead>
+                <tr class="custom-row">
+                  <th width="60%" scope="col">Particulars</th>
+                  <th width="15%" scope="col">Amount</th>
+                  <th width="25%" scope="col">Comment</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngIf="isIT10BMandatory">
+                  <td class="font-weight-bold form-group" width="60%">Expenses for Food, Clothing and Other Essentials
+                  </td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="expenseFoodClothingAmt" (keyup)="totalExpenseInputSum()" placeholder=""
+                      [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder="" formControlName="expenseFoodClothingCmt">
+                  </td>
+                </tr>
+                <tr *ngIf="isIT10BMandatory">
+                  <td class="font-weight-bold form-group" width="60%">Accommodation Expense</td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="housingExpenseAmt" (keyup)="totalExpenseInputSum()" placeholder=""
+                      [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder="" formControlName="housingExpenseCmt">
+                  </td>
+                </tr>
+                <tr *ngIf="isIT10BMandatory">
+                  <!-- <td class="font-weight-bold form-group" width="90%" colspan="3">Auto and Transportation Expenses</td> -->
+                  <td class="font-weight-bold form-group" width="100%" colspan="3">
+                    <div class="row" type="button" style="width: 100%;"
+                      (click)="isAutoTransportationCollapsed = !isAutoTransportationCollapsed"
+                      [attr.aria-expanded]="!isAutoTransportationCollapsed" aria-controls="collapseExample">
+
+                      <div class="col-sm-7" style="text-align: start; width: 60%;">
+                        <p style="font-weight: bold; font-size: 15px;">
+                          <i *ngIf="isAutoTransportationCollapsed" class="fa fa-chevron-circle-up" aria-hidden="true"
+                            style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                          <i *ngIf="!isAutoTransportationCollapsed" class="fa fa-chevron-circle-down" aria-hidden="true"
+                            style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                          Auto and Transportation Expenses
+                        </p>
+                      </div>
+
+                      <div class="customCss">
+                        <input type="text" class="form-control"
+                          formControlName="auto_and_Transportation_Expenses_Sum"
+                          [value]="expenditureForm.value.auto_and_Transportation_Expenses_Sum===0? '': expenditureForm.value.auto_and_Transportation_Expenses_Sum"
+                          placeholder="" [ngClass]="{'is-invalid': expenditureValidation_ShowError}" readonly>
+                      </div>
+                      <div style="width: 27%;">
+
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr *ngIf="isIT10BMandatory && isAutoTransportationCollapsed">
+                  <td class="force-padding" width="60%">
+                    Driver's Salary, Fuel and Maintenance
+                  </td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="driverSalaryFuelMaintanceAmt" (keyup)="totalExpenseInputSum()" placeholder=""
+                      [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder=""
+                      formControlName="driverSalaryFuelMaintanceCmt">
+                  </td>
+                </tr>
+
+                <tr *ngIf="isIT10BMandatory && isAutoTransportationCollapsed">
+                  <td class="force-padding" width="60%">
+                    Other Transportation
+                  </td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="otherTransportationAmt" (keyup)="totalExpenseInputSum()" placeholder=""
+                      [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder="" formControlName="otherTransportationCmt">
+                  </td>
+                </tr>
+
+                <tr *ngIf="isIT10BMandatory">
+                  <!-- <td class="font-weight-bold form-group" width="100%" colspan="3">Household and Utility Expenses</td> -->
+                  <td class="font-weight-bold form-group" width="100%" colspan="3">
+                    <div class="row" type="button" style="width: 100%;" (click)="isHouseholdUtilityCollapsed = !isHouseholdUtilityCollapsed"
+                      [attr.aria-expanded]="!isHouseholdUtilityCollapsed" aria-controls="collapseExample">
+
+                      <div class="col-sm-7" style="text-align: start; width: 60%;">
+                        <p style="font-weight: bold; font-size: 15px;">
+                          <i *ngIf="isHouseholdUtilityCollapsed" class="fa fa-chevron-circle-up" aria-hidden="true"
+                            style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                          <i *ngIf="!isHouseholdUtilityCollapsed" class="fa fa-chevron-circle-down" aria-hidden="true"
+                            style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                          Household and Utility Expenses
+                        </p>
+                      </div>
+
+                      <div class="customCss">
+                        <input type="text" class="form-control"
+                          formControlName="household_and_Utility_Expenses_Sum"
+                          [value]="expenditureForm.value.household_and_Utility_Expenses_Sum===0? '': expenditureForm.value.household_and_Utility_Expenses_Sum"
+                          placeholder="" [ngClass]="{'is-invalid': expenditureValidation_ShowError}" readonly>
+                      </div>
+                      <div style="width: 27%;">
+
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr *ngIf="isIT10BMandatory && isHouseholdUtilityCollapsed">
+                  <td class="force-padding form-group" width="60%">Electricity</td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="electricityAmt" (keyup)="totalExpenseInputSum()" placeholder=""
+                      [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder="" formControlName="electricityCmt">
+                  </td>
+                </tr>
+                <tr *ngIf="isIT10BMandatory && isHouseholdUtilityCollapsed">
+                  <td class="force-padding form-group" width="60%">Gas,Water,Sewer and Garbage</td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="gasWaterSewerGurbageAmt" (keyup)="totalExpenseInputSum()" placeholder=""
+                      [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder="" formControlName="gasWaterSewerGurbageCmt">
+                  </td>
+                </tr>
+                <tr *ngIf="isIT10BMandatory && isHouseholdUtilityCollapsed">
+                  <td class="force-padding form-group" width="60%">Phone, Internet, TV channels and Subscription</td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="phoneInternetTVChannelSubAmt" (keyup)="totalExpenseInputSum()" placeholder=""
+                      [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder=""
+                      formControlName="phoneInternetTVChannelSubCmt">
+                  </td>
+                </tr>
+                <tr *ngIf="isIT10BMandatory && isHouseholdUtilityCollapsed">
+                  <td class="force-padding form-group" width="60%">Home-Support Stuff and Other Expenses</td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="homeSupportStuffandOtherExpensesAmt" (keyup)="totalExpenseInputSum()"
+                      placeholder="" [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder=""
+                      formControlName="homeSupportStuffandOtherExpensesCmt">
+                  </td>
+                </tr>
+                <tr *ngIf="isIT10BMandatory">
+                  <td class="font-weight-bold form-group" width="60%">Children's Education Expenses</td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="childrensEducationExpensesAmt" (keyup)="totalExpenseInputSum()" placeholder=""
+                      [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder=""
+                      formControlName="childrensEducationExpensesCmt">
+                  </td>
+                </tr>
+
+                <tr *ngIf="isIT10BMandatory">
+                  <!-- <td class="font-weight-bold form-group" width="100%" colspan="3">Special Expenses</td> -->
+                  <td class="font-weight-bold form-group" width="100%" colspan="3">
+                    <div class="row" type="button" style="width: 100%;" (click)="isSpecialExpensesCollapsed = !isSpecialExpensesCollapsed"
+                      [attr.aria-expanded]="!isSpecialExpensesCollapsed" aria-controls="collapseExample">
+
+                      <div class="col-sm-7" style="text-align: start; width: 60%;">
+                        <p style="font-weight: bold; font-size: 15px;">
+                          <i *ngIf="isSpecialExpensesCollapsed" class="fa fa-chevron-circle-up" aria-hidden="true"
+                            style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                          <i *ngIf="!isSpecialExpensesCollapsed" class="fa fa-chevron-circle-down" aria-hidden="true"
+                            style="font-size: 14px; text-align: right; color: indigo; margin-right: 5px;"></i>
+                          Special Expenses
+                        </p>
+                      </div>
+
+                      <div class="customCss">
+                        <input type="text" class="form-control" formControlName="special_Expenses_Sum"
+                          [value]="expenditureForm.value.special_Expenses_Sum=='0'? '': expenditureForm.value.special_Expenses_Sum"
+                          placeholder="" [ngClass]="{'is-invalid': expenditureValidation_ShowError}" readonly>
+                      </div>
+                      <div style="width: 27%;">
+
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr *ngIf="isIT10BMandatory && isSpecialExpensesCollapsed">
+                  <td class="force-padding form-group" width="60%">Festival, Party, Events</td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="festivalPartyExpensesAmt" (keyup)="totalExpenseInputSum()" placeholder=""
+                      [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder="" formControlName="festivalPartyExpensesCmt">
+                  </td>
+                </tr>
+                <tr *ngIf="isIT10BMandatory && isSpecialExpensesCollapsed">
+                  <td class="force-padding form-group" width="60%">Domestic and Overseas Tour, Holiday, Etc.</td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="domesticOverseasTourHolidayAmt" (keyup)="totalExpenseInputSum()" placeholder=""
+                      [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder=""
+                      formControlName="domesticOverseasTourHolidayCmt">
+                  </td>
+                </tr>
+                <tr *ngIf="isIT10BMandatory && isSpecialExpensesCollapsed">
+                  <td class="force-padding form-group" width="60%">Philanthropy, Etc</td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="philanthropyAmt" (keyup)="totalExpenseInputSum()" placeholder=""
+                      [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder="" formControlName="philanthropyCmt">
+                  </td>
+                </tr>
+                <tr *ngIf="isIT10BMandatory && isSpecialExpensesCollapsed">
+                  <td class="force-padding form-group" width="60%">Other Special Expenses</td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="otherSocialExpensesAmt" (keyup)="totalExpenseInputSum()" placeholder=""
+                      [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder="" formControlName="otherSocialExpensesCmt">
+                  </td>
+                </tr>
+                <tr *ngIf="isIT10BMandatory">
+                  <td class="font-weight-bold form-group" width="60%">Any Other Expenses</td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="anyOtherExpensesAmt" (keyup)="totalExpenseInputSum()" placeholder=""
+                      [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder="" formControlName="anyOtherExpensesCmt">
+                  </td>
+                </tr>
+                <tr *ngIf="isIT10BMandatory">
+                  <td class="font-weight-bold form-group" width="60%">Total Expense Relating to Lifestyle</td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="totalExpensesRelatingToLifeStyleAmt" placeholder="" readonly>
+                  </td>
+                  <td width="25%"></td>
+                </tr>
+                <tr *ngIf="isIT10BMandatory">
+                  <td class="font-weight-bold form-group" width="100%" colspan="3">Payment of Tax, Charges, Etc</td>
+                </tr>
+                <tr *ngIf="isIT10BMandatory">
+                  <td class="font-weight-bold" width="60%">Payment of Tax at Source</td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="paymentOfTaxAtSourceAmt" (keyup)="totalAmtExpenseTax()" placeholder=""
+                      [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder="" formControlName="paymentOfTaxAtSourceCmt">
+                  </td>
+                </tr>
+                <tr *ngIf="isIT10BMandatory">
+                  <td class="font-weight-bold form-group" width="60%">Payment of Tax, Surcharge or Other Amounts</td>
+                  <td width="15%">
+                    <input type="text" (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="paymentOfTaxSurchargeOrOtherAmt" (keyup)="totalAmtExpenseTax()" placeholder=""
+                      [ngClass]="{'is-invalid': expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                    <input type="text" class="form-control" placeholder=""
+                      formControlName="paymentOfTaxSurchargeOrOtherCmt">
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-weight-bold form-group" width="60%">Total Amount of Expense and Tax</td>
+                  <td width="15%">
+                    <input [readonly]="isIT10BMandatory" (keyup)="initializeTotalAmtOfExp($event)" type="text"
+                      (keypress)="numberOnly($event)" class="form-control"
+                      formControlName="totalAmountOfExpenseAndTaxAmt" placeholder=""
+                      [ngClass]="{'is-invalid': !isIT10BMandatory && expenditureValidation_ShowError}">
+                  </td>
+                  <td width="25%">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+
+          <!-- new button design start -->
+          <div class="row mt-4">
+            <div class="col-sm-6 pl-3">
+              <button type="button" class="btn btn-sm backBtn" (click)="onBackPage()">
+                <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left"
+                  fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                </svg>&nbsp;
+                Back</button>
+            </div>
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-sm-12 text-right">
+                  <button type="button" class="btn btn-sm saveDraftBtn" (click)="saveDraft()">
+                    Save Draft</button>
+                  <button type="button" class="btn btn-sm saveContinueBtn" (click)="submittedData()">
+                    <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em" viewBox="0 0 16 16"
+                      class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd"
+                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                    </svg>
+                    Save & Continue</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- new button design end -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-ui-loader></ngx-ui-loader>

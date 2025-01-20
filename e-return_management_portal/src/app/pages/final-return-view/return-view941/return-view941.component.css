@@ -1,0 +1,213 @@
+.headline {
+  text-align: left;
+  /* font: normal normal 600 18px/24px Open Sans; */
+  font-size: 17px;
+  font-weight: bold;
+  letter-spacing: 0px;
+  color: #0F0F0F;
+  text-transform: capitalize;
+  opacity: 1;
+}
+
+
+.tooltip{
+  margin-left: 20px;
+}
+
+.fs-14{
+  font-size: 14px;
+}
+.text-decoration-underline{
+  text-decoration: underline !important;
+}
+.text-black{
+  color: #000 !important;
+}
+
+.bg-grey{
+  background: #E1EAEC;
+}
+.img-120{
+  width: 120px;
+  height: 120px;
+}
+
+.pt-38{
+  padding-top: 38px;
+}
+.bt-black{
+  border-top: 1px solid black;height: 2px;width: 150px;
+}
+.mtn-5{
+  margin-top: -5px;
+}
+.mr-35{
+  margin-right: 35px;
+}
+.custom-input{
+  background: #F4F9FA !important;
+  border-bottom: 1px solid #bbb !important;
+  border: 0;
+  border-radius: 0 !important;
+  width: 100%;
+  font-size: 12px!important;
+  }
+  .custom-input:focus,.custom-input:active{
+      background: #F4F9FA !important;
+  border-bottom: 1px solid #bbb !important;
+  border: 0;
+  border-radius: 0 !important;
+  outline: 0;
+  }
+.form-group label{
+  font-size: 11px !important;
+}
+.ft-11{
+  font-size: 11px !important;
+}
+.ft-10{
+  font-size: 10px !important;
+}
+.ft-12{
+  font-size: 12px !important;
+}
+.ft-14{
+font-size: 14px !important;
+}
+
+.main_nav:hover {
+float: right;
+background-color: #01649A;
+color: white;
+}
+
+.active{
+background-color: #01649A !important;
+color: white;
+border: 0px;
+}
+
+
+.border-none
+{
+  border: none !important;
+}
+.border-full
+{
+  border: 1px solid grey !important;
+}
+.border-left
+{
+  border-left: 1px solid gray !important;
+}
+.border-right
+{
+  border-right: 1px solid gray !important;
+}
+.border-top
+{
+  border-top: 1px solid gray !important;
+}
+.border-bottom
+{
+  border-bottom: 1px solid gray !important;
+}
+
+.assessment-input-box-len
+{
+  width: 30px !important; 
+  height: 45px !important; 
+}
+
+.input_51
+{
+  width: 50px !important; 
+  height: 30px !important; 
+}
+.input_52
+{
+  width: 100px !important; 
+  height: 30px !important; 
+}
+
+.row-height-922
+{
+  height : 30px !important;
+}
+.font-italic
+{
+  font-style: italic;
+}
+
+.custom-checkbox {
+/* -webkit-appearance:none; */
+width: 30px !important; 
+height: 30px !important; 
+border-radius:5px;
+border:2px solid #555;
+}
+
+.chkbox-custom-input{
+width: 30px !important; 
+height: 30px !important; 
+}
+
+input[type="checkbox"]:disabled::before{
+background: rgb(199, 33, 33);
+}
+
+/* .mr-170{
+margin-right: 170px;
+}
+.mr-70{
+margin-right: 70px;
+} */
+/* .mr-22{
+margin-right: 22px;
+} */
+.mr-145{
+margin-right: 145px;
+}
+.mr-110{
+margin-right: 110px;
+}
+.mr-87{
+margin-right: 87px;
+}
+
+.eReturn-logo{
+width:120px;
+height:30px;
+}
+
+.customMargin{
+margin-top: -62px;
+}
+
+.margin-4{
+margin-top: 50px;
+}
+
+@media print {
+  .content-background{
+    background: white !important;
+    box-shadow: none !important;
+  }
+  .print-image
+  {
+    border: 1px solid white !important;
+  }
+  .custom_height_print{
+    height: 70px !important;
+  }
+  .input-disable-fields,.customInput{
+    width: 100% !important;
+    border-radius: 0px 0px 0px 0px !important;
+    /* border: none; */
+    border: 1px solid grey;
+    background-color: #fff !important;
+  }
+  .other-document{
+    border: none;
+  }
+  }

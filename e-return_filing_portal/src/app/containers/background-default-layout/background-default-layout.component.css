@@ -1,0 +1,56 @@
+.bg-img {
+    /* background-image: url("assets\img\background\back.png"); */
+    background-image: url("assets\img\background\bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+}
+img{
+    width: 50%;
+}
+
+h1 {
+    color: #145DA0;
+    font-weight: bold;
+    font-size: 55px;
+}
+
+.custom-font{
+ font-weight: normal !important;
+}
+
+.left-part{
+    margin-top: 40px;
+    padding: 20px;
+}
+
+.right-part{
+    padding: 0;
+}
+
+.bg-grey{
+    background: #F4F9FA;
+}
+
+.font-12{
+    font-size:12px !important;
+}
+
+.font-13{
+    font-size:13px !important;
+}
+
+.font-14{
+    font-size:14px !important;
+}
+
+@media (max-width: 767px){
+    .left-section{
+        display: none !important;
+    }
+}
+@media (min-width: 768px){
+    .left-section{
+        display: block !important;
+    }
+}

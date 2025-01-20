@@ -1,0 +1,160 @@
+<div *ngIf="isShow">
+<!-- <div> -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row mb-4">
+        <div class="col-12 col-sm-4">
+          <span style="font-size:24px; font-weight: bold; color: #22223B;">Income Tax Certificate</span>
+        </div>
+        <div class="col-12 col-sm-8">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 container-cover-shadow">
+      <div class="row custom-container" style="margin-top: 10px;background: white;">
+        <div class="col-sm-12">
+          <div class="content-background" style="height: 100%;background: white !important;">
+            <div class="col-md-12 bg-white p-1" style="border: none" id="income-tax-certificate">
+              <div class="col-md-12 m-0" style="border: none">
+                <div style="position: absolute;right: 150px;top: 45px;">
+                  <img src="assets\img\logo\eReturn_logo_png.png" alt="Logo" style="width:140px;">
+                </div>
+                <div style="position: absolute;right: 150px;top: 85px;">
+                  <p>Reference Number: {{reference_no}}</p>
+                </div>
+                <table class="table table-borderless">
+                  <tr>
+                    <td class="text-center"><img src="assets/img/govt-logo/bd-govt-logo.png" alt="Logo"
+                        style="width:75px; margin-top: 115px !important"></td>
+                  </tr>
+                  <tr>
+                    <td class="text-center p-0">
+                      <p class="m-0">Government of the People’s Republic of Bangladesh
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center p-0">
+                      <p class="m-0">National Board of Revenue</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center p-0">
+                      <p class="m-0">Income Tax Department</p>
+                    </td>
+                  </tr>
+                  <tr style="height: 20px;">
+
+                  </tr>
+                  <tr>
+                    <td class="text-center p-0">
+                      <p class="m-0">Income Tax Certificate</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center p-0">
+                      <p class="m-0">Assessment Year: {{assessmentYr}}</p>
+                    </td>
+                  </tr>
+                </table>
+                <div class="row" style="margin-top: 40px !important;">
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-8">
+                    <table class="table table-borderless">
+                      <tr>
+                        <td class="py-0" width="50%">Taxpayer’s Name</td>
+                        <td class="py-0 text-center" width="5%">:</td>
+                        <td class="py-0" width="45%">{{nameOfAssessee}}</td>
+                      </tr>
+                      <tr class="mt-1">
+                        <td class="py-0" width="50%">Taxpayer’s Identification Number (TIN)</td>
+                        <td class="py-0 text-center" width="5%">:</td>
+                        <td class="py-0" width="45%">{{twelveDigitTIN}}</td>
+                      </tr>
+                      <tr>
+                        <td class="py-0" width="50%">Father’s Name</td>
+                        <td class="py-0 text-center" width="5%">:</td>
+                        <td class="py-0" width="45%">{{fatherName}}</td>
+                      </tr>
+                      <tr>
+                        <td class="py-0" width="50%">Mother’s Name</td>
+                        <td class="py-0 text-center" width="5%">:</td>
+                        <td class="py-0" width="45%">{{motherName}}</td>
+                      </tr>
+                      <tr>
+                        <td class="py-0" width="50%">Current Address</td>
+                        <td class="py-0 text-center" width="5%">:</td>
+                        <td class="py-0" width="45%">{{presentAdd}}</td>
+                      </tr>
+
+                      <tr>
+                        <td class="py-0" width="50%">Permanent Address</td>
+                        <td class="py-0 text-center" width="5%">:</td>
+                        <td class="py-0" width="45%">{{permanentAdd}}</td>
+                      </tr>
+                      <tr>
+                        <td class="py-0" width="50%">Status</td>
+                        <td class="py-0 text-center" width="5%">:</td>
+                        <td class="py-0" width="45%">Individual</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="col-sm-2"></div>
+                  <!-- </div> -->
+                </div>
+                <div class="row" style="margin-top: 40px !important;">
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-8">
+                    <p class="text-justify">This is to certify that {{nameOfAssessee}} is a registered taxpayer of Taxes
+                      {{circle}}, Taxes Zone-{{zone}}. The taxpayer has filed the return of income for the Assessment
+                      Year {{assessmentYr}} using online return filing system, and the assessment has been completed
+                      under section 82BB of Income Tax Ordinance, 1984.</p>
+                  </div>
+                  <div class="col-sm-2"></div>
+                </div>
+                <div class="row" style="margin-top: 40px !important;">
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-8 text-center">
+                    <!-- <img src="assets/img/qrcode/qrcode.png" alt="Logo" style="width:90px;"> -->
+                    <qrcode [elementType]="elementType" [qrdata]="taxpayerQRData" [width]="100" [errorCorrectionLevel]="'M'"></qrcode>
+                  </div>
+                  <div class="col-sm-2"></div>
+                </div>
+                <div class="row" style="margin-top: 40px !important;">
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-8 text-center">
+                    <p>This is a system generated certificate, and requires no signature.</p>
+                  </div>
+                  <div class="col-sm-2"></div>
+                </div>
+              </div>
+            </div>
+            <!-- DESIGN END -->
+            <div class="row">
+              <div class="col-sm-2"></div>
+              <div class="col-sm-8"></div>
+              <div class="col-sm-2">
+                  <!-- download button -->
+                  <!-- <button type="button" (click)="taxCertificateDownload()"
+                  style="float: right !important; margin-right: 14px !important; margin-bottom: 10px !important; width: 100px !important;"
+                  class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize">
+                  <i class="fa fa-download mr-1" aria-hidden="true"></i>
+                  <b>Download</b></button> -->
+                  <button type="button"
+                  style="float: right !important;margin-top: 12px; margin-right: 14px !important; margin-bottom: 10px !important; width: 95px !important;"
+                  class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"
+                  [printStyle]="{body : {'background': 'white'}}" [useExistingCss]="true" printTitle="Tax-Certificate-{{userTin}}" printSectionId="income-tax-certificate" ngxPrint>
+                  <i class="fa fa-print mr-1" aria-hidden="true"></i>
+                  <b>Download</b></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-ui-loader></ngx-ui-loader>

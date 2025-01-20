@@ -1,0 +1,155 @@
+
+<div style="margin-top: 30px;">
+  <div class="content-background">
+    <form [formGroup]="filingConfigForm">
+    <!-- <div style="margin-left: 5px;"> -->
+      <div class="investmentCategory">
+        <p><b>Filing Configuration</b></p>
+        <hr>
+      </div>
+      <div class="form-group" style="margin-left: 5px;">
+        <div class="main">
+          <div class="col-12 addAnotherButtonClass">
+            <button type="button" class="addAnotherBtnStyle" (click)="add_row_table_1()">
+              &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+              Add&nbsp;
+            </button>
+          </div>
+          <div class="table-responsive tableBgStyle" id="dynamicTable">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" width="2%"></th>
+                  <th scope="col" width="15%">Module Type</th>
+                  <th scope="col" width="15%">Label Name</th>
+                  <th scope="col" width="15%">Type</th>
+                  <th scope="col" width="10%">Value</th>
+                  <th scope="col" width="5%">Nullable</th>
+                  <th scope="col" width="5%">Validity</th>
+                  <th scope="col" width="15%">Valid From</th>
+                  <th scope="col" width="15%">Valid To</th>
+                  <th scope="col" width="3%"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of table_1_List.controls; let k = index" [formGroup]="item">
+                  <td scope="row" width="2%">{{k+1}}</td>
+                  <td width="15%">
+                    <select class="form-control" formControlName="incomeHeadType" (change)="rowCheckingError(k, 'incomeHeadType')" [ngClass]="{'is-invalid': filing_showError[k].incomeType_showError}">
+                    <option value="0" selected>Select One</option>
+                    <option value="FILING_SALARY">Salary</option>
+                    <option value="FILING_HP">House Property</option>
+                    <option value="FILING_IOS">Interest of Securities</option>
+                    <option value="FILING_AGRICULTURE">Agriculture</option>
+                    <option value="FILING_CG">Capital Gain</option>
+                    <option value="FILING_BUSINESS">Business</option>
+                    <option value="FILING_IFOS">Income from Other Sources</option>
+                    <option value="FILING_FE_FIRM">Firm</option>
+                    <option value="FILING_FE_AOP">AoP</option>
+                    <option value="FILING_FE_IEOB">Earned outside Bangladesh</option>
+                    <option value="FILING_IESC">Earned by the Spouse or Minor Children</option>
+                    <option value="FILING_TEI">Tax Exempted Income</option>
+                    <option value="FILING_REBATE">Rebate</option>
+                    <option value="FILING_EXPENDITURE">Expenditure</option>
+                    <option value="FILING_AL">Asset and Liabilities</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    <div>Income Head is Required!</div>
+                  </div>
+                  </td>
+                  <td width="15%">
+                    <input type="text" class="form-control" formControlName="Lbl_Name"  placeholder="" (keyup)="rowCheckingError(k, 'Lbl_Name')"
+                    [ngClass]="{'is-invalid': filing_showError[k].level_showError}">
+                    <div class="invalid-feedback">
+                      <div>Level Name is Required!</div>
+                    </div>
+                  </td>
+                  <td width="15%">
+                    <select class="form-control" formControlName="type" (change)="rowCheckingError(k, 'type')" [ngClass]="{'is-invalid': filing_showError[k].type_showError}">
+                      <option value="0" selected>Select One</option>
+                      <option value="NUM">NUM</option>
+                      <option value="TEXT">TEXT</option>
+                      <option value="NUM_MUL">NUM_MUL</option>
+                      <option value="NUM_SINGLE">NUM_SINGLE</option>
+                      <option value="TEXT_MUL">TEXT_MUL</option>
+                      <option value="TEXT_MUL">TEXT_SINGLE</option>
+                      <option value="BOOL">BOOL</option>
+                      <option value="INACTIVE">INACTIVE</option>
+                      <option value="DATE">DATE</option>
+                      </select>
+                    <div class="invalid-feedback">
+                      <div>Type is Required!</div>
+                    </div>
+                  </td>
+                  <td width="10%">
+                    <input type="text" class="form-control" formControlName="value" placeholder="" (keyup)="rowCheckingError(k, 'value')"
+                    [ngClass]="{'is-invalid': filing_showError[k].value_showError}">
+                    <div class="invalid-feedback">
+                      <div>Value is Required!</div>
+                    </div>
+                  </td>
+
+                  <td width="5%" class="checkbox-align-center">
+                    <input type="checkbox" class="text-center" formControlName="is_nullable" placeholder="">
+                  </td>
+                  <td width="5%" class="checkbox-align-center">
+                    <input type="checkbox" class="text-center" formControlName="has_validity" placeholder="" (change)="changeHasValidity($event,k)">
+                  </td>
+
+                  <td width="15%">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="" formControlName="valid_from" (bsValueChange) ="rowCheckingError(k, 'valid_from')"
+                      aria-label="Recipient's username" aria-describedby="button-addon2" #valid_from="bsDatepicker" bsDatepicker 
+                      [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}" [ngClass]="{'is-invalid': filing_showError[k].validFrom_showError}">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-info btn-sm" type="button" (click)="valid_from.toggle()">
+                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </button>
+                      </div>
+                      <div class="invalid-feedback">
+                        <div>Valid from is Required!</div>
+                      </div>
+                    </div>                 
+                  </td>
+                  <td width="15%">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="" formControlName="valid_to" (bsValueChange) ="rowCheckingError(k, 'valid_to')"
+                      aria-label="Recipient's username" aria-describedby="button-addon2" #valid_to="bsDatepicker" bsDatepicker
+                      [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}" [ngClass]="{'is-invalid': filing_showError[k].validTo_showError}">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-info btn-sm" type="button" (click)="valid_to.toggle()">
+                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </button>
+                      </div>
+                      <div class="invalid-feedback">
+                        <div>Valid to is Required!</div>
+                      </div>
+                    </div>
+
+                  </td>
+                  <td width="3%">
+                    <button *ngIf="isDeleteBtnShow" class="deleteBtnStyle" (click)="delete_table_1_row(k,item.value.id)">
+                      <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      </form>
+      <div class="row mt-4">
+        <div class="col-sm-6 pl-3">
+        </div>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12 text-right">
+              <button type="button" class="btn btn-sm saveContinueBtn" (click)="saveData()">
+                Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

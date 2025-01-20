@@ -1,0 +1,18 @@
+{
+	"salary":[
+		{
+			"IS_SALARY_NO": "",
+			"IS_EMP_TYPE": "G",
+			"IS_OFC_NAME": "National Board Of Revenue",
+			"IS_EMP_DESIGNATION": "Commissioner",
+			"IS_BASIC_PAY": 518040,
+			"IS_HOUSE_RENT_ALW": 284922,
+			"IS_MEDICAL_ALW": 18000,
+			"IS_BANGLA_NEW_YEAR_ALW": 8634,
+			"IS_FESTIVAL_BONUS": 86340
+		}
+	],
+	"tds":{
+	   "50":36000
+	}
+}

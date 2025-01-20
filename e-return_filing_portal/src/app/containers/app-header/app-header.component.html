@@ -1,0 +1,73 @@
+<div class="container-fluid top-header shadow mb-2 pb-3">
+  <div class="row">
+    <!--<div class="col-sm-4 offset-sm-1">
+      <h1><b>e-Return</b></h1>
+    </div>-->
+    <div class="col-md-10 offset-md-1" style="margin: auto">
+      <!--<button type="button" class="btn btn-pill btn-outline-dark" style="font-size: 15px;"><b>Drafts</b></button>&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-pill btn-outline-dark" style="font-size: 15px"><b>Return History</b></button>&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-pill btn-outline-dark" style="font-size: 15px"><b>Certificates</b></button>-->
+      <nav class="navbar navbar-expand navbar-light">
+        <a class="navbar-brand" href="#">        
+            <img src="../../../assets/img/background/NBR_logo.jpg" class="logo"/>           
+            <!-- <img src="../../../assets/img/background/NBR_logo.jpg" height="40" width="200"/> -->
+          <!-- <h1 class="d-flex justify-content-between align-centent-center">
+            <img src="../../../assets/img/background/NBR_logo.jpg" height="40" width="200"/>
+          </h1> -->
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <!-- <li class="nav-item active" style="margin: auto">
+              <button type="button" class="btn btn-pill btn-outline-dark" style="font-size: 15px;"><b>Drafts</b></button>&nbsp;&nbsp;&nbsp;
+            </li>
+            <li class="nav-item" style="margin: auto">
+              <button type="button" class="btn btn-pill btn-outline-dark" style="font-size: 15px"><b>Return History</b></button>&nbsp;&nbsp;&nbsp;
+            </li>
+            <li class="nav-item d-md-down-none" style="margin: auto">
+              <button type="button" class="btn btn-pill btn-outline-dark" style="font-size: 15px"><b>Certificates</b></button>
+            </li>&nbsp; -->
+            <li class="nav-item dropdown" dropdown placement="middle right">
+              <a class="nav-link cursor-pointer" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
+                <img [src]="taxpayerProfileImg" class="rounded-circle img-50 cursor-pointer" alt="No Image"/>      
+                <i class="fa fa-caret-down ml-2"></i> 
+              </a>
+             
+              <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+                <a class="dropdown-item" [routerLink]="['/user-panel/taxpayer-profile']"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
+                <a class="dropdown-item" [routerLink]="['/user-panel/change-password']"><i class="fa fa-key" aria-hidden="true"></i>Change Password</a>
+                <a class="dropdown-item" [routerLink]="['/auth/sign-in']"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
+              </div>
+            </li>
+            
+          </ul>
+          
+          <!--<form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>-->
+        </div>        
+      </nav>
+      <div class="row">
+        <div class="col-5 col-md-6 text-left">
+          <!-- <button class="custom-logo" (click)="goToAssessmentPage()"><b>eReturn</b></button> -->
+          <!-- <button class="custom-logo" (click)="goToAssessmentPage()"><img src="assets\img\background\eReturn-LOGO-v3@4x.png" style="float: left; width: 30%;"></button> -->
+          <!-- <button class="custom-logo" (click)="goToHomePage()"><img src="assets\img\background\eReturn-LOGO-v3@4x.png" style="float: left; width: 30%;"></button> -->
+          <a [routerLink]="['/user-panel/home']"><img class="eReturn-logo" src="assets\img\background\eReturn-LOGO-v3@4x.png"></a>
+        </div>
+        <div class="col-7 col-md-6 text-right">
+          <p class="m-0 font-weight-bold colorStyle">{{taxpayerName}}</p>
+          <p class="m-0 font-weight-bold colorStyle">TIN: {{taxpayerTIN}}</p>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+<!--dark portion-->
+
+

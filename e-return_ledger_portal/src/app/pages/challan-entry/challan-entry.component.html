@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Challan Entry</title>
+</head>
+
+<div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Challan Entry &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-6 mt-3">
+            <label class="float-right" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12 mt-2">
+            <div class="content-background formSection">
+                <form class="row form-horizontal" [formGroup]="challanEntryForm" aria-labelledby="title">
+
+                    <!-- <div class="col-6">
+                        <div class="form-group">
+                            <label for="section" class="label col-8 form-control-label">Assessment Year
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="assessmentYear"></i>
+                            </label>
+                            <ng-template #assessmentYear>
+                                <div [innerHtml]="html"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <select class="form-control" id="assessmentYear" formControlName="assessmentYear">
+                                    <option value="2021-2022">2021-2022</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="challanDate" class="label col-8 form-control-label">Challan Date
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="challanDatee"></i>
+                            </label>
+                            <ng-template #challanDatee>
+                                <div [innerHtml]="html"></div>
+                            </ng-template>
+                            <div class="input-group col-12">
+                                <input type="text" placeholder="Enter Chalan Date" formControlName="challanDate"
+                                    class="form-control" id="challanDate" bsDatepicker #challanDate="bsDatepicker"
+                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }"
+                                    required
+                                    [ngClass]="{'is-invalid':challanEntryForm.get('challanDate').touched && challanEntryForm.get('challanDate').invalid}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-info btn-sm" (click)="challanDate.toggle()"
+                                        type="button" id="button-addon2">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback ">
+                                    <div>Challan Date is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="challanNo" class="label col-8 form-control-label">Challan No.
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="challanNo"></i>
+                            </label>
+                            <ng-template #challanNo>
+                                <div [innerHtml]="html"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Challan No." formControlName="challanNo"
+                                    class="form-control" id="challanNo" required
+                                    [ngClass]="{'is-invalid':challanEntryForm.get('challanNo').touched && challanEntryForm.get('challanNo').invalid}">
+                                <div class="invalid-feedback ">
+                                    <div>Challan No. is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="section" class="label col-8 form-control-label">Section
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="section"></i>
+                            </label>
+                            <ng-template #section>
+                                <div [innerHtml]="html"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <select class="form-control" id="section" formControlName="section"
+                                    [ngClass]="{'is-invalid':challanEntryForm.get('section').touched && challanEntryForm.get('section').value=='0'}">
+                                    <option value="0" selected>Select One</option>
+                                    <option value="Salary">Salary [ Section-50]</option>
+                                    <option value="Bangladesh Bank Bill" disabled>Bangladesh Bank Bill [ Section-50A]
+                                    </option>
+                                    <option value="MP Remuneration" disabled>MP Remuneration [ Section-50B]
+                                    </option>
+                                    <option value="Profit on Securities" disabled>Profit on Securities [ Section-51]
+                                    </option>
+                                    <option value="Contractor Payment" disabled>Contractor Payment [ Section-52]
+                                    </option>
+                                    <option value="Royalties" disabled>Royalties [ Section-52A]
+                                    </option>
+                                    <option value="Service Payments" disabled>Service Payments [ Section-52AA]
+                                    </option>
+                                    <option value="C&F Agent Payment" disabled>C & F Agent Payment [ Section-52AAA]
+                                    </option>
+                                    <option value="Cigerette Manufacture" disabled>Cigerette Manufacture [ Section-52B]
+                                    </option>
+                                    <option value="Acquisition of Property" disabled>Acquisition of Property [
+                                        Section-52C]
+                                    </option>
+                                    <option value="Sanchayapatra Interest" disabled>Sanchayapatra Interest [ Section-52D]
+                                    </option>
+                                    <option value="WPPF" disabled>WPPF [ Section-52DD]
+                                    </option>
+                                    <option value="Brick Manufacturing" disabled>Brick Manufacturing [ Section-52F]
+                                    </option>
+                                    <option value="LC Commission" disabled>LC Commission [ Section-52I]
+                                    </option>
+                                    <option value="Travel Agent" disabled>Travel Agent [ Section-52JJ]
+                                    </option>
+                                    <option value="Trade License Renewal" disabled>Trade License Renewal [ Section-52K]
+                                    </option>
+                                    <option value="Freight Forward Commission" disabled>Freight Forward Commission [
+                                        Section-52M]
+                                    </option>
+                                    <option value="Rental Power" disabled>Rental Power [ Section-52N]
+                                    </option>
+                                    <option value="Diamond Cutting Technician" disabled>Diamond Cutting Technician [
+                                        Section-52O]
+                                    </option>
+                                    <option value="Convention Hall Rent" disabled>Convention Hall Rent [ Section-52P]
+                                    </option>
+                                    <option value="Service to Foreign Person" disabled>Service to Foreign Person [
+                                        Section-52Q]
+                                    </option>
+                                    <option value="ICX/IGW payment" disabled>ICX/IGW payment [ Section-52R]
+                                    </option>
+                                    <option value="Excess Life Insurance Premium" disabled>Excess Life Insurance Premium
+                                        [ Section-52T]
+                                    </option>
+                                    <option value="Local LC" disabled>Local LC [ Section-52U]
+                                    </option>
+                                    <option value="Cellular Phone Revenue" disabled>Cellular Phone Revenue [ Section-52V]
+                                    </option>
+                                    <option value="Import" disabled>Import [ Section-53]
+                                    </option>
+                                    <option value="House Property" disabled>House Property [ Section-53A]
+                                    </option>
+                                    <option value="Shipping Business" disabled>Shipping Business [ Section-53AA]
+                                    </option>
+                                    <option value="Manpower Export" disabled>Manpower Export [ Section-53B]
+                                    </option>
+                                    <option value="Export Certain Items" disabled>Export Certain Items [ Section-53BB]
+                                    </option>
+                                    <option value="Member of Stock Exchange" disabled>Member of Stock Exchange [
+                                        Section-53BBB]
+                                    </option>
+                                    <option value="Export Except Certain Items" disabled>Export Except Certain Items [
+                                        Section-53BBBB]
+                                    </option>
+                                    <option value="Courier Business" disabled>Courier Business [ Section-53CCC]
+                                    </option>
+                                    <option value="Actor, Producer etc." disabled>Actor, Producer etc. [ Section-53D]
+                                    </option>
+                                    <option value="Export Cash Subsidy" disabled>Export Cash Subsidy [ Section-53DDD]
+                                    </option>
+                                    <option value="Commission, Discount, Fee" disabled>Commission, Discount, Fee [
+                                        Section-53E]
+                                    </option>
+                                    <option value="Foreign Agency Commission" disabled>Foreign Agency Commission [
+                                        Section-53EE]
+                                    </option>
+                                    <option value="Real Estate Business" disabled>Real Estate Business [ Section-53FF]
+                                    </option>
+                                    <option value="Insurance Commission" disabled>Insurance Commission [ Section-53G]
+                                    </option>
+                                    <option value="General Insurance Surveyor" disabled>General Insurance Surveyor [
+                                        Section-53GG]
+                                    </option>
+                                    <option value="Transfer of Property" disabled>Transfer of Property [ Section-53H]
+                                    </option>
+                                    <option value="Property Lease" disabled>Property Lease [ Section-53HH]
+                                    </option>
+                                    <option value="Interest on PO Savings" disabled>Interest on PO Savings [ Section-53I]
+                                    </option>
+                                    <option value="Plant, Machinery Rent" disabled>Plant, Machinery Rent [ Section-53J]
+                                    </option>
+                                    <option value="Advertising Bill" disabled>Advertising Bill [ Section-53K]
+                                    </option>
+                                    <option value="Sponsor Share Transfer" disabled>Sponsor Share Transfer [ Section-53M]
+                                    </option>
+                                    <option value="Stock Exchange Share" disabled>Stock Exchange Share [ Section-53N]
+                                    </option>
+                                    <option value="Signing Money" disabled>Signing Money [ Section-53P]
+                                    </option>
+                                    <option value="Dividend" disabled>Dividend [ Section-54]
+                                    </option>
+                                    <option value="Lottery" disabled>Lottery [ Section-55]
+                                    </option>
+                                    <option value="Non-resident Income" disabled>Non-resident Income [ Section-56]
+                                    </option>
+                                    <option value="Bank Interest" disabled>Bank Interest [ Section-53F]
+                                    </option>
+                                    <option value="Public Auction AIT" disabled>Public Auction AIT [ Section-53C]
+                                    </option>
+                                    <option value="Cigarette Manufacture AIT" disabled>Cigarette Manufacture AIT [
+                                        Section-68A]
+                                    </option>
+                                    <option value="Motor Car AIT" disabled>Motor Car AIT [ Section-68B]
+                                    </option>
+                                    <option value="Regular AIT" disabled>Regular AIT [ Section-64]
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback ">
+                                    <div>Section is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="position" class="label col-8 form-control-label">Deposited in
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="depositedin"></i>
+                            </label>
+                            <ng-template #depositedin>
+                                <div [innerHtml]="html"></div>
+                            </ng-template>
+                            <div class="col-12 mt-2">
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input selected class="form-check-input" type="radio"
+                                            formControlName="depositedin" id="inlineRadio1" value="CASH">
+                                        Cash
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" formControlName="depositedin"
+                                            id="inlineRadio2" value="CHEQUE"> Cheque
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" formControlName="depositedin"
+                                            id="inlineRadio3" value="TRANSFR"> Transfer
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" formControlName="depositedin"
+                                            id="inlineRadio4" value="E_PAYMENT"> e-Payment
+                                    </label>
+                                </div>
+                                <div class="invalid-feedback inputStyle">
+                                    <div>Deposited in is required!</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="bank" class="label col-8 form-control-label">Bank
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="bank"></i>
+                            </label>
+                            <ng-template #bank>
+                                <div [innerHtml]="html"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <select class="form-control" id="bank" formControlName="bank"
+                                    [ngClass]="{'is-invalid':challanEntryForm.get('bank').touched && challanEntryForm.get('bank').value=='0'}">
+                                    <option value="0" selected>Select One</option>
+                                    <option value="bangladesh_bank">Bangladesh Bank</option>
+                                    <option value="sonali_bank">Sonali Bank</option>
+                                </select>
+                                <div class="invalid-feedback ">
+                                    <div>Bank is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="branch" class="label col-8 form-control-label">Branch
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="branch"></i>
+                            </label>
+                            <ng-template #branch>
+                                <div [innerHtml]="html"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <select class="form-control" id="branch" formControlName="branch"
+                                    [ngClass]="{'is-invalid':challanEntryForm.get('branch').touched && challanEntryForm.get('branch').value=='0'}">
+                                    <option value="0" selected>Select One</option>
+                                    <option value="dhaka">Dhaka</option>
+                                    <option value="barisal">Barisal</option>
+                                    <option value="rajshahi">Rajshahi</option>
+                                    <option value="sylhet">Sylhet</option>
+                                    <option value="chittagong">Chittagong</option>
+                                    <option value="khulna">Khulna</option>
+                                </select>
+                                <div class="invalid-feedback ">
+                                    <div>Branch is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="codeNo" class="label col-8 form-control-label">Code No.
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="codeNo"></i>
+                            </label>
+                            <ng-template #codeNo>
+                                <div [innerHtml]="html"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Code No." formControlName="codeNo"
+                                    class="form-control" id="codeNo" required
+                                    [ngClass]="{'is-invalid':challanEntryForm.get('codeNo').touched && challanEntryForm.get('codeNo').invalid}">
+                                <div class="invalid-feedback ">
+                                    <div>Code No. is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="amount" class="label col-8 form-control-label">Amount
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="amount"></i>
+                            </label>
+                            <ng-template #amount>
+                                <div [innerHtml]="html"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Amount" formControlName="amount"
+                                    class="form-control" id="amount" required
+                                    [ngClass]="{'is-invalid':challanEntryForm.get('amount').touched && challanEntryForm.get('amount').invalid}">
+                                <div class="invalid-feedback ">
+                                    <div>Amount is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6"></div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="col-12">
+                                <button type="button" class="btn btn-warning reset" (click)="reset()">
+                                    Reset
+                                </button>
+
+                                <button type="button" [disabled]="!challanEntryForm.valid" class="btn submitBtn"
+                                    (click)="submittedData()">
+                                    <i class="fa fa-save btnText"></i>Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- <div class="row">
+                    <div class="col-6"></div>
+                    <div class="col-6 buttonCss">
+                        <div class="form-group">
+                            <div class="col-12">
+                                <button type="button" class="btn reset" (click)="reset()">
+                                    Reset
+                                </button>
+
+                                <button type="button" [disabled]="!challanEntryForm.valid" class="btn submitBtn"
+                                    (click)="submittedData()">
+                                    <i class="fa fa-save btnText"></i>Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</html>
+
+<!-- <pre>Form values: {{challanEntryForm.value | json}}</pre> -->

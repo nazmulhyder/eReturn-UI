@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Bank</title>
+</head>
+
+<!-- <div class="col-md-12  content-background">
+  <div class="row">
+    <div class="col-6 titleSection">
+      <span class="text-border">
+        <i class="fa fa-chevron-left titleText">
+        </i>Bank &nbsp; &nbsp;
+      </span>
+    </div>
+    <div class="col-6 mt-3">
+      <label class="float-right" for="assessmentYear"> <strong>Assessment Year : </strong>
+        2021-2022</label>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <div class="content-background formSection">
+        <form class="row form-horizontal" [formGroup]="bankForm" aria-labelledby="title">
+
+          <div class="col-6 ">
+            <div class="form-group">
+              <label for="bankName" class="label col-8 form-control-label ">Bank Name
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="bankName"></i>
+              </label>
+              <ng-template #bankName>
+                <div [innerHtml]="bankNameTooltip"></div>
+              </ng-template>
+              <div class="col-12">
+                <select class="form-control " id="section" formControlName="bankName"
+                  [ngClass]="{'is-invalid':bankForm.get('bankName').touched && bankForm.get('bankName').value === '0'}">
+                  <option value="0" selected>Select One</option>
+                  <option *ngFor="let item of banks" value="{{ item.bankName }}"> {{ item.bankName }} </option>
+                </select>
+                <div class="invalid-feedback ">
+                  <div>Bank name is required!</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 ">
+            <div class="form-group">
+              <label for="accNo" class="label col-8 form-control-label">Account No
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="accNo"></i>
+              </label>
+              <ng-template #accNo>
+                <div [innerHtml]="accNoTooltip"></div>
+              </ng-template>
+              <div class="input-group col-12">
+                <input type="text" placeholder="Enter Account No." formControlName="accNo" class="form-control "
+                  id="accNo" required
+                  [ngClass]="{'is-invalid':bankForm.get('accNo').touched && bankForm.get('accNo').invalid}">
+                <div class="invalid-feedback ">
+                  <div>Account No. is required!</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="form-group ">
+              <label for="claimAmount" class="label col-8 form-control-label">TDS Claim
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="claimAmount"></i>
+              </label>
+              <ng-template #claimAmount>
+                <div [innerHtml]="claimAmountTooltip"></div>
+              </ng-template>
+              <div class="col-12">
+                <input type="text" (keyup)="onValueChange($event)" (keypress)="numberOnly($event)"
+                  placeholder="Enter Claim Amount" formControlName="claimAmount" class="form-control " id="claimAmount"
+                  required
+                  [ngClass]="{'is-invalid':bankForm.get('claimAmount').touched && bankForm.get('claimAmount').invalid}">
+                <div class="invalid-feedback ">
+                  <div>TDS Claim is required!</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-5 mt-4">
+            <div class="form-group">
+              <div class="col-12">
+                <ng-template #resetBtn>
+                  <div [innerHtml]="resetBtnTooltip"></div>
+                </ng-template>
+                <button type="button" id="resetBtn" class="btn btn-warning reset tooltip-350" (click)="reset()" [tooltip]="resetBtn">
+                  Reset
+                </button>
+
+                <ng-template #searchBtn>
+                  <div [innerHtml]="searchBtnTooltip"></div>
+                </ng-template>
+                <button type="button" id="searchBtn" [disabled]="bankForm.value.accNo==='' || bankForm.value.bankName==='0' "
+                  class="btn searchBtn mr-2 tooltip-350" (click)="search($event, searchModalShow)" (click)="getVerifyBankData()" [tooltip]="searchBtn">
+                  <i class="fa fa-search btnText" aria-hidden="true"></i>Search
+                </button>
+
+                <button type="button" [disabled]="!bankForm.valid" class="btn submitBtn"
+                  (click)="submittedData()">
+                  <span><i class="fa fa-save btnText" aria-hidden="true"></i>&nbsp;Save</span>
+                </button>
+
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div *ngIf="bankGetDataLen > 0" class="col-12 col-sm-12 titleSection mt-4">
+      <span class="text-border">
+        <i class="fa fa-chevron-left titleText">
+        </i>Bank TDS Details&nbsp; &nbsp;
+      </span>
+    </div>
+
+    <div *ngIf="bankGetDataLen > 0" class="col-md-12 mt-2">
+      <div class="content-background formSection mt-3">
+        <div class="table-responsive tableBgStyle" id="dynamicTable">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">SL.</th>
+                <th scope="col">Bank Name</th>
+                <th scope="col">Account No</th>
+                <th scope="col">TDS Claim</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let item of bankgetData; let k = index">
+              <td scope="row">{{ k+1 }}</td>
+              <td scope="row">{{item.bankName}}</td>
+              <td scope="row">{{item.accountNo}}</td>
+              <td scope="row">{{ commonUtilService.commaSeperator(item.tdsClaim) }}</td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #searchModalShow>
+  <div class="modal-header">
+    <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">Bank TDS Details</h5>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close_Search()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal" [formGroup]="bankTDSForm" aria-labelledby="title">
+      <div class="row mb-2">
+        <div class="col-4">
+          <label for="assessmentYear" class="label form-control-label">Assessment Year
+          </label>
+        </div>
+        <div class="col-8">
+          <input type="text" formControlName="assessmentYear" class="form-control " readonly>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-4">
+          <label for="accNo" class="label form-control-label">Account No.
+          </label>
+        </div>
+        <div class="col-8">
+          <input type="text" formControlName="accNo" class="form-control " readonly>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-4">
+          <label for="accName" class="label form-control-label">Account Name
+          </label>
+        </div>
+        <div class="col-8">
+          <input type="text" formControlName="accName" class="form-control " readonly>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-4">
+          <label for="bankName" class="label form-control-label">Bank Name
+          </label>
+        </div>
+        <div class="col-8">
+          <input type="text" formControlName="bankName" class="form-control " readonly>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-4">
+          <label for="branchName" class="label form-control-label">Branch Name
+          </label>
+        </div>
+        <div class="col-8">
+          <input type="text" formControlName="branchName" class="form-control " readonly>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-4">
+          <label for="tdsAmount" class="label form-control-label">TDS on Interest
+          </label>
+        </div>
+        <div class="col-8">
+          <input type="text" formControlName="tdsAmount" class="form-control " readonly>
+        </div>
+      </div>
+
+    </form>
+    <button type="button" class="btn btn-sm btn-outline-danger" style="float: right;width: 100px;"
+      (click)="close_Search()">close</button>
+  </div>
+</ng-template> -->
+
+<div class="col-md-12">
+  <div class="row centered">
+      <div class="col-12">
+        <span><b>Integration of this source tax is under process</b></span>
+      </div>
+  </div>
+</div>
+
+</html>
+
+<ngx-ui-loader></ngx-ui-loader>
+
+<!-- <pre>Form values: {{bankForm.value | json}}</pre> -->

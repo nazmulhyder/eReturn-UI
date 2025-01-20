@@ -1,0 +1,102 @@
+<div class="container-fluid" style="margin-bottom: 20px;">
+    <div class="row content-background">
+        <div class="col-sm-6 offset-sm-3" [formGroup]="refundForm">
+            <div class="row pt-4">
+                <div class="col-sm-12 text-center">
+                    <h5 class="mr-3"><b>Bank Information for Refund</b></h5>
+                </div>
+            </div>
+
+            <div class="col-sm-12 pl-4 pt-4">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10 ml-4">
+                    <div class="form-group">
+                        <label class="font-14">Bank Name</label>
+                        <select class="form-control" formControlName="bankName"
+                            [ngClass]="{'is-invalid':refundForm.get('bankName').touched && refundForm.get('bankName').value==='0'}"
+                            required>
+                            <option value="0">Select One</option>
+                            <option value="dhaka_bank">Dhaka Bank</option>
+                            <option value="eastern_bank">Eastern Bank</option>
+                            <option value="prime_bank">Prime Bank</option>
+                            <option value="sonali_bank">Sonali Bank</option>
+                            <option value="standard_chartered_bank">Standard Chartered Bank</option>
+                            <option value="city_bank">The City Bank</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            <div>Bank Name is required!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 pl-4">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10 ml-4">
+                    <div class="form-group">
+                        <label class="font-14">Account Name</label>
+                        <input class="form-control" formControlName="accountName"
+                            [ngClass]="{'is-invalid':refundForm.get('accountName').touched && refundForm.get('accountName').invalid}"
+                            required >
+                        <div class="invalid-feedback">
+                            <div>Account Name is required!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 pl-4">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10 ml-4">
+                    <div class="form-group">
+                        <label class="font-14">Account No.</label>
+                        <input class="form-control" formControlName="accountNo"
+                            [ngClass]="{'is-invalid':refundForm.get('accountNo').touched && refundForm.get('accountNo').invalid}"
+                            required >
+                        <div class="invalid-feedback">
+                            <div>Account No. is required!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="col-sm-12 pl-4">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10 ml-4">
+                    <div class="form-group">
+                        <label class="font-14">Refund Amount</label>
+                        <input class="form-control" formControlName="refundAmt"
+                            [ngClass]="{'is-invalid':refundForm.get('refundAmt').touched && refundForm.get('refundAmt').invalid}"
+                            required readonly>
+                        <div class="invalid-feedback">
+                            <div>Refund Amount is required!</div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="col-sm-12 pt-2 pl-4">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10 ml-4">
+                    <div class="form-group">
+                        <button type="button" class="form-control btn" [disabled]="!refundForm.valid || refundForm.get('bankName').value==='0'"
+                            style="background-color:#145DA0;color: white;" (click)="submitData()">
+                            Submit</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-12 mt-4">
+            <div class="col-sm-6 pl-3">
+              <button type="button" class="btn btn-sm backBtn " (click)="onBackPage()">
+                <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left"
+                  fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                </svg>&nbsp;
+                <!-- <i class="fa fa-arrow-left" aria-hidden="true"></i> -->
+                Back</button>
+            </div>
+        </div>
+    </div>
+</div>

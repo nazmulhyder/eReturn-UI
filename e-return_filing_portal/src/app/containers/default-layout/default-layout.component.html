@@ -1,0 +1,54 @@
+<div class="d-flex flex-column min-vh-100">
+  <app-header [navbarBrandRouterLink]="['/user-panel/home']" [fixed]="true" [asideMenuToggler]="false" [mobileAsideMenuToggler]="false"
+    [navbarBrandFull]="{src: 'assets/img/logo/eReturn_Logo.svg', width: 200, height: 40, alt: 'e-Return Logo'}"
+    [navbarBrandMinimized]="{src: 'assets/img/logo/ereturn_short.png', width: 200, height: 40, alt: 'e-Return Logo'}"
+    [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
+
+    <ul class="nav navbar-nav ml-auto">
+      <li class="nav-item dropdown" dropdown placement="bottom right">
+        <a class="nav-link" title="account" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
+          dropdownToggle (click)="false">
+          <span class="hidden-xs mr-1">{{taxpayerName}}</span>
+          <img *ngIf="hasImage" [src]="taxpayerProfileImg" class="rounded-circle img-100" alt="User Image" />
+          <img *ngIf="!hasImage" src="assets\img\background\default_profile.png" class="rounded-circle img-100" alt="User Image" />
+        </a>
+        <div class="dropdown-menu dropdown-menu-right " *dropdownMenu aria-labelledby="simple-dropdown">
+          <li class="user-header">
+            <img *ngIf="hasImage" [src]="taxpayerProfileImg" class="rounded-circle center img-50" alt="User Image">
+            <img *ngIf="!hasImage" src="assets\img\background\default_profile.png" class="rounded-circle center img-50" alt="User Image">
+            <div class="col-12 text-center">
+              <p class="m-0 font-weight-bold colorStyle">{{taxpayerName}}</p>
+              <p class="m-0 font-weight-bold colorStyle">TIN: {{taxpayerTIN}}</p>
+            </div>
+          </li>
+          <hr>
+          <a class="dropdown-item" [routerLink]="['/user-panel/taxpayer-profile']"><i class="fa fa-user"
+              aria-hidden="true"></i>Profile</a>
+          <a class="dropdown-item" [routerLink]="['/user-panel/change-password']"><i class="fa fa-key"
+              aria-hidden="true"></i>Change Password</a>
+          <a class="dropdown-item" [routerLink]="" (click)="logOut()"><i class="fa fa-sign-out"
+              aria-hidden="true"></i>Logout</a>
+          <!-- <a class="dropdown-item" (click)="logOut()" [routerLink]="['/landing-page']"><i class="fa fa-sign-out"
+              aria-hidden="true"></i>Logout</a>               -->
+        </div>
+      </li>
+    </ul>
+
+  </app-header>
+  <div class="app-body">
+    <app-sidebar #appSidebar [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized"
+      (minimizedChange)="toggleMinimize($event)">
+      <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="appSidebar.minimized"></app-sidebar-nav>
+      <app-sidebar-minimizer></app-sidebar-minimizer>
+    </app-sidebar>
+    <!-- Main content -->
+    <main class="main" style="margin-top: 20px;">
+      <div class="container-fluid">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+    <app-aside [fixed]="true" [display]="false">
+    </app-aside>
+  </div>
+  <app-custom-footer></app-custom-footer>
+</div>

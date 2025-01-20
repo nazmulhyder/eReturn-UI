@@ -1,0 +1,94 @@
+<div class="landing">
+  <div class="text-center bg_image p-0">
+    <div class="row">
+      <div class="col-md-6 mt-5">
+        <img src="assets\img\background\NBR_logo.jpg" class="nbr_logo">
+      </div>
+      <div class="col-md-6 mt-4">
+        <img src="assets\img\logo\mujib_borsho.svg" class="mujib100_logo">
+      </div>
+    </div>
+    <div class="row main_section">
+    </div>
+    <div class="row">
+      <div class="col-sm-8 offset-sm-2">
+        <div class="row eTIN">
+          <a href="#">
+            <img (click)="goToEtin()" src="assets\img\logo\link_logo\eTIN.svg" class="link_logo">
+            <span>Register as a taxpayer</span>
+          </a>
+        </div>
+        <div class="row eReturn">
+          <a href="#" [routerLink]="['/auth/sign-in']">
+            <img src="assets\img\logo\link_logo\eReturn.svg" class="link_logo">
+            <span>File your tax return</span>
+          </a>
+        </div>
+        <div class="row eTaxPayment">
+          <a [routerLink]="" (click)="onClickETaxPayment()">
+            <img src="assets\img\logo\link_logo\eTaxPayment.svg" class="link_logo">
+            <span>Pay your tax online</span>
+          </a>
+        </div>
+        <div class="row eReturnLedger">
+          <a [routerLink]="" (click)="goToEledger()">
+            <img src="assets\img\logo\link_logo\eReturnLedger.svg"
+              class="link_logo eLedger_logo">
+            <span>Update your tax payment. If you are a withholding agent, update your source tax deposit.</span>
+          </a>
+        </div>
+        <div class="row eTDS">
+          <a href="#">
+            <img (click)="gotoETDS()" src="assets\img\logo\link_logo\eTDS.svg" class="link_logo">
+            <span>Manage your source tax (for withholding agents)</span>
+          </a>
+        </div>
+        <div class="row eTax_Service">
+          <a [routerLink]="['/e-tax-service-content']">
+            <img src="assets\img\logo\link_logo\eTaxService.svg" class="link_logo">
+            <span>Interact online with tax support team </span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="footer">
+      <div class="row mb-2">
+        <div class="col-sm-4">
+          <footer class="fontColor nbrText">&copy;{{year}} - National Board of Revenue(NBR)</footer>
+        </div>
+        <div class="col-sm-4">
+          <footer class="fontColor">
+            <div class="row">
+              <div class="col-sm-7">
+                <span class="created-by">
+                  Managed by
+                </span>
+              </div>
+              <div class="col-sm-5">
+                <img style="display: block;" src="../../../../assets/img/logo/synesisIT_logo.png"
+                  class="img-fluid synesis_logo" alt="Responsive image" />
+              </div>
+            </div>
+          </footer>
+        </div>
+        <div class="col-sm-4">
+          <footer class="art_logo_section">
+            <div class="row">
+              <div class="col-sm-9">
+                <span class="created-by">
+                  Graphic
+                </span>
+              </div>
+              <div class="col-sm-3">
+                <img style="display: block;" src="../../../../assets/img/logo/art_logo.jpg" class="img-fluid art_logo"
+                  alt="Responsive image" />
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>
+<ngx-ui-loader></ngx-ui-loader>

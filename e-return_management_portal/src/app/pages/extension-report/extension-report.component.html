@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Extension Report</title>
+</head>
+
+<div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-12 col-sm-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Extension Report &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-12 col-sm-6" [formGroup]="extensionReportForm">
+            <div class="row">
+                <div class="col-2 col-sm-5 float-right">
+                    <label class="label form-control-label float-right mt-2">Zone</label>
+                </div>
+                <div class="col-10 col-sm-7">
+                    <select class="form-control" formControlName="zoneNo" (change)="onChangeZone($event)" required
+                        [ngClass]="{'is-invalid':extensionReportForm.get('zoneNo').touched && extensionReportForm.get('zoneNo').value=='0'}">
+                        <option value="0" selected>Select Zone</option>
+                        <option *ngIf="this.userRoles == 'SS_ICT_SUPER_ADMIN'" [value]="-999">All Zone</option>
+                        <option [value]="data.zoneNo" *ngFor="let data of zoneData">{{data.zoneName}}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        <div>Zone is required!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row p-0">
+        <div class="col-12 text-center mt-3 p-0">
+            <label><b>{{zoneName}}</b></label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="col-12">
+                <div class="content-background ">
+                    <div>
+                        <label>Up to: {{currentDateTime}}</label>
+                    </div>
+                    <div class="table-responsive tableBgStyle" id="userListTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th *ngIf="!isZonalReport" scope="col" class="text-center">Circle Name</th>
+                                    <th *ngIf="isZonalReport" scope="col" class="text-center">Zone Name</th>
+                                    <th scope="col" class="text-center">Total Application</th>
+                                    <th scope="col" class="text-center">Total Approved</th>
+                                    <th scope="col" class="text-center">Total Rejected</th>
+                                    <th scope="col" class="text-center">Total Pending</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="extensionData.length>0">
+                                <tr *ngFor="let item of extensionData; let k = index">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row" class="text-center">{{ item.zoneOrCircleName }}</td>
+                                    <td scope="row" class="text-center">{{ item.total }}</td>
+                                    <td scope="row" class="text-center">{{ item.approved }}</td>
+                                    <td scope="row" class="text-center">{{ item.rejected }}</td>
+                                    <td scope="row" class="text-center">{{ item.pending }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="row"><b>Total</b></td>
+                                    <td scope="row"></td>
+                                    <td scope="row" class="text-center"><b>{{total}}</b></td>
+                                    <td scope="row" class="text-center"><b>{{totalApproved}}</b></td>
+                                    <td scope="row" class="text-center"><b>{{totalRejected}}</b></td>
+                                    <td scope="row" class="text-center"><b>{{totalPending}}</b></td>                                    
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="extensionData.length == 0">
+                                <tr>
+                                    <td class="text-center" colspan="7" style="color: red; font-style: italic;">No Data
+                                        Found!</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+<ngx-ui-loader></ngx-ui-loader>

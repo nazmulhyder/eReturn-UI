@@ -1,0 +1,197 @@
+<div>
+    <!-- <nav class="navbar navbar-expand-lg navbar-light menu_bg_Color">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <ul class="navbar-nav nav nav-pills mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link active" [routerLink]="['/user-panel/home']">Home <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" [routerLink]="['/user-panel/assessment']">Return Submission</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" [routerLink]="['/user-panel/report']">Report</a>
+                </li>
+                <li class="nav-item dropdown active" dropdown>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false" dropdownToggle >
+                        Certificate
+                    </a>
+                    <div class="dropdown-menu" *dropdownMenu aria-labelledby="simple-dropdown">
+                        <a class="dropdown-item" [routerLink]="['/user-panel/income-tax-certificate']">Tax
+                            Certificate</a>
+                        <a class="dropdown-item" [routerLink]="['/user-panel/ack-receipt']">Acknowledgement
+                            Certificate</a>
+                    </div>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" [routerLink]="">Contract Us</a>
+                </li>
+            </ul>
+        </div>
+    </nav> -->
+    <div class="text-center bg_image">
+        <div class="col-12 text-center">
+            <!-- <img src="assets\img\background\eReturn-logo.png" class="eReturn-logo" alt="logo"> -->
+            <img src="assets\img\background\eReturn_logo_with_sologan.png" class="eReturn_logo_sologan" alt="logo">
+        </div>
+        <!-- <div style="margin-top: 20px;">
+            <h2>Welcome to e-Return!</h2>
+        </div> -->
+    </div>
+</div>
+
+<!-- user profile pop up -->
+<ng-template #userProfilePopup>
+    <div class="modal-header content-background">
+      <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Profile Information</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_UserProfile()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+     <!-- START -->
+     <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="row" style="margin-top: 2px">
+            <div class="col-md-12 content-background mb-2">
+              <div class="col-md-12">
+                <h6><b>Basic Information</b></h6>
+                <p class="bt-black"></p>
+                <table class="table table-borderless">
+                  <tr>
+                    <td width="30%" class="fs-13 pl-0 py-2"><b>Taxpayer Name</b></td>
+                    <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                    <td width="65%" class="text-left fs-13 py-2">{{taxpayerName}}</td>
+                  </tr>
+                  <tr>
+                    <td width="30%" class="fs-13 pl-0 py-2"><b>TIN</b></td>
+                    <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                    <td width="65%" class="text-left fs-13 py-2">{{taxpayerTIN}}</td>
+                  </tr>
+                  <tr>
+                    <td width="30%" class="fs-13 pl-0 py-2"><b>Email</b></td>
+                    <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                    <td width="65%" class="text-left fs-13 py-2">
+                      <input class="customEmail" type="text" aria-describedby="basic-addon1" value="{{taxpayerEmail}}"
+                        [disabled]="isEmailEditDone" id="email">
+                      <button *ngIf="!isEmailEditDone" (click)="saveEmail()" class="defaultBtnStyle"><i class="fa fa-check"
+                        style="color: green;"></i></button>
+                    <button *ngIf="isEmailEditDone" (click)="editEmail()" class="defaultBtnStyle"><i class="fa fa-pencil ml-2"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="30%" class="fs-13 pl-0 py-2"><b>Present Address</b></td>
+                    <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                    <td width="65%" class="text-left fs-13 py-2"> <textarea class="customAddress" cols="56" rows="2" aria-describedby="basic-addon1"
+                      value="{{taxpayerPresentAddress}}" [disabled]="isAddressEditDone" id="address"></textarea>
+                      <button *ngIf="!isAddressEditDone" class="defaultBtnStyle" (click)="saveAddress()"><i
+                        class="fa fa-check" style="color: green;"></i></button>
+                    <button *ngIf="isAddressEditDone" class="defaultBtnStyle" (click)="editAddress()"><i class="fa fa-pencil ml-2 mb-1"></i></button>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-12 content-background">
+              <div class="row">
+                <div class="col-md-6">
+                  <h6><b>NID Information</b></h6>
+                  <p class="bt-black"></p>
+                  <table class="table table-borderless">
+                    <tr>
+                      <td width="30%" class="fs-13 pl-0 py-2"><b>Father Name</b></td>
+                      <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                      <td width="65%" class="text-left fs-13 py-2">{{taxpayerFatherName}}</td>
+                    </tr>
+                    <tr>
+                      <td width="30%" class="fs-13 pl-0 py-2"><b>Mother Name</b></td>
+                      <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                      <td width="65%" class="text-left fs-13 py-2">{{taxpayerMotherName}}</td>
+                    </tr>
+                    <tr>
+                      <td width="30%" class="fs-13 pl-0 py-2"><b>Date of Birth</b></td>
+                      <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                      <td width="65%" class="text-left fs-13 py-2">{{taxpayerDOB}}</td>
+                    </tr>
+                    <tr>
+                      <td width="30%" class="fs-13 pl-0 py-2"><b>Phone No.</b></td>
+                      <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                      <td width="65%" class="text-left fs-13 py-2">{{taxpayerPhone}}</td>
+                    </tr>
+                    <tr>
+                      <td width="30%" class="fs-13 pl-0 py-2"><b>Permanent Address</b></td>
+                      <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                      <td width="65%" class="text-left fs-13 py-2">{{taxpayerPermanentAddress}}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col-md-6">
+                  <h6><b>TIN Information</b></h6>
+                  <p class="bt-black"></p>
+                  <table class="table table-borderless">
+                    <tr>
+                      <td width="30%" class="fs-13 pl-0 py-2"><b>TIN</b></td>
+                      <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                      <td width="65%" class="text-left fs-13 py-2">{{taxpayerTIN}}</td>
+                    </tr>
+                    <tr>
+                      <td width="30%" class="fs-13 pl-0 py-2"><b>Tax Zone</b></td>
+                      <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                      <td width="65%" class="text-left fs-13 py-2">{{taxpayerZone}}</td>
+                    </tr>
+                    <tr>
+                      <td width="30%" class="fs-13 pl-0 py-2"><b>Tax Circle</b></td>
+                      <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                      <td width="65%" class="text-left fs-13 py-2">{{taxpayerCircle}}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col-md-6">
+                  <h6><b>Other Information</b></h6>
+                  <p class="bt-black"></p>
+                  <table class="table table-borderless">
+                    <tr>
+                      <td width="30%" class="fs-13 pl-0 py-2"><b>Spouse Name</b></td>
+                      <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                      <td width="65%" class="text-left fs-13 py-2">
+                        <input class="customSopuse" type="text" aria-describedby="basic-addon1" value="{{taxpayerSpouse}}"
+                          [disabled]="isSpouseNameEditDone" id="spouse">
+                        <button *ngIf="!isSpouseNameEditDone" class="defaultBtnStyle" (click)="saveSpouseName()"><i
+                            class="fa fa-check" style="color: green;"></i></button>
+                        <button class="defaultBtnStyle" (click)="editSpouseName()"><i
+                            class="fa fa-pencil ml-2"></i></button>
+    
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="30%" class="fs-13 pl-0 py-2"><b>Spouse TIN</b></td>
+                      <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                      <td width="65%" class="text-left fs-13 py-2">
+                        <input class="customSopuse" type="text" aria-describedby="basic-addon1" value="" (keypress)="numberOnly($event)"
+                          [disabled]="isSpouseTinEditDone" id="sp_tin">
+                        <button *ngIf="!isSpouseTinEditDone" class="defaultBtnStyle" (click)="saveSpouseTin()"><i
+                            class="fa fa-check" style="color: green;"></i></button>
+                        <button class="defaultBtnStyle" (click)="editSpouseTin()"><i class="fa fa-pencil ml-2"></i></button>
+                      </td>
+                      <!-- <td width="65%" class="text-left fs-13 py-2">{{data.spouseName}}<i class="fa fa-pencil ml-2"></i></td> -->
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="row" style="float: right;">
+                <button type="button" class="btn" style="background-color:#145DA0;color: white;float: right;" (click)="onNextPage()">Save & Continue</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     <!-- END -->
+    </div>
+  </ng-template> 

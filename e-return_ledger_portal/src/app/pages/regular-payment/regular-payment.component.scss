@@ -1,0 +1,21 @@
+#dynamicTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+}
+
+#dynamicTable th {
+    background-color: #C0D8DE;
+    color: #424548;
+}
+
+#dynamicTable {
+    border: 1px solid #ddd;
+}
+
+.tableBgStyle {
+    background-color: #FFFFFF; 
+}
+
+// #dynamicTable tr:nth-child(even){background-color: #f2f2f2;}

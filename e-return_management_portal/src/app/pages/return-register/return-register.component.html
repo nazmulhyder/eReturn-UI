@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Return Register</title>
+</head>
+
+<div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-12 col-sm-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Return Register &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-12 col-sm-6" [formGroup]="returnRegisterForm">
+            <div class="row">
+                <div class="col-sm-4 float-right">
+                    <label class="label form-control-label float-right mt-2">Circle</label>
+                </div>
+                <div class="col-sm-8">
+                    <l-select2 (valueChange)="onChangeCircle($event)" name="Select2" [data]="data" [options]="options" [disabled]="false"></l-select2>
+                    <!-- <l-select2  (valueChange)="valueChange($event)">
+                            <option>Select</option>
+                            <option *ngFor="let opt of data" [value]="opt.circleNo">{{opt.circleName}}</option>
+                    </l-select2> -->
+                    <!-- <select class="form-control" formControlName="circleNo" (change)="onChangeCircle($event)" required
+                        [ngClass]="{'is-invalid':returnRegisterForm.get('circleNo').touched && returnRegisterForm.get('circleNo').value=='0'}">
+                        <option value="0" selected>Select Circle</option>
+                        <option [value]="data.circleNo" *ngFor="let data of circleData">{{data.circleName}}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        <div>Circle is required!</div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row p-0">
+        <div class="col-12 text-center mt-3 p-0">
+            <label><b>{{circleName}}</b></label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="col-12">
+                <div class="content-background ">
+                    <div class="table-responsive tableBgStyle" id="userListTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th scope="col" class="text-center">TIN</th>
+                                    <th scope="col" class="text-left">Taxpayer Name</th>
+                                    <th scope="col" class="text-center">Submission Date</th>
+                                    <th scope="col" class="text-center">Reference No</th>
+                                    <th scope="col" class="text-center">Total Income</th>
+                                    <th scope="col" class="text-center">Amount Paid</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="returnData.length>0">
+                                <tr *ngFor="let item of returnData; let k = index">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row" class="text-center">{{ item.tin }}</td>
+                                    <td scope="row" class="text-left">{{ item.assesName }}</td>
+                                    <td scope="row" class="text-center">{{ item.submissionDate }}</td>
+                                    <td scope="row" class="text-center">{{ item.referenceNo }}</td>
+                                    <td scope="row" class="text-right">{{ addCommaSeparator(item.taxableAmount) }}</td>
+                                    <td scope="row" class="text-right">{{ addCommaSeparator(item.amountPaid) }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="row"><b>Total</b></td>
+                                    <td scope="row"></td>
+                                    <td scope="row" class="text-center"></td>
+                                    <td scope="row" class="text-center"></td>
+                                    <td scope="row" class="text-center"></td>
+                                    <!-- <td scope="row" class="text-right"><b>{{addCommaSeparator(sumData.taxableAmount)}}</b></td> -->
+                                    <td scope="row" class="text-right"></td>
+                                    <td scope="row" class="text-right"><b>{{addCommaSeparator(sumData.amountPaid)}}</b></td>
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="returnData.length == 0">
+                                <tr>
+                                    <td class="text-center" colspan="7" style="color: red; font-style: italic;">No Data
+                                        Found!</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+<ngx-ui-loader></ngx-ui-loader>

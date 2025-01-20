@@ -1,0 +1,84 @@
+.bg_image{
+    /* background-image: url('assets\img\background\welcome1.png'); */
+    background-image: url('assets/img/background/bg.png');
+    height: 98vh;
+    width: 98.93vw;
+    /* margin-top: 30px;
+    min-height: 82vh; */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.content-bg{
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029!important;
+    border-radius: 5px!important;
+    opacity: 1!important;
+    padding: 20px 30px 20px 30px!important;
+}
+
+.nbr_logo{
+    float: left;
+    margin-left: 60px;
+    width:16vw;
+    height:7vh;
+}
+
+.mujib100_logo{
+    float: right;
+    margin-right: 50px;
+    width:10vw;
+    height:11vh;
+}
+
+.main_section{
+    margin-top: 25vh;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.backBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    margin-left: 60px;
+    float: left;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 20px!important;
+    width: 100%;
+}
+
+@media (max-width: 767px){
+    .nbr_logo{
+        float: left;
+        margin-left: 24px;
+        width: 180px;
+        height: 40px;
+    }
+    
+    .mujib100_logo{
+        margin-top: -100px;
+        float: right;
+        margin-right: 10px !important;;
+        width:22vw;
+        height:11vh;
+    }
+
+    .backBtn {
+        background-color: #01649A;
+        color: #ffffff;
+        margin-left: 30px;
+        float: left;
+        margin-bottom: 30px !important;
+    }
+
+    @media (max-height: 568px){
+        .mujib100_logo{
+            margin-top: -85px; 
+        }
+    }
+}

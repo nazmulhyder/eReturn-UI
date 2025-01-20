@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AIT on Car</title>
+</head>
+
+<!-- <div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>AIT on Car &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-6 mt-3">
+            <label class="float-right" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="row form-horizontal" [formGroup]="paidCarOwnershipForm" aria-labelledby="title">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="regNo" class="label col-8 form-control-label">Registration No.
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="regNo"></i>
+                            </label>
+                            <ng-template #regNo>
+                                <div [innerHtml]="regNoTooltip"></div>
+                              </ng-template>
+                            <div class="col-12">
+                                <input type="text" (change)="check($event)" placeholder="Enter Registration No." formControlName="regNo"
+                                    class="form-control" id="regNo" required
+                                    [ngClass]="{'is-invalid':paidCarOwnershipForm.get('regNo').touched && paidCarOwnershipForm.get('regNo').invalid}">
+                                <div class="invalid-feedback ">
+                                    <div>Registration No. is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6"></div>
+                    <div class="col-6"></div>
+                    <div class="col-6 mt-4">
+                        <div class="form-group">
+
+                            <div class="col-12">
+                                <ng-template #resetBtn>
+                                    <div [innerHtml]="resetBtnTooltip"></div>
+                                  </ng-template>
+                                <button type="button" id="resetBtn" class="btn btn-warning tooltip-350 reset" (click)="reset()" [tooltip]="resetBtn">
+                                    Reset
+                                </button>
+
+                                <ng-template #searchBtn>
+                                    <div [innerHtml]="searchBtnTooltip"></div>
+                                  </ng-template>
+                            
+                                <button type="button" id="searchBtn" class="btn searchBtn mr-2 tooltip-350" [disabled]="paidCarOwnershipForm.value.regNo===''"
+                                    (click)="search($event, searchModalShow)" [tooltip]="searchBtn">
+                                    <i class="fa fa-search btnText" aria-hidden="true"></i>Search
+                                </button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>AIT Details &nbsp; &nbsp;
+            </span>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="form-horizontal" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="paidCarOwnershipTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th scope="col">Brand Name</th>
+                                    <th scope="col">Engine (cc)</th>
+                                    <th scope="col">Registration No.</th>
+                                    <th scope="col">TDS Claim</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of userCarInfos; let k = index">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row">{{ item.brandName == null ? "N/A" : item.brandName }}</td>
+                                    <td scope="row">{{ item.engineCapacity == null ? "N/A" : item.engineCapacity }}</td>
+                                    <td scope="row">{{ item.registrationNo }}</td>
+                                    <td scope="row">{{ commonUtilService.commaSeperator(item.tdsClaimAmount) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<ng-template #searchModalShow>
+    <div class="modal-header">
+        <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">TDS Details</h5>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="close_Search()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" [formGroup]="carTDSForm" aria-labelledby="title">
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="assessmentYear" class="label form-control-label">Assessment Year
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="assessmentYear" class="form-control " readonly>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="brandName" class="label form-control-label">Brand Name
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="brandName" class="form-control " readonly>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="engine" class="label form-control-label">Engine (cc)
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="engine" class="form-control " readonly>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="regNo" class="label form-control-label">Registration No
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="regNo" class="form-control " readonly>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="tdsAmount" class="label form-control-label">TDS on Interest
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" (keyup)="onValueChange($event)" (keypress)="numberOnly($event)" formControlName="tdsAmount" class="form-control ">
+                </div>
+            </div>
+
+        </form>
+        <button type="button" class="btn btn-sm btn-outline-danger" style="float: right;width: 100px;"
+            (click)="close_Search()">close</button>
+        <button type="button" class="btn btn-sm btn-outline-success" style="float: right;width: 100px;"
+        (click)="saveData()">save</button>
+    </div>
+</ng-template> -->
+
+<div class="col-md-12">
+    <div class="row centered">
+        <div class="col-12">
+          <span><b>Integration of this source tax is under process</b></span>
+        </div>
+    </div>
+</div>
+
+</html>
+
+<ngx-ui-loader></ngx-ui-loader>
+
+<!-- <pre>Form values: {{paidCarOwnershipForm.value | json}}</pre> -->
+
+

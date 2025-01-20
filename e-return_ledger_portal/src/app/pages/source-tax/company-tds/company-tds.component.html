@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Source Tax on iBAS++</title>
+</head>
+
+<div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Company TDS &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-6 mt-3">
+            <label class="float-right" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="row form-horizontal"  aria-labelledby="title">
+                    <input type="text" hidden>
+                    <div class="col-8">
+                        <div class="form-group">
+                            <!-- <label for="claimAmount" class="label col-8 form-control-label">TDS Claim
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="claimAmount"></i>
+                            </label> -->
+                            <!-- <ng-template #claimAmount>
+                                <div [innerHtml]="tdsClaimTooltip"></div>
+                            </ng-template> -->
+                            <div class="col-8">
+                                <!-- <input type="text" placeholder="Enter Claim Amount" 
+                                    formControlName="claimAmount" class="form-control" 
+                                    id="claimAmount" required>
+                                <div class="invalid-feedback ">
+                                    <div>TDS Claim is required!</div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 mt-4">
+                        <div class="form-group">
+                            <ng-template #resetBtn>
+                                <div [innerHtml]="resetBtnTooltip"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <ng-template #searchBtn>
+                                    <div [innerHtml]="searchBtnTooltip"></div>
+                                </ng-template>
+                                
+                                <!-- <button type="button" id="searchBtn" class="btn searchBtn mr-2 tooltip-350"
+                                    (click)="search($event, searchModalShow)">
+                                    <i class="fa fa-search btnText" aria-hidden="true"></i>Check Claim Availability
+                                </button> -->
+                                  <button type="button" id="searchBtn" class="btn searchBtn mr-2 tooltip-350"
+                                    (click)="loadAvailableTDSTaxpayer(winOrTinNo)">
+                                    <i class="fa fa-search btnText" aria-hidden="true"></i>Check Claim Availability
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row" *ngIf="isListSectionHidden">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Company TDS List &nbsp; &nbsp;
+            </span>
+        </div>
+    </div> -->
+
+    <!-- <div class="row mt-3" *ngIf="isListSectionHidden">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="form-horizontal" [formGroup]="companyTDSForm" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="tdsTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th scope="col">Company Name</th>
+                                    <th scope="col">TDS Available</th>
+                                    <th scope="col">TDS Claim</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of companyAvailableTDS.controls; let k = index" [formGroup]="item">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row">{{ item.value.COM_NAME }}</td>
+                                    <td scope="row">{{ item.value.TDS_CLAIM }}</td>
+
+                                    <td scope="row">
+                                        <button type="button" class="btn btn-sm btn-info editBtnStyle mr-2"
+                                            title="Click here to edit" (click)="onEdit(item.id)"><i
+                                                class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-sm deleteBtnStyle"
+                                            title="Click here to delete" (click)="onDelete(item.id)"><i
+                                                class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
+                                    </td> 
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="row" *ngIf="isOpenAvailableTDS">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Available TDS &nbsp; &nbsp;
+            </span>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="isOpenAvailableTDS">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="form-horizontal"  aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="tdsTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th scope="col">Deductors Name</th>
+                                    <th scope="col" class="text-center">TDS</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of companyAvailableTDS.controls; let k = index" [formGroup]="item">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row">{{ item.value.COM_NAME }}</td>
+                                    <td scope="row"><input type="text" class="form-control text-right" formControlName="TDS_CLAIM" (keypress)="numberOnly($event)" (keyup)="validateClaim(k, $event, item.value.TIN_OR_WIN)"></td>
+                                    <td scope="row" style="text-align: end;"><button class="btn btn-sm btn-success" (click)="loadClaimedTDS(item.value.TDS_CLAIM,item.value.TIN_OR_WIN,k)">Claim</button></td>
+                                    <td scope="row"><button class="btn btn-sm btn-info" (click)="search($event, searchModalShow, item.value.TIN_OR_WIN)">Search</button></td>
+                                    <!-- <td scope="row">
+                                        <button type="button" class="btn btn-sm btn-info editBtnStyle mr-2"
+                                            title="Click here to edit" (click)="onEdit(item.id)"><i
+                                                class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-sm deleteBtnStyle"
+                                            title="Click here to delete" (click)="onDelete(item.id)"><i
+                                                class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Claimed TDS SECTION START -->
+    <div class="row" *ngIf="isOpenClaimedTDS">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Claimed TDS &nbsp;&nbsp;
+            </span>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="isOpenClaimedTDS">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="form-horizontal" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="tdsTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th scope="col">Deductors Name</th>
+                                    <!-- <th scope="col" class="text-center">TDS Available</th> -->
+                                    <th scope="col" class="text-center">TDS Claim</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of companyClaimTDS.controls; let k = index" [formGroup]="item">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row">{{ item.value.COM_NAME }}</td>
+                                    <!-- <td scope="row" class="text-center">{{ item.value.TDS_AVAILABLE }}</td> -->
+                                    <td scope="row" class="text-center">{{ item.value.TDS_CLAIM ? item.value.TDS_CLAIM : 0}}</td>
+                                    <td scope="row"><button class="btn btn-sm btn-danger" (click)="deleteClaim(item.value.CLAIM_REF,k,removeClaim)">delete</button></td>
+                                    <!-- <td scope="row">
+                                        <button type="button" class="btn btn-sm btn-info editBtnStyle mr-2"
+                                            title="Click here to edit" (click)="onEdit(item.id)"><i
+                                                class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-sm deleteBtnStyle"
+                                            title="Click here to delete" (click)="onDelete(item.id)"><i
+                                                class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+ <!-- Claimed TDS SECTION END -->
+</div>
+
+<ng-template #searchModalShow>
+    <div class="modal-header">
+        <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">TDS Companies</h5>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="close_Search()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="table-responsive tableBgStyle" id="tdsTable">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">S.L</th>
+                  <th scope="col">WIN No</th>
+                  <th scope="col">Deductors Name</th>
+                  <th scope="col">TDS Available</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let item of getCompanyByWin; let k = index">
+                <td scope="row">{{k+1}}</td>
+                <td scope="row">{{item.winNo}}</td>
+                <td scope="row">{{item.companyName}}</td>
+                <td scope="row">{{item.claimAmount}}</td>
+              </tbody>
+            </table>
+          </div>
+
+          <button type="button" class="btn btn-sm btn-outline-danger" style="margin-left: 5px;float: right;width: 100px;"
+            (click)="close_Search()">close</button>
+        
+    </div>
+</ng-template>
+
+<!-- DELETE CLAIM POPUP -->
+<ng-template #removeClaim>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_Claim()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>This Action will Remove Your Claim!</p>
+      <p>Still Want to Remove?</p>
+      <button type="button" class="btn btn-danger" style="float: right;" (click)="remove_Claim()">Yes</button>
+      <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+        (click)="unchange_Claim()">No</button>
+    </div>
+  </ng-template>
+  
+
+</html>

@@ -1,0 +1,94 @@
+.card{
+    background-color: #F4F9FA;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
+    border-top: 0px solid #F4F9FA;
+    border-bottom: 0px solid #F4F9FA;
+}
+.fa-color{
+    color: #3F85ED ;
+}
+.fa-text
+{
+    font-style: italic;
+}
+.fa-customize{
+    margin-left: auto;
+}
+.custom-row{
+    margin-bottom:170px;
+}
+
+.custom-signin-btn{
+   background-color:#145DA0;
+   color: white;
+   font-size: 12px;
+ }
+ 
+.btn-customize {
+    background-color: white;
+    font-size: 12px;
+  }
+.btn-customize:hover {
+    background-color: black !important;
+    color:  white;
+  }
+::-webkit-input-placeholder {
+    font-style: italic;
+    font-size: small;
+ }
+ :-moz-placeholder {
+    font-style: italic;  
+    font-size: small;
+ }
+ ::-moz-placeholder {
+    font-style: italic; 
+    font-size: small; 
+ }
+ :-ms-input-placeholder {  
+    font-style: italic; 
+    font-size: small;
+ }
+
+ .text-blue{
+    color: #145DA0 !important;
+ }
+ @media (max-width: 767px){
+    .logo-text{
+        display: block !important;
+    }
+ }
+ @media (min-width: 768px){
+    .logo-text{
+        display: none !important;
+    }
+ }
+ .font-11
+ {
+    font-size: 11px !important;;
+ }
+ .font-12
+ {
+    font-size: 12px !important;;
+ }
+ 
+ .font-13
+ {
+    font-size: 13px !important;;
+ }
+ .font-14
+ {
+    font-size: 14px !important;;
+ }
+ ::ng-deep .custom-tooltip ~ .tooltip .tooltip-inner {
+   min-width: 300px;
+   background-color: #fffbfa;
+   border-radius: 3%;
+   border: 1px solid#C23306;
+   text-align: left;
+   font-family: 'Open Sans';
+   font-weight: 600;
+ }
+
+ .tooltip-content {
+   color:  #C23306;
+ }

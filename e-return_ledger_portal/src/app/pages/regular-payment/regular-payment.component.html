@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div style="margin-top: 10px;">
+            <div class="content-background">
+                <div class="table-responsive tableBgStyle" id="dynamicTable">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" width="30%">Date of Payment</th>
+                                <th scope="col" width="29%">Reference</th>
+                                <th scope="col" width="35%">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of allRegularPayments">
+                                <td>
+                                    <input type="text" value="{{ data.dateOfPayment }}" class="form-control"
+                                        placeholder="" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" value="{{data.paymentRef}}" class="form-control" placeholder=""
+                                        readonly>
+                                </td>
+                                <td><input type="text" value="{{ commonUtilService.commaSeperator(data.amount) }}" readonly class="form-control text-right"
+                                        placeholder="">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label class="labelStyle"><b>Total Regular Payment</b></label>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" style="text-align: right;" readonly
+                                        value="{{ commonUtilService.commaSeperator(totalRegularPayment) }}" id="totalPayment" placeholder="">
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-ui-loader></ngx-ui-loader>

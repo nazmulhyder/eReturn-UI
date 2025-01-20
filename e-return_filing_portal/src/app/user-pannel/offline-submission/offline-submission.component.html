@@ -1,0 +1,63 @@
+<div *ngIf="isShow">
+  <div class="row" ngxUiLoaderBlurred>
+    <div class="col-sm-12">
+      <div class="row mb-4">
+        <div class="col-12 col-sm-6">
+          <button type="button" class="btn btn-sm backBtn " (click)="onBackPage()">
+            <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left"
+              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+            </svg>&nbsp;
+            Back</button>
+        </div>
+        <div class="col-12 col-sm-6">
+          <!-- <span class="titleSection">Offline Submission</span> -->
+          <span class="titleSection">Offline (paper) Return</span>
+        </div>
+        <!-- <div class="col-12 col-sm-10">
+          <div class="row" style="float: right; padding-right: 5px;">
+            <button type="button" class="btn btn-pill rounded-pill btn-outline-dark btn-customize btn-sm main_nav"
+              *ngFor="let head of selectedNavbar; let i = index" (click)="mainNavActiveSelect(head['id'])"
+              [class.active]="mainNavActive[head['id']]" routerLink="{{head['link']}}"
+              style="float: right; margin-right: 5px;">{{head['name']}}
+            </button>          
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 container-cover-shadow">
+      <div id="print-me">
+        <app-offline-single-return-view *ngIf="singleReturnViewVisible"></app-offline-single-return-view>
+        <app-offline-return-view941 *ngIf="commonReturnView_941Visible"></app-offline-return-view941>
+        <app-offline-return-view922 *ngIf="salaryReturnView_922Visible"></app-offline-return-view922>
+        <app-offline-return-view903 *ngIf="housePropertyView_903Visible && isHPDataExists"></app-offline-return-view903>
+        <app-offline-return-view884 *ngIf="businessReturnView_884Visible && isBusinessDataExists">
+        </app-offline-return-view884>
+        <app-offline-return-view865 *ngIf="rebateReturnView_865Visible"></app-offline-return-view865>
+        <app-offline-return-view846 *ngIf="assetsReturnView_846Visible"></app-offline-return-view846>
+        <!-- <app-offline-return-view-it10-bb20167 *ngIf="it10bb20167ReturnViewVisible"></app-offline-return-view-it10-bb20167> -->
+        <app-offline-return-view-it10-bb20167 *ngIf="isExpenditureExists"></app-offline-return-view-it10-bb20167>
+        <div *ngIf="!singleReturnViewVisible" class="d-none blank_Page" style="page-break-before: always;">
+          <p style="background-color: #fff; height: 100vh; font-style: italic;text-align: center;padding-top: 650px;">
+            This
+            page intentionally left blank</p>
+        </div>
+        <app-offline-acknowledgement941 *ngIf="commonReturnView_941Visible"></app-offline-acknowledgement941>
+      </div>
+      <button type="button" (click)="onClickOfflineSubmission()"
+        style="float: right !important; margin-right: 14px !important; margin-bottom: 10px !important; width: 75px !important;"
+        class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"
+        [printStyle]="{body : {'background': 'white'}}" [useExistingCss]="true" printTitle="offline-return-{{userTin}}"
+        printSectionId="print-me" ngxPrint>
+        <i class="fa fa-print mr-1" aria-hidden="true"></i>
+        <b>Print</b></button>
+    </div>
+  </div>
+</div>
+
+
+
+<ngx-ui-loader text="Loading Offline Submission"></ngx-ui-loader>

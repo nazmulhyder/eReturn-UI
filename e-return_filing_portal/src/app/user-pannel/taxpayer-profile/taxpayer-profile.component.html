@@ -1,0 +1,160 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 container-cover-shadow">
+      <div class="row custom-container" style="margin-top: 10px">
+        <div class="col-sm-12 content-background bg-grey">
+          <div class="row">
+            <div class="col-md-2 text-center">
+              <!-- <img [src]="taxpayerProfileImg ===''? assets/img/avatars/empty_img.JPG : taxpayerProfileImg"  width="100" class="rounded-circle img-120" alt="admin@bootstrapmaster.com"/> -->
+              <img [src]="taxpayerProfileImg" width="100" class="rounded-circle img-120" alt="NO Image" />
+
+            </div>
+            <div class="col-md-7">
+              <div class="row">
+                <h4>{{taxpayerName}}</h4>
+              </div>
+              <div class="row fs-14">
+                <div class="col-sm-8 ml-0 pl-0">
+                  <i class="fa fa-at mr-2"></i>
+                  <input class="customEmail" type="text" aria-describedby="basic-addon1" value="{{taxpayerEmail}}"
+                    [disabled]="isEmailEditDone" #email>
+                </div>
+                <div class="col-sm-4 ml-0 pl-0">
+                  <button *ngIf="!isEmailEditDone" (click)="saveEmail()" class="defaultBtnStyle"><i class="fa fa-check"
+                      style="color: green;"></i></button>
+                  <button (click)="editEmail()" class="defaultBtnStyle"><i class="fa fa-pencil ml-2"></i></button>
+                </div>
+              </div>
+              <div class="row fs-14 ">
+                <div class="col-sm-8 ml-0 pl-0 d-flex flex-wrap">
+                  <i class="fa fa-building mr-2" style="margin-top: 5px;"></i>
+                  <textarea class="customAddress" cols="50" rows="3" aria-describedby="basic-addon1"
+                    value="{{taxpayerPresentAddress}}" [disabled]="isAddressEditDone" #address></textarea>
+                </div>
+                <div class="col-sm-4 ml-0 pl-0">
+                  <button *ngIf="!isAddressEditDone" class="defaultBtnStyle" (click)="saveAddress()"><i
+                      class="fa fa-check" style="color: green;"></i></button>
+                  <button class="defaultBtnStyle" (click)="editAddress()"><i class="fa fa-pencil ml-2"></i></button>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-3">
+              <h4>TIN: {{taxpayerTIN}}</h4>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="row custom-container" style="margin-top:-15px!important;">
+        <div class="col-md-12 content-background">
+          <div class="row">
+            <div class="col-md-6">
+              <h6><b>NID Information</b></h6>
+              <p class="bt-black"></p>
+              <table class="table table-borderless">
+                <tr>
+                  <td width="30%" class="fs-13 pl-0 py-2"><b>Father Name</b></td>
+                  <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                  <!-- <td width="65%" class="text-left fs-13 py-2">M. A. Jalil</td> -->
+                  <td width="65%" class="text-left fs-13 py-2">{{taxpayerFatherName}}</td>
+                </tr>
+                <tr>
+                  <td width="30%" class="fs-13 pl-0 py-2"><b>Mother Name</b></td>
+                  <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                  <!-- <td width="65%" class="text-left fs-13 py-2">Shafia Khatun</td> -->
+                  <td width="65%" class="text-left fs-13 py-2">{{taxpayerMotherName}}</td>
+                </tr>
+                <tr>
+                  <td width="30%" class="fs-13 pl-0 py-2"><b>Date of Birth</b></td>
+                  <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                  <!-- <td width="65%" class="text-left fs-13 py-2">01-10-1974</td> -->
+                  <td width="65%" class="text-left fs-13 py-2">{{taxpayerDOB}}</td>
+                </tr>
+                <tr>
+                  <td width="30%" class="fs-13 pl-0 py-2"><b>Phone Number</b></td>
+                  <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                  <!-- <td width="65%" class="text-left fs-13 py-2">01712006227</td> -->
+                  <td width="65%" class="text-left fs-13 py-2">{{taxpayerPhone}}</td>
+                </tr>
+                <tr>
+                  <td width="30%" class="fs-13 pl-0 py-2"><b>Permanent Address</b></td>
+                  <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                  <!-- <td width="65%" class="text-left fs-13 py-2">Holding # 8, Sadar Road, Natun Bazar, Patuakhali, PO : 8600, Bangladesh</td> -->
+                  <td width="65%" class="text-left fs-13 py-2">{{taxpayerPermanentAddress}}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-md-6">
+              <h6><b>TIN Information</b></h6>
+              <p class="bt-black"></p>
+              <table class="table table-borderless">
+                <tr>
+                  <td width="30%" class="fs-13 pl-0 py-2"><b>TIN</b></td>
+                  <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                  <!-- <td width="65%" class="text-left fs-13 py-2">243149308855</td> -->
+                  <td width="65%" class="text-left fs-13 py-2">{{taxpayerTIN}}</td>
+                </tr>
+                <tr>
+                  <td width="30%" class="fs-13 pl-0 py-2"><b>Tax Zone</b></td>
+                  <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                  <!-- <td width="65%" class="text-left fs-13 py-2">04, Dhaka</td> -->
+                  <td width="65%" class="text-left fs-13 py-2">{{taxpayerZone}}</td>
+                </tr>
+                <tr>
+                  <td width="30%" class="fs-13 pl-0 py-2"><b>Tax Circle</b></td>
+                  <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                  <!-- <td width="65%" class="text-left fs-13 py-2">085 (Salary)</td> -->
+                  <td width="65%" class="text-left fs-13 py-2">{{taxpayerCircle}}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-md-6">
+              <h6><b>Other Information</b></h6>
+              <p class="bt-black"></p>
+              <table class="table table-borderless">
+                <tr>
+                  <td width="30%" class="fs-13 pl-0 py-2"><b>Spouse Name</b></td>
+                  <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                  <!-- <td width="65%" class="text-left fs-13 py-2">Tasmiah Khatun<i class="fa fa-pencil ml-2"></i></td> -->
+                  <td width="65%" class="text-left fs-13 py-2">
+                    <!-- {{data.spouseName}} -->
+                    <input class="customEmail" type="text" aria-describedby="basic-addon1" value="{{taxpayerSpouse}}"
+                      [disabled]="isSpouseNameEditDone" #spouse>
+                    <button *ngIf="!isSpouseNameEditDone" class="defaultBtnStyle" (click)="saveSpouseName()"><i
+                        class="fa fa-check" style="color: green;"></i></button>
+                    <button class="defaultBtnStyle" (click)="editSpouseName()"><i
+                        class="fa fa-pencil ml-2"></i></button>
+
+                  </td>
+                </tr>
+                <tr>
+                  <td width="30%" class="fs-13 pl-0 py-2"><b>Spouse TIN</b></td>
+                  <td width="5%" class="fs-13 py-2"><b>:</b></td>
+                  <td width="65%" class="text-left fs-13 py-2">
+                    <input class="customEmail" type="text" aria-describedby="basic-addon1" (keypress)="numberOnly($event)" value="{{spouseTin}}"
+                      [disabled]="isSpouseTinEditDone" #sp_tin>
+                    <button *ngIf="!isSpouseTinEditDone" class="defaultBtnStyle" (click)="saveSpouseTin()"><i
+                        class="fa fa-check" style="color: green;"></i></button>
+                    <button class="defaultBtnStyle" (click)="editSpouseTin()"><i class="fa fa-pencil ml-2"></i></button>
+                  </td>
+                  <!-- <td width="65%" class="text-left fs-13 py-2">{{data.spouseName}}<i class="fa fa-pencil ml-2"></i></td> -->
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row content-slider-footer">
+        <div class="col-sm-12" style="text-align: right">
+          <button type="button" class="btn mr-1" (click)="onSync()" style="background-color:#145DA0;color: white;">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+            Sync with eTIN
+          </button>
+          <button type="button" class="btn" (click)="onNextPage()" style="background-color:#145DA0;color: white;">Save
+            Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

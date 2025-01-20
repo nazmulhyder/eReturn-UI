@@ -1,0 +1,41 @@
+.bg_image{
+    background-image: url('assets/img/background/bg.png');
+    height: 98vh;
+    width: 98.93vw;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.text-style{
+    margin-top: 20px;
+    font-size: 20px;
+}
+.backBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    /* width: 100px; */
+}
+
+.customHeight{
+    height: 490px;
+}
+
+.service_center_image_1{
+    height: 300px; 
+    width: 600px;
+}
+
+@media (max-width: 767px){
+    .customHeight{
+        height: auto;
+        margin-bottom: 10px;
+    }
+    
+    .service_center_image_1{
+        height: 160px; 
+        width: 600px;
+    }
+}
+
+
+  

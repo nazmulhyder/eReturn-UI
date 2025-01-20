@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Others Entry</title>
+</head>
+
+<!-- <div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Others Entry &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-6 mt-3">
+            <label class="float-right" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="row form-horizontal" [formGroup]="othersEntryForm" aria-labelledby="title">
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="section" class="label col-8 form-control-label">Section 
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="section"></i>
+                            </label>
+                            <ng-template #section>
+                                <div [innerHtml]="sectionTooltip"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <select class="form-control" id="section" formControlName="section"
+                                    [ngClass]="{'is-invalid':othersEntryForm.get('section').touched && othersEntryForm.get('section').value=='0'}">
+                                    <option value="0" selected>Select One</option>
+                                    <option value="Salary [ Section-50]">Salary [ Section-50]</option>
+                                    <option value="Bangladesh Bank Bill [ Section-50A]">Bangladesh Bank Bill [
+                                        Section-50A]
+                                    </option>
+                                    <option value="MP Remuneration [ Section-50B]">MP Remuneration [ Section-50B]
+                                    </option>
+                                    <option value="Profit on Securities [ Section-51]">Profit on Securities [
+                                        Section-51]
+                                    </option>
+                                    <option value="Contractor Payment [ Section-52]">Contractor Payment [ Section-52]
+                                    </option>
+                                    <option value="Royalties [ Section-52A]">Royalties [ Section-52A]
+                                    </option>
+                                    <option value="Service Payments [ Section-52AA]">Service Payments [ Section-52AA]
+                                    </option>
+                                    <option value="C & F Agent Payment [ Section-52AAA]">C & F Agent Payment [
+                                        Section-52AAA]
+                                    </option>
+                                    <option value="Cigerette Manufacture [ Section-52B]">Cigerette Manufacture [
+                                        Section-52B]
+                                    </option>
+                                    <option value="Acquisition of Property [Section-52C]">Acquisition of Property
+                                        [Section-52C]
+                                    </option>
+                                    <option value="Sanchayapatra Interest [ Section-52D]">Sanchayapatra Interest [
+                                        Section-52D]
+                                    </option>
+                                    <option value="WPPF [ Section-52DD]">WPPF [ Section-52DD]
+                                    </option>
+                                    <option value="Brick Manufacturing [ Section-52F]">Brick Manufacturing [
+                                        Section-52F]
+                                    </option>
+                                    <option value="LC Commission [ Section-52I]">LC Commission [ Section-52I]
+                                    </option>
+                                    <option value="Travel Agent [ Section-52JJ]">Travel Agent [ Section-52JJ]
+                                    </option>
+                                    <option value="Trade License Renewal [ Section-52K]">Trade License Renewal [
+                                        Section-52K]
+                                    </option>
+                                    <option value="Freight Forward Commission [Section-52M]">Freight Forward Commission
+                                        [Section-52M]
+                                    </option>
+                                    <option value="Rental Power [ Section-52N]">Rental Power [ Section-52N]
+                                    </option>
+                                    <option value="Diamond Cutting Technician [Section-52O]">Diamond Cutting Technician
+                                        [Section-52O]
+                                    </option>
+                                    <option value="Convention Hall Rent [ Section-52P]">Convention Hall Rent [
+                                        Section-52P]
+                                    </option>
+                                    <option value="Service to Foreign Person [Section-52Q]">Service to Foreign Person
+                                        [Section-52Q]
+                                    </option>
+                                    <option value="ICX/IGW payment [ Section-52R]">ICX/IGW payment [ Section-52R]
+                                    </option>
+                                    <option value="Excess Life Insurance Premium [ Section-52T]">Excess Life Insurance
+                                        Premium [ Section-52T]
+                                    </option>
+                                    <option value="Local LC [ Section-52U]">Local LC [ Section-52U]
+                                    </option>
+                                    <option value="Cellular Phone Revenue [ Section-52V]">Cellular Phone Revenue [
+                                        Section-52V]
+                                    </option>
+                                    <option value="Import [ Section-53]">Import [ Section-53]
+                                    </option>
+                                    <option value="House Property [ Section-53A]">House Property [ Section-53A]
+                                    </option>
+                                    <option value="Shipping Business [ Section-53AA]">Shipping Business [ Section-53AA]
+                                    </option>
+                                    <option value="Manpower Export [ Section-53B]">Manpower Export [ Section-53B]
+                                    </option>
+                                    <option value="Export Certain Items [ Section-53BB]">Export Certain Items [
+                                        Section-53BB]
+                                    </option>
+                                    <option value="Member of Stock Exchange [Section-53BBB]">Member of Stock Exchange
+                                        [Section-53BBB]
+                                    </option>
+                                    <option value="Export Except Certain Items [Section-53BBBB]">Export Except Certain
+                                        Items [Section-53BBBB]
+                                    </option>
+                                    <option value="Courier Business [ Section-53CCC]">Courier Business [ Section-53CCC]
+                                    </option>
+                                    <option value="Actor, Producer etc. [ Section-53D]">Actor, Producer etc. [
+                                        Section-53D]
+                                    </option>
+                                    <option value="Export Cash Subsidy [ Section-53DDD]">Export Cash Subsidy [
+                                        Section-53DDD]
+                                    </option>
+                                    <option value="Commission, Discount, Fee [Section-53E]">Commission, Discount, Fee
+                                        [Section-53E]
+                                    </option>
+                                    <option value="Foreign Agency Commission [Section-53EE]">Foreign Agency Commission
+                                        [Section-53EE]
+                                    </option>
+                                    <option value="Real Estate Business [ Section-53FF]">Real Estate Business [
+                                        Section-53FF]
+                                    </option>
+                                    <option value="Insurance Commission [ Section-53G]">Insurance Commission [
+                                        Section-53G]
+                                    </option>
+                                    <option value="General Insurance Surveyor [Section-53GG]">General Insurance Surveyor
+                                        [Section-53GG]
+                                    </option>
+                                    <option value="Transfer of Property [ Section-53H]">Transfer of Property [
+                                        Section-53H]
+                                    </option>
+                                    <option value="Property Lease [ Section-53HH]">Property Lease [ Section-53HH]
+                                    </option>
+                                    <option value="Interest on PO Savings [ Section-53I]">Interest on PO Savings [
+                                        Section-53I]
+                                    </option>
+                                    <option value="Plant, Machinery Rent [ Section-53J]">Plant, Machinery Rent [
+                                        Section-53J]
+                                    </option>
+                                    <option value="Advertising Bill [ Section-53K]">Advertising Bill [ Section-53K]
+                                    </option>
+                                    <option value="Sponsor Share Transfer [ Section-53M]">Sponsor Share Transfer [
+                                        Section-53M]
+                                    </option>
+                                    <option value="Stock Exchange Share [ Section-53N]">Stock Exchange Share [
+                                        Section-53N]
+                                    </option>
+                                    <option value="Signing Money [ Section-53P]">Signing Money [ Section-53P]
+                                    </option>
+                                    <option value="Dividend [ Section-54]">Dividend [ Section-54]
+                                    </option>
+                                    <option value="Lottery [ Section-55]">Lottery [ Section-55]
+                                    </option>
+                                    <option value="Non-resident Income [ Section-56]">Non-resident Income [ Section-56]
+                                    </option>
+                                    <option value="Bank Interest [ Section-53F]">Bank Interest [ Section-53F]
+                                    </option>
+                                    <option value="Public Auction AIT [ Section-53C]">Public Auction AIT [ Section-53C]
+                                    </option>
+                                    <option value="Cigarette Manufacture AIT [Section-68A]">Cigarette Manufacture AIT
+                                        [Section-68A]
+                                    </option>
+                                    <option value="Motor Car AIT [ Section-68B]">Motor Car AIT [ Section-68B]
+                                    </option>
+                                    <option value="Regular AIT [ Section-64]">Regular AIT [ Section-64]
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback ">
+                                    <div>Section is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="office" class="label col-8 form-control-label">Office
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="office"></i>
+                            </label>
+                            <ng-template #office>
+                                <div [innerHtml]="officeTooltip"></div>
+                            </ng-template>                                
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Office" formControlName="office"
+                                    class="form-control" id="office" required
+                                    [ngClass]="{'is-invalid':othersEntryForm.get('office').touched && othersEntryForm.get('office').invalid}">
+                                <div class="invalid-feedback ">
+                                    <div>Office is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="challanNo" class="label col-8 form-control-label">Challan
+                                No.
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="challanNo"></i>
+                            </label>
+                            <ng-template #challanNo>
+                                <div [innerHtml]="challanTooltip"></div>
+                            </ng-template>                                
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Challan No." formControlName="challanNo"
+                                    class="form-control" id="challanNo" required
+                                    [ngClass]="{'is-invalid':othersEntryForm.get('challanNo').touched && othersEntryForm.get('challanNo').invalid}">
+                                <div class="invalid-feedback ">
+                                    <div>Challan No. is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="date" class="label col-8 form-control-label">Challan Date
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="challanDate"></i>
+                            </label>
+                            <ng-template #challanDate>
+                                <div [innerHtml]="challanDateTooltip"></div>
+                            </ng-template>                                  
+                            <div class="input-group col-12">
+                                <input type="text" placeholder="Enter Date" formControlName="date" class="form-control"
+                                    id="date" bsDatepicker #date="bsDatepicker"
+                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }"
+                                    required
+                                    [ngClass]="{'is-invalid':othersEntryForm.get('date').touched && othersEntryForm.get('date').invalid}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-info btn-sm" (click)="date.toggle()" type="button"
+                                        id="button-addon2">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback ">
+                                    <div>Challan Date is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="referenceNo" class="label col-8 form-control-label">Reference No.
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="reference"></i>
+                            </label>
+                            <ng-template #reference>
+                                <div [innerHtml]="referenceTooltip"></div>
+                            </ng-template>                                  
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Reference No." formControlName="referenceNo"
+                                    class="form-control" id="referenceNo" required
+                                    [ngClass]="{'is-invalid':othersEntryForm.get('referenceNo').touched && othersEntryForm.get('referenceNo').invalid}">
+                                <div class="invalid-feedback ">
+                                    <div>Reference No. is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="amount" class="label col-8 form-control-label">Amount
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="amountt"></i>
+                            </label>
+                            <ng-template #amountt>
+                                <div [innerHtml]="amountTooltip"></div>
+                            </ng-template>                                  
+                            <div class="col-12">
+                                <input type="text" (keyup)="onValueChange($event)" (keypress)="numberOnly($event)" placeholder="Enter Amount" formControlName="amount"
+                                    class="form-control" id="amount" required
+                                    [ngClass]="{'is-invalid':othersEntryForm.get('amount').touched && othersEntryForm.get('amount').invalid}">
+                                <div class="invalid-feedback ">
+                                    <div>Amount is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8"></div>
+                    <div class="col-4 mt-4">
+                        <div class="form-group">
+                            <ng-template #resetBtn>
+                                <div [innerHtml]="resetBtnTooltip"></div>
+                              </ng-template>
+                            <div class="col-10">
+                                <button type="button" id="resetBtn" class="btn btn-warning tooltip-350 reset" (click)="reset()" [tooltip]="resetBtn">
+                                    Reset
+                                </button>
+
+                                <button type="button" [disabled]="!othersEntryForm.valid" class="btn submitBtn"
+                                    (click)="submittedData()">
+                                    <i class="fa fa-save btnText"></i>Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3" *ngIf="othersGetDataLen > 0">
+        <div class="col-12 col-sm-12 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>TDS Details &nbsp; &nbsp;
+            </span>
+        </div>
+    </div>
+
+    <div class="row mt-3" *ngIf="othersGetDataLen > 0">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="form-horizontal" [formGroup]="othersEntryForm" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="challanListTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th scope="col">Section</th>
+                                    <th scope="col">Challan No.</th>
+                                    <th scope="col">Challan Date</th>
+                                    <th scope="col">Reference No.</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col" width="16%">Tax Office Verification</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of othersgetData; let k = index">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row">{{ item.section }}</td>
+                                    <td scope="row">{{ item.challanNo }}</td>
+                                    <td scope="row">{{ item.challanDate }}</td>
+                                    <td scope="row">{{ item.referenceNo }}</td>
+                                    <td scope="row">{{ this.commonUtilService.commaSeperator(item.tdsClaim) }}</td>
+                                    <td scope="row" *ngIf="item.verificationStatus==='Verified'">
+                                        <h5><label class="badge badge-success">Verified</label></h5>
+                                    </td>
+                                    <td scope="row" *ngIf="item.verificationStatus==='Pending'">
+                                        <h5><label class="badge badge-warning">Pending</label></h5>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div> -->
+
+<div class="col-md-12">
+    <div class="row centered">
+        <div class="col-12">
+          <span><b>Integration of this source tax is under process</b></span>
+        </div>
+    </div>
+</div>
+
+</html>
+
+<ngx-ui-loader></ngx-ui-loader>
+
+<!-- <pre>Form values: {{othersEntryForm.value | json}}</pre> -->

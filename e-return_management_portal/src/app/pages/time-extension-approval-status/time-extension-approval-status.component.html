@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Time Extension Approval Status</title>
+</head>
+
+<div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-6 col-sm-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left iconStyle">
+                </i> Time Extension Approval Status &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-6 mt-3">
+            <label class="float-right" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <div class="table-responsive tableBgStyle" id="timeExtensionListTable">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">SL.</th>
+                                <th scope="col">Ticket No</th>
+                                <th scope="col">TIN</th>
+                                <th scope="col">Taxpayer Name</th>
+                                <th scope="col">Application Date</th>
+                                <th scope="col">Requested Upto</th>
+                                <th scope="col">Approval Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of timeExtensionGetData; let k = index">
+                                <td scope="row">{{ k+1 }}</td>
+                                <td scope="row">{{ item.TICKET_NO }}</td>
+                                <td scope="row">{{ item.TIN }}</td>
+                                <td scope="row">{{ item.TAXPAYER_NAME }}</td>
+                                <td scope="row">{{ item.APPLICATION_DATE }}</td>
+                                <td scope="row">{{ item.EXTENSION_REQ_DATE }}</td>
+                                <td scope="row" *ngIf="item.APPLICATION_STATUS=='Approved'">{{ item.EXTENSION_DATE_APPROVED_UPTO}}</td>
+                                <td scope="row" *ngIf="item.APPLICATION_STATUS!='Approved'">
+                                    <span class="badge badge-danger">Rejected</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+<ngx-ui-loader></ngx-ui-loader>

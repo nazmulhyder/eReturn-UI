@@ -1,0 +1,31 @@
+/* .bg_image{
+    background-image: url('assets/img/background/bg.png');
+    height: 98vh;
+    width: 98.93vw;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+} */
+
+.btn-customize {
+    background-color: white;
+    font-size: 12px;
+}
+.btn-customize:hover {
+    background-color: black !important;
+    color:  white;
+}
+.closeBtn{
+    font-size: 16px;
+    width: 100px;
+}
+
+.message{
+    font-size: 20px;
+}
+
+@media (max-width: 767px){
+    .message{
+        font-size: 15Px !important;
+    }
+}

@@ -1,0 +1,135 @@
+<!-- NEW DESIGN START -->
+<div *ngIf="isShow">
+  <!-- <div> -->
+  <div class="row mt-3">
+    <div class="col-sm-12">
+      <div class="row mb-4">
+        <div class="col-12 col-sm-4">
+          <span style="font-size:24px; font-weight: bold; color: #22223B;">Acknowledgement Receipt</span>
+        </div>
+        <div class="col-12 col-sm-8">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 container-cover-shadow">
+      <div class="row custom-container mt-10">
+        <div class="col-sm-12">
+          <div class="content-background back-white">
+            <div class="col-md-12 bg-white p-1 border-none" id="ack-certificate" style="padding-top: 80px !important;">
+              <div class="col-md-12 m-0 border-none">
+                <div class="row custom-page-back-width" style=" padding-bottom: 20px;">
+                  <div class="col-sm-12 text-right" style="padding-left: 105px; padding-top: 15px;">
+                    <img class="custom-logo-width" src="assets\img\logo\eReturn_logo_png.png" alt="Logo">
+                    <p style="font-weight: 500;">National Board of Revenue</p>
+                  </div>
+                  <div class="col-md-12 m-0 border-none text-center mt-2">
+                    Acknowledgement Receipt<br>of<br>Return of Income
+                    <br><br>Assessment Year: {{assessmentYr}}
+                  </div>
+                  <!-- </div> -->
+                </div>
+
+
+                <div class="wid-75-0-margin">
+                  <table class="table table-borderless m-0 fs-14 custom-page-body-bg">
+                    <tr>
+                      <td class="pb-1 pl-22 p-15">Taxpayer's Name: {{nameOfAssessee}} </td>
+                      <td class="pb-1 p-15  pl-110">Return Scheme: {{return_submit_under_82bb === true ? 'Universal Self
+                        (82BB)' : ''}}</td>
+                    </tr>
+                    <tr>
+                      <td class="py-0 pl-22">TIN: {{userTin}}</td>
+                      <td class="py-0  pl-110">Total Income shown: <span style="font-weight: 900;">৳</span>
+                        {{totalIncome}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="py-0 pl-22"></td>
+
+                      <td class="py-0  pl-110"></td>
+                    </tr>
+                    <tr>
+                      <td class="pb-1 pl-22 ">Taxes Circle: {{circle}}
+                      </td>
+                      <td class="pb-1   pl-110 ">Tax Paid: <span style="font-weight: 900;">৳</span> {{amountPayable}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="py-0 pl-22 ">Taxes Zone: {{zone}}
+                      </td>
+                      <td class="py-0 pl-110">Net Wealth Shown: <span style="font-weight: 900;">৳</span> {{
+                        gross_wealth}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="py-3 pl-22"></td>
+
+                      <td class="py-3  pl-110"></td>
+                    </tr>
+                    <tr>
+                      <td class="pb-1 pl-22 p-15">Date of Return Filing: {{returnSubmissionDate}} </td>
+                      <!-- <td class="pb-1 p-15  pl-110" >Return Scheme:{{return_submit_under_82bb === true ? 'Universal Self (82BB)' : ''}}</td> -->
+                    </tr>
+                    <tr>
+                      <td class="py-0 pl-22">Reference Number: {{referenceNo}}</td>
+                      <!-- <td class="py-0  pl-110" >Total income shown: ৳ {{totalIncome}}
+                      </td> -->
+                    </tr>
+                  </table>
+                </div>
+                <div class="custom-page-back-width">
+                  <table class="table table-borderless">
+                    <tr>
+                      <td class="py-5 pl-22"></td>
+
+                      <td class="py-5  pl-110"></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left m-0 pl-30 va-middle" style="width: 10%;">
+                        <!-- <img class="m-0" src="assets/img/qrcode/qrcode.png" alt="Logo" style="width:50px;"> -->
+                        <qrcode [elementType]="elementType" [qrdata]="taxpayerQRData" [width]="100" [errorCorrectionLevel]="'M'"></qrcode>
+                        </td>
+                      <td class="text-justify m-0 va-middle" style="width: 90%">
+                        <p class="m-0 text-left fs-14">
+                          This is a system-generated Acknowledgement Receipt. No signature is required.</p>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div style="clear: both;"></div>
+              </div>
+            </div>
+            
+            <div class="custom-page-back-width">
+              <table class="table table-borderless">
+                <tr>
+                  <td class="py-5 pl-22"></td>
+                  <td class="py-5  pl-110">
+                    <!-- download button -->
+                    <!-- <button type="button" (click)="ackCertificateDownload()"
+                      style="float: right !important; margin-right: 14px !important; margin-bottom: 10px !important; width: 100px !important;"
+                      class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize">
+                      <i class="fa fa-download mr-1" aria-hidden="true"></i>
+                      <b>Download</b></button> -->
+                      <button type="button"
+                      style="float: right !important;margin-top: 12px; margin-right: 14px !important; margin-bottom: 10px !important; width: 95px !important;"
+                      class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"
+                      [printStyle]="{body : {'background': 'white'}}" [useExistingCss]="true" printTitle="Acknowledgement-{{userTin}}" printSectionId="ack-certificate" ngxPrint>
+                      <i class="fa fa-print mr-1" aria-hidden="true"></i>
+                      <b>Download</b></button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-ui-loader></ngx-ui-loader>
+<!-- DESIGN END -->

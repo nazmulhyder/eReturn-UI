@@ -1,0 +1,2207 @@
+<div class="row" *ngIf="isShow">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-12 col-sm-2">
+        <span style="font-size:20px; font-weight: bold; color: #22223B;">Income Details</span>
+      </div>
+      <div class="col-12 col-sm-10">
+        <div class="row" style="float: right; padding-right: 5px;">
+          <button type="button" class="btn btn-pill rounded-pill btn-outline-dark btn-customize btn-sm main_nav"
+            *ngFor="let head of selectedNavbar; let i = index" (click)="mainNavActiveSelect(head['id'])"
+            [class.activeMainNav]="mainNavActive[head['id']]" routerLink="{{head['link']}}"
+            style="float: right; margin-right: 5px;">{{head['name']}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-12">
+        <ul class="nav nav-tabs nav_font" style="margin-top: 36px">
+          <li class="nav-item" *ngFor="let head of headsOfIncome; let i = index">
+            <a class="nav-link" [class.activeHead]="navActive[head['id']]" routerLink="{{head['link']}}"
+              (click)="navActiveSelect(head['id'])">{{head['name']}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="multiple-section">
+      <div class="row">
+        <div class="col-sm-10">
+          <button [hidden]="isVisibleIncomeTab" class="btn btn-sm btn-light salary-btn"
+            [class.salary-btn-active]="isVisibleForm == i" *ngFor="let item of formArray.controls; let i = index"
+            (click)="selectedSalary(i)">
+            {{salaryName[i]}}
+            <i (click)="onCloseTabClick(closetabpopup)" class="fa fa-times-circle" aria-hidden="true"
+              style="margin-left: 10px;"></i>
+            <ng-template #closetabpopup>
+              <div class="modal-header">
+                <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>This action will remove all your unsaved data.</p>
+                <p>Would you like to remove it?</p>
+                <button type="button" class="btn btn-danger" style="float: right;" (click)="close(i, 0)">Remove</button>
+                <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+                  (click)="modalRef.hide()">Keep</button>
+              </div>
+            </ng-template>
+            &nbsp;
+          </button>
+          <button [hidden]="isVisibleIncomeTab" class="btn btn-sm btn-light salary-btn"
+            [class.salary-btn-active]="isVisibleForm == formArray.length+1"
+            (click)="showSummary(formArray.length+1)">Salary Summary</button>
+        </div>
+        <div class="col-sm-2" style="text-align: right; padding: 0;">
+          <button [disabled]="isVisibleAddSalBtn" type="button" class="btn btn-sm btn-pill"
+            style="border-radius: 50px; background-color: #01649A; color: white;" (click)="insertFormGroupToArray(0)"><i
+              class="fa fa-plus-square" aria-hidden="true"></i>&nbsp;Add Salary</button>&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+
+    <div class="content-background">
+      <div class="row" *ngFor="let form of formArray.controls; let i = index">
+
+        <div class="col-sm-6" [hidden]="i != isVisibleForm">
+
+          <form [formGroup]="form">
+            <div class="content-background">
+
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Employment Type</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="employmentType"
+                  style="padding-right: 5px"></i>
+                <ng-template #employmentType>
+                  <div [innerHtml]="employmentTypeTooltip"></div>
+                </ng-template>
+                <select class="form-control" formControlName="employmentType" (change)="employmentTypeChange($event, i)"
+                  [ngClass]="{'is-invalid': salaryType_showError[i]}">
+                  <option value="0" selected>Select</option>
+                  <option value="1">Government Pay Scale (Payment through iBAS++)</option>
+                  <option value="2">Government Pay Scale (Payment not through iBAS++)</option>
+                  <option value="3">Private/Other than Government Pay Scale</option>
+                  <option value="4">Salary Subject to Reduced Tax Rate</option>
+                </select>
+                <div class="invalid-feedback">
+                  <div>This field is Required!</div>
+                </div>
+              </div>
+
+              <div *ngIf="form.value.employmentType != '0'">
+                <div *ngIf="form.value.employmentType != '1'">
+                  <div class="form-group">
+                    <label>Name of the Employer</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="employerName"
+                      style="padding-right: 5px"></i>
+                    <ng-template #employerName>
+                      <div [innerHtml]="employerNameTooltip"></div>
+                    </ng-template>
+                    <input type="text" id="employerName{{i}}" (keyup)="onEmployerNameKeyUp(i)" class="form-control"
+                      placeholder="" formControlName="employerName"
+                      [ngClass]="{'is-invalid': employerName_showError[i]}">
+                    <div class="invalid-feedback">
+                      <div>This field is Required!</div>
+                    </div>
+                  </div>
+                  <div *ngIf="form.value.employmentType ==='2' ;else temoo" class="form-group">
+                    <label>Designation</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="designation"
+                      style="padding-right: 5px"></i>
+                    <ng-template #designation>
+                      <div [innerHtml]="G_DesignationTooltip"></div>
+                    </ng-template>
+                    <input type="text" id="designation{{i}}" class="form-control" placeholder=""
+                      (keyup)="onDesignationKeyUp(i)" formControlName="designation"
+                      [ngClass]="{'is-invalid': designation_showError[i]}">
+                    <div class="invalid-feedback">
+                      <div>This field is Required!</div>
+                    </div>
+                  </div>
+                  <ng-template #temoo>
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group">
+                          <label>Designation</label>
+                          <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="designation"
+                            style="padding-right: 5px"></i>
+                          <ng-template #designation>
+                            <div [innerHtml]="NG_DesignationTooltip"></div>
+                          </ng-template>
+                          <input type="text" id="designation{{i}}" class="form-control" placeholder=""
+                            (keyup)="onDesignationKeyUp(i)" formControlName="designation"
+                            [ngClass]="{'is-invalid': designation_showError[i]}">
+                          <div class="invalid-feedback">
+                            <div>This field is Required!</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6" style="padding-top: 30px;">
+                        <div class="form-check" placement="right">
+                          <input type="checkbox" formControlName="isShareholderDirector">
+                          <label for="defaultCheck100" class="ml-1">
+                            Shareholder Director
+                          </label>
+                          <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="shareholderDirector"
+                            style="padding-right: 5px"></i>
+                          <ng-template #shareholderDirector>
+                            <div [innerHtml]="shareholderDirectorTooltip"></div>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </div>
+                <div *ngIf="form.value.employmentType === '1'">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput9">Name of the Office</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="ofcName"
+                      style="padding-right: 5px"></i>
+                    <ng-template #ofcName>
+                      <div [innerHtml]="ofcNameTooltip"></div>
+                    </ng-template>
+                    <input type="text" id="organizationName{{i}}" class="form-control"
+                      (keyup)="onOrganizationNameKeyUp(i)" placeholder="" formControlName="organizationName"
+                      [ngClass]="{'is-invalid': organizationName_showError[i]}">
+
+                    <div class="invalid-feedback">
+                      <div>This field is Required!</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Designation</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="designation"
+                      style="padding-right: 5px"></i>
+                    <ng-template #designation>
+                      <div [innerHtml]="GI_DesignationTooltip"></div>
+                    </ng-template>
+                    <input type="text" id="designation{{i}}" class="form-control" placeholder=""
+                      (keyup)="onDesignationKeyUp(i)" formControlName="designation"
+                      [ngClass]="{'is-invalid': designation_showError[i]}">
+                    <div class="invalid-feedback">
+                      <div>This field is Required!</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div *ngIf="form.value.employmentType != '0'" style="margin-top: 20px">
+
+              <div class="content-background" *ngIf="form.value.employmentType != '4'">
+
+                <div class="col-sm-12 p-0" *ngIf="form.value.employmentType === '1'">
+                  <span style="margin-right: 40px; font-size: 17px;">
+                    <b>Particulars</b>
+                    <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="particulars"
+                      style="padding-right: 5px"></i>
+                    <ng-template #particulars>
+                      <div [innerHtml]="GI_ParticularsTooltip"></div>
+                    </ng-template>
+                  </span>
+                </div>
+
+                <div class="col-sm-12 p-0" *ngIf="form.value.employmentType === '2'">
+                  <span style="margin-right: 40px; font-size: 17px;">
+                    <b>Particulars</b>
+                    <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="particulars"
+                      style="padding-right: 5px"></i>
+                    <ng-template #particulars>
+                      <div [innerHtml]="G_ParticularsTooltip"></div>
+                    </ng-template>
+                  </span>
+                </div>
+
+                <div class="col-sm-12 p-0" *ngIf="form.value.employmentType === '3'">
+                  <span style="margin-right: 40px; font-size: 17px;">
+                    <b>Particulars</b>
+                    <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="particulars"
+                      style="padding-right: 5px"></i>
+                    <ng-template #particulars>
+                      <div [innerHtml]="NG_ParticularsTooltip"></div>
+                    </ng-template>
+                  </span>
+                </div>
+
+              </div>
+
+              <div class="content-background mt-2" *ngIf="form.value.employmentType != '4'">
+
+                <div *ngIf="form.value.employmentType != '3'; else nonGov">
+                  <div *ngIf="form.value.employmentType === '1' || '2' ">
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1">Basic Pay</label>
+                      <input type="text" (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.basicPay" class="form-control" placeholder=""
+                        (keyup)="placeCommaSeparator(i)" formControlName="basicPay"
+                        [ngClass]="{'is-invalid': particular_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>At least one field is required!</div>
+                      </div>
+
+                      <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control"
+                        placeholder="" formControlName="basicPay"> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput22">House Rent Allowance</label>
+
+                      <input type="text" (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.houseRentAllowance"
+                        class="form-control" placeholder="" (keyup)="placeCommaSeparator(i)"
+                        formControlName="houseRentAllowance" [ngClass]="{'is-invalid': particular_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>At least one field is required!</div>
+                      </div>
+
+                      <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control"
+                        placeholder="" formControlName="houseRentAllowance"> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput3">Medical Allowance</label>
+
+                      <input type="text" (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.medicalAllowance" class="form-control"
+                        placeholder="" (keyup)="placeCommaSeparator(i)" formControlName="medicalAllowance"
+                        [ngClass]="{'is-invalid': particular_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>At least one field is required!</div>
+                      </div>
+
+                      <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control"
+                        placeholder="" formControlName="medicalAllowance"> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput4">Bangla New Year Allowance</label>
+
+                      <input type="text" (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.banglaNewYearAllowance"
+                        class="form-control" placeholder="" (keyup)="placeCommaSeparator(i)"
+                        formControlName="banglaNewYearAllowance" [ngClass]="{'is-invalid': particular_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>At least one field is required!</div>
+                      </div>
+
+                      <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control"
+                        placeholder="" formControlName="banglaNewYearAllowance"> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInput5">Festival Allowance</label>
+
+                      <input type="text" (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.festivalBonus" class="form-control"
+                        placeholder="" (keyup)="placeCommaSeparator(i)" formControlName="festivalBonus"
+                        [ngClass]="{'is-invalid': particular_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>At least one field is required!</div>
+                      </div>
+
+                      <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control"
+                        placeholder="" formControlName="festivalBonus"> -->
+                    </div>
+
+
+                    <!-- more section start-->
+                    <!--dropdown list start-->
+
+                    <div class="form-group" [hidden]="showInput27[i]">
+                      <label for="exampleInput8">Arrear Pay</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.arrearPay" class="form-control col-sm-9"
+                          placeholder="" (keyup)="placeCommaSeparator(i)" formControlName="arrearPay">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="arrearPay"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '27', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput33[i]">
+                      <label for="exampleFormControlInput13">Appointment Pay</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.appointmentPay"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="appointmentPay">
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '33', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="appointmentPay">
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '33', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button> -->
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput38[i]">
+                      <label for="exampleFormControlInput13">Batsman Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.batsmanPay" class="form-control col-sm-9"
+                          placeholder="" (keyup)="placeCommaSeparator(i)" formControlName="batsmanPay">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="batsmanPay"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '38', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput20[i]">
+                      <label for="exampleInput8">Charge Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.chargeAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="chargeAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="chargeAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '20', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput40[i]">
+                      <label for="exampleFormControlInput13">Chawki Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.chawkiAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="chawkiAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="chawkiAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '40', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput41[i]">
+                      <label for="exampleFormControlInput13">Compensatory Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.compensatoryAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="compensatoryAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="compensatoryAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '41', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput39[i]">
+                      <label for="exampleFormControlInput13">Conveyance Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.conveyanceAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="conveyanceAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="conveyanceAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '39', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput42[i]">
+                      <label for="exampleFormControlInput13">Cook Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.cookAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="cookAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="cookAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '42', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput43[i]">
+                      <label for="exampleFormControlInput13">Daily Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.dailyAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="dailyAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="dailyAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '43', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput18[i]">
+                      <label for="exampleInput8">Dearness Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.dearnessAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="dearnessAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="dearnessAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '18', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput22[i]">
+                      <label for="exampleInput8">Defence Services Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.defenseServiceAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="defenseServiceAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="defenseServiceAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '22', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput19[i]">
+                      <label for="exampleInput8">Deputation Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.deputationAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="deputationAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="deputationAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '19', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput44[i]">
+                      <label for="exampleFormControlInput13">Disturbance Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.disturbanceAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="disturbanceAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="disturbanceAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '44', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput45[i]">
+                      <label for="exampleFormControlInput13">Domestic Aid Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.domesticAidAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="domesticAidAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="domesticAidAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '45', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput14[i]">
+                      <div class="row">
+                        <label class="col-sm-12" for="exampleInput6">Education Allowance</label>
+
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.educationAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="educationAllowance">
+
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="educationAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '14', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput34[i]">
+                      <label for="exampleFormControlInput13">Flying Pay</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.flyingPay" class="form-control col-sm-9"
+                          placeholder="" (keyup)="placeCommaSeparator(i)" formControlName="flyingPay">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="flyingPay"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '34', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput24[i]">
+                      <label for="exampleInput8">Foreign Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.foreignAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="foreignAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="foreignAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '24', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput11[i]">
+                      <label for="exampleFormControlInput13">Gratuity</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.gratuity" class="form-control col-sm-9"
+                          placeholder="" (keyup)="placeCommaSeparator(i)" formControlName="gratuity">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="gratuity"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '11', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput31[i]">
+                      <label for="exampleInput8">GPF Interest</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.gpfInterest"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="gpfInterest">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="gpfInterest"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '31', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput35[i]">
+                      <label for="exampleFormControlInput13">Good Conduct Pay</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.goodConductPay"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="goodConductPay">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="goodConductPay"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '35', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput26[i]">
+                      <label for="exampleInput8">Hazardous Job Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.hazardousJobAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="hazardousJobAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="hazardousJobAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '26', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput46[i]">
+                      <label for="exampleFormControlInput13">Haircut Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.haircutAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="haircutAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="haircutAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '46', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput25[i]">
+                      <label for="exampleInput8">Hill Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.hillAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="hillAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="hillAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '25', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput30[i]">
+                      <label for="exampleInput8">Honorarium</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.honorariumRewardFee"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="honorariumRewardFee">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="honorariumRewardFee"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '30', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput21[i]">
+                      <label for="exampleInput8">Judicial Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.judicialAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="judicialAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="judicialAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '21', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput47[i]">
+                      <label for="exampleFormControlInput13">Medal Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.medalAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="medalAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="medalAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '47', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput15[i]">
+                      <label for="exampleInput7">Mobile/cellphone Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.mobileAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="mobileAllowance">
+
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="mobileAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '15', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput4[i]">
+                      <label for="exampleFormControlInput13">Overtime Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.overtimeAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="overtimeAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="overtimeAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '4', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput32[i]">
+                      <label for="exampleFormControlInput13">Other Retirement Benefits</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.otherRetirementBenefits"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="otherRetirementBenefits">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="otherRetirementBenefits"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '32', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput12[i]">
+                      <label for="exampleFormControlInput13">Pension</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.pension" class="form-control col-sm-9"
+                          placeholder="" (keyup)="placeCommaSeparator(i)" formControlName="pension">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="pension"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '12', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput29[i]">
+                      <label for="exampleInput8">Personal Pay</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.personalPay"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="personalPay">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="personalPay"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '29', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput16[i]">
+                      <label for="exampleInput8">Residential Telephone Encashment Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.telephoneAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="telephoneAllowance">
+
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="telephoneAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '16', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput48[i]">
+                      <label for="exampleFormControlInput13">Ration Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.rationAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="rationAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="rationAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '48', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput49[i]">
+                      <label for="exampleFormControlInput13">Refreshment Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.refreshmentAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="refreshmentAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="refreshmentAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '49', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput17[i]">
+                      <label for="exampleInput8">Rest and Recreation Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.recreationAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="recreationAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="recreationAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '17', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput50[i]">
+                      <label for="exampleFormControlInput13">Retainer Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.retainerAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="retainerAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="retainerAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '50', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput28[i]">
+                      <label for="exampleInput8">Special Pay</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.speacialPay"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="speacialPay">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="speacialPay"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '28', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput36[i]">
+                      <label for="exampleFormControlInput13">SSG Pay</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.ssgPay" class="form-control col-sm-9"
+                          placeholder="" (keyup)="placeCommaSeparator(i)" formControlName="ssgPay">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="ssgPay"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '36', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput51[i]">
+                      <label for="exampleFormControlInput13">Security Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.securityAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="securityAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="securityAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '51', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput6[i]">
+                      <label for="exampleInput8">TA/DA etc. not Expended</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.tadaExpended"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="tadaExpended">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="tadaExpended"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '6', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput52[i]">
+                      <label for="exampleFormControlInput13">Tiffin Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.tiffinAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="tiffinAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="tiffinAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '52', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput23[i]">
+                      <label for="exampleInput8">Transport Maintenance Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.transportMaintenanceAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="transportMaintenanceAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                          style="margin-left: 16px;" placeholder="" formControlName="transportMaintenanceAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '23', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput53[i]">
+                      <label for="exampleFormControlInput13">Training Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.trainingAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="trainingAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="trainingAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '53', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput54[i]">
+                      <label for="exampleFormControlInput13">Travel Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.travelAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="travelAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="travelAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '54', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput55[i]">
+                      <label for="exampleFormControlInput13">Uniform Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.uniformAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="uniformAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="uniformAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '55', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput56[i]">
+                      <label for="exampleFormControlInput13">Washing Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.washingAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="washingAllowance">
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '56', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="washingAllowance">
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '56', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button> -->
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput57[i]">
+                      <label for="exampleFormControlInput13">Other Allowance</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.otherAllowance"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="otherAllowance">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="otherAllowance"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '57', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <div class="form-group" [hidden]="showInput37[i]">
+                      <label for="exampleFormControlInput13">Worthiness Pay</label>
+                      <div class="row">
+
+                        <input type="text" (keypress)="positiveIntegerOnly($event)" style="margin-left: 16px;"
+                          [value]="form.value.worthynessPay"
+                          class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="worthynessPay">
+
+                        <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                          class="form-control col-sm-9" placeholder="" formControlName="worthynessPay"> -->
+                        &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '37', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 6px; color:red"></i></button>
+                      </div>
+                    </div>
+
+                    <!-- <div class="form-group" [hidden]="showInput13[i]">
+                      <div class="row">
+                        <div class="col-sm-5">
+                          <label>Particular</label>
+                          <input type="text" class="form-control" placeholder="" formControlName="otherIfAnyHead">
+                        </div>
+                        <div class="col-sm-5" style="margin-right: -8px;">
+                          <label>Amount</label>
+
+                          <input type="text" (keypress)="positiveIntegerOnly($event)"
+                            [value]="form.value.otherIfAnyValue=='0'? '': form.value.otherIfAnyValue"
+                            class="form-control" placeholder="" (keyup)="placeCommaSeparator(i)"
+                            formControlName="otherIfAnyValue">
+                        </div>
+                        <div class="col-sm-2">
+                          <button class="deleteBtnStyle" (click)="showInputFun(i, '13', popup)"><i
+                              class="fa fa-trash fa-lg" aria-hidden="true"
+                              style="margin-top: 35px; color:red"></i></button>
+                        </div>
+                      </div>
+                    </div> -->
+
+                    <!-- other If Any section start -->
+
+                    <div class="form-group" [hidden]="showInput13[i]">
+                      <div class="row" *ngFor="let item of form.get('Other_If_Any')['controls']; let k = index"
+                        [formGroup]="item">
+                        <div class="col-sm-5">
+                          <label>Particular</label>
+                          <input type="text" class="form-control" placeholder="" formControlName="otherIfAnyHead">
+                        </div>
+                        <div class="col-sm-5" style="margin-right: -8px;">
+                          <label>Amount</label>
+                          <input type="text" class="form-control" placeholder="" (keyup)="placeCommaSeparator(i)"
+                            formControlName="otherIfAnyValue">
+                        </div>
+                        <div class="col-sm-2">
+                          <button class="deleteBtnStyle" (click)="delete_row_other_if_any(i,k)"><i
+                              class="fa fa-trash fa-lg" aria-hidden="true"
+                              style="margin-top: 35px; color:red"></i></button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- other If Any section end -->
+
+
+                    <!--dropdown end-->
+                    <!-- more section end -->
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-8">
+                          <l-select2 style="outline-color: #715ddc;outline-style: auto;"
+                            (valueChange)="showInputFun(i, $event.id, popup)">
+                            <option>&#10133; Add More</option>
+                            <option *ngFor="let opt of data[i]" [value]="opt.id">{{opt.text}}</option>
+                          </l-select2>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ng-template #nonGov>
+
+                  <div class="form-group">
+                    <label for="exampleInput1">Basic Salary</label>
+
+                    <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                      (keypress)="positiveIntegerOnly($event)"
+                      [value]="form.value.basicPay" class="form-control" placeholder=""
+                      (keyup)="placeCommaSeparator(i)" formControlName="basicPay"
+                      [ngClass]="{'is-invalid': particular_showError[i]}">
+                    <div class="invalid-feedback">
+                      <div>At least one field is required!</div>
+                    </div>
+
+                    <!-- <input [attr.disabled]="checkedSRO[i] ? '' : null" type="number" min="0"
+                      oninput="validity.valid||(value='');" class="form-control" placeholder=""
+                      formControlName="basicPay"> -->
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInput2">House Rent Allowance</label>
+
+                    <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                      (keypress)="positiveIntegerOnly($event)"
+                      [value]="form.value.houseRentAllowance"
+                      class="form-control" placeholder="" (keyup)="placeCommaSeparator(i)"
+                      formControlName="houseRentAllowance" [ngClass]="{'is-invalid': particular_showError[i]}">
+                    <div class="invalid-feedback">
+                      <div>At least one field is required!</div>
+                    </div>
+
+                    <!-- <input [attr.disabled]="checkedSRO[i] ? '' : null" type="number" min="0"
+                      oninput="validity.valid||(value='');" class="form-control" placeholder=""
+                      formControlName="houseRentAllowance"> -->
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInput3">Medical Allowance</label>
+
+                    <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                      (keypress)="positiveIntegerOnly($event)"
+                      [value]="form.value.medicalAllowance" class="form-control"
+                      placeholder="" (keyup)="placeCommaSeparator(i)" formControlName="medicalAllowance"
+                      [ngClass]="{'is-invalid': particular_showError[i]}">
+                    <div class="invalid-feedback">
+                      <div>At least one field is required!</div>
+                    </div>
+
+                    <!-- <input [attr.disabled]="checkedSRO[i] ? '' : null" type="number" min="0"
+                      oninput="validity.valid||(value='');" class="form-control" placeholder=""
+                      formControlName="medicalAllowance"> -->
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInput4">Conveyance Allowance</label>
+
+                    <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                      (keypress)="positiveIntegerOnly($event)"
+                      [value]="form.value.conveyanceAllowance"
+                      [ngClass]="{'is-invalid': particular_showError[i]}" class="form-control" placeholder=""
+                      (keyup)="placeCommaSeparator(i)" formControlName="conveyanceAllowance">
+                    <div class="invalid-feedback">
+                      <div>At least one field is required!</div>
+                    </div>
+
+                    <!-- <input [attr.disabled]="checkedSRO[i] ? '' : null" type="number" min="0"
+                      oninput="validity.valid||(value='');" class="form-control" placeholder=""
+                      formControlName="conveyanceAllowance"> -->
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInput5">Festival Bonus</label>
+
+                    <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                      (keypress)="positiveIntegerOnly($event)"
+                      [value]="form.value.festivalBonus" class="form-control"
+                      placeholder="" (keyup)="placeCommaSeparator(i)" formControlName="festivalBonus"
+                      [ngClass]="{'is-invalid': particular_showError[i]}">
+                    <div class="invalid-feedback">
+                      <div>At least one field is required!</div>
+                    </div>
+
+                    <!-- <input [attr.disabled]="checkedSRO[i] ? '' : null" type="number" min="0"
+                      oninput="validity.valid||(value='');" class="form-control" placeholder=""
+                      formControlName="festivalBonus"> -->
+                  </div>
+
+                  <!--dropdown list start-->
+
+                  <div class="form-group" [hidden]="showInput1[i]">
+                    <label for="exampleInput7">Arrear Salary</label>
+                    <div class="row">
+
+                      <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                        (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.arrearPay" class="form-control col-sm-9"
+                        placeholder="" (keyup)="placeCommaSeparator(i)" style="margin-left: 16px;"
+                        formControlName="arrearPay">
+
+                      <!-- <input type="number" [attr.disabled]="checkedSRO[i] ? '' : null" min="0"
+                        oninput="validity.valid||(value='');" class="form-control col-sm-9" style="margin-left: 16px;"
+                        placeholder="" formControlName="arrearPay"> -->
+                      &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '1', popup)"><i
+                          class="fa fa-trash fa-lg" aria-hidden="true" style="margin-top: 6px; color:red"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="form-group" [hidden]="showInput2[i]">
+                    <label for="exampleInput7">Education Allowance</label>
+                    <div class="row">
+
+                      <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                        (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.educationAllowance"
+                        class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                        style="margin-left: 16px;" formControlName="educationAllowance">
+
+                      <!-- <input type="number" [attr.disabled]="checkedSRO[i] ? '' : null" min="0"
+                        oninput="validity.valid||(value='');" class="form-control col-sm-9" style="margin-left: 16px;"
+                        placeholder="" formControlName="educationAllowance"> -->
+                      &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '2', popup)"><i
+                          class="fa fa-trash fa-lg" aria-hidden="true" style="margin-top: 6px; color:red"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="form-group" [hidden]="showInput3[i]">
+                    <label for="exampleInput7">Entertainment Allowance</label>
+                    <div class="row">
+
+                      <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                        (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.entertainmentAllowance"
+                        class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                        style="margin-left: 16px;" formControlName="entertainmentAllowance">
+
+                      <!-- <input type="number" [attr.disabled]="checkedSRO[i] ? '' : null" min="0"
+                        oninput="validity.valid||(value='');" class="form-control col-sm-9" style="margin-left: 16px;"
+                        placeholder="" formControlName="entertainmentAllowance"> -->
+                      &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '3', popup)"><i
+                          class="fa fa-trash fa-lg" aria-hidden="true" style="margin-top: 6px; color:red"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="form-group" [hidden]="showInput9[i]">
+                    <label for="exampleInput15">Employer’s Contribution to RPF</label>
+                    <div class="row">
+
+                      <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                        (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.empContributionToRPF"
+                        class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                        style="margin-left: 16px;" formControlName="empContributionToRPF">
+
+                      <!-- <input type="number" [attr.disabled]="checkedSRO[i] ? '' : null" min="0"
+                        oninput="validity.valid||(value='');" class="form-control col-sm-9" style="margin-left: 16px;"
+                        placeholder="" formControlName="empContributionToRPF"> -->
+                      &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '9', popup)"><i
+                          class="fa fa-trash fa-lg" aria-hidden="true" style="margin-top: 6px; color:red"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="form-group" [hidden]="showInput11[i]">
+                    <label for="exampleFormControlInput13">Gratuity</label>
+                    <div class="row">
+
+                      <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                        (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.gratuity" class="form-control col-sm-9"
+                        placeholder="" (keyup)="placeCommaSeparator(i)" style="margin-left: 16px;"
+                        formControlName="gratuity">
+
+                      <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                        class="form-control col-sm-9" placeholder="" formControlName="gratuity"> -->
+                      &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '11', popup)"><i
+                          class="fa fa-trash fa-lg" aria-hidden="true" style="margin-top: 6px; color:red"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="form-group" [hidden]="showInput10[i]">
+                    <label for="exampleInput16">Interest Accrued on RPF</label>
+                    <div class="row">
+
+                      <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                        (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.interestAccruedOnRPF"
+                        class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                        style="margin-left: 16px;" formControlName="interestAccruedOnRPF">
+
+                      <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control col-sm-9"
+                        [attr.disabled]="checkedSRO[i] ? '' : null" style="margin-left: 16px;" placeholder=""
+                        formControlName="interestAccruedOnRPF"> -->
+                      &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '10', popup)"><i
+                          class="fa fa-trash fa-lg" aria-hidden="true" style="margin-top: 6px; color:red"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="form-group" [hidden]="showInput5[i]">
+                    <label for="exampleInput10">Leave Allowance</label>
+                    <div class="row">
+
+                      <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                        (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.leaveAllowance"
+                        class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                        style="margin-left: 16px;" formControlName="leaveAllowance">
+
+                      <!-- <input type="number" [attr.disabled]="checkedSRO[i] ? '' : null" min="0"
+                        oninput="validity.valid||(value='');" class="form-control col-sm-9" style="margin-left: 16px;"
+                        placeholder="" formControlName="leaveAllowance"> -->
+                      &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '5', popup)"><i
+                          class="fa fa-trash fa-lg" aria-hidden="true" style="margin-top: 6px; color:red"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="form-group" [hidden]="showInput7[i]">
+                    <label for="exampleInput14">Other Bonus</label>
+                    <div class="row">
+
+                      <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                        (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.otherAllowance"
+                        class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                        style="margin-left: 16px;" formControlName="otherAllowance">
+
+                      <!-- <input type="number" [attr.disabled]="checkedSRO[i] ? '' : null" min="0"
+                        oninput="validity.valid||(value='');" class="form-control col-sm-9" style="margin-left: 16px;"
+                        placeholder="" formControlName="otherAllowance"> -->
+                      &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '7', popup)"><i
+                          class="fa fa-trash fa-lg" aria-hidden="true" style="margin-top: 6px; color:red"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="form-group" [hidden]="showInput4[i]">
+                    <label for="exampleInput12">Overtime Allowance</label>
+                    <div class="row">
+
+                      <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                        (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.overtimeAllowance"
+                        class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                        style="margin-left: 16px;" formControlName="overtimeAllowance">
+
+                      <!-- <input type="number" [attr.disabled]="checkedSRO[i] ? '' : null" min="0"
+                        oninput="validity.valid||(value='');" class="form-control col-sm-9" style="margin-left: 16px;"
+                        placeholder="" formControlName="overtimeAllowance"> -->
+                      &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '4', popup)"><i
+                          class="fa fa-trash fa-lg" aria-hidden="true" style="margin-top: 6px; color:red"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="form-group" [hidden]="showInput12[i]">
+                    <label for="exampleFormControlInput13">Pension</label>
+                    <div class="row">
+
+                      <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                        (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.pension" class="form-control col-sm-9"
+                        placeholder="" (keyup)="placeCommaSeparator(i)" style="margin-left: 16px;"
+                        formControlName="pension">
+
+                      <!-- <input type="number" min="0" oninput="validity.valid||(value='');" style="margin-left: 16px;"
+                        class="form-control col-sm-9" placeholder="" formControlName="pension"> -->
+                      &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '12', popup)"><i
+                          class="fa fa-trash fa-lg" aria-hidden="true" style="margin-top: 6px; color:red"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="form-group" [hidden]="showInput6[i]">
+                    <label for="exampleInput10">TA/DA etc. not expended</label>
+                    <div class="row">
+
+                      <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                        (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.tadaExpended"
+                        class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                        style="margin-left: 16px;" formControlName="tadaExpended">
+
+                      <!-- <input type="number" [attr.disabled]="checkedSRO[i] ? '' : null" min="0"
+                        oninput="validity.valid||(value='');" class="form-control col-sm-9" style="margin-left: 16px;"
+                        placeholder="" formControlName="tadaExpended"> -->
+                      &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '6', popup)"><i
+                          class="fa fa-trash fa-lg" aria-hidden="true" style="margin-top: 6px; color:red"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="form-group" [hidden]="showInput8[i]">
+                    <label for="exampleInput14">Free or Concessional Passage</label>
+                    <div class="row">
+
+                      <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null"
+                        (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.freeConcessionalPassage"
+                        class="form-control col-sm-9" placeholder="" (keyup)="placeCommaSeparator(i)"
+                        style="margin-left: 16px;" formControlName="freeConcessionalPassage">
+
+                      <!-- <input type="number" [attr.disabled]="checkedSRO[i] ? '' : null" min="0"
+                        oninput="validity.valid||(value='');" class="form-control col-sm-9" style="margin-left: 16px;"
+                        placeholder="" formControlName="freeConcessionalPassage"> -->
+                      &nbsp;<button class="col-sm-2 deleteBtnStyle" (click)="showInputFun(i, '8', popup)"><i
+                          class="fa fa-trash fa-lg" aria-hidden="true" style="margin-top: 6px; color:red"></i></button>
+                    </div>
+                  </div>
+
+                  <!-- new -->
+
+                  <!-- <div class="form-group" [hidden]="showInput13[i]">
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <label>Particular</label>
+                        <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null" class="form-control"
+                          placeholder="" formControlName="otherIfAnyHead">
+                      </div>
+                      <div class="col-sm-5" style="margin-right: -8px;">
+                        <label>Amount</label>
+
+                        <input type="text" [attr.disabled]="checkedSRO[i] ? '' : null" (keypress)="positiveIntegerOnly($event)"
+                          [value]="form.value.otherIfAnyValue=='0'? '': form.value.otherIfAnyValue" class="form-control"
+                          placeholder="" (keyup)="placeCommaSeparator(i)" formControlName="otherIfAnyValue">
+                      </div>
+                      <div class="col-sm-2">
+                        <button class="deleteBtnStyle" (click)="showInputFun(i, '13', popup)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 35px; color:red"></i></button>
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <!-- other If Any section start -->
+
+                  <div class="form-group" [hidden]="showInput13[i]">
+                    <div class="row" *ngFor="let item of form.get('Other_If_Any')['controls']; let k = index"
+                      [formGroup]="item">
+                      <div class="col-sm-5">
+                        <label>Particular</label>
+                        <input type="text" class="form-control" placeholder="" formControlName="otherIfAnyHead">
+                      </div>
+                      <div class="col-sm-5" style="margin-right: -8px;">
+                        <label>Amount</label>
+                        <input type="text" class="form-control" placeholder="" (keyup)="placeCommaSeparator(i)"
+                          formControlName="otherIfAnyValue">
+                      </div>
+                      <div class="col-sm-2">
+                        <button class="deleteBtnStyle" (click)="delete_row_other_if_any(i,k)"><i
+                            class="fa fa-trash fa-lg" aria-hidden="true"
+                            style="margin-top: 35px; color:red"></i></button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- other If Any section end -->
+
+
+
+                  <!--dropdown list end-->
+
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <l-select2 [disabled]="checkedSRO[i]" style="outline-color: #715ddc;outline-style: auto;"
+                          (valueChange)="showInputFun(i, $event.id, popup)">
+                          <option>&#10133; Add More</option>
+                          <option *ngFor="let opt of data[i]" [value]="opt.id">{{opt.text}}</option>
+                        </l-select2>
+                      </div>
+                    </div>
+                  </div>
+
+                </ng-template>
+
+              </div>
+            </div>
+
+          </form>
+
+          <div class="content-background" *ngIf="form.value.employmentType=== '4'" [hidden]="i != isVisibleForm">
+            <div class="col-sm-12 p-0">
+              <form [formGroup]="form">
+
+                <!-- <div class="input-group mb-3">
+                  <div class="form-check" placement="right" style="padding-right: 5px">
+                    <input class="form-check-input" type="checkbox" formControlName="isSalaryExemptedUnderSRO"
+                      (change)="onSROFilterChange($event, i)">
+                    <label class="form-check-label" for="defaultCheck4" style="margin-right: 40px;">
+                      Did you receive any salary that is exempted from tax or enjoys reduced tax benefits?
+                      <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="sroSalary"
+                        style="padding-right: 5px"></i>
+                      <ng-template #sroSalary>
+                        <div [innerHtml]="sroSalaryTooltip"></div>
+                      </ng-template>
+                    </label>
+                  </div>
+                </div> -->
+
+                <div [hidden]="true">
+                  <input class="form-check-input" type="checkbox" formControlName="isSalaryExemptedUnderSRO">
+                </div>
+
+                <div class="hiddenFiled">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput15">SRO No./Reference</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="sroReference"
+                      style="padding-right: 5px"></i>
+                    <ng-template #sroReference>
+                      <div [innerHtml]="sroReferenceTooltip"></div>
+                    </ng-template>
+                    <input type="text" id="SroNo{{i}}" class="form-control" formControlName="SroNo"
+                      (keyup)="onSroNoKeyUp(i)" placeholder="" [ngClass]="{'is-invalid': sroNo_showError[i]}">
+                    <div class="invalid-feedback">
+                      <div>This field is Required!</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-6">
+                        <label for="exampleFormControlInput16">Year</label>
+                        <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="sroYear"
+                          style="padding-right: 5px"></i>
+                        <ng-template #sroYear>
+                          <div [innerHtml]="sroYearTooltip"></div>
+                        </ng-template>
+                      </div>
+                      <div class="col-12 input-group">
+                        <input type="text" class="form-control" formControlName="sroYear" id="sroYear{{i}}"
+                          (bsValueChange)="onSroYearKeyUp(i)" placeholder=""
+                          [ngClass]="{'is-invalid': sroYear_showError[i]}" [minDate]="minDate" [maxDate]="maxDate"
+                          bsDatepicker #SROyear="bsDatepicker"
+                          [bsConfig]="{ dateInputFormat: 'YYYY', containerClass: 'theme-dark-blue', minMode: 'year' }">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-info btn-sm" type="button" id="button-addon2"
+                            (click)="SROyear.toggle()">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                          </button>
+                        </div>
+                        <div class="invalid-feedback">
+                          <div>This field is Required!</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput17">Particular</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="sroParticular"
+                      style="padding-right: 5px"></i>
+                    <ng-template #sroParticular>
+                      <div [innerHtml]="sroParticularTooltip"></div>
+                    </ng-template>
+                    <input type="text" class="form-control" id="particularOfSro{{i}}" formControlName="particularOfSro"
+                      placeholder="" (keyup)="onParticularOfSroKeyUp(i)"
+                      [ngClass]="{'is-invalid': particularOfSro_showError[i]}">
+                    <div class="invalid-feedback">
+                      <div>This field is Required!</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput18">Taxable Income</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="sroTaxableIncome"
+                      style="padding-right: 5px"></i>
+                    <ng-template #sroTaxableIncome>
+                      <div [innerHtml]="sroTaxableIncomeTooltip"></div>
+                    </ng-template>
+
+                    <input type="text" (keypress)="positiveIntegerOnly($event)" id="taxableIncomeOfSro{{i}}"
+                      [value]="form.value.taxableIncomeOfSro"
+                      class="form-control" placeholder="" (keyup)="placeCommaSeparator(i)" (keyup)="onKeyUpTaxableIncomeOfSro(i)"
+                      [ngClass]="{'is-invalid': taxableIncomeOfSro_showError[i]}" formControlName="taxableIncomeOfSro">
+                      <div class="invalid-feedback">
+                        <div>This field is Required!</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput19">Tax Exempted Income</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="sroTaxExemptedIncome"
+                      style="padding-right: 5px"></i>
+                    <ng-template #sroTaxExemptedIncome>
+                      <div [innerHtml]="sroTaxExemptedIncomeTooltip"></div>
+                    </ng-template>
+
+                    <input type="text" (keypress)="positiveIntegerOnly($event)"
+                      [value]="form.value.taxExemptedIncomeOfSro"
+                      class="form-control" placeholder="" (keyup)="placeCommaSeparator(i)"
+                      formControlName="taxExemptedIncomeOfSro">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput8">Tax Applicable</label>
+                    <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="sroTaxApplicableIncome"
+                      style="padding-right: 5px"></i>
+                    <ng-template #sroTaxApplicableIncome>
+                      <div [innerHtml]="sroTaxApplicableIncomeTooltip"></div>
+                    </ng-template>
+
+                    <input type="text" (keypress)="positiveIntegerOnly($event)" id="taxApplicableOfSro{{i}}"
+                      [value]="form.value.taxApplicableOfSro"
+                      class="form-control" placeholder="" (keyup)="placeCommaSeparator(i)" (keyup)="onKeyUpTaxApplicableOfSro(i)"
+                      formControlName="taxApplicableOfSro" [ngClass]="{'is-invalid': taxApplicableOfSro_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>This field is Required!</div>
+                      </div>
+                  </div>
+
+                </div>
+
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-sm-6">
+
+          <div *ngIf="formArray.value[i].employmentType==='3'" [hidden]="i != isVisibleForm">
+            <!-- <div class="row content-background">
+              <span class="headline">Non-Cash Benefits</span>
+            </div> -->
+            <div class="row content-background">
+              <div class="col-sm-12 p-0">
+                <span style="margin-right: 40px; font-size: 17px;">
+                  <b>Non-Cash Benefits</b>
+                  <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="nonCashBenefits"
+                    style="padding-right: 5px"></i>
+                  <ng-template #nonCashBenefits>
+                    <div [innerHtml]="nonCashBenefitsTooltip"></div>
+                  </ng-template>
+                </span>
+              </div>
+            </div>
+            <div class="row content-background mt-2">
+              <div class="col-sm-12 p-0">
+                <form [formGroup]="form" style="margin-top: 10px">
+                  <div class="input-group mb-3">
+                    <div class="form-check" placement="right" style="padding-right: 5px">
+                      <input class="form-check-input" [attr.disabled]="checkedSRO[i] ? '' : null" type="checkbox"
+                        formControlName="isRentFreeAccommodation" (change)="onRentFilterChange($event, i)"
+                        [checked]="isCheckedRentFreeAccommodation[i]">
+                      <label class="form-check-label" for="defaultCheck5" style="margin-right: 40px;">
+                        Rent Free Accommodation
+                        <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="rentFreeAccommodation"
+                          style="padding-right: 5px"></i>
+                        <ng-template #rentFreeAccommodation>
+                          <div [innerHtml]="rentFreeAccommodationTooltip"></div>
+                        </ng-template>
+                      </label>
+                    </div>
+
+                  </div>
+
+                  <div class="hiddenFiled" *ngIf="checkedRent[i]">
+                    <div class="form-group">
+                      <label for="exampleFormControlInput15">Value of Accommodation</label>
+                      <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="rentFreeAccommodationValue"
+                        style="padding-right: 5px"></i>
+                      <ng-template #rentFreeAccommodationValue>
+                        <div [innerHtml]="rentFreeAccommodationValueTooltip"></div>
+                      </ng-template>
+
+                      <input type="text" (keypress)="positiveIntegerOnly($event)" id="RentFreeAccValue{{i}}"
+                        [value]="form.value.RentFreeAccValue" class="form-control" placeholder=""
+                        (keyup)="checkRentFreeAccommodationValue(i); placeCommaSeparator(i)" formControlName="RentFreeAccValue"
+                        [ngClass]="{'is-invalid': rentFreeAccValue_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>This field is Required!</div>
+                      </div>
+
+                      <!-- <input type="number" min="1" oninput="validity.valid||(value='');" class="form-control"
+                        formControlName="RentFreeAccValue" placeholder=""> -->
+                    </div>
+                  </div>
+
+
+                </form>
+
+                <form [formGroup]="form" style="margin-top: 30px">
+                  <div class="input-group mb-3">
+                    <div class="form-check" placement="right" style="padding-right: 5px">
+                      <input class="form-check-input" [attr.disabled]="checkedSRO[i] ? '' : null" type="checkbox"
+                        formControlName="isAccommodationAtConcessRate" (change)="onConFilterChange($event, i)"
+                        [checked]="isCheckedAccommodationAtConcessRate[i]">
+                      <label class="form-check-label" for="defaultCheck6" style="margin-right: 40px;">
+                        Accommodation at Concessional Rate
+                        <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="ACR"
+                          style="padding-right: 5px"></i>
+                        <ng-template #ACR>
+                          <div [innerHtml]="ACRTooltip"></div>
+                        </ng-template>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="hiddenFiled" *ngIf="checkedCon[i]">
+                    <div class="form-group">
+                      <label for="exampleFormControlInput15">Value of Accommodation</label>
+                      <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="acrAccommodationValue"
+                        style="padding-right: 5px"></i>
+                      <ng-template #acrAccommodationValue>
+                        <div [innerHtml]="acrAccommodationValueTooltip"></div>
+                      </ng-template>
+
+                      <input type="text" (keypress)="positiveIntegerOnly($event)" id="ConcessRateValue{{i}}"
+                        [value]="form.value.ConcessRateValue" class="form-control"
+                        placeholder="" (keyup)="checkConcessionalRateAccommodationValue(i); placeCommaSeparator(i)" formControlName="ConcessRateValue"
+                        [ngClass]="{'is-invalid': concessRateValue_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>This field is Required!</div>
+                      </div>
+
+                      <!-- <input type="number" min="1" oninput="validity.valid||(value='');" class="form-control"
+                        formControlName="ConcessRateValue" placeholder=""> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput15">Rent Paid by the Taxpayer</label>
+                      <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="rentPaidTaxpayer"
+                        style="padding-right: 5px"></i>
+                      <ng-template #rentPaidTaxpayer>
+                        <div [innerHtml]="rentPaidTaxpayerTooltip"></div>
+                      </ng-template>
+
+                      <input type="text" (keypress)="positiveIntegerOnly($event)"
+                        [value]="form.value.ConcessRateRentPaidByTaxpayer"
+                        class="form-control" placeholder="" (keyup)="onRentPaidChange(i); placeCommaSeparator(i)"
+                        formControlName="ConcessRateRentPaidByTaxpayer">
+
+                      <!-- <input type="number" min="0" oninput="validity.valid||(value='');" (keyup)="onRentPaidChange(i)"
+                        class="form-control" formControlName="ConcessRateRentPaidByTaxpayer" placeholder=""> -->
+                    </div>
+                  </div>
+                </form>
+
+                <form [formGroup]="form" style="margin-top: 30px">
+                  <div class="input-group mb-3">
+                    <div class="form-check" placement="right" style="padding-right: 5px">
+                      <input class="form-check-input" [attr.disabled]="checkedSRO[i] ? '' : null" type="checkbox"
+                        (change)="onVehicleFacilityFilterChange($event, i)" formControlName="isVehicleFacilityProvided"
+                        [checked]="isCheckedVehicleFacilityProvided[i]">
+                      <label class="form-check-label" for="defaultCheck2" style="margin-right: 40px;">
+                        Vehicle Facility Provided
+                        <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="vehicleFacility"
+                          style="padding-right: 5px"></i>
+                        <ng-template #vehicleFacility>
+                          <div [innerHtml]="vehicleFacilityTooltip"></div>
+                        </ng-template>
+                      </label>
+                    </div>
+                  </div>
+
+                </form>
+
+                <form [formGroup]="form" style="margin-top: 30px">
+                  <div class="input-group mb-3">
+                    <div class="form-check" placement="right" style="padding-right: 5px">
+                      <input class="form-check-input" [attr.disabled]="checkedSRO[i] ? '' : null" type="checkbox"
+                        formControlName="isOtherNonCashBenefit" [checked]="isCheckedOtherNonCashBenefit[i]"
+                        (change)="onNonCashilterChange($event, i)">
+                      <label class="form-check-label" for="defaultCheck3" style="margin-right: 40px;">
+                        Other Non-Cash Benefit
+                        <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="otherNonCashBenefit"
+                          style="padding-right: 5px"></i>
+                        <ng-template #otherNonCashBenefit>
+                          <div [innerHtml]="otherNonCashBenefitTooltip"></div>
+                        </ng-template>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="hiddenFiled" *ngIf="checkedNcash[i]">
+                    <div class="form-group">
+                      <label for="exampleFormControlInput15">Particular</label>
+                      <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="otherNonCashBenefitParticular"
+                        style="padding-right: 5px"></i>
+                      <ng-template #otherNonCashBenefitParticular>
+                        <div [innerHtml]="otherNonCashBenefitParticularTooltip"></div>
+                      </ng-template>
+                      <input type="text" id="particularOfOtherNonCashBenefit{{i}}" class="form-control"
+                        formControlName="particularOfOtherNonCashBenefit" placeholder=""
+                        (keyup)="onParticularOfOtherNonCashBenefitKeyUp(i)"
+                        [ngClass]="{'is-invalid': particularOfOtherNonCashBenefit_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>This field is Required!</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput15">Value</label>
+                      <i class="fa fa-question-circle-o fa-md tooltip-370" [tooltip]="otherNonCashBenefitValue"
+                        style="padding-right: 5px"></i>
+                      <ng-template #otherNonCashBenefitValue>
+                        <div [innerHtml]="otherNonCashBenefitValueTooltip"></div>
+                      </ng-template>
+
+                      <input type="text" (keypress)="positiveIntegerOnly($event)" id="valueOfOtherNonCashBenefit{{i}}"
+                        [value]="form.value.valueOfOtherNonCashBenefit=='0'? '': form.value.valueOfOtherNonCashBenefit"
+                        class="form-control" placeholder="" (keyup)="placeCommaSeparator(i)"
+                        formControlName="valueOfOtherNonCashBenefit"
+                        [ngClass]="{'is-invalid': valueOfOtherNonCashBenefit_showError[i]}">
+                      <div class="invalid-feedback">
+                        <div>This field is Required!</div>
+                      </div>
+
+                      <!-- <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control"
+                        formControlName="valueOfOtherNonCashBenefit" placeholder=""> -->
+                    </div>
+                  </div>
+                </form>
+
+
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="form.value.employmentType == '1'" [hidden]="i != isVisibleForm">
+            <div class="row content-background" [hidden]="!isDataFound[i]">
+              <div class="col-sm-12 p-0">
+                <p style="color: darkorange;font-weight: bold;">Notice: </p>
+                <p>The system has gathered information from iBAS++ for your convenience.</p>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="form.value.employmentType == '1'" [hidden]="i != isVisibleForm || !onGovtToNonGovt[i]">
+            <!-- <div class="row content-background">
+              <div class="col-sm-12 p-0">
+                <p style="color: darkorange;font-weight: bold;">Notice: </p>
+                <p>No data was found on the iBAS++. However, you can still keep entering data on your own.</p>
+              </div>
+            </div> -->
+          </div>
+
+        </div>
+
+        <ng-template #popup>
+          <div class="modal-header">
+            <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Do you want to remove this field?</p>
+            <button type="button" class="btn btn-danger" style="float: right;"
+              (click)="popupRemoveOnClick(i)">Remove</button>
+            <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+              (click)="popupKeepOnClick()">Keep</button>
+          </div>
+        </ng-template>
+
+      </div>
+
+      <!--Salary Summary Start-->
+      <div *ngIf="hasSummary[formArray.length+1] && isSummary">
+        <div class="row salary-Summary-Section">
+
+          <div class="col-12 table-responsive tableBgStyle" id="salarySummaryTable">
+            <table class="table table-margin">
+              <thead>
+                <tr>
+                  <th scope="col" class="text-left">
+                    SL.
+                  </th>
+                  <th scope="col" class="text-left">
+                    Particulars
+                  </th>
+                  <th scope="col" class="text-center">
+                    Amount
+                    <br>
+                    (A)
+                  </th>
+                  <th scope="col" class="text-center">
+                    Tax Exempted
+                    <br>
+                    (B)
+                  </th>
+                  <th scope="col" class="text-center">
+                    Taxable Income
+                    <br>
+                    (C = A - B)
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of salarySummaryData; let k = index">
+                  <td *ngIf="data.titleKey!='IS_SUM';">
+                    <label for=""
+                      *ngIf="data.titleKey!='IS_SUM_REG' && data.titleKey!='IS_SUM_SRO'; else add">{{k+1}}</label>
+                    <ng-template #add>
+                      <label for="" style="display: none;">{{k+1}}</label>
+                    </ng-template>
+                  </td>
+                  <td width="38%" *ngIf="data.titleKey!='IS_SUM'">
+                    <div class="row" *ngIf="data.titleKey==='IS_BASIC_PAY'">&nbsp;&nbsp;&nbsp;Basic Pay</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_SPECIAL_PAY'">&nbsp;&nbsp;&nbsp;Special Pay</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_ARREAR_PAY'">&nbsp;&nbsp;&nbsp;Arrear Pay</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_DEARNESS_ALW'">&nbsp;&nbsp;&nbsp;Dearness Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_HOUSE_RENT_ALW'">&nbsp;&nbsp;&nbsp;House Rent Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_MEDICAL_ALW'">&nbsp;&nbsp;&nbsp;Medical Allowance</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_CONVEYANCE_ALW'">&nbsp;&nbsp;&nbsp;Conveyance Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_FESTIVAL_BONUS'">&nbsp;&nbsp;&nbsp;Festival Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_BANGLA_NEW_YEAR_ALW'">&nbsp;&nbsp;&nbsp;Bangla New Year
+                      Allowance</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_LEAVE_ALW'">&nbsp;&nbsp;&nbsp;Leave Allowance</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_HONORARIUM_REWARD_FEE'">&nbsp;&nbsp;&nbsp;Honorarium
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_OVERTIME_ALW'">&nbsp;&nbsp;&nbsp;Overtime Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_TADA_NOT_EXPENDED'">&nbsp;&nbsp;&nbsp;TA/DA etc. not
+                      Expended
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_EDUCATION_ALW'">&nbsp;&nbsp;&nbsp;Education Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_EMP_CONTRIBUTION_RPF'">&nbsp;&nbsp;&nbsp;Employer’s
+                      Contribution to a Recognized Provident Fund</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_INTEREST_ACCRUED_RPF'">&nbsp;&nbsp;&nbsp;Interest
+                      Accrued on a
+                      Recognized Provident Fund</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_MOBILE_ALW'">&nbsp;&nbsp;&nbsp;Mobile/Cellphone
+                      Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_RESIDENTIAL_TELEPHN_ALW'">&nbsp;&nbsp;&nbsp;Residential
+                      Telephone Encashment Allowance</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_ENTERTAINMENT_ALW'">&nbsp;&nbsp;&nbsp;Entertainment
+                      Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_REST_RECREATION_ALW'">&nbsp;&nbsp;&nbsp;Rest and
+                      Recreation
+                      Allowance</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_DEPUTATION_ALW'">&nbsp;&nbsp;&nbsp;Deputation Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_CHARGE_ALW'">&nbsp;&nbsp;&nbsp;Charge Allowance</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_JUDICIAL_ALW'">&nbsp;&nbsp;&nbsp;Judicial Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_DEFENSE_SERVICE_ALW'">&nbsp;&nbsp;&nbsp;Defence Services
+                      Allowance</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_TRANSPORT_MAINTENANCE_ALW'">&nbsp;&nbsp;&nbsp;Transport
+                      Maintenance Allowance</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_FOREIGN_ALW'">&nbsp;&nbsp;&nbsp;Foreign Allowance</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_PERSONAL_PAY'">&nbsp;&nbsp;&nbsp;Personal Pay</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_GPF_INTEREST'">&nbsp;&nbsp;&nbsp;GPF Interest</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_PENSION'">&nbsp;&nbsp;&nbsp;Pension</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_GRATUITY'">&nbsp;&nbsp;&nbsp;Gratuity</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_OTHER_RETIREMENT_BENEFITS'">&nbsp;&nbsp;&nbsp;Other
+                      Retirement
+                      Benefits</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_VAL_OF_ACMDTN_RFA'">&nbsp;&nbsp;&nbsp;Deemed Income for
+                      Rent
+                      Free Accommodation</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_RES_OF_ACMDTN_ACR'">&nbsp;&nbsp;&nbsp;Deemed Income for
+                      Free/Concessional Accommodation</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_RENT_PAID_BY_TAXPAYER_ACR'">&nbsp;&nbsp;&nbsp;Rent Paid
+                      by the
+                      Taxpayer</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_VAL_ONCB'">&nbsp;&nbsp;&nbsp;Deemed Income for Other
+                      Non-Cash
+                      Benefit</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_COOK_ALW'">&nbsp;&nbsp;&nbsp;Cook Allowance</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_APPOINTMENT_PAY'">&nbsp;&nbsp;&nbsp;Appointment Pay
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_REFRESHMENT_ALW'">&nbsp;&nbsp;&nbsp;Refreshment
+                      Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_HILL_ALW'">&nbsp;&nbsp;&nbsp;Hill
+                      Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_HAZARDOUS_JOB_ALW'">&nbsp;&nbsp;&nbsp;Hazardous Job
+                      Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_FLYING_PAY'">&nbsp;&nbsp;&nbsp;Flying Pay
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_GOOD_CONDUCT_PAY'">&nbsp;&nbsp;&nbsp;GOOD CONDUCT PAY
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_SSG_PAY'">&nbsp;&nbsp;&nbsp;SSG PAY
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_WORTHYNESS_PAY'">&nbsp;&nbsp;&nbsp;WORTHYNESS PAY
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_BATSMAN_ALW'">&nbsp;&nbsp;&nbsp;Batsman Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_CHAWKI_ALW'">&nbsp;&nbsp;&nbsp;Chawki Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_DAILY_ALW'">&nbsp;&nbsp;&nbsp;Daily Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_DOMESTIC_AID_ALW'">&nbsp;&nbsp;&nbsp;Domestic Aid
+                      Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_HAIRCUT_ALW'">&nbsp;&nbsp;&nbsp;Haircut Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_MEDAL_ALW'">&nbsp;&nbsp;&nbsp;Medal Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_RATION_ALW'">&nbsp;&nbsp;&nbsp;Ration Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_TIFFIN_ALW'">&nbsp;&nbsp;&nbsp;Tiffin Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_UNIFORM_ALW'">&nbsp;&nbsp;&nbsp;Uniform Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_WASHING_ALW'">&nbsp;&nbsp;&nbsp;Washing Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_COMPENSATORY_ALW'">&nbsp;&nbsp;&nbsp;Compensatory
+                      Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_RETAINER_ALW'">&nbsp;&nbsp;&nbsp;Retainer Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_DISTURBANCE_ALW'">&nbsp;&nbsp;&nbsp;Disturbance
+                      Allowance
+                    </div>
+
+                    <div class="row" *ngIf="data.titleKey==='IS_SECURITY_ALW'">&nbsp;&nbsp;&nbsp;Security Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_TRAINING_ALW'">&nbsp;&nbsp;&nbsp;Training Allowance
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_TRAVEL_ALW'">&nbsp;&nbsp;&nbsp;Travel Allowance</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_OTHER_ALW'">&nbsp;&nbsp;&nbsp;Other Allowance</div>
+                    <div class="row" *ngIf="data.titleKey==='IS_OTHER_INCOME_VALUE'">&nbsp;&nbsp;&nbsp;Other, if any
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_DEEMED_INCM_TRANSPORT'">&nbsp;&nbsp;&nbsp;Deemed Income
+                      for
+                      Transport Facility</div>
+                    <div class="row" *ngIf="(data.titleKey.substring(0, 3) != 'IS_')">
+                      &nbsp;&nbsp;&nbsp;{{data.titleKey}}
+                    </div>
+                    <div class="row" *ngIf="data.titleKey==='IS_SUM_REG'">&nbsp;&nbsp;<b>Total Regular Income</b></div>
+                    <div class="row" *ngIf="data.titleKey==='IS_SUM_SRO'">&nbsp;&nbsp;<b>Total SRO Income</b></div>
+                  </td>
+                  <td style="text-align: right;" *ngIf="data.titleKey!='IS_SUM'">
+                    <input type="text" class="form-control text-right tax-exempted" value="{{data.gross}}" readonly>
+
+                  </td>
+                  <td style="text-align: right;" *ngIf="data.titleKey!='IS_SUM'">
+
+                    <input
+                      *ngIf="data.titleKey==='IS_SUM_REG' || data.titleKey==='IS_DEEMED_INCM_TRANSPORT' || data.titleKey==='IS_VAL_ONCB' || data.titleKey==='IS_RES_OF_ACMDTN_ACR' || data.titleKey==='IS_VAL_OF_ACMDTN_RFA'; else other"
+                      type="text" class="form-control text-right tax-exempted"
+                      [(ngModel)]="salarySummaryData[k].exempted" [ngModelOptions]="{standalone: true}" readonly>
+                    <ng-template #other>
+                      <input type="text" class="form-control text-right tax-exempted" (keypress)="numberOnly($event)"
+                        (keyup)="onChangeExemptedValue(data.titleKey,$event)"
+                        [(ngModel)]="salarySummaryData[k].exempted" [ngModelOptions]="{standalone: true}">
+                    </ng-template>
+                  </td>
+                  <td style="text-align: right;" *ngIf="data.titleKey!='IS_SUM'">
+
+                    <input type="text" class="form-control text-right tax-exempted"
+                      [(ngModel)]="salarySummaryData[k].taxable" [ngModelOptions]="{standalone: true}" readonly>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="col-12 netIncomeSection">
+            <div class="row">
+              <div class="col-9 netIncomeDivStyle2">
+                <label class="netIncomeLabel"><b>Total Amount</b></label>
+              </div>
+              <div class="col-3 netIncomeDivStyle2">
+                <input type="text" class="form-control netIncomeInput" id="netIncome" [(ngModel)]="is_sum_total_gross"
+                  [ngModelOptions]="{standalone: true}" readonly>
+              </div>
+              <div class="col-12" style="padding: 0; margin: 0;">
+                <hr>
+              </div>
+              <div class="col-9 netTaxExemptedIncomeDivStyle">
+                <label class="netTaxExemptedIncomeLabel"><b>Tax Exempted Amount</b></label>
+              </div>
+              <div class="col-3 netTaxExemptedIncomeDivStyle">
+                <input type="text" class="form-control netTaxExemptedIncomeInput" id="exemptedIncome"
+                  [(ngModel)]="is_sum_total_exempted" [ngModelOptions]="{standalone: true}" readonly>
+              </div>
+              <div class="col-12" style="padding: 0; margin: 0;">
+                <hr>
+              </div>
+              <div class="col-9 taxableIncomeDivStyle">
+                <label class="netTaxExemptedIncomeLabel"><b>Taxable Amount</b></label>
+              </div>
+              <div class="col-3 taxableIncomeDivStyle">
+                <input type="text" class="form-control netTaxExemptedIncomeInput" id="taxableIncome"
+                  [(ngModel)]="is_sum_total_taxable" [ngModelOptions]="{standalone: true}" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Salary Summary End-->
+
+      <!-- bottom button design start -->
+      <div class="row mt-4">
+        <div class="col-sm-6 pl-3">
+          <button type="button" class="btn btn-sm backBtn" (click)="onBackPage()">
+            <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left"
+              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+            </svg>&nbsp;
+            Back</button>
+        </div>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12 text-right">
+              <button type="button" class="btn btn-sm saveDraftBtn" (click)="saveDraft()">
+                Save Draft</button>
+              <button type="button" class="btn btn-sm saveContinueBtn" (click)="submittedData()">
+                <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em" viewBox="0 0 16 16"
+                  class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                </svg>
+                Save & Continue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- bottom button design end -->
+
+    </div>
+
+  </div>
+</div>
+
+
+
+<ngx-ui-loader></ngx-ui-loader>
+
+<!-- {{form.value |json}} -->

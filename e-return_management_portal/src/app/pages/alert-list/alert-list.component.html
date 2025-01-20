@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Alert List</title>
+</head>
+
+<div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-8 col-sm-8 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left iconStyle">
+                </i> Alert List &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-4 col-sm-4">
+            <label class="float-right mt-2" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="form-horizontal" [formGroup]="alertListForm" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="alertListTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th width="5%" scope="col">SL.</th>
+                                    <th width="15%" scope="col">Notification Type</th>
+                                    <th width="60%" scope="col">Notification Msg</th>
+                                    <th width="20%" scope="col">Notified Date</th>
+                                    <!-- <th scope="col">User ID</th>
+                                    <th scope="col">Designation</th>
+                                    <th scope="col">TIN No.</th>
+                                    <th scope="col">Taxpayer Name</th>
+                                    <th scope="col">Alert Message</th>
+                                    <th scope="col">Total Occurred</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of alertGetData; let k = index">
+                                    <td width="5%" scope="row">{{ k+1 }}</td>
+                                    <td width="15%" scope="row">{{ item.notificationType }}</td>
+                                    <td  width="60%" scope="row">{{ item.notificationMsg }}</td>
+                                    <td  width="20%" scope="row">{{ item.notifiedDate }}</td>
+                                    <!-- <td scope="row">{{ item.userId }}</td>
+                                    <td scope="row">{{ item.designation }}</td>
+                                    <td scope="row">{{ item.tinNo }}</td>
+                                    <td scope="row">{{ item.taxpayerName }}</td>
+                                    <td scope="row">{{ item.alert }}</td>
+                                    <td scope="row">{{ item.occurredTime }}</td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

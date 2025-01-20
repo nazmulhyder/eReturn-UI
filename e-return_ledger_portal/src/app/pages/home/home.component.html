@@ -1,0 +1,53 @@
+<div>
+    <div class="text-center bg_image">
+        <div class="row">
+            <!-- <div class="col-8 text-left mt-4">
+                <label class="label custom mt-2"><b>{{content('How to update your source tax and AIT payments')}}</b></label>
+            </div> -->
+            <div class="col-12 mt-4" style="padding-left: 0;">
+                <div *ngFor="let language of languageList" class="float-right">
+                    <button (click)="languageClick(language.code)"
+                        [class.activeLan]="getSelectedLanguagesCode()===language.code"
+                        class="btn btn-sm btn-outline-dark mr-2">{{language.label}}</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 text-center">
+            <img src="assets\img\logo\eLedger_logo.png" class="eReturn-ledger-logo" alt="logo">
+        </div>
+        <div class="mt-5">
+            <!-- <div class="col-12">
+                <label class="label text-center custom mt-2"><b>{{content('How to update your source tax and AIT payments')}}</b></label>
+            </div> -->
+            <div class="col-12 text-left mt-4">
+                <h6><b>{{content('How you will update your source tax and AIT payments made between 1 July 2020 to 30 June 2021')}}</b></h6>
+                <ul>
+                  <li class="mt-2">{{content("Click 'Verify Source Tax' in the menu at the left to update your source tax payments.")}}</li>
+                  <li class="mt-2">{{content("Select your source tax category. For example, if you have paid source tax against your iBAS pay bill, select 'iBAS++ (Salary)'.")}}</li>
+                  <li class="mt-2">{{content("Input your source tax amount in 'TDS Claim' field and click 'Save' button. Verified source tax amount will display in output lines.")}}</li>
+                  <li class="mt-2">{{content("If you want to edit any source tax figure in output line, click 'Edit' icon and enter changed source tax amount in 'TDS Claim' field.")}}</li>
+                  <li class="mt-2">{{content("For dropping entire output line of any source tax, click 'Delete' icon.")}}</li>
+                  <li class="mt-2">{{content("When you finish the update of all available source taxes, go to 'Tax Payment Status' in the menu to find your verified source tax amount.")}}</li>
+                  <li class="mt-2">{{content("Select 'Go to eReturn' for going back to eReturn system and complete remaining tasks once you are done with update.")}}</li>
+                </ul> 
+            </div>
+            <div class="col-12 text-left mt-2 ml-4">
+                <label class="label"><b>{{content('Guidelines for AIT verification will be added gradually.')}}</b></label>
+            </div>
+            <div class="col-12 text-left mt-4">
+                <label class="label"><b>{{content('Search Option')}}</b></label>
+            </div>
+            <div class="col-12 text-left mt-1 mb-4">
+                <label class="label">{{content("Click 'Search' button to know what is your source tax amount according to the system of your withholding agents.")}}</label>
+            </div>
+            <div class="col-12 text-left mt-2  customDesign">
+                <p><b>{{content('You may want to know')}}</b></p>
+                <ul>
+                    <li class="mt-2">{{content('Online verification of source tax usually requires connectivity with withholding agent’s system. The process may take some time ranging from few seconds to few minutes.')}}</li>
+                    <li class="mt-2">{{content("Connectivity with many systems of withholding tax agents is under process. All your source tax and advance tax payments may not yet display as 'Verified Tax payment' due to the fact that your withholding agent has not yet connected to eReturn Ledger system. In such case, if you like to submit paper return instead of filing online, you may get a system-prepared offline (paper) return.")}}</li>
+                    <li class="mt-2 mb-4">{{content("Select 'Go to eReturn' option, and in 'Tax & Payment' page of eReturn, click 'Proceed to offline (paper) return' to get your offline (paper) return prepared by eReturn system.")}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1252 @@
+<div class="row" *ngIf="isShow">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-12 col-sm-2">
+                <span style="font-size:20px; font-weight: bold; color: #22223B;">Income Details</span>
+            </div>
+            <div class="col-12 col-sm-10">
+                <div class="row" style="float: right; padding-right: 5px;">
+                    <button type="button"
+                        class="btn btn-pill rounded-pill btn-outline-dark btn-customize btn-sm main_nav"
+                        *ngFor="let head of selectedNavbar; let i = index" (click)="mainNavActiveSelect(head['id'])"
+                        [class.activeMainNav]="mainNavActive[head['id']]" routerLink="{{head['link']}}"
+                        style="float: right; margin-right: 5px;">{{head['name']}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-sm-12">
+                <ul class="nav nav-tabs nav_font" style="margin-top: 36px">
+                    <li class="nav-item" *ngFor="let head of headsOfIncome; let i = index">
+                        <a class="nav-link" [class.activeHead]="navActive[head['id']]" routerLink="{{head['link']}}"
+                            (click)="navActiveSelect(head['id'])">{{head['name']}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="multiple-section">
+            <div class="row">
+                <div class="col-sm-10">
+                    <button [hidden]="isVisibleIncomeTab" class="btn btn-sm btn-light salary-btn"
+                        [class.salary-btn-active]="isVisibleForm == i"
+                        *ngFor="let item of formArray.controls; let i = index"
+                        (click)="selectedTaxExemptedIncome(i)">{{incomeTypeName[i]}}
+                        <i (click)="onCloseTabClick(closetabpopup)" class="fa fa-times-circle" aria-hidden="true"
+                            style="margin-left: 10px;"></i>
+                        <ng-template #closetabpopup>
+                            <div class="modal-header">
+                                <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+                                <button type="button" class="close pull-right" aria-label="Close"
+                                    (click)="modalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>This action will remove all your unsaved data.</p>
+                                <p>Would you like to remove it?</p>
+                                <button type="button" class="btn btn-danger" style="float: right;"
+                                    (click)="close(i)">Remove</button>
+                                <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+                                    (click)="modalRef.hide()">Keep</button>
+                            </div>
+                        </ng-template>
+                        &nbsp;
+                    </button>
+                </div>
+                <div class="col-sm-2" style="text-align: right; padding: 0;">
+                    <button [disabled]="isVisibleAddAnotherTypeBtn" type="button" class="btn btn-sm btn-pill"
+                        style="border-radius: 50px; background-color: #01649A; color: white;"
+                        (click)="addNewHead()"><i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp;Add
+                        Another Type</button>&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+
+        <div class="content-background">
+
+            <form [formGroup]="form" *ngFor="let form of formArray.controls; let i = index">
+                <div class="row">
+                    <div class="col-sm-6" [hidden]="i != isVisibleForm">
+                        <div>
+                            <div class="content-background">
+                                <div class="form-group">
+                                    <label for="taxExemptedIncomeType">Tax Exempted Income Type</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="employmentType"
+                                        style="padding-right: 5px"></i>
+                                    <ng-template #employmentType>
+                                        <div [innerHtml]="taxExemptedIncomeType"></div>
+                                    </ng-template>
+                                    <select class="form-control" formControlName="taxExemptedIncomeType"
+                                        (change)="taxExemptedIncomeTypeChange($event, i)" [ngClass]="{'is-invalid': taxExemptedIncomeType_showError[i]}">
+                                        <option value="0" selected>Select One</option>
+                                        <option value="foreign_remittance">Foreign Remittance</option>
+                                        <option value="transfer_of_share_of_listed_company">Transfer of Share of Listed Company</option>
+                                        <option value="software_and_it_business">Software and IT Business</option>
+                                        <option value="export_of_handicrafts">Export of Handicrafts</option>
+                                        <option value="tax_exempted_bond_or_securities">Tax Exempted Bond or Securities</option>
+                                        <option value="government_welfare_allowance">Government Welfare Allowance/Rewards from the Government</option>
+                                        <option value="other_exemption_under_sixth_schedule_part_a">Other Exemption under 6th Schedule Part A</option>
+                                        <option value="other_exemption_by_sro">Other Exemption by SRO</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        <div>Tax Exempted Income Type is Required!</div>
+                                      </div>
+                                </div>
+
+                                
+                                <div *ngIf="form.value.taxExemptedIncomeType === 'foreign_remittance'">
+                                    <div class="form-group">
+                                        <label for="totalRemittedAmount">Total Remitted Amount</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="totalRemittedAmount" placement="top"></i>
+                                        <ng-template #totalRemittedAmount>
+                                            <div [innerHtml]="totalRemittedAmount_t"></div>
+                                        </ng-template>
+                                        <input type="text" (keypress)="numberOnly($event)" (keyup)="placeCommaSeparator(i, $event)" class="form-control" id="totalRemittedAmount" placeholder=""
+                                            formControlName="totalRemittedAmount"  [ngClass]="{'is-invalid': totalRemittedAmt_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Total Remitted Amount is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="countryofEarning">Country of Earning</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="countryofEarning" placement="top"></i>
+                                        <ng-template #countryofEarning>
+                                            <div [innerHtml]="countryofEarning_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="countryofEarning" placeholder="" (keyup)="falseErrorIndexes(i,'countryofEarning')"
+                                            formControlName="countryofEarning" [ngClass]="{'is-invalid': countryOfEarning_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Country of Earning is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sourceofIncome">Source of Income</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="sourceofIncome"
+                                            placement="top"></i>
+                                        <ng-template #sourceofIncome>
+                                            <div [innerHtml]="sourceofIncome_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="sourceofIncome" placeholder="" (keyup)="falseErrorIndexes(i,'sourceofIncome')"
+                                            formControlName="sourceofIncome" [ngClass]="{'is-invalid': srcOfIncome_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Source of Income is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nameoftheEmployer">Name of the Employer</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="nameoftheEmployer" placement="top"></i>
+                                        <ng-template #nameoftheEmployer>
+                                            <div [innerHtml]="nameoftheEmployer_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="nameoftheEmployer" placeholder=""
+                                            formControlName="nameoftheEmployer">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="modeofRemittance">Mode of Remittance</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="modeofRemittance" placement="top"></i>
+                                        <ng-template #modeofRemittance>
+                                            <div [innerHtml]="modeofRemittance_t"></div>
+                                        </ng-template>
+                                        <select class="form-control" (change)="falseErrorIndexes(i,'modeofRemittance')" formControlName="modeofRemittance" [ngClass]="{'is-invalid': modeOfRemittance_showError[i]}">
+                                            <option value="0" selected>Select One</option>
+                                            <option value="Banking_Channel">Banking Channel</option>
+                                            <option value="Foreign_Currency_Declaration_at_Customs_Point">Foreign Currency Declaration at Customs Point</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            <div>Mode of Remittance is Required!</div>
+                                          </div>
+                                    </div>
+                                    <div class="form-group" *ngIf="form.value.modeofRemittance ==='Banking_Channel' ">
+                                        <label for="bankMoneyTransferAgencyName">Bank/Money Transfer Agency Name</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="bankMoneyTransferAgencyNameTT"
+                                            placement="top"></i>
+                                        <ng-template #bankMoneyTransferAgencyNameTT>
+                                            <div [innerHtml]="bankMoneyTransferAgencyName_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="bankMoneyTransferAgencyName" placeholder=""
+                                            formControlName="bankMoneyTransferAgencyName" [ngClass]="{'is-invalid': bankMoneyTransferAgency_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Bank/Money Transfer Agency Name is Required!</div>
+                                              </div> 
+                                    </div>
+                                    <div class="form-group" *ngIf="form.value.modeofRemittance ==='Banking_Channel' ">
+                                        <label for="accountName">Account Name</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="accountNameTT"
+                                            placement="top"></i>
+                                        <ng-template #accountNameTT>
+                                            <div [innerHtml]="accountName_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="accountName" placeholder=""
+                                            formControlName="accountName" [ngClass]="{'is-invalid': acName_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Account Name is Required!</div>
+                                              </div> 
+                                    </div>
+                                    <div class="form-group" *ngIf="form.value.modeofRemittance ==='Banking_Channel' ">
+                                        <label for="accountNumber">Account Number</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="accountNumberTT" placement="top"></i>
+                                        <ng-template #accountNumberTT>
+                                            <div [innerHtml]="accountNumber_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="accountNumber" placeholder=""
+                                            formControlName="accountNumber" [ngClass]="{'is-invalid': acNumber_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Account Number is Required!</div>
+                                              </div> 
+                                    </div>
+                                    <div class="form-group" *ngIf="form.value.modeofRemittance ==='Foreign_Currency_Declaration_at_Customs_Point' ">
+                                        <label for="customAuthority">Customs Authority</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="customAuthorityTT"
+                                            placement="top"></i>
+                                        <ng-template #customAuthorityTT>
+                                            <div [innerHtml]="customAuthority_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="customAuthority" placeholder=""
+                                            formControlName="customAuthority" [ngClass]="{'is-invalid': customsAuthority_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Customs Authority is Required!</div>
+                                              </div> 
+                                    </div>
+                                    <div class="form-group" *ngIf="form.value.modeofRemittance ==='Foreign_Currency_Declaration_at_Customs_Point' ">
+                                        <label for="formSerialNo">FMJ Form Serial No.</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="formSerialNoTT"
+                                            placement="top"></i>
+                                        <ng-template #formSerialNoTT>
+                                            <div [innerHtml]="formSerialNo_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="formSerialNo" placeholder=""
+                                            formControlName="formSerialNo" [ngClass]="{'is-invalid': fmgFormSertial_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>FMJ Form Serial No is Required!</div>
+                                              </div> 
+                                    </div>
+                                    <div class="form-group" *ngIf="form.value.modeofRemittance ==='Foreign_Currency_Declaration_at_Customs_Point' ">
+                                        <label for="declarationDate">Declaration Date</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="declarationDateTT"
+                                            placement="top"></i>
+                                        <ng-template #declarationDateTT>
+                                            <div [innerHtml]="declarationDate_t"></div>
+                                        </ng-template>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder=""
+                                                formControlName="declarationDate" id= "declarationDate" aria-label="Recipient's username"
+                                                aria-describedby="button-addon2" bsDatepicker [minDate]="minDate"
+                                                [maxDate]="maxDate" #declarationDate="bsDatepicker"
+                                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}" [ngClass]="{'is-invalid': decDate_showError[i]}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-info btn-sm" type="button"
+                                                    id="button-addon2" (click)="declarationDate.toggle()">
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                <div>Declaration Date is Required!</div>
+                                              </div> 
+                                        </div>
+                                    </div>
+                                    <div class="form-group" *ngIf="form.value.modeofRemittance ==='Foreign_Currency_Declaration_at_Customs_Point' ">
+                                        <label for="passportNo">Passport No.</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="passportNoTT"
+                                            placement="top"></i>
+                                        <ng-template #passportNoTT>
+                                            <div [innerHtml]="passportNo_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="passportNo" placeholder=""
+                                            formControlName="passportNo" [ngClass]="{'is-invalid': passportNo_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Passport No is Required!</div>
+                                              </div> 
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="taxExemptedIncome">Tax Exempted Income</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="taxExemptedIncome" placement="top"></i>
+                                        <ng-template #taxExemptedIncome>
+                                            <div [innerHtml]="taxExemptedIncome_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="taxExemptedIncome" placeholder=""
+                                            formControlName="taxExemptedIncome" readonly>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="form.value.taxExemptedIncomeType === 'transfer_of_share_of_listed_company'">
+                                    <div class="form-group">
+                                        <label for="boIdNo">BO ID No.</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="boIdNo"
+                                            placement="top"></i>
+                                        <ng-template #boIdNo>
+                                            <div [innerHtml]="boIdNo_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="boIdNo" placeholder=""
+                                            formControlName="boIdNo" (keyup)="falseErrorIndexes(i,'boIdNo')"  [ngClass]="{'is-invalid': BOIDNo_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>BO ID No is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="brokerageHouseName">Brokerage House Name</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="brokerageHouseName" placement="top"></i>
+                                        <ng-template #brokerageHouseName>
+                                            <div [innerHtml]="brokerageHouseName_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="brokerageHouseName" placeholder=""
+                                            formControlName="brokerageHouseName" (keyup)="falseErrorIndexes(i,'brokerageHouseName')" [ngClass]="{'is-invalid': brogerageHouseName_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Brokerage House Name is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="portfolioStatementReferenceNo">Portfolio Statement Reference
+                                            No.</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="portfolioStatementReferenceNo" placement="top"></i>
+                                        <ng-template #portfolioStatementReferenceNo>
+                                            <div [innerHtml]="portfolioStatementReferenceNo_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="portfolioStatementReferenceNo"
+                                            placeholder="" formControlName="portfolioStatementReferenceNo" (keyup)="falseErrorIndexes(i,'portfolioStatementReferenceNo')" [ngClass]="{'is-invalid': portfolioStatementRef_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Portfolio Statement Reference is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="transferShareReferenceDate">Reference Date</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="transferShareReferenceDateTT"
+                                            placement="top"></i>
+                                        <ng-template #transferShareReferenceDateTT>
+                                            <div [innerHtml]="transferShareReferenceDate_t"></div>
+                                        </ng-template>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="" (bsValueChange) = "falseErrorIndexes(i,'transferShareReferenceDate')"
+                                                formControlName="transferShareReferenceDate" aria-label="Recipient's username"
+                                                aria-describedby="button-addon2" bsDatepicker [minDate]="minDate"
+                                                [maxDate]="maxDate" #transferShareReferenceDate="bsDatepicker"
+                                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}" [ngClass]="{'is-invalid': refDate_showError[i]}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-info btn-sm" type="button"
+                                                    id="button-addon2" (click)="transferShareReferenceDate.toggle()">
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                <div>Reference Date is Required!</div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="grossRealizedGain">Gross Realized Gain</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="grossRealizedGain" placement="top"></i>
+                                        <ng-template #grossRealizedGain>
+                                            <div [innerHtml]="grossRealizedGain_t"></div>
+                                        </ng-template>
+                                        <input type="text" (keypress)="integerOnly($event)" (keyup)="placeCommaSeparator(i, $event)" class="form-control" id="grossRealizedGain" placeholder=""
+                                            formControlName="grossRealizedGain" [ngClass]="{'is-invalid': grossRealizedGain_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Gross Realized Gain is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="relatedExpenses">Related Expenses</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="transferRelatedExpensesTT"
+                                            placement="top"></i>
+                                        <ng-template #transferRelatedExpensesTT>
+                                            <div [innerHtml]="transferRelatedExpenses_t"></div>
+                                        </ng-template>
+                                        <input type="text" (keypress)="numberOnly($event)" (keyup)="placeCommaSeparator(i, $event)" class="form-control" id="relatedExpenses" placeholder=""
+                                            formControlName="relatedExpenses">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="netRealizedGain">Net Realized Gain</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="netRealizedGain"
+                                            placement="top"></i>
+                                        <ng-template #netRealizedGain>
+                                            <div [innerHtml]="netRealizedGain_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="netRealizedGain" placeholder=""
+                                            formControlName="netRealizedGain" readonly>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="form.value.taxExemptedIncomeType === 'software_and_it_business'">
+                                    <div class="form-group">
+                                        <label for="typeofBusiness">Type of Business</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="typeofBusiness"
+                                            placement="top"></i>
+                                        <ng-template #typeofBusiness>
+                                            <div [innerHtml]="typeofBusiness_t"></div>
+                                        </ng-template>
+                                        <select class="form-control" formControlName="typeofBusiness" (change)="falseErrorIndexes(i,'typeofBusiness')" [ngClass]="{'is-invalid': businessTypeName_showError[i]}">
+                                            <option value="0" selected>Select One</option>
+                                            <option value="Call Center Services">Call Center Services</option>
+                                            <option value="Cyber Security Services">Cyber Security Services</option>
+                                            <option value="Digital Animation Development">Digital Animation Development</option>
+                                            <option value="Digital Content Development">Digital Content Development</option>
+                                            <option value="Digital Graphics Design">Digital Graphics Design</option>
+                                            <option value="Digital Data Entry and Processing">Digital Data Entry and Processing</option>
+                                            <option value="Digital Data Analytics">Digital Data Analytics</option>
+                                            <option value="Document Conversion etc.">Document Conversion etc.</option>
+                                            <option value="Geographic Information Services">Geographic Information Services</option>
+                                            <option value="IT Process Outsourcing">IT Process Outsourcing</option>
+                                            <option value="IT Support and Software Maintenance Services">IT Support and Software Maintenance Services</option>
+                                            <option value="NTTN">NTTN</option>
+                                            <option value="Overseas Medical Transcription">Overseas Medical Transcription</option>
+                                            <option value="Robotics Process Outsourcing">Robotics Process Outsourcing</option>
+                                            <option value="Search Engine Optimization Services">Search Engine Optimization Services</option>
+                                            <option value="Software Development">Software Development</option>
+                                            <option value="Software or Application Customization">Software or Application Customization</option>
+                                            <option value="Software Test Lab Services">Software Test Lab Services</option>
+                                            <option value="Website Development">Website Development</option>
+                                            <option value="Website Hosting">Website Hosting</option>
+                                            <option value="Web Listing">Web Listing</option>
+                                            <option value="Website Services">Website Services</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            <div>Type of Business is Required!</div>
+                                          </div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="form.value.taxExemptedIncomeType === 'export_of_handicrafts'">
+                                    <div class="form-group">
+                                        <label for="typeofHandicrafts">Type of Handicrafts</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="typeofHandicrafts" placement="top"></i>
+                                        <ng-template #typeofHandicrafts>
+                                            <div [innerHtml]="typeofHandicrafts_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="typeofHandicrafts" placeholder="" (keyup)="falseErrorIndexes(i,'typeofHandicrafts')"
+                                            formControlName="typeofHandicrafts" [ngClass]="{'is-invalid': typeOfHandicrafts_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Type of Handicrafts is Required!</div>
+                                              </div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="form.value.taxExemptedIncomeType === 'tax_exempted_bond_or_securities'">
+                                    <div class="form-group">
+                                        <label for="nameoftheBondSecurity">Name of the Bond/Security</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="nameoftheBondSecurity" placement="top"></i>
+                                        <ng-template #nameoftheBondSecurity>
+                                            <div [innerHtml]="nameoftheBondSecurity_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="nameoftheBondSecurity" (keyup)="falseErrorIndexes(i,'nameoftheBondSecurity')"
+                                            placeholder="" formControlName="nameoftheBondSecurity" [ngClass]="{'is-invalid': nameOfBond_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Name of the Bond/Security is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="issueNo">Issue No</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="issueNo"
+                                            placement="top"></i>
+                                        <ng-template #issueNo>
+                                            <div [innerHtml]="issueNo_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="issueNo" placeholder="" (keyup)="falseErrorIndexes(i,'issueNo')"
+                                            formControlName="issueNo" [ngClass]="{'is-invalid': issueNo_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Issue No is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="issueDate">Issue Date</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="issueDateTT"
+                                            placement="top"></i>
+                                        <ng-template #issueDateTT>
+                                            <div [innerHtml]="issueDate_t"></div>
+                                        </ng-template>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="" (bsValueChange)="setupDateOfMaturity($event,i)"
+                                                formControlName="issueDate" aria-label="Recipient's username"
+                                                aria-describedby="button-addon2" bsDatepicker 
+                                                [maxDate]="maxDate" #issueDate="bsDatepicker"
+                                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}" [ngClass]="{'is-invalid': issueDate_showError[i] || dateValidation[i]} ">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-info btn-sm" type="button"
+                                                    id="button-addon2" (click)="issueDate.toggle()">
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                <div><span *ngIf="issueDate_showError[i]">Issue date is required!</span> <span *ngIf="dateValidation[i]">The issue date will always be less than the maturity date.</span></div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="issuingOffice">Issuing Office</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="issuingOffice"
+                                            placement="top"></i>
+                                        <ng-template #issuingOffice>
+                                            <div [innerHtml]="issuingOffice_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="issuingOffice" placeholder="" (keyup)="falseErrorIndexes(i,'issuingOffice')"
+                                            formControlName="issuingOffice" [ngClass]="{'is-invalid': issuingOffice_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Issuing Office is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="value">Value</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="valueTT"
+                                            placement="top"></i>
+                                        <ng-template #valueTT>
+                                            <div [innerHtml]="value_t"></div>
+                                        </ng-template>
+                                        <input type="text" (keypress)="numberOnly($event)" (keyup)="placeCommaSeparator(i, $event)" class="form-control" id="value" placeholder=""
+                                            formControlName="value" [ngClass]="{'is-invalid': value_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Value is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dateofMaturity">Date of Maturity</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="dateofMaturityTT"
+                                            placement="top"></i>
+                                        <ng-template #dateofMaturityTT>
+                                            <div [innerHtml]="dateofMaturity_t"></div>
+                                        </ng-template>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="" (bsValueChange)="falseErrorIndexes(i,'dateofMaturity')"
+                                                formControlName="dateofMaturity" aria-label="Recipient's username"
+                                                aria-describedby="button-addon2" bsDatepicker [minDate]="dateOfMaturityFrom[i]"
+                                                 #dateofMaturity="bsDatepicker"
+                                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}" [ngClass]="{'is-invalid': dateOfMaturity_showError[i] || dateValidation[i]}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-info btn-sm" type="button"
+                                                    id="button-addon2" (click)="dateofMaturity.toggle()">
+                                                    <span class="input-group-addon"><i
+                                                        class="fa fa-calendar"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                <div><span  *ngIf="dateOfMaturity_showError[i]">Maturity date is required!</span><span *ngIf="dateValidation[i]">The maturity date will always be greater than the issue date.</span></div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="grossInterest">Gross Interest</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="grossInterest"
+                                            placement="top"></i>
+                                        <ng-template #grossInterest>
+                                            <div [innerHtml]="grossInterest_t"></div>
+                                        </ng-template>
+                                        <input type="text" (keypress)="numberOnly($event)" (keyup)="placeCommaSeparator(i, $event)" class="form-control" id="grossInterest" placeholder=""
+                                            formControlName="grossInterest" [ngClass]="{'is-invalid': grossInterest_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Gross Interest is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bondRelatedExpense">Related Expense</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="bondRelatedExpense"
+                                            placement="top"></i>
+                                        <ng-template #bondRelatedExpense>
+                                            <div [innerHtml]="bondRelatedExpense_t"></div>
+                                        </ng-template>
+                                        <input type="text" (keypress)="numberOnly($event)" (keyup)="placeCommaSeparator(i, $event)" class="form-control" id="bondRelatedExpense" placeholder=""
+                                            formControlName="bondRelatedExpense">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bondTaxExemptedIncome">Tax Exempted Income</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="bondTaxExemptedIncome" placement="top"></i>
+                                        <ng-template #bondTaxExemptedIncome>
+                                            <div [innerHtml]="bondTaxExemptedIncome_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="bondTaxExemptedIncome"
+                                            placeholder="" formControlName="bondTaxExemptedIncome" readonly>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="form.value.taxExemptedIncomeType === 'government_welfare_allowance'">
+                                    <div class="form-group">
+                                        <label for="particulars">Particulars</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="particulars"
+                                            placement="top"></i>
+                                        <ng-template #particulars>
+                                            <div [innerHtml]="particulars_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="particulars" placeholder="" (keyup)="falseErrorIndexes(i,'particulars')"
+                                            formControlName="particulars" [ngClass]="{'is-invalid': particulars_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Particulars is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nameoftheOrganization">Name of the Organization</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="nameoftheOrganization" placement="top"></i>
+                                        <ng-template #nameoftheOrganization>
+                                            <div [innerHtml]="nameoftheOrganization_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="nameoftheOrganization" (keyup)="falseErrorIndexes(i,'nameoftheOrganization')"
+                                            placeholder="" formControlName="nameoftheOrganization" [ngClass]="{'is-invalid': nameOfOrg_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Name of the Organization is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="rewardReferenceNo">Reward Reference No</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="rewardReferenceNo" placement="top"></i>
+                                        <ng-template #rewardReferenceNo>
+                                            <div [innerHtml]="rewardReferenceNo_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="rewardReferenceNo" placeholder="" (keyup)="falseErrorIndexes(i,'rewardReferenceNo')"
+                                            formControlName="rewardReferenceNo" [ngClass]="{'is-invalid': rewardRefNo_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Reward Reference No is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="rewardReferenceDate">Reference Date</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="rewardReferenceDateTT" placement="top"></i>
+                                        <ng-template #rewardReferenceDateTT>
+                                            <div [innerHtml]="rewardReferenceDate_t"></div>
+                                        </ng-template>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder=""  (bsValueChange)="falseErrorIndexes(i,'rewardReferenceDate')"
+                                                formControlName="rewardReferenceDate" aria-label="Recipient's username"
+                                                aria-describedby="button-addon2" bsDatepicker [minDate]="minDate"
+                                                [maxDate]="maxDate" #rewardReferenceDate="bsDatepicker"
+                                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}" [ngClass]="{'is-invalid': refDate_showError[i]}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-info btn-sm" type="button"
+                                                    id="button-addon2" (click)="rewardReferenceDate.toggle()">
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                <div>Reference Date is Required!</div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="rewardAmount">Reward Amount</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="rewardAmount"
+                                            placement="top"></i>
+                                        <ng-template #rewardAmount>
+                                            <div [innerHtml]="rewardAmount_t"></div>
+                                        </ng-template>
+                                        <input type="text" (keypress)="numberOnly($event)" (keyup)="placeCommaSeparator(i, $event)" class="form-control" id="rewardAmount" placeholder=""
+                                            formControlName="rewardAmount" [ngClass]="{'is-invalid': RewardAmount_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Reward Amount is Required!</div>
+                                              </div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="form.value.taxExemptedIncomeType === 'other_exemption_under_sixth_schedule_part_a'">
+                                    <div class="form-group">
+                                        <label for="paragraphNo">Paragraph No.</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="paragraphNo"
+                                            placement="top"></i>
+                                        <ng-template #paragraphNo>
+                                            <div [innerHtml]="paragraphNo_t"></div>
+                                        </ng-template>
+                                        <select class="form-control" formControlName="paragraphNo" (change)="onChangeParagraphNo($event, i)" [ngClass]="{'is-invalid': paragraphNo_showError[i]}">
+                                            <option value="0" selected>Select One</option>
+                                            <option *ngIf="!isInterestonGPFHidden" value="4">4 : Interest on GPF</option>
+                                            <option value="7">7 : Exempted Salaries</option>
+                                            <option *ngIf="!isPensionHidden" value="8">8 : Pension</option>
+                                            <option *ngIf="!isDividendfromListedCompanyHidden" value="11A">11A : Dividend from Listed Company</option>
+                                            <option value="18">18 : Capital Gains Received from Firm</option>
+                                            <option value="19">19 : Received as Member of HUF</option>
+                                            <option *ngIf="!isGratuityHidden" value="20">20 : Gratuity</option>
+                                            <option value="21">21 : Payment from GPF/RPF/WPF</option>
+                                            <option *ngIf="!isIncomefromMutualUnitFundHidden" value="22A">22A : Income from Mutual/Unit Fund</option>
+                                            <option *ngIf="!isInterestonRPFHidden" value="25">25 : Interest on RPF</option>
+                                            <option value="26">26 : Voluntary Retirement Benefit</option>
+                                            <option value="27">27 : Economic Activities at Hill Tracts</option>
+                                            <option *ngIf="!isExemptedLimitfromAgricultureHidden" value="29">29 : Exempted Limit from Agriculture</option>
+                                            <option value="44">44 : Income of Cinema Hall</option>
+                                            <option value="45">45 : Production of Rice Bran Oil</option>
+                                            <!-- <option value="56">56 : Govt Welfare Allowance/Govt Rewards</option> -->
+                                            <option value="58">58 : Income from Ederly Care/Day Care</option>
+                                            <option value="Other">Other : Please Mention Paragraph No.</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            <div>Paragraph No is Required!</div>
+                                          </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="otherExemptionParticulars">Particulars</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="otherExemptionParticulars"
+                                            placement="top"></i>
+                                        <ng-template #otherExemptionParticulars>
+                                            <div [innerHtml]="otherExemptionParticulars_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="otherExemptionParticulars" placeholder="" (keyup)="falseErrorIndexes(i,'otherExemptionParticulars')"
+                                            formControlName="otherExemptionParticulars" [ngClass]="{'is-invalid': particulars_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Particulars is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="receiptReferenceNo">Receipt Reference No</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="receiptReferenceNo" placement="top"></i>
+                                        <ng-template #receiptReferenceNo>
+                                            <div [innerHtml]="receiptReferenceNo_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="receiptReferenceNo" placeholder="" (keyup)="falseErrorIndexes(i,'receiptReferenceNo')"
+                                            formControlName="receiptReferenceNo" [ngClass]="{'is-invalid': receiptRefNo_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Receipt Reference No is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="otherExemptionReferenceDate">Reference Date</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="otherExemptionReferenceDateTT" placement="top"></i>
+                                        <ng-template #otherExemptionReferenceDateTT>
+                                            <div [innerHtml]="otherExemptionReferenceDate_t"></div>
+                                        </ng-template>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="" (bsValueChange)="falseErrorIndexes(i,'otherExemptionReferenceDate')"
+                                                formControlName="otherExemptionReferenceDate"
+                                                aria-label="Recipient's username" aria-describedby="button-addon2"
+                                                bsDatepicker [minDate]="minDate" [maxDate]="maxDate"
+                                                #otherExemptionReferenceDate="bsDatepicker"
+                                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}" [ngClass]="{'is-invalid': refDate_showError[i]}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-info btn-sm" type="button"
+                                                    id="button-addon2" (click)="otherExemptionReferenceDate.toggle()">
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                <div>Reference Date is Required!</div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="amountofIncome">Amount of Income</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="amountofIncome"
+                                            placement="top"></i>
+                                        <ng-template #amountofIncome>
+                                            <div [innerHtml]="amountofIncome_t"></div>
+                                        </ng-template>
+                                        <input type="text" (keypress)="numberOnly($event)" (keyup)="placeCommaSeparator(i, $event)" class="form-control" id="amountofIncome" placeholder=""
+                                            formControlName="amountofIncome" [ngClass]="{'is-invalid': amtOfIncome_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Amount of Income is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="otherExemptionRelatedExpense">Related Expense</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="otherExemptionRelatedExpense" placement="top"></i>
+                                        <ng-template #otherExemptionRelatedExpense>
+                                            <div [innerHtml]="otherExemptionRelatedExpense_t"></div>
+                                        </ng-template>
+                                        <input type="text" (keypress)="numberOnly($event)" (keyup)="placeCommaSeparator(i, $event)" class="form-control" id="otherExemptionRelatedExpense"
+                                            placeholder="" formControlName="otherExemptionRelatedExpense">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="otherExemptionBondTaxExemptedIncome">Tax Exempted Income</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="otherExemptionBondTaxExemptedIncome" placement="top"></i>
+                                        <ng-template #otherExemptionBondTaxExemptedIncome>
+                                            <div [innerHtml]="otherExemptionBondTaxExemptedIncome_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="otherExemptionBondTaxExemptedIncome"
+                                            placeholder="" formControlName="otherExemptionBondTaxExemptedIncome" readonly>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="form.value.taxExemptedIncomeType === 'other_exemption_by_sro'">
+                                    <div class="form-group">
+                                        <label for="sroNo">SRO No.</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="sroNo"
+                                            placement="top"></i>
+                                        <ng-template #sroNo>
+                                            <div [innerHtml]="sroNo_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="sroNo" placeholder="" (keyup)="falseErrorIndexes(i,'sroNo')"
+                                            formControlName="sroNo" [ngClass]="{'is-invalid': sroNo_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>SRO No is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="year">Year</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="yearTT"
+                                            placement="top"></i>
+                                        <ng-template #yearTT>
+                                            <div [innerHtml]="year_t"></div>
+                                        </ng-template>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" formControlName="year" id="year" (bsValueChange)="falseErrorIndexes(i,'year')"
+                                                placeholder="" [minDate]="minYear" [maxDate]="maxYear" bsDatepicker
+                                                #year="bsDatepicker"
+                                                [bsConfig]="{ dateInputFormat: 'YYYY', containerClass: 'theme-dark-blue', minMode: 'year' }" [ngClass]="{'is-invalid': year_showError[i]}">
+                                            <div class="input-group-append">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-info btn-sm" type="button"
+                                                        id="button-addon2" (click)="year.toggle()">
+                                                        <span class="input-group-addon"><i
+                                                                class="fa fa-calendar"></i></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                <div>Year is Required!</div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sroDescription">Description</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="sroDescription"
+                                            placement="top"></i>
+                                        <ng-template #sroDescription>
+                                            <div [innerHtml]="sroDescription_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="sroDescription" placeholder="" (keyup)="falseErrorIndexes(i,'sroDescription')"
+                                            formControlName="sroDescription" [ngClass]="{'is-invalid': DescriptionNo_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Description is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sroReceiptReferenceNo">Receipt Reference No.</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="sroReceiptReferenceNo" placement="top"></i>
+                                        <ng-template #sroReceiptReferenceNo>
+                                            <div [innerHtml]="sroReceiptReferenceNo_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="sroReceiptReferenceNo" (keyup)="falseErrorIndexes(i,'sroReceiptReferenceNo')"
+                                            placeholder="" formControlName="sroReceiptReferenceNo" [ngClass]="{'is-invalid': receiptRefNo_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Receipt Reference No is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sroReferenceDate">Reference Date</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="sroReferenceDateTT" placement="top"></i>
+                                        <ng-template #sroReferenceDateTT>
+                                            <div [innerHtml]="sroReferenceDate_t"></div>
+                                        </ng-template>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="" (bsValueChange)="falseErrorIndexes(i,'sroReferenceDate')"
+                                                formControlName="sroReferenceDate" aria-label="Recipient's username"
+                                                aria-describedby="button-addon2" bsDatepicker [minDate]="minDate"
+                                                [maxDate]="maxDate" #sroReferenceDate="bsDatepicker"
+                                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}" [ngClass]="{'is-invalid': refDate_showError[i]}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-info btn-sm" type="button"
+                                                    id="button-addon2" (click)="sroReferenceDate.toggle()">
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                <div>Reference Date is Required!</div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sroAmountofIncome">Amount of Income</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="sroAmountofIncome" placement="top"></i>
+                                        <ng-template #sroAmountofIncome>
+                                            <div [innerHtml]="sroAmountofIncome_t"></div>
+                                        </ng-template>
+                                        <input type="text" (keypress)="numberOnly($event)" (keyup)="placeCommaSeparator(i, $event)" class="form-control" id="sroAmountofIncome" placeholder=""
+                                            formControlName="sroAmountofIncome" [ngClass]="{'is-invalid': amtOfIncome_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Amount of Income is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sroRelatedExpense">Related Expense</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="sroRelatedExpense" placement="top"></i>
+                                        <ng-template #sroRelatedExpense>
+                                            <div [innerHtml]="sroRelatedExpense_t"></div>
+                                        </ng-template>
+                                        <input type="text" (keypress)="numberOnly($event)" (keyup)="placeCommaSeparator(i, $event)" class="form-control" id="sroRelatedExpense" placeholder=""
+                                            formControlName="sroRelatedExpense">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sroTaxExemptedIncome">Tax Exempted Income</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="sroTaxExemptedIncome" placement="top"></i>
+                                        <ng-template #sroTaxExemptedIncome>
+                                            <div [innerHtml]="sroTaxExemptedIncome_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="sroTaxExemptedIncome" placeholder=""
+                                            formControlName="sroTaxExemptedIncome" readonly>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="form.value.taxExemptedIncomeType === 'software_and_it_business' || form.value.taxExemptedIncomeType === 'export_of_handicrafts' ">
+                                    <!-- <div class="form-group">
+                                        <label for="businessTypeID">Business Type</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="businessTypeTT"></i>
+                                        <ng-template #businessTypeTT>
+                                            <div [innerHtml]="html"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="businessTypeID" placeholder=""
+                                            formControlName="businessTypeName">
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput9">Business Name</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="businessNameTT"></i>
+                                        <ng-template #businessNameTT>
+                                            <div [innerHtml]="businessName_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="exampleFormControlInput9" (keyup)="falseErrorIndexes(i,'businessName')"
+                                            placeholder="" formControlName="businessName" [ngClass]="{'is-invalid': businessName_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Business Name is Required!</div>
+                                              </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput9">Business Address</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                            [tooltip]="businessAddressTT"></i>
+                                        <ng-template #businessAddressTT>
+                                            <div [innerHtml]="businessAddress_t"></div>
+                                        </ng-template>
+                                        <input type="text" class="form-control" id="exampleFormControlInput9" (keyup)="falseErrorIndexes(i,'businessAddress')"
+                                            placeholder="" formControlName="businessAddress" [ngClass]="{'is-invalid': BusinessAddress_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Business Address is Required!</div>
+                                              </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div *ngIf="form.value.taxExemptedIncomeType === 'software_and_it_business' || form.value.taxExemptedIncomeType === 'export_of_handicrafts' "
+                            class="mt-4">
+                            <div class="content-background">
+                                <div class="col-sm-12 p-0">
+                                    <span for="defaultCheck1" style="margin-right: 40px; font-size: 17px;">
+                                        <b>Income Summary</b>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="content-background mt-2">
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput2">Sales/Turnover/Receipts</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                        [tooltip]="salesTurnOverTT"></i>
+                                    <ng-template #salesTurnOverTT>
+                                        <div [innerHtml]="salesTurnoverReceipts_t"></div>
+                                    </ng-template>
+                                    <input type="text"
+                                        [value]="form.value.salesTurnoverReceipts=='0'? '': form.value.salesTurnoverReceipts"
+                                        (keypress)="numberOnly($event)"
+                                        (keyup)="placeCommaSeparator(i, $event)" class="form-control"
+                                        id="exampleFormControlInput13" placeholder=""
+                                        formControlName="salesTurnoverReceipts"  [ngClass]="{'is-invalid': salesTurnoverReceipt_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>Sales/Turnover/Receipts is Required!</div>
+                                          </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput3">Gross Profit</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="grossProfitTT"></i>
+                                    <ng-template #grossProfitTT>
+                                        <div [innerHtml]="grossProfit_t"></div>
+                                    </ng-template>
+                                    <input type="text" [value]="form.value.grossProfit=='0'? '': form.value.grossProfit"
+                                        (keypress)="integerOnly($event)" class="form-control"
+                                        id="exampleFormControlInput14" placeholder=""
+                                        (keyup)="placeCommaSeparator(i, $event)"
+                                        formControlName="grossProfit" [ngClass]="{'is-invalid': grossProfit_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>Gross Profit is Required!</div>
+                                          </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput3">General, Administrative, Selling and
+                                        Other Expenses</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="generalAddTT"></i>
+                                    <ng-template #generalAddTT>
+                                        <div [innerHtml]="generalAdminisSellingAndOther_t"></div>
+                                    </ng-template>
+                                    <input type="text"
+                                        [value]="form.value.generalAdminisSellingAndOther=='0'? '': form.value.generalAdminisSellingAndOther"
+                                        (keypress)="numberOnly($event)" class="form-control"
+                                        id="exampleFormControlInput15"
+                                        (keyup)="placeCommaSeparator(i, $event)" placeholder=""
+                                        formControlName="generalAdminisSellingAndOther" [ngClass]="{'is-invalid': generalAdminisSell_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>General, Administrative, Selling and
+                                                Other Expenses is Required!</div>
+                                          </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput3">Net Profit</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="netProfitTT"></i>
+                                    <ng-template #netProfitTT>
+                                        <div [innerHtml]="netProfit_1_t"></div>
+                                    </ng-template>
+                                    <input type="text" [value]="form.value.netProfit_1=='0'? '': form.value.netProfit_1"
+                                        class="form-control" id="exampleFormControlInput" placeholder=""
+                                        formControlName="netProfit_1" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6" *ngIf="form.value.taxExemptedIncomeType === 'software_and_it_business' || form.value.taxExemptedIncomeType === 'export_of_handicrafts'" [hidden]="i != isVisibleForm">
+                        <div class="content-background" style="margin-bottom: 10px !important;">
+                            <div class="col-sm-12 p-0">
+                                <label>Maintain Books of Accounts?</label>
+                                <i class="fa fa-question-circle-o fa-md tooltip-390 tooltip-350"
+                                    [tooltip]="maintainBooksTT"></i>
+                                <ng-template #maintainBooksTT>
+                                    <div [innerHtml]="maintainBooksOfAccounts_t"></div>
+                                </ng-template>
+                                <div class="row">
+                                    <div class="col-md-6 input-group">
+                                        <div class="form-check" placement="right" style="padding-right: 5px">
+                                            <input class="form-check-input" type="radio"
+                                                formControlName="isMaintainedBookOfAC" value="1">
+                                            <label class="form-check-label" for="chkisMaintainedBookOfACYes"
+                                                style="margin-right: 40px;">
+                                                Yes
+                                            </label>
+                                            <input class="form-check-input" type="radio"
+                                                (change)="isMaintainedBookOfACFalse($event,i)"
+                                                formControlName="isMaintainedBookOfAC" value="0">
+                                            <label class="form-check-label" for="chkisMaintainedBookOfACNo">
+                                                No
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div *ngIf="form.value.isMaintainedBookOfAC==='1'">
+                                <div class="content-background mt-3">
+                                    <div class="col-sm-12 p-0">
+                                        <span for="defaultCheck1" style="margin-right: 40px; font-size: 17px;">
+                                            <b>Balance Sheet Summary</b>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-background" *ngIf="form.value.isMaintainedBookOfAC==='1'"
+                                style="margin-top: 7px !important;">
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput3">Cash in Hand & at Bank</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="cashInHandTT"></i>
+                                    <ng-template #cashInHandTT>
+                                        <div [innerHtml]="cashInHandandAtBank_t"></div>
+                                    </ng-template>
+                                    <input type="text"
+                                        [value]="form.value.cashInHandandAtBank=='0'? '': form.value.cashInHandandAtBank"
+                                        (keypress)="numberOnly($event)" class="form-control"
+                                        id="exampleFormControlInput27" (keyup)="placeCommaSeparator(i, $event)" placeholder=""
+                                        formControlName="cashInHandandAtBank" [ngClass]="{'is-invalid': cashInHand_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>Cash in Hand & at Bank is Required!</div>
+                                          </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput3">Inventories</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="inventoriesTT"></i>
+                                    <ng-template #inventoriesTT>
+                                        <div [innerHtml]="inventories_t"></div>
+                                    </ng-template>
+                                    <input type="text" [value]="form.value.inventories=='0'? '': form.value.inventories"
+                                        (keypress)="numberOnly($event)" class="form-control"
+                                        id="exampleFormControlInput28" placeholder="" (keyup)="placeCommaSeparator(i, $event)"
+                                        formControlName="inventories" [ngClass]="{'is-invalid': inventories_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>Inventories is Required!</div>
+                                          </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput3">Fixed Assets</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="fixedAssetsTT"></i>
+                                    <ng-template #fixedAssetsTT>
+                                        <div [innerHtml]="fixedAssets_t"></div>
+                                    </ng-template>
+                                    <input type="text" [value]="form.value.fixedAssets=='0'? '': form.value.fixedAssets"
+                                        (keypress)="numberOnly($event)" class="form-control"
+                                        id="exampleFormControlInput29" placeholder="" (keyup)="placeCommaSeparator(i, $event)"
+                                        formControlName="fixedAssets" [ngClass]="{'is-invalid': fixedAsset_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>Fixed Assets is Required!</div>
+                                          </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput3">Other Assets</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="otherAssetsTT"></i>
+                                    <ng-template #otherAssetsTT>
+                                        <div [innerHtml]="otherAssets_t"></div>
+                                    </ng-template>
+                                    <input type="text" [value]="form.value.otherAssets=='0'? '': form.value.otherAssets"
+                                        (keypress)="numberOnly($event)" class="form-control"
+                                        id="exampleFormControlInput30" placeholder="" (keyup)="placeCommaSeparator(i, $event)"
+                                        formControlName="otherAssets" [ngClass]="{'is-invalid': otherAsset_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>Other Assets is Required!</div>
+                                          </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput3">Total Assets</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="totalAssetsTT"></i>
+                                    <ng-template #totalAssetsTT>
+                                        <div [innerHtml]="totalAssets_t"></div>
+                                    </ng-template>
+                                    <input type="text" [value]="form.value.totalAssets=='0'? '': form.value.totalAssets"
+                                        class="form-control" id="exampleFormControlInput30" placeholder=""
+                                        formControlName="totalAssets" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput3">Opening Capital</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                        [tooltip]="openingCapitalTT"></i>
+                                    <ng-template #openingCapitalTT>
+                                        <div [innerHtml]="openingCapital_t"></div>
+                                    </ng-template>
+                                    <input type="text"
+                                        [value]="form.value.openingCapital=='0'? '': form.value.openingCapital"
+                                        (keypress)="numberOnly($event)" class="form-control"
+                                        id="exampleFormControlInput211" placeholder="" (keyup)="placeCommaSeparator(i, $event)"
+                                        formControlName="openingCapital" [ngClass]="{'is-invalid': openingCapital_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>Opening Capital is Required!</div>
+                                          </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput3">Net Profit</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="netProfitTT"></i>
+                                    <ng-template #netProfitTT>
+                                        <div [innerHtml]="netProfit_2_t"></div>
+                                    </ng-template>
+                                    <input type="text" [value]="form.value.netProfit_1=='0'? '': form.value.netProfit_1"
+                                        class="form-control" id="exampleFormControlInput" placeholder=""
+                                        formControlName="netProfit_2" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput3">Withdrawals in the Income Year</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="WithdrawalsTT"></i>
+                                    <ng-template #WithdrawalsTT>
+                                        <div [innerHtml]="withdrawalIncomeYear_t"></div>
+                                    </ng-template>
+                                    <input type="text"
+                                        [value]="form.value.withdrawalIncomeYear=='0'? '': form.value.withdrawalIncomeYear"
+                                        (keypress)="numberOnly($event)" class="form-control"
+                                        id="exampleFormControlInput212" (keyup)="placeCommaSeparator(i, $event)" placeholder=""
+                                        formControlName="withdrawalIncomeYear" [ngClass]="{'is-invalid': withdrawals_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>Withdrawals in the Income Year is Required!</div>
+                                          </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput3">Closing Capital</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390"
+                                        [tooltip]="closingCapitalTT"></i>
+                                    <ng-template #closingCapitalTT>
+                                        <div [innerHtml]="closingCapital_t"></div>
+                                    </ng-template>
+                                    <input type="text"
+                                        [value]="form.value.closingCapital=='0'? '': form.value.closingCapital"
+                                        class="form-control" id="exampleFormControlInput213" placeholder=""
+                                        formControlName="closingCapital" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput3">Liabilities</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="liabilitiesTT"></i>
+                                    <ng-template #liabilitiesTT>
+                                        <div [innerHtml]="liabilities_t"></div>
+                                    </ng-template>
+                                    <input type="text" [value]="form.value.liabilities=='0'? '': form.value.liabilities"
+                                        (keypress)="numberOnly($event)" class="form-control"
+                                        id="exampleFormControlInput214" placeholder="" (keyup)="placeCommaSeparator(i, $event)"
+                                        formControlName="liabilities" [ngClass]="{'is-invalid': liabilities_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>Liabilities is Required!</div>
+                                          </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput3">Total Capital and Liabilities</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-390" [tooltip]="totalCapitalTT"></i>
+                                    <ng-template #totalCapitalTT>
+                                        <div [innerHtml]="totalCapitalandLiabilities_t"></div>
+                                    </ng-template>
+                                    <input type="text"
+                                        [value]="form.value.totalCapitalandLiabilities=='0'? '': form.value.totalCapitalandLiabilities"
+                                        class="form-control" id="exampleFormControlInput215" placeholder=""
+                                        formControlName="totalCapitalandLiabilities" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6" *ngIf="isAlertSectionShow" [hidden]="i != isVisibleForm">
+                        <div class="content-background" style="margin-bottom: 10px !important;">
+                            <div class="col-sm-12 p-0 alertMessage">
+                                <label>{{alertMessage}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- bottom button design start -->
+            <div class="row mt-4">
+                <div class="col-sm-6 pl-3">
+                    <button type="button" class="btn btn-sm backBtn" (click)="onBackPage()">
+                        <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16"
+                            class="bi bi-arrow-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                        </svg>&nbsp;
+                        Back</button>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-12 text-right">
+                            <button type="button" class="btn btn-sm saveDraftBtn" (click)="saveDraft()">
+                                Save Draft</button>
+                            <button type="button" class="btn btn-sm saveContinueBtn" (click)="submittedData()">
+                                <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em"
+                                    viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                </svg>
+                                Save & Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- new button design end -->
+
+        </div>
+    </div>
+</div>
+<ngx-ui-loader></ngx-ui-loader>

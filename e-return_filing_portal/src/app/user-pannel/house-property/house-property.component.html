@@ -1,0 +1,449 @@
+<div class="row" ngxUiLoaderBlurred *ngIf="isShow">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-12 col-sm-2">
+                <!-- <span style="font: normal normal bold 24px/28px Ubuntu;color: #22223B;">Income Details</span> -->
+                <span style="font-size:20px; font-weight: bold; color: #22223B;">Income Details</span>
+            </div>
+            <div class="col-12 col-sm-10">
+                <div class="row buttonAllign">
+                    <button type="button"
+                        class="btn btn-pill rounded-pill btn-outline-dark btn-customize btn-sm main_nav"
+                        *ngFor="let head of selectedNavbar; let i = index" (click)="mainNavActiveSelect(head['id'])"
+                        [class.activeMainNav]="mainNavActive[head['id']]" routerLink="{{head['link']}}"
+                        style="float: right; margin-right: 5px;">{{head['name']}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-sm-12">
+                <ul class="nav nav-tabs nav_font" style="margin-top: 36px">
+                    <li class="nav-item" *ngFor="let head of headsOfIncome; let i = index">
+                        <a class="nav-link" [class.activeHead]="navActive[head['id']]" routerLink="{{head['link']}}"
+                            (click)="navActiveSelect(head['id'])">{{head['name']}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="multiple-section">
+            <div class="row">
+                <div class="col-sm-9">
+                    <button class="btn btn-sm btn-light addPropertyBtn" [class.property-btn-active]="isVisibleForm == i"
+                        *ngFor="let item of formArray.controls; let i = index" (click)="selectedProperty(i)">Property
+                        {{i + 1}}
+                        <i class="fa fa-times-circle" (click)="onCloseTabClick(closetabpopup)" aria-hidden="true"
+                            style="margin-left: 10px;">
+                        </i>
+                        <ng-template #closetabpopup>
+                            <div class="modal-header">
+                                <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+                                <button type="button" class="close pull-right" aria-label="Close"
+                                    (click)="modalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>This action will remove all your unsaved data.</p>
+                                <p>Would you like to remove it?</p>
+                                <button type="button" class="btn btn-danger" style="float: right;"
+                                    (click)="close(i)">Remove</button>
+                                <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+                                    (click)="modalRef.hide()">Keep</button>
+                            </div>
+                        </ng-template>
+                        &nbsp;
+                    </button>
+                </div>
+                <div class="col-sm-3" style="text-align: right; padding: 0;">
+                    <button type="button" class="btn btn-sm btn-pill" (click)="insertFormGroupToArray()"
+                        style="margin-right: 5px; border-radius: 50px; background-color: #01649A; color: white;"><i
+                            class="fa fa-plus-square" aria-hidden="true">
+                        </i>&nbsp;Add Another Property
+                    </button>&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+
+        <div class="content-background">
+            <form [formGroup]="form" *ngFor="let form of formArray.controls; let i = index">
+                <div class="row" [hidden]="i != isVisibleForm">
+                    <div class="col-6 col-sm-6">
+                        <div class="content-background">
+                            <div>
+                                <div class="row">
+                                    <div class="col-12 col-sm-8">
+                                        <label for="propertyAddress">Address of the Property</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="addressTT"
+                                            placement="top"></i>
+                                        <ng-template #addressTT>
+                                            <div [innerHtml]="addressOfProperty"></div>
+                                        </ng-template>
+                                        <input type="text" formControlName="propertyAddress" class="form-control"
+                                            id="hp_id_address_prop" placeholder=""
+                                            (keyup)="initializeAddressOfProp($event,i)"
+                                            [ngClass]="{'is-invalid': addressOfProperty_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>Address of the Property is Required!</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row pt-2">
+                                    <div class="col-12 col-sm-8 form-group">
+                                        <label>Is it in any city corporation?</label>
+                                        <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="chkAnyCCTT"></i>
+                                        <ng-template #chkAnyCCTT>
+                                            <div [innerHtml]="chkAnyCC"></div>
+                                        </ng-template>
+                                        <div class="row">
+                                            <div class="col-md-6 input-group mb-2">
+                                                <div class="form-check custom-form-check-padding" placement="right"
+                                                    style="padding-right: 5px">
+                                                    <input class="form-check-input" type="radio"
+                                                        (change)="IsAnyCCTrue($event)" name="IsAnyCC"
+                                                        formControlName="IsAnyCC" value="1">
+                                                    <label class="form-check-label" for="chkIsAnyCCYes"
+                                                        style="margin-right: 40px;">
+                                                        Yes
+                                                    </label>
+                                                    <input class="form-check-input" type="radio"
+                                                        (change)="IsAnyCCTrueFalse($event)" name="IsAnyCC"
+                                                        formControlName="IsAnyCC" value="0">
+                                                    <label class="form-check-label" for="chkIsAnyCCNo">
+                                                        No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-background" style="margin-top: 20px">
+                            <div class="table-responsive">
+                                <table class="table" id="AnnualRentTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" style="width: 30%;">Particular</th>
+                                            <th scope="col" style="width: 35%;">Area (in Sq. ft.)
+                                                <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                    [tooltip]="area"></i>
+                                                <ng-template #area>
+                                                    <div [innerHtml]="areaTooltip"></div>
+                                                </ng-template>
+                                            </th>
+                                            <th scope="col" style="width: 35%;">Annual Rent</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <label for="selfOccupied">Self Occupied</label>
+                                            </td>
+                                            <td><input type="text" formControlName="selfOccupiedArea"
+                                                    (keyup)="acceptAreasFloatingPoints($event,i,'selfOccupiedArea')"
+                                                    (keyup)="sumArea(i)" class="form-control"
+                                                    id="{{'selfOccupiedArea' + i}}" placeholder="">
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label for="residential">Residential</label>
+                                            </td>
+                                            <td><input type="text" formControlName="residentialArea"
+                                                    (keyup)="acceptAreasFloatingPoints($event,i,'residentialArea')"
+                                                    (keyup)="sumArea(i)" class="form-control"
+                                                    id="{{'residentialArea' + i}}" placeholder="">
+                                            </td>
+                                            <td><input type="text" formControlName="residentialAnnualRent"
+                                                    (keypress)="numberOnly($event)"
+                                                    (keyup)="sumAnnualRent(i,'residentialAnnualRent')"
+                                                    class="form-control" id="{{'residentialAnnualRent' + i}}"
+                                                    placeholder=""
+                                                    [ngClass]="{'is-invalid': ResAnnualRent_showError[i]}">
+                                                <div class="invalid-feedback">
+                                                    <div>Annual Rent is Required!</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label for="commertial">Commercial</label>
+                                            </td>
+                                            <td><input type="text" formControlName="commercialArea"
+                                                    (keyup)="acceptAreasFloatingPoints($event,i,'commercialArea')"
+                                                    (keyup)="sumArea(i)" class="form-control"
+                                                    id="{{'commercialArea' + i}}" placeholder="">
+                                            </td>
+                                            <td><input type="text" formControlName="commertialAnnualRent"
+                                                    (keypress)="numberOnly($event)"
+                                                    (keyup)="sumAnnualRent(i,'commertialAnnualRent')"
+                                                    class="form-control" id="{{'commertialAnnualRent' + i}}"
+                                                    placeholder=""
+                                                    [ngClass]="{'is-invalid': commAnnualRent_showError[i]}">
+                                                <div class="invalid-feedback">
+                                                    <div>Annual Rent is Required!</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label for="total"><b>Total</b></label>
+                                            </td>
+                                            <td><input type="text" formControlName="totalArea" class="form-control"
+                                                    id="totalArea" placeholder="" disabled>
+                                            </td>
+                                            <td><input type="text" formControlName="totalAnnualRent"
+                                                    class="form-control" id="totalAnnualRent" placeholder="" disabled>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6">
+                        <div class="content-background">
+                            <div>
+                                <label>Are you the only owner?</label>
+                                <div class="input-group mb-3">
+                                    <div class="form-check custom-form-check-padding" placement="right"
+                                        style="padding-right: 5px">
+                                        <input class="form-check-input" formControlName="ownershipRadio" type="radio"
+                                            value="1" id="ownershipRadioYes" (change)="onClick($event,i)">
+                                        <label class="form-check-label" for="ownershipRadioYes"
+                                            style="margin-right: 40px;">
+                                            Yes
+                                        </label>
+
+                                        <input class="form-check-input" formControlName="ownershipRadio" type="radio"
+                                            value="0" id="ownershipRadioNo" (change)="onClick($event,i)">
+                                        <label class="form-check-label" for="ownershipRadioNo">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                                <div *ngIf="noSelected[i]">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-8">
+                                            <label for="shareOfOwnership">Share of Your Ownership (%)</label>
+                                            <input type="text" formControlName="shareOfOwnership"
+                                                (keyup)="floatingNumbersOnly($event,i)"
+                                                (keyup)="calcTotalIncome($event,i)" class="form-control"
+                                                id="shareOfOwnership" placeholder=""
+                                                [ngClass]="{'is-invalid': shareOfOwnership_showError[i]}">
+                                            <div class="invalid-feedback">
+                                                <div>Share of Your Ownership(%) is Required!</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <label for="nameOfOtherOwner" style="margin-top: 3px;">Name of Other
+                                                Owner(s)</label>
+                                            <button type="button" (click)="addOtherOwners(i)" style="margin-top: 6px;"
+                                                class="addOtherOwnertBtnStyle">
+                                                <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                                Add Owner
+                                            </button>
+
+                                            <input type="text" formControlName="nameOfOtherOwner" class="form-control"
+                                                id="nameOfOtherOwner" placeholder="" hidden>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- dynamic owner addition added -->
+                                    <div *ngFor="let value of values[i]; let j = index;" class="row">
+                                        <div class="col-sm-8">
+                                            <input type="text" [(ngModel)]="value.value"
+                                                [ngModelOptions]="{standalone: true}" style="margin-top: 6px;"
+                                                class="form-control" placeholder="">
+                                        </div>
+
+                                        <div class="row col-12 col-sm-4">
+                                            <button class="deleteOtherOwnerBtnStyle" (click)="removeOtherOwner(i, j)"><i
+                                                    class="fa fa-trash" aria-hidden="true"
+                                                    style="margin-top: 6px; color:red"></i></button>
+                                        </div>
+                                    </div>
+                                    <!-- end of dynamic owner addition -->
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-background" style="margin-top: 20px">
+                            <div class="table-responsive">
+                                <table class="table" id="DeductionTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" style="width: 57%;">Deductions</th>
+                                            <th scope="col" style="width: 38%;"></th>
+                                            <th scope="col" style="width: 5%;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <label for="repairDeductAmt">Repair, Collections, etc.</label>
+                                            </td>
+                                            <td><input type="text" formControlName="repairDeductAmt"
+                                                    (keypress)="numberOnly($event)"
+                                                    (keyup)="sumDeductAmt(i,'repairDeductAmt')" class="form-control"
+                                                    id="{{'repairDeductAmt' + i}}" placeholder=""
+                                                    [ngClass]="{'is-invalid': repCollEtc_showError[i]}">
+                                                <div class="invalid-feedback">
+                                                    <div>Repair, Collections, etc. is Required!</div>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label for="municipalDeductAmt">Municipal or Local Tax</label>
+                                            </td>
+                                            <td><input type="text" formControlName="municipalDeductAmt"
+                                                    (keypress)="numberOnly($event)"
+                                                    (keyup)="sumDeductAmt(i,'municipalDeductAmt')" class="form-control"
+                                                    id="{{'municipalDeductAmt' + i}}" placeholder="">
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label for="landRevenueDeductAmt">Land Revenue</label>
+                                            </td>
+                                            <td><input type="text" formControlName="landRevenueDeductAmt"
+                                                    (keypress)="numberOnly($event)"
+                                                    (keyup)="sumDeductAmt(i,'landRevenueDeductAmt')"
+                                                    class="form-control" id="{{'landRevenueDeductAmt' + i}}"
+                                                    placeholder="">
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label for="interestDeductAmt">Interest on Loan/Mortgage/Capital
+                                                    Charge</label>
+                                            </td>
+                                            <td><input type="text" formControlName="interestDeductAmt"
+                                                    (keypress)="numberOnly($event)"
+                                                    (keyup)="sumDeductAmt(i,'interestDeductAmt')" class="form-control"
+                                                    id="{{'interestDeductAmt' + i}}" placeholder="">
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label for="insuranceDeductAmt">Insurance Premium</label>
+                                            </td>
+                                            <td><input type="text" formControlName="insuranceDeductAmt"
+                                                    (keypress)="numberOnly($event)"
+                                                    (keyup)="sumDeductAmt(i,'insuranceDeductAmt')" class="form-control"
+                                                    id="{{'insuranceDeductAmt' + i}}" placeholder="">
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label for="vacancyDeductAmt">Vacancy Allowance</label>
+                                            </td>
+                                            <td><input type="text" formControlName="vacancyDeductAmt"
+                                                    (keypress)="numberOnly($event)"
+                                                    (keyup)="sumDeductAmt(i,'vacancyDeductAmt')" class="form-control"
+                                                    id="{{'vacancyDeductAmt' + i}}" placeholder="">
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label for="otherDeductAmt">Other</label>
+                                            </td>
+                                            <td><input type="text" formControlName="otherDeductAmt"
+                                                    (keypress)="numberOnly($event)"
+                                                    (keyup)="sumDeductAmt(i,'otherDeductAmt')" class="form-control"
+                                                    id="{{'otherDeductAmt' + i}}" placeholder="">
+                                            </td>
+                                            <td> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label for=""><b>Total</b></label>
+                                            </td>
+                                            <td><input type="text" formControlName="totalDeductAmt" class="form-control"
+                                                    placeholder="" disabled>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-background" style="margin-top: 30px" [hidden]="i != isVisibleForm">
+
+                    <div class="row header">
+                        <div class="col-6" style="margin-top: 10px;">
+                            <span>Income from Property {{i + 1}}</span>
+                        </div>
+                        <div class="col-6" style="margin-top: 10px;">
+                            <span>Amount</span>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-6">
+                            <label style="margin-top: 5px;">{{percentTitle[i]}}(Total Annual Rent - Deductions)</label>
+                        </div>
+                        <div class="col-5">
+                            <input type="text" formControlName="totalIncome" style="padding: 0; height: 35px;"
+                                class="form-control text-center" id="totalIncome" disabled>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- bottom button design start -->
+            <div class="row  mt-4">
+                <div class="col-sm-6 pl-3">
+                    <button type="button" class="btn btn-sm backBtn" (click)="onBackPage()">
+                        <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16"
+                            class="bi bi-arrow-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                        </svg>&nbsp;
+                        Back</button>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-12 text-right">
+                            <button type="button" class="btn btn-sm saveDraftBtn" (click)="saveDraft()">
+                                Save Draft</button>
+                            <button type="button" class="btn btn-sm saveContinueBtn" (click)="submittedData()">
+                                <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em"
+                                    viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                </svg>
+                                Save & Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- new button design end -->
+
+
+        </div>
+    </div>
+</div>
+<ngx-ui-loader></ngx-ui-loader>

@@ -1,0 +1,70 @@
+<div class="d-flex flex-column min-vh-100">
+  <app-header [navbarBrandRouterLink]="['/pages/home']" [fixed]="true" [asideMenuToggler]=false [mobileAsideMenuToggler]="false"
+    [navbarBrandFull]="{src: 'assets/img/logo/eLedger_logo.png', width: 350, height: 40, alt: 'e-Return-ledger Logo'}"
+    [navbarBrandMinimized]="{src: 'assets/img/logo/eLedger_short.png', width: 60, height: 30, alt: 'e-Return Logo'}">
+
+    <ul class="nav navbar-nav ml-auto">
+      <li class="nav-item dropdown" dropdown placement="bottom right">
+        <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
+          dropdownToggle (click)="false">
+          <span class="hidden-xs" *ngIf="isCompany">{{userFullName}}</span>
+          <span class="hidden-xs" *ngIf="!isCompany && notDCT">{{tokenInfo['userFullName']}}</span>
+          <span class="hidden-xs" *ngIf="!isCompany && isDCT1">DCT-1, Tax Zone 1, Dhaka</span>
+          <span class="hidden-xs" *ngIf="!isCompany && isDCT2">DCT-2, Tax Zone 1, Dhaka</span>
+
+          <!-- <span class="hidden-xs mr-1">{{tokenInfo['userFullName']}}</span> -->
+          <img *ngIf="!isCompany && !hasImage" src="assets\img\background\default_profile.png" class="rounded-circle img-100" alt="User Image" />
+          <img *ngIf="!isCompany && hasImage" [src]="taxpayerProfileImg" class="rounded-circle img-100" alt="User Image" />
+        </a>
+        <div class="dropdown-menu dropdown-menu-right " *dropdownMenu aria-labelledby="simple-dropdown">
+          <li class="user-header">
+            <img *ngIf="!isCompany && !hasImage" src="assets\img\background\default_profile.png" class="rounded-circle center img-50" alt="User Image">
+            <img *ngIf="!isCompany && hasImage" [src]="taxpayerProfileImg" class="rounded-circle center img-50" alt="User Image">
+            <div class="col-12 text-center" *ngIf="isCompany">
+              <!-- <p class="m-0 font-weight-bold colorStyle">{{tokenInfo['userFullName']}}</p> -->
+              <p class="m-0 font-weight-bold colorStyle">{{userFullName}}</p>
+              <p class="m-0 font-weight-bold colorStyle">WIN - {{userIdentity}}</p>
+            </div>
+            <div class="col-12 text-center" *ngIf="!isCompany && notDCT">
+              <p class="m-0 font-weight-bold colorStyle">{{userFullName}}</p>
+              <p class="m-0 font-weight-bold colorStyle">TIN - {{userIdentity}}</p>
+            </div>
+            <div class="col-12 text-center" *ngIf="!isCompany && isDCT1">
+              <p class="m-0 font-weight-bold colorStyle">{{tokenInfo['userFullName']}}</p>
+              <p class="m-0 font-weight-bold colorStyle">WIN - {{tinNo}}</p>
+            </div>
+            <div class="col-12 text-center" *ngIf="!isCompany && isDCT2">
+              <p class="m-0 font-weight-bold colorStyle">{{tokenInfo['userFullName']}}</p>
+              <p class="m-0 font-weight-bold colorStyle">WIN - {{tinNo}}</p>
+            </div>
+          </li>
+          <hr>
+          <!-- <a class="dropdown-item" [routerLink]=""><i class="fa fa-user"
+              aria-hidden="true"></i>Profile</a>
+          <a class="dropdown-item" [routerLink]=""><i class="fa fa-key"
+              aria-hidden="true"></i>Change Password</a> -->
+
+          <a class="dropdown-item" [routerLink]="['/auth/sign-in']"><i class="fa fa-sign-out"
+              aria-hidden="true"></i>Logout</a>
+        </div>
+      </li>
+    </ul>
+
+  </app-header>
+  <div class="app-body">
+    <app-sidebar #appSidebar [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized"
+      (minimizedChange)="toggleMinimize($event)">
+      <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="appSidebar.minimized"></app-sidebar-nav>
+      <app-sidebar-minimizer></app-sidebar-minimizer>
+    </app-sidebar>
+    <!-- Main content -->
+    <main class="main">
+      <div class="container-fluid">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+    <app-aside [fixed]="true" [display]="false">
+    </app-aside>
+  </div>
+  <app-custom-footer></app-custom-footer>
+</div>

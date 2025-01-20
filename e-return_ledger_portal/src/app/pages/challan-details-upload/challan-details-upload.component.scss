@@ -1,0 +1,89 @@
+.text-border{
+    border-left: 10px solid #01649A;
+    border-right: 0px solid #01649A;
+    border-top: 0px solid #01649A;
+    border-bottom: 0px solid #01649A;
+    padding: 5px 10px;
+    // font: normal normal normal 22px/42px Open Sans;
+    font-size:22px; 
+    font-weight: normal;
+    color: #000000;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 10px 10px 20px #00000029;
+    border-radius: 10px 37px 37px 10px;
+    opacity: 1;
+}
+
+.titleSection{
+    margin-top: 5px; 
+    margin-bottom: 5px;
+}
+
+.titleText{
+    margin-right: 10px; 
+    color: #01649A;
+}
+
+#chalanDetailsTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+}
+
+#chalanDetailsTable th {
+    background-color: #C0D8DE;
+    color: #424548;
+}
+
+#chalanDetailsTable {
+    border: 1px solid #ddd;
+}
+
+.tableBgStyle {
+    background-color: #FFFFFF; 
+}
+
+#chalanDetailsTable tr:nth-child(even){background-color: #f2f2f2;}
+
+.uploadBtn {
+    background-color: #01649A;
+    color: #ffffff;
+}
+
+.labelStyle{
+    margin-left: 50px; 
+    text-align: left;
+}
+
+.inputStyle{
+    margin-left: 50px; 
+}
+
+.buttonRowStyle{
+    margin-left: 50px; 
+    // margin-right: 38px;
+}
+
+.submitBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 200px;
+    float: right;
+}
+
+.reset{
+    border: none; 
+    background: none; 
+    color: #01649A;
+}
+
+.customHeight{
+    height: 45px;
+}
+
+.template{
+    float: right;
+    margin-top: 10px;
+    font-size: large;
+}

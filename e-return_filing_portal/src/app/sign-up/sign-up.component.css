@@ -1,0 +1,97 @@
+.card{
+    background-color: #F4F9FA;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
+    border-top: 0px solid #F4F9FA;
+    border-bottom: 0px solid #F4F9FA;
+}
+.fa-color{
+    color: #3F85ED ;
+}
+.fa-text
+{
+    font-style: italic;
+}
+.fa-customize{
+    margin-left: auto;
+}
+.custom-row{
+    margin-bottom:165px;
+}
+
+.btn-customize {
+    background-color: white;
+    font-size: 12px;
+  }
+.btn-customize:hover {
+    background-color: black !important;
+    color: white;
+  }
+::-webkit-input-placeholder {
+    font-style: italic;
+    font-size: small;
+ }
+ :-moz-placeholder {
+    font-style: italic;  
+    font-size: small;
+ }
+ ::-moz-placeholder {
+    font-style: italic; 
+    font-size: small; 
+ }
+ :-ms-input-placeholder {  
+    font-style: italic; 
+    font-size: small;
+ }
+ /* .input-group-text
+ {
+     background-color: white;
+ } */
+ .text-blue{
+    color: #145DA0 !important;
+ }
+ @media (max-width: 767px){
+    .logo-text{
+        display: block !important;
+    }
+ }
+ @media (min-width: 768px){
+    .logo-text{
+        display: none !important;
+    }
+ }
+ 
+ .font-10
+ {
+    font-size: 10px !important;;
+ }
+
+ .font-11
+ {
+    font-size: 11px !important;;
+ }
+
+ .font-12
+ {
+    font-size: 12px !important;;
+ }
+
+ .font-13
+ {
+    font-size: 13px !important;;
+ }
+ .font-14
+ {
+    font-size: 14px !important;;
+ }
+
+ .returnLogo{
+   margin-left: 70px; 
+   width: 60%;
+ }
+
+ @media (max-height: 568px){
+   .returnLogo{
+     margin-left: 55px; 
+     width: 60%;
+   }
+}

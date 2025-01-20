@@ -1,0 +1,72 @@
+.top-header {
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 1px 3px #0000001A;
+  opacity: 1;
+}
+
+.cursor-pointer{
+  cursor: pointer !important;
+}
+.font-12{
+  font-size: 12px;
+}
+.custom-logo{
+  padding-left: 50px;
+  color: #01649A;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.colorStyle {
+  color: #01649A;
+}
+
+.dropdown-menu a:hover {
+  background-color: #01649A;
+  color: #ffffff;
+}
+
+.eReturn-logo{
+  float: left; 
+  padding-left: 20px; 
+  width: 30%; 
+  height: 100%;
+}
+
+@media (max-width: 500px){
+  .custom-logo{
+    font-size: 4VW;
+  }
+  .text-right{
+    font-size: 2VW;
+  }
+  .img-50{
+    width: 50px;
+    height: 50px;
+  }
+  .logo{
+    height: 35px;
+    width: 34vw;
+  }
+
+}
+
+@media (min-width: 501px){
+  .custom-logo{
+    font-size: 2.5VW;
+  }
+  .text-right{
+    font-size: 1VW;
+  }
+  .img-50{
+    width: 50px;
+    height: 50px;
+  }
+  .logo{
+    height: 40px;
+    width: 200px;
+  }
+
+}
+

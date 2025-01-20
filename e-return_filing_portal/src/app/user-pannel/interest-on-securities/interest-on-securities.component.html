@@ -1,0 +1,868 @@
+<div class="row" *ngIf="isShow">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-12 col-sm-2">
+                <!-- <span style="font: normal normal bold 24px/28px Ubuntu;color: #22223B;">Income Details</span> -->
+                <span style="font-size:20px; font-weight: bold; color: #22223B;">Income Details</span>
+            </div>
+            <div class="col-12 col-sm-10">
+                <div class="row buttonAllign">
+                    <button type="button"
+                        class="btn btn-pill rounded-pill btn-outline-dark btn-customize btn-sm main_nav"
+                        *ngFor="let head of selectedNavbar; let i = index" (click)="mainNavActiveSelect(head['id'])"
+                        [class.activeMainNav]="mainNavActive[head['id']]" routerLink="{{head['link']}}"
+                        style="float: right; margin-right: 5px;">{{head['name']}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-sm-12">
+                <ul class="nav nav-tabs navFont" style="margin-top: 36px">
+                    <li class="nav-item" *ngFor="let head of headsOfIncome; let i = index">
+                        <a class="nav-link" [class.activeHead]="navActive[head['id']]" routerLink="{{head['link']}}"
+                            (click)="navActiveSelect(head['id'])">{{head['name']}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="multiple-section">
+            <div class="row">
+                <div class="col-sm-10">
+                    <button class="btn btn-sm btn-light SecurityBtn" [class.property-btn-active]="isVisibleForm == i"
+                        [hidden]="isVisibleTab[i]" *ngFor="let item of formArray.controls; let i = index"
+                        (click)="selectedProperty(i)">{{interestOnSecuritiesTypeName[i]}}
+                        <i class="fa fa-times-circle" (click)="onCloseTabClick(closetabpopup)" aria-hidden="true"
+                            style="margin-left: 10px;">
+                        </i>
+                        <ng-template #closetabpopup>
+                            <div class="modal-header">
+                                <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+                                <button type="button" class="close pull-right" aria-label="Close"
+                                    (click)="modalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>This action will remove all your unsaved data.</p>
+                                <p>Would you like to remove it?</p>
+                                <button type="button" class="btn btn-danger" style="float: right;"
+                                    (click)="close(i)">Remove</button>
+                                <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+                                    (click)="modalRef.hide()">Keep</button>
+                            </div>
+                        </ng-template>
+                        &nbsp;
+                    </button>
+                </div>
+                <div class="col-sm-2" style="text-align: right; padding: 0;">
+                    <button type="button" [disabled]="isDisableAddSalBtn" class="btn btn-sm btn-pill"
+                        (click)="insertFormGroupToArray()"
+                        style="margin-right: 5px; border-radius: 50px; background-color: #01649A; color: white;"><i
+                            class="fa fa-plus-square" aria-hidden="true">
+                        </i>&nbsp;Add Another Type
+                    </button>&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+
+        <div class="content-background">
+            <form [formGroup]="form" *ngFor="let form of formArray.controls; let i = index">
+                <div class="row" [hidden]="i != isVisibleForm">
+                    <div class="col-sm-12">
+                        <div class="content-background">
+                            <div class="form-group col-sm-5">
+                                <label class="form-check-label" for="exampleInterestonSecuritiesType">Interest on
+                                    Securities
+                                    Type</label>
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="securitiesType"
+                                    style="padding-right: 5px"></i>
+                                <ng-template #securitiesType>
+                                    <div class="text-left" [innerHtml]="securitiesTypeTooltip"></div>
+                                </ng-template>
+                                <select class="form-control" formControlName="interestOnSecuritiesType"
+                                    (change)="interestOnSecuritiesTypeChange($event,i)" [ngClass]="{'is-invalid': IOS_Type_showError[i]}" style="font-size: 14px;">
+                                    <option value="0" selected>Select One</option>
+                                    <option value="sanchayapatra_OTP">Sanchayapatra (Other than Pensioners)</option>
+                                    <option value="sanchayapatra_pensioners">Sanchayapatra (Pensioners)</option>
+                                    <option value="bonds_and_other_securities">Bonds and Other Securities</option>
+                                    <option value="income_exempted_reduced_by_sro">Securities Subject to Reduced Tax Rate</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    <div>Interest on Securities Type is Required!</div>
+                                  </div>
+                            </div>
+                            <div *ngIf="form.value.interestOnSecuritiesType ==='sanchayapatra_OTP'">
+                                <div class="row" style="margin-top: 15px; margin-left: 3px;">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12"
+                                        *ngFor="let data of sanchaypatraOtherArray; index as j">
+                                        <div class="row" style="margin-bottom: 10px;" *ngIf="j<1">
+                                            <div class="col-6 col-md-6">
+                                                <label><b>Sanchayapatra (Other than Pensioners)</b></label>
+                                            </div>
+                                            <div class="col-6 col-md-6" style="float: right;">
+                                                <button type="button" (click)="addRowSanchaypatraOther(j)"
+                                                    class="addAnotherBtnStyle">
+                                                    <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                                    Add
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive tableBgStyle" id="dynamicTable">
+                                            <table class="table">
+                                                <thead *ngIf="j<1">
+                                                    <tr>
+                                                        <th scope="col"></th>
+                                                        <th scope="col">Registration No
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="registrationNo"
+                                                                style="padding-right: 5px"></i>
+                                                            <ng-template #registrationNo>
+                                                                <div class="text-left"
+                                                                    [innerHtml]="sanchaypatraRegistrationTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col">Issue Date
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="issueDate" style="padding-right: 5px"></i>
+                                                            <ng-template #issueDate>
+                                                                <div class="text-left" [innerHtml]="issueDateTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col">Value
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="value" style="padding-right: 5px"></i>
+                                                            <ng-template #value>
+                                                                <div class="text-left" [innerHtml]="valueTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col">Gross Interest
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="grossInterest"
+                                                                style="padding-right: 5px"></i>
+                                                            <ng-template #grossInterest>
+                                                                <div class="text-left"
+                                                                    [innerHtml]="grossInterestTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col">Tax Deducted at source
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="tds" style="padding-right: 5px"></i>
+                                                            <ng-template #tds>
+                                                                <div class="text-left" [innerHtml]="tdsTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{ j+1 }}</td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                [(ngModel)]="sanchaypatraOtherArray[j].registrationNo"
+                                                                placeholder="" [ngModelOptions]="{standalone: true}"  (keyup)="changeSnchayapatraOTP(j,'registrationNo')"   [ngClass]="{'is-invalid': valdate_sanchayapatraOtherThanPensioners[j].registrationNo_showError}">
+                                                                <div class="invalid-feedback">
+                                                                    <div>Registration No is Required!</div>
+                                                                  </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" placeholder="" (bsValueChange) ="changeSnchayapatraOTP(j,'issueDate')"
+                                                                    [(ngModel)]="sanchaypatraOtherArray[j].issueDate"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    aria-label="Recipient's username"
+                                                                    [maxDate]="maxIssueDate"
+                                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}"
+                                                                    aria-describedby="button-addon2" bsDatepicker
+                                                                    #SOPissueDate="bsDatepicker" [ngClass]="{'is-invalid': valdate_sanchayapatraOtherThanPensioners[j].issueDate_showError}">
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-outline-info btn-sm"
+                                                                        type="button" id="button-addon2"
+                                                                        (click)="SOPissueDate.toggle()">
+                                                                        <span class="input-group-addon"><i
+                                                                                class="fa fa-calendar"></i></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="invalid-feedback">
+                                                                    <div>Issue Date is Required!</div>
+                                                                  </div>
+                                                            </div>
+                                                        </td>
+                                                        <td><input type="text" (keypress)="numberOnly($event)"
+                                                                (keyup)="sanchaypatraOTPCommaSeparator(j,'costValueOfSanchaypatra')" (keyup)="changeSnchayapatraOTP(j,'costValueOfSanchaypatra')"
+                                                                class="form-control"
+                                                                [(ngModel)]="sanchaypatraOtherArray[j].costValueOfSanchaypatra"
+                                                                [ngModelOptions]="{standalone: true}" placeholder="" [ngClass]="{'is-invalid': valdate_sanchayapatraOtherThanPensioners[j].costValueOfSanchaypatra_showError}">
+                                                                <div class="invalid-feedback">
+                                                                    <div>Value is Required!</div>
+                                                                  </div>
+                                                        </td>
+                                                        <td><input type="text" (keypress)="numberOnly($event)"
+                                                                (keyup)="sanchaypatraOTPCommaSeparator(j,'grossInterest')" (keyup)="changeSnchayapatraOTP(j,'grossInterest')"
+                                                                class="form-control"
+                                                                [(ngModel)]="sanchaypatraOtherArray[j].grossInterest"
+                                                                [ngModelOptions]="{standalone: true}" placeholder="" [ngClass]="{'is-invalid': valdate_sanchayapatraOtherThanPensioners[j].grossInterest_showError}">
+                                                                <div class="invalid-feedback">
+                                                                    <div>Gross Interest is Required!</div>
+                                                                  </div>
+                                                        </td>
+                                                        <td><input type="text" (keypress)="numberOnly($event)"
+                                                                (keyup)="sanchaypatraOTPCommaSeparator(j,'sourceTaxDeducted')" (keyup)="changeSnchayapatraOTP(j,'sourceTaxDeducted')"
+                                                                class="form-control"
+                                                                [(ngModel)]="sanchaypatraOtherArray[j].sourceTaxDeducted"
+                                                                [ngModelOptions]="{standalone: true}" placeholder=""  [ngClass]="{'is-invalid': valdate_sanchayapatraOtherThanPensioners[j].tds_showError}">
+                                                                <div class="invalid-feedback">
+                                                                    <div>Tax Deducted at source is Required!</div>
+                                                                  </div>
+                                                        </td>
+                                                        <td *ngIf="isdeleteActionShowSanchaypatraOther">
+                                                            <button (click)="deleteRowSanchaypatraOther(j)"
+                                                                class="deleteBtnStyle">
+                                                                <i class="fa fa-trash fa-lg"
+                                                                    style="margin-top: 10px; color:red"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="form.value.interestOnSecuritiesType ==='sanchayapatra_pensioners'">
+                                <div class="row" style="margin-top: 15px; margin-left: 3px;">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12"
+                                        *ngFor="let data of sanchaypatraPensionersArray; index as j">
+                                        <div class="row" style="margin-bottom: 10px;" *ngIf="j<1">
+                                            <div class="col-6 col-md-6">
+                                                <label><b>Sanchayapatra (Pensioners)</b></label>
+                                            </div>
+                                            <div class="col-6 col-md-6" style="float: right;">
+                                                <button type="button" (click)="addRowSanchaypatraPensioners(j)"
+                                                    class="addAnotherBtnStyle">
+                                                    <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                                    Add
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive tableBgStyle" id="dynamicTable">
+                                            <table class="table">
+                                                <thead *ngIf="j<1">
+                                                    <tr>
+                                                        <th scope="col"></th>
+                                                        <th scope="col">Registration No
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="regNo" style="padding-right: 5px"></i>
+                                                            <ng-template #regNo>
+                                                                <div class="text-left"
+                                                                    [innerHtml]="sanchaypatraRegistrationTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col">Issue Date
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="issueDate" style="padding-right: 5px"></i>
+                                                            <ng-template #issueDate>
+                                                                <div class="text-left" [innerHtml]="issueDateTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col">Value
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="value" style="padding-right: 5px"></i>
+                                                            <ng-template #value>
+                                                                <div class="text-left" [innerHtml]="valueTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col">Gross Interest
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="grossInterest"
+                                                                style="padding-right: 5px"></i>
+                                                            <ng-template #grossInterest>
+                                                                <div class="text-left"
+                                                                    [innerHtml]="grossInterestTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col">Tax Deducted at source
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="tds" style="padding-right: 5px"></i>
+                                                            <ng-template #tds>
+                                                                <div class="text-left" [innerHtml]="tdsTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{ j+1 }}</td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                [(ngModel)]="sanchaypatraPensionersArray[j].registrationNo" (keyup)="changeSnchayapatraPansioners(j,'registrationNo')" 
+                                                                [ngModelOptions]="{standalone: true}" placeholder="" [ngClass]="{'is-invalid': validate_sanchayapatraPensioners[j].registrationNo_showError}">
+                                                                <div class="invalid-feedback">
+                                                                    <div>Registration No is Required!</div>
+                                                                  </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" placeholder=""
+                                                                    [(ngModel)]="sanchaypatraPensionersArray[j].issueDate"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    aria-label="Recipient's username"
+                                                                    [maxDate]="maxIssueDate"
+                                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}" (bsValueChange) ="changeSnchayapatraPansioners(j,'issueDate')"
+                                                                    aria-describedby="button-addon2" bsDatepicker
+                                                                    #SPissueDate="bsDatepicker" [ngClass]="{'is-invalid': validate_sanchayapatraPensioners[j].issueDate_showError}">
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-outline-info btn-sm"
+                                                                        type="button" id="button-addon2"
+                                                                        (click)="SPissueDate.toggle()">
+                                                                        <span class="input-group-addon"><i
+                                                                                class="fa fa-calendar"></i></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="invalid-feedback">
+                                                                    <div>Issue Date is Required!</div>
+                                                                  </div>
+                                                            </div>
+                                                        </td>
+                                                        <td><input type="text" (keypress)="numberOnly($event)"
+                                                                (keyup)="sanchaypatraPensionersCommaSeparator(j,'costValueOfSanchaypatra')" (keyup)="changeSnchayapatraPansioners(j,'costValueOfSanchaypatra')"
+                                                                class="form-control"
+                                                                [(ngModel)]="sanchaypatraPensionersArray[j].costValueOfSanchaypatra"
+                                                                [ngModelOptions]="{standalone: true}" placeholder=""[ngClass]="{'is-invalid': validate_sanchayapatraPensioners[j].costValueOfSanchaypatra_showError}">
+                                                                <div class="invalid-feedback">
+                                                                    <div>Value is Required!</div>
+                                                                  </div>
+                                                        </td>
+                                                        <td><input type="text" (keypress)="numberOnly($event)"
+                                                                (keyup)="sanchaypatraPensionersCommaSeparator(j,'grossInterest')"  (keyup)="changeSnchayapatraPansioners(j,'grossInterest')"
+                                                                class="form-control"
+                                                                [(ngModel)]="sanchaypatraPensionersArray[j].grossInterest"
+                                                                [ngModelOptions]="{standalone: true}" placeholder=""[ngClass]="{'is-invalid': validate_sanchayapatraPensioners[j].grossInterest_showError}">
+                                                                <div class="invalid-feedback">
+                                                                    <div>Gross Interest is Required!</div>
+                                                                  </div>
+                                                        </td>
+                                                        <td><input type="text" (keypress)="numberOnly($event)"
+                                                                (keyup)="sanchaypatraPensionersCommaSeparator(j,'sourceTaxDeducted')" (keyup)="changeSnchayapatraPansioners(j,'sourceTaxDeducted')"
+                                                                class="form-control"
+                                                                [(ngModel)]="sanchaypatraPensionersArray[j].sourceTaxDeducted"
+                                                                [ngModelOptions]="{standalone: true}" placeholder="" [ngClass]="{'is-invalid': validate_sanchayapatraPensioners[j].tds_showError}">
+                                                                <div class="invalid-feedback">
+                                                                    <div>Tax Deducted at source is Required!</div>
+                                                                  </div>
+                                                        </td>
+                                                        <td *ngIf="isdeleteActionShowSanchaypatraPensioners">
+                                                            <button class="deleteBtnStyle"
+                                                                (click)="deleteRowSanchaypatraPensioners(j)">
+                                                                <i class="fa fa-trash fa-lg"
+                                                                    style="margin-top: 10px; color:red"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="form.value.interestOnSecuritiesType ==='bonds_and_other_securities'">
+                                <div class="row" style="margin-top: 15px; margin-left: 3px;">
+                                    <div class="col-12" *ngFor="let data of bondsandSecuritiesArray; index as j">
+                                        <div class="row" style="margin-bottom: 10px;" *ngIf="j<1">
+                                            <div class="col-6 col-md-6">
+                                                <label><b>Bonds and Other Securities</b></label>
+                                            </div>
+                                            <div class="col-6 col-md-6" style="float: right;">
+                                                <button type="button" (click)="addRowBondsandSecurities(j,i)"
+                                                    class="addAnotherBtnStyle">
+                                                    <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                                    Add
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive tableBgStyle" id="dynamicTable">
+                                            <table class="table">
+                                                <thead *ngIf="j<1">
+                                                    <tr>
+                                                        <th scope="col"></th>
+                                                        <th scope="col">Name of the Bond/Security
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="nameofBond" style="padding-right: 5px"></i>
+                                                            <ng-template #nameofBond>
+                                                                <div class="text-left" [innerHtml]="nameOfBondTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col">Issue No
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="issueNo" style="padding-right: 5px"></i>
+                                                            <ng-template #issueNo>
+                                                                <div class="text-left" [innerHtml]="issueNoTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col">Issue Date
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="bondIssueDate"
+                                                                style="padding-right: 5px"></i>
+                                                            <ng-template #bondIssueDate>
+                                                                <div class="text-left"
+                                                                    [innerHtml]="bondIssueDateTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col">Value
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="bondValue" style="padding-right: 5px"></i>
+                                                            <ng-template #bondValue>
+                                                                <div class="text-left" [innerHtml]="bondValueTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col">Date of Maturity
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="dateOfMaturity"
+                                                                style="padding-right: 5px"></i>
+                                                            <ng-template #dateOfMaturity>
+                                                                <div class="text-left"
+                                                                    [innerHtml]="dateOfMaturityTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col">Gross Interest
+                                                            <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                                                [tooltip]="bondGrossInterest"
+                                                                style="padding-right: 5px"></i>
+                                                            <ng-template #bondGrossInterest>
+                                                                <div class="text-left"
+                                                                    [innerHtml]="bondGrossInterestTooltip">
+                                                                </div>
+                                                            </ng-template>
+                                                        </th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{ j+1 }}</td>
+                                                        <td width="20%">
+                                                            <input type="text" class="form-control"
+                                                                [(ngModel)]="bondsandSecuritiesArray[j].nameofBond" (keyup)="changeBondsAndOther(j,'nameofBond')"
+                                                                [ngModelOptions]="{standalone: true}" placeholder=""  [ngClass]="{'is-invalid': validate_bondsOtherSecurities[j].nameofBond_showError}">
+                                                                <div class="invalid-feedback">
+                                                                    <div>Name of the Bond/Security is Required!</div>
+                                                                  </div>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" (keyup)="changeBondsAndOther(j,'issueNo')"
+                                                                [(ngModel)]="bondsandSecuritiesArray[j].issueNo"
+                                                                [ngModelOptions]="{standalone: true}" placeholder="" [ngClass]="{'is-invalid': validate_bondsOtherSecurities[j].issueNo_showError}">
+                                                                <div class="invalid-feedback">
+                                                                    <div>Issue No is Required!</div>
+                                                                  </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" placeholder="" (bsValueChange)="changeBondsAndOther(j,'issueDate')"
+                                                                    [(ngModel)]="bondsandSecuritiesArray[j].issueDate"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    aria-label="Recipient's username"
+                                                                    [maxDate]="maxIssueDate"
+                                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}"
+                                                                    aria-describedby="button-addon2" bsDatepicker
+                                                                    #BSissueDate="bsDatepicker" [ngClass]="{'is-invalid': validate_bondsOtherSecurities[j].issueDate_showError}">
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-outline-info btn-sm"
+                                                                        type="button" id="button-addon2"
+                                                                        (click)="BSissueDate.toggle()">
+                                                                        <span class="input-group-addon"><i
+                                                                                class="fa fa-calendar"></i></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="invalid-feedback">
+                                                                    <div>Issue Date is Required!</div>
+                                                                  </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" (keypress)="numberOnly($event)" (keyup)="changeBondsAndOther(j,'value')"
+                                                                (keyup)="bondsandSecuritiesCommaSeparator(j,'value')"
+                                                                class="form-control"
+                                                                [(ngModel)]="bondsandSecuritiesArray[j].value"
+                                                                [ngModelOptions]="{standalone: true}" placeholder=""  [ngClass]="{'is-invalid': validate_bondsOtherSecurities[j].value_showError}">
+                                                                <div class="invalid-feedback">
+                                                                    <div>Value is Required!</div>
+                                                                  </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" placeholder="" (bsValueChange)="changeBondsAndOther(j,'dateOfMaturity')"
+                                                                    [(ngModel)]="bondsandSecuritiesArray[j].dateOfMaturity"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    aria-label="Recipient's username"
+                                                                    [minDate]="bondsandSecuritiesArray[j].issueDate"
+                                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}"
+                                                                    aria-describedby="button-addon2" bsDatepicker
+                                                                    #BSdateOfMaturity="bsDatepicker"  [ngClass]="{'is-invalid': validate_bondsOtherSecurities[j].dateOfMaturity_showError}">
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-outline-info btn-sm"
+                                                                        type="button" id="button-addon2"
+                                                                        (click)="BSdateOfMaturity.toggle()">
+                                                                        <span class="input-group-addon"><i
+                                                                                class="fa fa-calendar"></i></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="invalid-feedback">
+                                                                    <div>Date of Maturity is Required!</div>
+                                                                  </div>
+                                                            </div>
+                                                        </td>
+                                                        <td><input type="text" (keypress)="numberOnly($event)" (keyup)="changeBondsAndOther(j,'grossInterest')"
+                                                                (keyup)="bondsandSecuritiesCommaSeparator(j,'grossInterest')"
+                                                                class="form-control"
+                                                                [(ngModel)]="bondsandSecuritiesArray[j].grossInterest"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                id="exampleRegistrationNo1" placeholder=""
+                                                                (keyup)="calBondTotalGross($event,i)"  [ngClass]="{'is-invalid': validate_bondsOtherSecurities[j].grossInterest_showError}">
+                                                                <div class="invalid-feedback">
+                                                                    <div>Gross Interest is Required!</div>
+                                                                  </div>
+                                                            </td>
+                                                        <td *ngIf="isdeleteActionShowBondsandSecurities">
+                                                            <button class="deleteBtnStyle"
+                                                                (click)="deleteRowBondsandSecurities(j,i)">
+                                                                <i class="fa fa-trash fa-lg"
+                                                                    style="margin-top: 10px; height:30px; color:red"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="row netIncomeSection">
+                                            <div class="col-9 netIncomeDivStyle2">
+                                                <label class="netIncomeLabel"><b>Total Gross Interest</b></label>
+                                            </div>
+                                            <div class="col-3 netIncomeDivStyle2">
+                                                <input type="text" (keypress)="numberOnly($event)"
+                                                    class="form-control netIncomeInput" id="netIncome"
+                                                    formControlName="totalGrossInterest" readonly>
+                                            </div>
+                                            <div class="col-12" style="padding: 0; margin: 0;">
+                                                <hr>
+                                            </div>
+                                            <div class="col-9 netTaxExemptedIncomeDivStyle">
+                                                <label class="netTaxExemptedIncomeLabel"><b>Related Expense</b></label>
+                                            </div>
+                                            <div class="col-3 netTaxExemptedIncomeDivStyle">
+                                                <input type="text" (keypress)="numberOnly($event)"
+                                                    class="form-control netTaxExemptedIncomeInput" id="exemptedIncome"
+                                                    formControlName="relatedExpenses"
+                                                    (keyup)="calInterestIncome(i);placeCommaSeparator(i,'relatedExpenses')">
+                                            </div>
+                                            <div class="col-12" style="padding: 0; margin: 0;">
+                                                <hr>
+                                            </div>
+                                            <div class="col-9 taxableIncomeDivStyle">
+                                                <label class="netTaxExemptedIncomeLabel"><b>Interest Income</b></label>
+                                            </div>
+                                            <div class="col-3 taxableIncomeDivStyle">
+                                                <input type="text" (keypress)="numberOnly($event)"
+                                                    class="form-control netTaxExemptedIncomeInput" id="taxableIncome"
+                                                    formControlName="interestIncome" readonly>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="form.value.interestOnSecuritiesType ==='income_exempted_reduced_by_sro'">
+                                <div class="form-group col-12 col-sm-5">
+                                    <label for="exampleFormControlInput1">Name of the Bond/Security</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="nameOfBondSRO"
+                                        style="padding-right: 5px"></i>
+                                    <ng-template #nameOfBondSRO>
+                                        <div class="text-left" [innerHtml]="nameOfBondSROTooltip"></div>
+                                    </ng-template>
+                                    <input style="height: 35px;" type="text" class="form-control" (keyup)= "changeSRO(i,'nameofBond')"
+                                        formControlName="nameofBond" placeholder="" [ngClass]="{'is-invalid': sro_nameOfBond_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>Name of the Bond/Security is Required!</div>
+                                          </div>
+                                </div>
+                                <div class="form-group col-12 col-sm-5">
+                                    <label for="exampleFormControlInput1">Issue No.</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="issueNoSRO"
+                                        style="padding-right: 5px"></i>
+                                    <ng-template #issueNoSRO>
+                                        <div class="text-left" [innerHtml]="issueNoSROTooltip"></div>
+                                    </ng-template>
+                                    <input style="height: 35px;" type="text" class="form-control"
+                                        formControlName="issueNo" placeholder="">
+                                       
+                                </div>
+                                <div class="form-group col-12 col-sm-5">
+                                    <label>Issue Date</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="issueDateSRO"
+                                        style="padding-right: 5px"></i>
+                                    <ng-template #issueDateSRO>
+                                        <div class="text-left" [innerHtml]="issueDateSROTooltip"></div>
+                                    </ng-template>
+                                    <div class="input-group">
+                                        <input type="text" style="height: 35px;" class="form-control"  (bsValueChange)= "changeSRO(i,'issueDate')"
+                                            formControlName="issueDate" placeholder="" [maxDate]="maxIssueDate"
+                                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}"
+                                            aria-label="Recipient's username" aria-describedby="button-addon2"
+                                            bsDatepicker #SROissueDate="bsDatepicker" [ngClass]="{'is-invalid': sro_issueDate_showError[i]}">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-info btn-sm" type="button" id="button-addon2"
+                                                (click)="SROissueDate.toggle()">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </button>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            <div>Issue Date is Required!</div>
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-sm-5">
+                                    <label for="exampleRegistrationNo1">Issuing Office</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="issuingOfc"
+                                        style="padding-right: 5px"></i>
+                                    <ng-template #issuingOfc>
+                                        <div class="text-left" [innerHtml]="issuingOfcSROTooltip"></div>
+                                    </ng-template>
+                                    <input type="text" style="height: 35px;" class="form-control"   (keyup)= "changeSRO(i,'issuingOffice')"
+                                        formControlName="issuingOffice" placeholder=""  [ngClass]="{'is-invalid': sro_issuingOffice_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>Issuing Office is Required!</div>
+                                          </div>
+                                </div>
+                                <div class="form-group col-12 col-sm-5">
+                                    <label>Date of Maturity</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="dateOfMaturitySRO"
+                                        style="padding-right: 5px"></i>
+                                    <ng-template #dateOfMaturitySRO>
+                                        <div class="text-left" [innerHtml]="dateOfMaturitySROTooltip"></div>
+                                    </ng-template>
+                                    <div class="input-group ">
+                                        <input type="text" style="height: 35px;" class="form-control" (bsValueChange)= "changeSRO(i,'dateOfMaturity')"
+                                            formControlName="dateOfMaturity" placeholder="" [minDate]="form.value.issueDate"
+                                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}"
+                                            aria-label="Recipient's username" aria-describedby="button-addon2"
+                                            bsDatepicker #SROdateOfMaturity="bsDatepicker" [ngClass]="{'is-invalid': sro_dateOfMatirity_showError[i]}">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-info btn-sm" type="button" id="button-addon2"
+                                                (click)="SROdateOfMaturity.toggle()">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </button>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            <div>Date of Maturity is Required!</div>
+                                          </div>
+                                </div>
+                                    </div>
+                               
+                                <div class="form-group col-12 col-sm-5">
+                                    <label for="exampleRegistrationNo1">Gross Interest</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="grossInterestSRO"
+                                        style="padding-right: 5px"></i>
+                                    <ng-template #grossInterestSRO>
+                                        <div class="text-left" [innerHtml]="grossInterestSROTooltip"></div>
+                                    </ng-template>
+                                    <input type="text" (keypress)="numberOnly($event)" style="height: 35px;"
+                                        class="form-control" formControlName="grossInterest" placeholder="" (keyup)= "changeSRO(i,'grossInterest')"
+                                        (keyup)="calIncome(i);placeCommaSeparator(i,'grossInterest')" [ngClass]="{'is-invalid': sro_grossInterest_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>Gross Interest is Required!</div>
+                                          </div>
+                                </div>
+                                <div class="form-group col-12 col-sm-5">
+                                    <label for="exampleRegistrationNo1">Related Expenses</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="relatedExpensesSRO"
+                                        style="padding-right: 5px"></i>
+                                    <ng-template #relatedExpensesSRO>
+                                        <div class="text-left" [innerHtml]="relatedExpensesSROTooltip"></div>
+                                    </ng-template>
+                                    <input type="text" (keypress)="numberOnly($event)" style="height: 35px;"
+                                        class="form-control" formControlName="relatedExpenses" placeholder=""
+                                        (keyup)="calIncome(i);placeCommaSeparator(i,'relatedExpenses')">
+                                </div>
+                                <div class="form-group col-12 col-sm-5">
+                                    <label for="exampleRegistrationNo1">Interest Income</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="interestIncomeSRO"
+                                        style="padding-right: 5px"></i>
+                                    <ng-template #interestIncomeSRO>
+                                        <div class="text-left" [innerHtml]="interestIncomeSROTooltip"></div>
+                                    </ng-template>
+                                    <input type="text" (keypress)="numberOnly($event)" style="height: 35px;"
+                                        class="form-control" formControlName="income" placeholder="" readonly>
+                                </div>
+                                <div class="form-group col-12 col-sm-5">
+                                    <label for="exampleRegistrationNo1">SRO No/Reference</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="sroNO"
+                                        style="padding-right: 5px"></i>
+                                    <ng-template #sroNO>
+                                        <div class="text-left" [innerHtml]="sroNOTooltip"></div>
+                                    </ng-template>
+                                    <input type="text" style="height: 35px;" class="form-control"  (keyup)= "changeSRO(i,'sroNo')"
+                                        formControlName="sroNo" placeholder="" [ngClass]="{'is-invalid': sro_sroRef_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>SRO No/Reference is Required!</div>
+                                          </div>
+                                </div>
+                                <div class="form-group col-12 col-sm-5">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="exampleFormControlInput16">Year</label>
+                                            <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="sroyear"
+                                                style="padding-right: 5px"></i>
+                                            <ng-template #sroyear>
+                                                <div class="text-justify" [innerHtml]="SROyearTooltip"></div>
+                                            </ng-template>
+                                        </div>
+                                        <div class="col-12 input-group ">
+                                            <input type="email" class="form-control" formControlName="year" id="year" (bsValueChange)= "changeSRO(i,'year')"
+                                                placeholder="" [minDate]="minYear" [maxDate]="maxYear" bsDatepicker
+                                                #SROyear="bsDatepicker"
+                                                [bsConfig]="{ dateInputFormat: 'YYYY', containerClass: 'theme-dark-blue', minMode: 'year' }" [ngClass]="{'is-invalid': sro_year_showError[i]}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-info btn-sm" type="button"
+                                                    id="button-addon2" (click)="SROyear.toggle()">
+                                                    <span class="input-group-addon"><i
+                                                            class="fa fa-calendar"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                <div>Year is Required!</div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-sm-5">
+                                    <label for="exampleRegistrationNo1">Particular</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="particularSRO"
+                                        style="padding-right: 5px"></i>
+                                    <ng-template #particularSRO>
+                                        <div class="text-left" [innerHtml]="particularSROTooltip"></div>
+                                    </ng-template>
+                                    <input type="text" style="height: 35px;" class="form-control" (keyup)= "changeSRO(i,'particular')"
+                                        formControlName="particular" placeholder="" [ngClass]="{'is-invalid': sro_particular_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>Particular is Required!</div>
+                                          </div>
+                                </div>
+
+                                <div class="form-group col-12 col-sm-5">
+                                    <label for="exampleRegistrationNo1">Tax Exempted Income</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-350"
+                                        [tooltip]="taxExemptedIncomeSRO" style="padding-right: 5px"></i>
+                                    <ng-template #taxExemptedIncomeSRO>
+                                        <div class="text-left" [innerHtml]="taxExemptedIncomeSROTooltip"></div>
+                                    </ng-template>
+                                    <input type="text" style="height: 35px;" (keypress)="numberOnly($event)"
+                                        [value]="form.value.taxExemptedIncome=='0'? '': form.value.taxExemptedIncome"
+                                        class="form-control" placeholder=""
+                                        (keyup)="calTaxableIncome(i);placeCommaSeparator(i,'taxExemptedIncome')"
+                                        formControlName="taxExemptedIncome" [readonly]="isTaxExemptedReadonly[i]">
+                                        
+                                    <!-- <input type="number" min="0" oninput="validity.valid||(value='');"
+                                        style="height: 35px;" class="form-control" formControlName="taxExemptedIncome"
+                                        placeholder=""
+                                        (keyup)="calTaxableIncome(i)"
+                                        [readonly]="isTaxExemptedReadonly[i]"> -->
+                                </div>
+
+                                <div class="form-group col-12 col-sm-5">
+                                    <label for="exampleRegistrationNo1">Taxable Income</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="taxableIncomeSRO"
+                                        style="padding-right: 5px"></i>
+                                    <ng-template #taxableIncomeSRO>
+                                        <div class="text-left" [innerHtml]="taxableIncomeSROTooltip"></div>
+                                    </ng-template>
+                                    <input type="text" (keypress)="numberOnly($event)" style="height: 35px;"
+                                        class="form-control" placeholder="" formControlName="taxableIncome" readonly>
+                                    <!-- <input type="number" min="0" oninput="validity.valid||(value='');"
+                                        style="height: 35px;" class="form-control" formControlName="taxableIncome"
+                                        placeholder="" readonly> -->
+                                </div>
+
+                                <div class="form-group col-12 col-sm-5">
+                                    <label for="exampleRegistrationNo1">Tax Applicable</label>
+                                    <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="taxApplicableSRO"
+                                        style="padding-right: 5px"></i>
+                                    <ng-template #taxApplicableSRO>
+                                        <div class="text-left" [innerHtml]="taxApplicableSROTooltip"></div>
+                                    </ng-template>
+                                    <input type="text" (keypress)="numberOnly($event)" style="height: 35px;"
+                                        class="form-control" placeholder=""
+                                        (keyup)="placeCommaSeparator(i,'taxApplicable')" (keyup)= "changeSRO(i,'taxApplicable')"
+                                        formControlName="taxApplicable" [ngClass]="{'is-invalid': sro_taxApplicable_showError[i]}">
+                                        <div class="invalid-feedback">
+                                            <div>Tax Applicable is Required!</div>
+                                          </div>
+                                    <!-- <input type="number" min="0" oninput="validity.valid||(value='');"
+                                        style="height: 35px;" class="form-control" formControlName="taxApplicable"
+                                        placeholder=""> -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- bottom button design start -->
+            <div class="row mt-4">
+                <div class="col-sm-6 pl-3">
+                    <button type="button" class="btn btn-sm backBtn" (click)="onBackPage()">
+                        <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16"
+                            class="bi bi-arrow-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                        </svg>&nbsp;
+                        Back</button>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-12 text-right">
+                            <button type="button" class="btn btn-sm saveDraftBtn" (click)="saveDraft()">
+                                Save Draft</button>
+                            <button type="button" class="btn btn-sm saveContinueBtn" (click)="submittedData()">
+                                <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em"
+                                    viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                </svg>
+                                Save & Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- new button design end -->
+        </div>
+    </div>
+
+</div>
+
+<ngx-ui-loader></ngx-ui-loader>

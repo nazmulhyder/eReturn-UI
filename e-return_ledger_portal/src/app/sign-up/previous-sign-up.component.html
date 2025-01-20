@@ -1,0 +1,128 @@
+<!--new design start-->
+<div class="app-body">
+    <div class="col-md-12 px-0">
+        <div class="row pt-5">
+            <div class="col-md-12 text-center py-2">
+                <button type="button"
+                    class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"><b>Guideline</b></button>
+                <button type="button"
+                    class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize mx-2"><b>Reference</b></button>
+                <button type="button"
+                    class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"><b>Contact
+                        Us</b></button>
+            </div>
+            <div class="col-md-12" style="padding-top: 20px;">
+                <div class="form-group text-center mb-4">
+                    <h4><b>Sign Up</b></h4>
+                    <p class="font-13"><b>Please enter the information below for registration</b></p>
+                </div>
+                <form class="col-md-8 offset-md-2" name="form" [formGroup]="signupForm">
+                    <label class="font-14">WIN</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter your WIN" formControlName="win"
+                            [ngClass]="{'is-invalid':signupForm.get('win').touched && signupForm.get('win').invalid}"
+                            required />
+                        <div class="invalid-feedback">
+                            <div>WIN is required!</div>
+                        </div>
+                    </div>
+                    <label class="font-14">Name</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter your Name" formControlName="name"
+                            [ngClass]="{'is-invalid':signupForm.get('name').touched && signupForm.get('name').invalid}"
+                            required />
+                        <div class="invalid-feedback">
+                            <div>Name is required!</div>
+                        </div>
+                    </div>
+                    <label class="font-14">TIN</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter your TIN" formControlName="tin" />
+                    </div>
+                    <label class="font-14">Address</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter your Address"
+                            formControlName="address"
+                            [ngClass]="{'is-invalid':signupForm.get('address').touched && signupForm.get('address').invalid}"
+                            required />
+                        <div class="invalid-feedback">
+                            <div>Address is required!</div>
+                        </div>
+                    </div>
+                    <label class="font-14">Contract Person's Name</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter contract person's name"
+                            formControlName="contractPersonName"
+                            [ngClass]="{'is-invalid':signupForm.get('contractPersonName').touched && signupForm.get('contractPersonName').invalid}"
+                            required />
+                        <div class="invalid-feedback">
+                            <div>Contract person's name is required!</div>
+                        </div>
+                    </div>
+                    <label class="font-14">Contract Person Mobile Number</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">+880</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Enter contract person's mobile no"
+                            formControlName="contractPersonMobile"
+                            [ngClass]="{'is-invalid':signupForm.get('contractPersonMobile').touched && signupForm.get('contractPersonMobile').invalid}"
+                            required />
+                        <div class="invalid-feedback">
+                            <div>Contract Person's mobile number is required!</div>
+                        </div>
+                    </div>
+                    <label class="font-14">Contract Person's Designation</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter contract person's designation"
+                            formControlName="contractPersonDesignation"
+                            [ngClass]="{'is-invalid':signupForm.get('contractPersonDesignation').touched && signupForm.get('contractPersonDesignation').invalid}"
+                            required />
+                        <div class="invalid-feedback">
+                            <div>Contract person's designation is required!</div>
+                        </div>
+                    </div>
+                    <label class="font-14">Contract Person's Email</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter contract person's email"
+                            formControlName="contractPersonEmail"
+                            [ngClass]="{'is-invalid':signupForm.get('contractPersonEmail').touched && signupForm.get('contractPersonEmail').invalid}"
+                            required />
+                        <div class="invalid-feedback">
+                            <div>Contract person's email is required!</div>
+                        </div>
+                    </div>
+                    <label class="font-14">Captcha</label>
+                    <div class="input-group mb-4">
+                        <input type="text" class="form-control" placeholder="" formControlName="captcha"
+                            [ngClass]="{'is-invalid':signupForm.get('captcha').touched && signupForm.get('captcha').invalid}"
+                            required />
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"
+                                style="height: 38px; background-color: rgb(169, 169, 169);"><img [src]="captchaImg"
+                                    width="100" height="30" alt="" /></span>
+                        </div>
+                        <button class="btn btn-outline-dark " style="width: 50px;" (click)="reloadCaptcha()"><span><i
+                                    class="fa fa-refresh" aria-hidden="true"></i></span></button>
+                        <div class="invalid-feedback">
+                            <div>captcha is required!</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" (click)="onSubmit()" class="btn btn-block"
+                                [disabled]="!signupForm.valid"
+                                style="background-color:#145DA0;color: white;">Submit</button>
+                        </div>
+                    </div>
+                    <div class="input-group mb-4 text-center justify-content-center pt-2">
+                        <div class="font-14" style="font-style: bold;">Already registered?&nbsp;<a
+                                routerLink="/auth/sign-in"
+                                style="color: #145DA0; font-weight: normal; cursor: pointer;">Sign in</a></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--new design end-->

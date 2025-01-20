@@ -1,0 +1,23 @@
+{
+   "salary":[
+      {
+         "IS_SALARY_NO":"",
+         "IS_EMP_TYPE":"GI",
+         "IS_OFC_NAME":"NA",
+         "IS_EMP_DESIGNATION":"NA",
+         "IS_BASIC_PAY":354000,
+         "IS_HOUSE_RENT_ALW":194700,
+		 "IS_CHARGE_ALW":0,
+         "IS_MEDICAL_ALW":18000,
+		 "IS_MOBILE_ALW":0,
+		 "IS_EDUCATION_ALW":0,
+		 "IS_FESTIVAL_BONUS":59000,
+         "IS_BANGLA_NEW_YEAR_ALW":5900,
+		 "IS_REST_RECREATION_ALW":0
+         
+      }
+   ],
+   "tds":{
+      "50":10800
+   }
+}

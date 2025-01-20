@@ -1,0 +1,272 @@
+<div class="row">
+    <div class="col-sm-10 offset-sm-1">
+      <span style="font: normal normal bold 24px/28px Ubuntu;color: #22223B;">Heads of Income</span>
+      <button class="btn btn-outline-primary" style="float: right;border-radius: 50px">Save Draft</button>
+      <ul class="nav nav-tabs" style="margin-top: 36px">
+        <li class="nav-item" *ngFor="let head of headsOfIncome; let i = index">
+          <a class="nav-link" [class.active]="navActive[head['id']]" (click)="navActiveSelect(head['id'])">{{head['name']}}</a>
+        </li>
+      </ul>
+      <div class="multiple-section">
+        <div class="row">
+          <div  class="col-sm-6">
+            <button style="background-color: white;color: blue; border: 1px solid blue;" [hidden] = "isVisibleIncomeTab" class="btn btn-light salary-btn" [class.salary-btn-active]="isVisibleForm == i" *ngFor="let item of formArray.controls; let i = index" (click)="selectedSalary(i)">{{formArray.value[i].organizationName}} {{i + 1}} <span><i class="fa fa-times-circle" aria-hidden="true"></i></span></button>
+          </div>
+          <div class="col-sm-6" style="text-align: right">
+            <button [disabled] = "isVisibleAddSalBtn" type="button" class="btn btn-pill btn-primary" style="border-radius: 50px;" (click)="insertFormGroupToArray()"><i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp;Add Salary</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-danger" style="border-radius: 50px;" (click)="removeOption()" [hidden]="formArray.length<=1"><i class="fa fa-minus-square" aria-hidden="true"></i>&nbsp;Remove Salary</button>
+          </div>
+        </div>
+      </div>
+      <div class="content-background">
+        <div class="row" *ngFor="let form of formArray.controls; let i = index" style="">
+          <div class="col-sm-5 offset-sm-1 mr-4 content-background" [hidden]="i != isVisibleForm">
+            <form [formGroup]="form">
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Employment Type</label>
+                <select class="form-control" id="exampleFormControlSelect1" formControlName="employmentType" (change)="employmentTypeChange($event)">
+                  <option value="0" selected>Select</option>
+                  <option value="1">Government(Payment Through iBAS++)</option>
+                  <option value="2">Government(Payment Without iBAS++)</option>
+                  <option value="2">Other Than Government</option>
+                </select>
+              </div>
+              <div *ngIf="form.value.employmentType == '1'; else nonGov">
+                <div class="form-group">
+                  <label for="exampleFormControlInput9">Organization Name</label>
+                  <input  type="text" class="form-control" id="exampleFormControlInput9" placeholder="e.g. Synesis It" formControlName="organizationName">
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Basic Pay</label>
+                  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="-----" formControlName="basicPay">
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput2">House Rent Allowance</label>
+                  <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="-----" formControlName="houseRentAllowance">
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput3">Medical Allowance</label>
+                  <input type="text" class="form-control" id="exampleFormControlInput3" placeholder="-----" formControlName="medicalAllowance">
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput4">Bangla New Year Allowance</label>
+                  <input type="text" class="form-control" id="exampleFormControlInput4" placeholder="-----" formControlName="banglaNewYearAllowance">
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput5">Festival Bonus</label>
+                  <input type="text" class="form-control" id="exampleFormControlInput5" placeholder="-----" formControlName="festivalBonus">
+                </div>
+                <div class="form-group" [hidden]="showInput1">
+                  <label for="exampleFormControlInput6">Rest and Recreation Allowance</label>
+                  <input type="text" class="form-control" id="exampleFormControlInput6" placeholder="-----" formControlName="recreationAllowance">
+                </div>
+                <div class="form-group" [hidden]="showInput2">
+                  <label for="exampleFormControlInput7">Education Allowance</label>
+                  <input type="text" class="form-control" id="exampleFormControlInput7" placeholder="-----" formControlName="educationAllowance">
+                </div>
+                <div class="form-group" [hidden]="showInput3">
+                  <label for="exampleFormControlInput8">GPF Interest</label>
+                  <input type="text" class="form-control" id="exampleFormControlInput8" placeholder="-----" formControlName="gpfInterest">
+                </div>
+                <div class="dropdown mt-4" dropdown *ngIf="(showInput1 || showInput2 || showInput3)">
+                  <button class="btn btn-pill btn-outline-primary dropdown-toggle" (click)="scroll(target)" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="false" dropdownToggle>
+                    Add More Allowance
+                  </button>
+                  <div #target>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2" *dropdownMenu style="margin-top: 5px">
+                      <button class="dropdown-item" type="button" [hidden]="!showInput1" (click)="showInputFun(1)">Rest and Recreation Allowance</button>
+                      <button class="dropdown-item" type="button" [hidden]="!showInput2" (click)="showInputFun(2)">Education Allowance</button>
+                      <button class="dropdown-item" type="button" [hidden]="!showInput3" (click)="showInputFun(3)">GPF Interest</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ng-template #nonGov>
+                <div class="form-group">
+                  <label for="exampleInput9">Organization Name</label>
+                  <input type="text" class="form-control" id="exampleInput9" placeholder="e.g. Synesis It" formControlName="organizationName">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInput1">Basic Pay</label>
+                  <input type="text" class="form-control" id="exampleInput1" placeholder="-----" formControlName="basicPay">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInput2">House Rent Allowance</label>
+                  <input type="text" class="form-control" id="exampleInput2" placeholder="-----" formControlName="houseRentAllowance">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInput3">Medical Expense</label>
+                  <input type="text" class="form-control" id="exampleInput3" placeholder="-----" formControlName="medicalAllowance">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInput4">Conveyance Allowance</label>
+                  <input type="text" class="form-control" id="exampleInput4" placeholder="-----" formControlName="banglaNewYearAllowance">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInput5">Festival Bonus</label>
+                  <input type="text" class="form-control" id="exampleInput5" placeholder="-----" formControlName="festivalBonus">
+                </div>
+                <div class="form-group" [hidden]="showInput1">
+                  <label for="exampleInput6">Leave Fare Assistance</label>
+                  <input type="text" class="form-control" id="exampleInput6" placeholder="-----" formControlName="recreationAllowance">
+                </div>
+                <div class="form-group" [hidden]="showInput2">
+                  <label for="exampleInput7">Employees Contribution to RPF</label>
+                  <input type="text" class="form-control" id="exampleInput7" placeholder="-----" formControlName="educationAllowance">
+                </div>
+                <div class="form-group" [hidden]="showInput3">
+                  <label for="exampleInput8">Interest Accrued on RPF</label>
+                  <input type="text" class="form-control" id="exampleInput8" placeholder="-----" formControlName="gpfInterest">
+                </div>
+                <div class="dropdown mt-4" dropdown *ngIf="(showInput1 || showInput2 || showInput3)">
+                  <button class="btn btn-pill btn-outline-primary dropdown-toggle" (click)="scroll(target)" type="button" id="dropdownMenu" data-toggle="dropdown" aria-expanded="false" dropdownToggle>
+                    Add More Allowance
+                  </button>
+                  <div #target>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu" *dropdownMenu style="margin-top: 5px">
+                      <button class="dropdown-item" type="button" [hidden]="!showInput1" (click)="showInputFun(1)">Leave Fare Assistance</button>
+                      <button class="dropdown-item" type="button" [hidden]="!showInput2" (click)="showInputFun(2)">Employees Contribution to RPF</button>
+                      <button class="dropdown-item" type="button" [hidden]="!showInput3" (click)="showInputFun(3)">Interest Accrued on RPF</button>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </form>
+          </div>
+          <div class="col-sm-5" [hidden]="i != isVisibleForm">
+            <div class="row content-background">
+              <div class="col-sm-12 p-0">
+                <p>Salary Exempted or at Reduced TAX Rate by SRO?</p>
+                <form [formGroup]="form">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-2" *ngFor="let salary of salaryExempted">
+                        <input type="radio" name="salaryExempte" (change)="salaryTypeChange($event)" [value]="salary['value']" formControlName="salaryExempte">
+                        <label>{{salary['label']}}</label><br>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="form.value.salaryExempte == '1'; else nonSalary">
+                    <div class="form-group">
+                      <label for="exampleFormControlInput9">Total Salary Received</label>
+                      <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="-----" formControlName="organizationName">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1">SRO No.</label>
+                      <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="-----" formControlName="basicPay">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput2">Year</label>
+                      <select class="form-control" id="exampleFormControlSelect1" formControlName="year" (change)="employmentTypeChange($event)">
+                        <option value="1">2021</option>
+                        <option value="2">2020</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput3">Particular of the SRO</label>
+                      <input type="text" class="form-control" id="exampleFormControlInput3" placeholder="-----" formControlName="medicalAllowance">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput4">Income Exempted from TAX</label>
+                      <input type="text" class="form-control" id="exampleFormControlInput4" placeholder="-----" formControlName="banglaNewYearAllowance">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput5">Taxable Income</label>
+                      <input type="text" class="form-control" id="exampleFormControlInput5" placeholder="-----" formControlName="festivalBonus">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput6">Applicable TAX as per SRO</label>
+                      <input type="text" class="form-control" id="exampleFormControlInput6" placeholder="-----" formControlName="recreationAllowance">
+                    </div>
+                  </div>
+                  <ng-template #nonSalary>
+                  </ng-template>
+                </form>
+              </div>
+            </div>
+            <div class="row content-background mt-4">
+              <div class="col-sm-12 p-0">
+                <form [formGroup]="form">
+                  <div class="input-group mb-3">
+                    <div [tooltip]="popTemplate" placement="right" style="padding-right: 5px">
+                      <input type="checkbox" id="ibas" name="ibas" value="Bike" formControlName="ibas">
+                      <label for="ibas"> Receive Salary through IBAS</label>
+                      <i class="fa fa-question-circle fa-lg"></i>
+                      <ng-template #popTemplate>Here we go: <div [innerHtml]="html"></div></ng-template>
+                    </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div [tooltip]="popTemplate" placement="right" style="padding-right: 5px">
+                      <input type="checkbox" id="noCashBenefit" name="noCashBenefit" formControlName="noCashBenefit">
+                      <label for="noCashBenefit"> Received any non-cash Benefit</label>
+                      <i class="fa fa-question-circle fa-lg"></i>
+                      <ng-template #popTemplate>Here we go: <div [innerHtml]="html"></div></ng-template>
+                    </div>
+                  </div>
+                  <div *ngIf="form.value.noCashBenefit">
+                    <div class="input-group mb-3">
+                      <div [tooltip]="popTemplate" placement="right" style="padding-right: 5px">
+                        <input type="checkbox" id="rentFreeAcc" name="rentFreeAcc" formControlName="rentFreeAcc">
+                        <label for="rentFreeAcc"> Rent Free Accommodation</label>
+                        <i class="fa fa-question-circle fa-lg"></i>
+                        <ng-template #popTemplate>Here we go: <div [innerHtml]="html"></div></ng-template>
+                      </div>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div [tooltip]="popTemplate" placement="right" style="padding-right: 5px">
+                        <input type="checkbox" id="concessionalRate" name="concessionalRate" formControlName="concessionalRate">
+                        <label for="concessionalRate"> Accommodation at Concessional rate</label>
+                        <i class="fa fa-question-circle fa-lg"></i>
+                        <ng-template #popTemplate>Here we go: <div [innerHtml]="html"></div></ng-template>
+                      </div>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div [tooltip]="popTemplate" placement="right" style="padding-right: 5px">
+                        <input type="checkbox" id="facilityProvided" name="facilityProvided" formControlName="facilityProvided">
+                        <label for="facilityProvided"> Vehicle facility provided</label>
+                        <i class="fa fa-question-circle fa-lg"></i>
+                        <ng-template #popTemplate>Here we go: <div [innerHtml]="html"></div></ng-template>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput5">Value of Accommodation</label>
+                      <input type="text" class="form-control" id="exampleFormControlInput5" placeholder="-----" formControlName="festivalBonus">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput5">Rent Payed by the Taxpayer</label>
+                      <input type="text" class="form-control" id="exampleFormControlInput5" placeholder="-----" formControlName="festivalBonus">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput5">Value of Other Non-Cash Benefits</label>
+                      <input type="text" class="form-control" id="exampleFormControlInput5" placeholder="-----" formControlName="festivalBonus">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-sm-10 offset-sm-1">
+      <div class="content-slider-footer">
+        <div class="row">
+          <div class="col-sm-6">
+            <button type="button" class="btn btn-style" routerLink="../assessment">
+              <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+              </svg>&nbsp;
+              Back</button>
+          </div>
+          <div class="col-sm-6" style="text-align: right">
+            <button type="button" class="btn btn-style" routerLink="../interest-on-securities">
+              <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+              </svg>&nbsp;
+              Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

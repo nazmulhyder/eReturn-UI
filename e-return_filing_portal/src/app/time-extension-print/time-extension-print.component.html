@@ -1,0 +1,33 @@
+<div class="row" *ngIf="isShow">
+    <div class="col-sm-12">
+        <div class="row mb-4">
+          <div class="col-12 col-sm-10">
+            <span style="font-size:20px; font-weight: bold; color: #22223B;">Time Extension Print View</span>
+          </div>
+          <div class="col-12 col-sm-2">
+            <div class="row" style="float: right; padding-right: 5px;">
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+<div class="row" *ngIf="isShow">
+    <div class="col-sm-12 container-cover-shadow">
+    <div id="print-me">
+        <app-time-extension-applicant-copy></app-time-extension-applicant-copy>
+        <!-- <app-time-extension-office-copy></app-time-extension-office-copy> -->
+    </div>
+    <button type="button" style="float: right !important; margin-right: 14px !important; margin-bottom: 10px !important; width: 75px !important;"
+      class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"
+      [printStyle]="{body : {'background': 'white'}}" printTitle="Time-Extension-{{userTin}}"
+      [useExistingCss]="true"
+      printSectionId="print-me" 
+      ngxPrint
+      >
+      <i class="fa fa-print mr-1" aria-hidden="true"></i>
+      <b>Print</b></button>
+    </div>
+  </div>
+
+

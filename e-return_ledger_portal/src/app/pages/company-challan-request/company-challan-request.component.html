@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Challan Entry</title>
+</head>
+
+<div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-12 col-sm-12 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left iconStyle">
+                </i> Company Challan List &nbsp; &nbsp;
+            </span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="form-horizontal" [formGroup]="challanListForm" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="challanListTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th scope="col">Assessment Year</th>
+                                    <th scope="col">Code No.</th>
+                                    <th scope="col">Challan No</th>
+                                    <th scope="col">Challan Date</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col" width="15%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of companyChallanGetData; let k = index">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row">{{ item.assessmentYear }}</td>
+                                    <td scope="row">{{ item.codeNo }}</td>
+                                    <td scope="row">{{ item.challanNo }}</td>
+                                    <td scope="row">{{ item.challanDate }}</td>
+                                    <td scope="row">{{ item.amount }}</td>
+                                    <td>
+                                        <button (click)="goToDetailsPage($event)" type="button" class="addAnotherBtnStyle">
+                                            <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
+                                        </button>
+                                        <button (click)="companyChallanConfirmation(k)" type="button" class="btn btn-sm uploadBtn">
+                                            <i class="fa fa-check titleText"></i>Verify
+                                        </button>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

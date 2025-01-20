@@ -1,0 +1,59 @@
+.custom-row
+{
+    background-color: #c7dee5  !important;
+}
+.force-padding
+{
+    padding-left: 30px !important;
+}
+
+.main_nav:hover {
+    float: right;
+    background-color: #01649A;
+    color: white;
+}
+  
+.activeMainNav{
+    background-color: #01649A !important;
+    color: white;
+    border: 0px;
+}
+
+label,input,select,option,p{
+    font-size: 14px !important;
+}
+  
+.saveContinueBtn {
+background-color: #01649A;
+color: #ffffff;
+width: 200px;
+}
+
+.backBtn {
+background-color: #01649A;
+color: #ffffff;
+width: 100px;
+}
+
+#dynamicTable {
+    font-size: 14px;
+}
+
+.saveDraftBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 100px;
+    margin-right: 3px;
+}
+
+.customCss{
+    margin-left: 45px; 
+    width: 13%;
+}
+
+@media (min-height: 769px){
+    .customCss{
+        margin-left: 55px; 
+        width: 13.6%;
+    }
+}

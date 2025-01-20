@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Advance Tax Entry</title>
+</head>
+
+<!-- <div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Regular Tax under Section 74 &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-6 mt-3">
+            <label class="float-right" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mt-2">
+            <div class="content-background formSection">
+                <form class="row form-horizontal" [formGroup]="advanceTaxEntryForm" aria-labelledby="title">
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="depositType" class="label col-8 form-control-label">Type
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="depositType"></i>
+                            </label>
+                            <ng-template #depositType>
+                                <div [innerHtml]="typeTooltip"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <select class="form-control" (change)="onTypeChange($event)" id="depositType"
+                                    formControlName="depositType" required
+                                    [ngClass]="{'is-invalid':advanceTaxEntryForm.get('depositType').touched && advanceTaxEntryForm.get('depositType').value=='0'}">
+                                    <option value="0">Select One</option>
+                                    <option value="CHALLAN"> Challan</option>
+                                    <option value="PAY_ORDER">Pay Order</option>
+                                    <option value="CHEQUE">Cheque</option>
+                                </select>
+                                <div class="invalid-feedback ">
+                                    <div>Type is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6" *ngIf="selectedType == 'CHALLAN'">
+                        <div class="form-group">
+                            <label for="challanNo" class="label col-8 form-control-label">Challan No.</label>
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Challan No." formControlName="challanNo"
+                                    class="form-control" id="challanNo">
+                                <div class="invalid-feedback ">
+                                    <div>Challan No. is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6" *ngIf="selectedType == 'PAY_ORDER'">
+                        <div class="form-group">
+                            <label for="poNo" class="label col-8 form-control-label">Pay Order No</label>
+                            <div class="col-12">
+                                <input type="text" (change)="check($event)" placeholder="Enter Payment Order No"
+                                    formControlName="poNo" class="form-control" id="poNo">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6" *ngIf="selectedType =='CHEQUE'">
+                        <div class="form-group">
+                            <label for="chequeNo" class="label col-8 form-control-label">Cheque No</label>
+                            <div class="col-12">
+                                <input type="text" (change)="check($event)" placeholder="Enter Cheque No"
+                                    formControlName="chequeNo" class="form-control" id="chequeNo">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6" *ngIf="selectedType !='0'">
+                        <div class="form-group">
+                            <label for="challanDate" class="label col-8 form-control-label">Date</label>
+                            <div class="input-group col-12">
+                                <input type="text" placeholder="Enter Date" formControlName="challanDate"
+                                    class="form-control" id="challanDate" bsDatepicker #challanDate="bsDatepicker"
+                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-info btn-sm" (click)="challanDate.toggle()"
+                                        type="button" id="button-addon2">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback ">
+                                    <div>Challan Date is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6" *ngIf="selectedType == 'CHALLAN'">
+                        <div class="form-group">
+                            <label for="amount" class="label col-8 form-control-label">Amount</label>
+                            <div class="col-12">
+                                <input type="text" (keyup)="onValueChange($event)" (keypress)="numberOnly($event)"
+                                    placeholder="Enter Amount" formControlName="amount" class="form-control" id="amount"
+                                    required
+                                    [ngClass]="{'is-invalid':advanceTaxEntryForm.get('amount').touched && advanceTaxEntryForm.get('amount').invalid}">
+                                <div class="invalid-feedback ">
+                                    <div>Amount is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6" *ngIf="selectedType == 'CHALLAN'">
+                        <div class="form-group">
+                            <label for="position" class="label col-8 form-control-label">Challan Payment Mode</label>
+                            <div class="col-12 mt-2">
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input selected class="form-check-input" type="radio"
+                                            formControlName="paymentType" id="inlineRadio1" value="CASH">
+                                        Cash
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" formControlName="paymentType"
+                                            id="inlineRadio2" value="CHEQUE"> Cheque
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" formControlName="paymentType"
+                                            id="inlineRadio3" value="TRANSFER"> Transfer
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" formControlName="paymentType"
+                                            id="inlineRadio4" value="E_PAYMENT"> e-Payment
+                                    </label>
+                                </div>
+                                <div class="invalid-feedback inputStyle">
+                                    <div>Deposited in is required!</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-6" *ngIf="selectedType == 'CHALLAN'">
+                        <div class="form-group">
+                            <label for="taxesZone" class="label col-8 form-control-label">Taxes Zone (Where Deposited)
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="taxesZone"></i>
+                            </label>
+                            <ng-template #taxesZone>
+                                <div [innerHtml]="taxesZoneTooltip"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <select class="form-control" id="taxesZone" (change)="onZoneChange($event)"
+                                    formControlName="taxesZone" required
+                                    [ngClass]="{'is-invalid':advanceTaxEntryForm.get('taxesZone').touched && advanceTaxEntryForm.get('taxesZone').value=='0'}">
+                                    <option value="0">Select One</option>
+                                    <option *ngFor="let item of zones" value="{{ item.zoneNo }}"> {{ item.zoneName }}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback ">
+                                    <div>Taxes Zone is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6" *ngIf="selectedType !='0'">
+                        <div class="form-group">
+                            <label for="bank" class="label col-8 form-control-label">Bank</label>
+                            <div class="col-12">
+                                <select class="form-control" id="bank" formControlName="bank"
+                                    [ngClass]="{'is-invalid':advanceTaxEntryForm.get('bank').touched && advanceTaxEntryForm.get('bank').value=='0'}">
+                                    <option value="0" selected>Select One</option>
+                                    <option *ngFor="let item of banks" value="{{ item.bankName }}"> {{ item.bankName }}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback ">
+                                    <div>Bank is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6" *ngIf="selectedType == 'CHALLAN'">
+                        <div class="form-group">
+                            <label for="taxesCircle" class="label col-8 form-control-label">Taxes Circle (Where
+                                Deposited)
+                                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="taxesCircle"></i>
+                            </label>
+                            <ng-template #taxesCircle>
+                                <div [innerHtml]="taxesCircleTooltip"></div>
+                            </ng-template>
+                            <div class="col-12">
+                                <select class="form-control" id="taxesCircle" (change)="onCircleChange($event)"
+                                    formControlName="taxesCircle" required
+                                    [ngClass]="{'is-invalid':advanceTaxEntryForm.get('taxesCircle').touched && advanceTaxEntryForm.get('taxesCircle').value=='0'}">
+                                    <option value="0">Select One</option>
+                                    <option *ngFor="let item of circles" value="{{ item.circleNo }}"> {{ item.circleName
+                                        }} </option>
+                                </select>
+                                <div class="invalid-feedback ">
+                                    <div>Taxes Circle is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6" *ngIf="selectedType == 'CHALLAN'">
+                        <div class="form-group">
+                            <label for="branch" class="label col-8 form-control-label">Branch</label>
+                            <div class="col-12">
+                                <select class="form-control" id="branch" formControlName="branch"
+                                    [ngClass]="{'is-invalid':advanceTaxEntryForm.get('branch').touched && advanceTaxEntryForm.get('branch').value=='0'}">
+                                    <option value="0" selected>Select One</option>
+                                    <option>Dhaka</option>
+                                    <option>Barisal</option>
+                                    <option>Rajshahi</option>
+                                    <option>Sylhet</option>
+                                    <option>Chittagong</option>
+                                    <option>Khulna</option>
+                                </select>
+                                <div class="invalid-feedback ">
+                                    <div>Branch is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+                <div class="row">
+                    <div class="col-8"></div>
+                    <div class="form-group">
+                        <ng-template #resetBtn>
+                            <div [innerHtml]="resetBtnTooltip"></div>
+                        </ng-template>
+                        <div class="col-12">
+                            <button type="button" id="resetBtn" class="btn btn-warning tooltip-350 reset"
+                                (click)="reset()" [tooltip]="resetBtn">
+                                Reset
+                            </button>
+
+                            <ng-template #searchBtn>
+                                <div [innerHtml]="searchBtnTooltip"></div>
+                            </ng-template>
+                            <button type="button" id="searchBtn" class="btn searchBtn mr-2 tooltip-350" [disabled]="
+                (advanceTaxEntryForm.value.depositType==='PAY_ORDER' && (advanceTaxEntryForm.value.poNo==='' || 
+                advanceTaxEntryForm.value.challanDate==='' || advanceTaxEntryForm.value.bank==='0'))
+                || (advanceTaxEntryForm.value.depositType==='CHEQUE' && (advanceTaxEntryForm.value.chequeNo==='' || 
+                advanceTaxEntryForm.value.challanDate==='' || advanceTaxEntryForm.value.bank==='0'))"
+                                (click)="search($event, searchModalShow)" *ngIf="selectedType != 'CHALLAN'">
+                                <i class="fa fa-search btnText" aria-hidden="true"></i>Search
+                            </button>
+
+                            <button type="button" [disabled]="!advanceTaxEntryForm.valid" class="btn submitBtn"
+                                (click)="submittedData()" *ngIf="selectedType == 'CHALLAN'">
+                                <i class="fa fa-save btnText"></i>Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-sm-12 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>AIT Details &nbsp; &nbsp;
+            </span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mt-2">
+            <div class="content-background formSection">
+                <form class="form-horizontal" [formGroup]="advanceTaxEntryForm" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="advanceTaxTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Challan No</th>
+                                    <th scope="col">Cheque No</th>
+                                    <th scope="col">P.O No</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Payment Mode</th>
+                                    <th scope="col">Bank</th>
+                                    <th scope="col">Branch</th>
+                                    <th scope="col">Zone</th>
+                                    <th scope="col">Circle</th>
+                                    <th scope="col" class="text-center">Tax Office Verification</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of advanceTaxGetData; let k = index">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row">{{ item.depositType }}</td>
+                                    <td scope="row">{{ item.challanNo }}</td>
+                                    <td scope="row" nowrap="nowrap">{{ item.chequeNo ? item.chequeNo : "N/A" }}</td>
+                                    <td scope="row" nowrap="nowrap">{{ item.payOrderNo ? item.payOrderNo : "N/A" }}</td>
+                                    <td scope="row" nowrap="nowrap">{{ item.challanDate }}</td>
+                                    <td scope="row">{{ commonUtilService.commaSeperator(item.challanAmount) }}</td>
+                                    <td scope="row">{{ item.paymentType ? item.paymentType : "N/A" }}</td>
+                                    <td scope="row">{{ item.bank }}</td>
+                                    <td scope="row">{{ item.branch }}</td>
+                                    <td scope="row">{{ item.depositedTaxZone }}</td>
+                                    <td scope="row">{{ item.depositedTaxCircle }}</td>
+                                    <td scope="row" class="text-center" *ngIf="item.verificationStatus==='VERIFIED'">
+                                        <h5><label class="badge badge-success">Verified</label></h5>
+                                    </td>
+                                    <td scope="row" class="text-center" *ngIf="item.verificationStatus==='PENDING'">
+                                        <h5><label class="badge badge-warning">Pending</label></h5>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<ng-template #searchModalShow>
+    <div class="modal-header">
+        <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">{{ selectedTypeName }} Details</h5>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="close_Search()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" [formGroup]="searchForm" aria-labelledby="title">
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="no" class="label form-control-label">{{ selectedTypeName }} No
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="no" class="form-control " readonly>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="date" class="label form-control-label">{{ selectedTypeName }} Date
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="date" class="form-control " readonly>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="amount" class="label form-control-label">{{ selectedTypeName }} Amount
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" (keyup)="onValueChange($event)" (keypress)="numberOnly($event)"
+                        formControlName="amount" class="form-control ">
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="challanNo" class="label form-control-label">Challan No
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="challanNo" class="form-control " readonly>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="bank" class="label form-control-label">Bank
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="bank" class="form-control " readonly>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="branch" class="label form-control-label">Branch
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="branch" class="form-control " readonly>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="taxesZone" class="label form-control-label">Taxes Zone &nbsp; (Where Deposited)
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="taxesZone" class="form-control " readonly>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label for="taxesCircle" class="label form-control-label">Taxes Circle (Where Deposited)
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="taxesCircle" class="form-control " readonly>
+                </div>
+            </div>
+
+        </form>
+        <button type="button" class="btn btn-sm btn-outline-danger" style="float: right;width: 100px;"
+            (click)="close_Search()">close</button>
+        <button type="button" class="btn btn-sm btn-outline-success" style="float: right;width: 100px;"
+            (click)="submittedOtherData()">save</button>
+    </div>
+</ng-template> -->
+
+<div class="col-md-12">
+    <div class="row centered">
+        <div class="col-12">
+          <span><b>Integration of this source tax is under process</b></span>
+        </div>
+    </div>
+</div>
+
+</html>
+
+<ngx-ui-loader ></ngx-ui-loader>
+
+<!-- <pre>Form values: {{advanceTaxEntryForm.value | json}}</pre> -->

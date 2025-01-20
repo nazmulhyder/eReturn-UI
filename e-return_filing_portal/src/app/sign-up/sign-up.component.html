@@ -1,0 +1,78 @@
+<!--new design start-->
+<div class="app-body">
+  <div class="col-md-12 px-0">
+    <div class="row pt-5">
+      <div class="col-md-12 text-center py-2">
+        <!-- <button type="button"
+          class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"><b>Guideline</b></button>
+        <button type="button"
+          class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize mx-2"><b>Reference</b></button>
+        <button type="button"
+          class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"><b>Contact Us</b></button> -->
+      </div>
+      <div class="col-md-12" style="padding-top: 30px;">
+        <div class="form-group text-center">
+          <!-- <h1 class="text-blue logo-text"><b>e-Return</b></h1> -->
+          <img src="assets\img\logo\eReturn_Logo.svg" class="logo-text returnLogo">
+        </div>
+        <div class="form-group text-center mb-4">
+          <h4><b>Sign Up</b></h4>
+          <p class="font-13"><b>Please enter the information below for registration</b></p>
+        </div>
+        <form class="col-md-8 offset-md-2" name="form" [formGroup]="signupForm">
+          <label class="font-14">Taxpayer's Indentification Number (TIN)</label>
+          <div class="input-group mb-3">
+            <input type="text" (keypress)="numberOnly($event)" class="form-control" placeholder="Enter your TIN" formControlName="etin"
+              [ngClass]="{'is-invalid':signupForm.get('etin').touched && signupForm.get('etin').invalid}" required />
+            <div class="invalid-feedback">
+              <div>12 Digit TIN No. is required!</div>
+            </div>
+          </div>
+          <label class="font-14">Mobile Number</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">+880</span>
+            </div>
+            <input type="text" (keypress)="numberOnly($event)" class="form-control" placeholder="Enter your registered mobile no"
+              formControlName="mobilenumber" id="mobilenumber"
+              [ngClass]="{'is-invalid':signupForm.get('mobilenumber').touched && signupForm.get('mobilenumber').invalid}"
+              required />
+            <div class="invalid-feedback">
+              <div>Registered Mobile No. must be 11 digits!</div>
+            </div>
+          </div>
+          <label class="font-14">Captcha</label>
+          <div class="input-group mb-4">
+            <input type="text" class="form-control" placeholder="" formControlName="captcha"
+              [ngClass]="{'is-invalid':signupForm.get('captcha').touched && signupForm.get('captcha').invalid}"
+              required />
+              <!-- <div class="input-group-prepend">
+                <span class="input-group-text" style="height: 38px; background-color: rgb(220, 220, 220);">
+                  <img [src]="captchaImg" width="110" height="30" alt="" />
+                </span>
+              </div> -->
+              <div class="input-group-prepend" id="captcha" style="background-color: rgb(220, 220, 220);">
+              </div>
+            <button type="button" class="btn btn-outline-dark " style="width: 50px;" (click)="reloadCaptcha()"><span><i
+                  class="fa fa-refresh" aria-hidden="true"></i></span></button>
+            <div class="invalid-feedback">
+              <div>captcha is required!</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <button type="submit" (click)="onSubmit()" class="btn btn-block" [disabled]="!signupForm.valid"
+                style="background-color:#145DA0;color: white;">Verify</button>
+            </div>
+          </div>
+          <div class="input-group mb-4 text-center justify-content-center pt-2">
+            <div class="font-14" style="font-style: bold;">Already registered?&nbsp;<a routerLink="/auth/sign-in"
+                style="color: #145DA0; font-weight: normal; cursor: pointer;">Sign in</a></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-ui-loader></ngx-ui-loader>
+<!--new design end-->

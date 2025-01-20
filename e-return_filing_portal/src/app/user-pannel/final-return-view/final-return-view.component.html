@@ -1,0 +1,90 @@
+<div *ngIf="isShow">
+  <!-- <div> -->
+  <div class="row" ngxUiLoaderBlurred>
+    <div class="col-sm-12">
+      <div class="row mb-4">
+        <div class="col-12 col-sm-2">
+          <span style="font-size:20px; font-weight: bold; color: #22223B;">Return</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 container-cover-shadow">
+      <div id="print_final_return_view">
+      <app-single-return-view *ngIf="singleReturnViewVisible"></app-single-return-view>
+      <app-return-view941 *ngIf="commonReturnView_941Visible"></app-return-view941>
+      <app-return-view922 *ngIf="salaryReturnView_922Visible"></app-return-view922>
+      <app-return-view903 *ngIf="housePropertyView_903Visible && isHPDataExists"></app-return-view903>
+      <app-return-view884 *ngIf="businessReturnView_884Visible && isBusinessDataExists"></app-return-view884>
+      <app-return-view865 *ngIf="rebateReturnView_865Visible"></app-return-view865>
+      <app-return-view846 *ngIf="assetsReturnView_846Visible"></app-return-view846>
+      <!-- <app-return-view-it10-bb20167 *ngIf="it10bb20167ReturnViewVisible"></app-return-view-it10-bb20167> -->
+      <app-return-view-it10-bb20167 *ngIf="isExpenditureExists"></app-return-view-it10-bb20167>
+      <!-- <app-acknowledgement941 *ngIf="commonReturnView_941Visible"></app-acknowledgement941> -->
+      <div class="col-sm-12" style="padding-left: 10px; padding-right: 10px;">
+        <div class="content-background" style="margin-bottom: 10px;">
+          <div class="row px-2 pt-2 text-center mt-2">
+            <div class="col-sm-12">
+              <h5 class="font-weight-bolder">Verification and signature</h5>
+            </div>
+          </div>
+          <div class="row border-full">
+            <div class="col-sm-12">
+              <div class="row">
+                <!-- <div class="col-sm-1">
+                  <input type="checkbox" name="" id="">
+                </div> -->
+                <div class="col-sm-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h5>Verification</h5>
+                       <!-- <p class="text-justify"><input class="largerCheckbox" [disabled]="isReturnSubmissionSuccessful==true" type="checkbox" [checked]="verificaionChecked" (change)="onVerificationChange($event)" style="margin-right: 10px;"> I solemnly declare that to the best of my knowledge and belief the information given in this
+                       return statement and the schedule are correct and complete.</p> -->
+    
+                    </div>
+                    <div class="row">
+                         <div class="col-md-1">
+                          <input class="largerCheckbox" [disabled]="true" type="checkbox" [checked]="true">
+                         </div>
+                         <div class="col-md-11 text-justify">
+                          I solemnly declare that to the best of my knowledge and belief, the information given in this
+                          return, statements, schedules, and online forms are correct and complete.
+                         </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="row border-top">
+                        <div class="col-sm-6 border-right">
+                          <div class="row">&nbsp;Name</div>
+                          <div class="row mb-2">&nbsp;{{taxPayerName}}</div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="row">&nbsp;Signature & Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{submissionDate}}</div>
+                          <div class="row mb-2">
+                            <i>
+                              &nbsp;This is a system generated document. No signature is required.
+                            </i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+    
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button"
+    style="float: right !important;margin-top: 12px; margin-right: 14px !important; margin-bottom: 10px !important; width: 75px !important;"
+    class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"
+    [printStyle]="{body : {'background': 'white'}}" [useExistingCss]="true" printTitle="Return-{{userTin}}" printSectionId="print_final_return_view" ngxPrint>
+    <i class="fa fa-print mr-1" aria-hidden="true"></i>
+    <b>Print</b></button>
+
+    </div>
+  </div>
+</div>
+<ngx-ui-loader text="Loading Return View"></ngx-ui-loader>

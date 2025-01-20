@@ -1,0 +1,359 @@
+.bg_image{
+    /* background-image: url('assets\img\background\welcome1.png'); */
+    background-image: url('assets/img/background/bg.png');
+    height: 98vh;
+    width: 98.93vw;
+    /* margin-top: 30px;
+    min-height: 82vh; */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.content-bg{
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029!important;
+    border-radius: 5px!important;
+    opacity: 1!important;
+    padding: 20px 30px 20px 30px!important;
+}
+
+.nbr_logo{
+    float: left;
+    margin-left: 60px;
+    width:16vw;
+    height:7vh;
+}
+
+.mujib100_logo{
+    float: right;
+    margin-right: 50px;
+    width:10vw;
+    height:11vh;
+}
+
+.main_section{
+    margin-top: 25vh;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.site_link{
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.link_Btn {
+    background-color: #01649A;
+    color: #ffffff;
+    outline: none;
+}
+
+.fontColor {
+    /* margin-left: 100px; */
+    color: rgb(164,172,173);
+}
+  
+.created-by{
+    float: right;
+}
+  
+.img-fluid{
+    /* margin-top: 5px; */
+    height: 60%;
+    float: left;
+    margin-left: -20px;
+}
+
+.eLedger_logo{
+    margin-left: 4.75vw !important;
+}
+  
+/* .nbrText{
+    margin-left: 180px;
+} */
+  
+  
+.synesis_logo{
+    margin-top: 3px;
+    height: 20px;
+    float: left;
+    margin-left: -20px;
+}
+  
+.art_logo_section{
+    /* margin-left: 100px; */
+    color: rgb(164,172,173);
+}
+  
+.art_logo{
+    margin-top: 3px;
+    height: 22px;
+    width: 27px;
+    float: left;
+    margin-left: -20px;
+}
+
+
+.link_logo{
+    width:10vw;
+    height:7vh;
+    margin-left:4vw;
+    cursor: pointer;
+}
+
+
+/* start */
+.eTIN a {
+    text-decoration: none;
+    color: black;
+    cursor: default;
+    font-weight: normal;
+}
+
+.eTIN a span {
+    visibility: hidden;
+    position: absolute;
+    /* left: 18em;
+    top: -2em; */
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    box-shadow: 1px 1px 10px 2px #00000029;
+    color: #0F0F0F;
+    width: 17em;
+    /* border: 1px solid #404040; */
+    font-size: 0.8em;
+    padding: 0.3em;
+    cursor: default;
+    line-height: 1.8;
+    border-radius: 5px;
+    margin-left: -30px!important;
+    text-align: left;
+}
+
+.eTIN a:hover span {
+    visibility: visible;
+}
+/* end */
+
+
+/* start */
+
+.eReturn a {
+    text-decoration: none;
+    color: black;
+    cursor: default;
+    font-weight: normal;
+}
+
+.eReturn a span {
+    visibility: hidden;
+    position: absolute;
+    /* left: 18em;
+    top: -2em; */
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    box-shadow: 1px 1px 10px 2px #00000029;
+    color: #0F0F0F;
+    width: 17em;
+    /* border: 1px solid #404040; */
+    font-size: 0.8em;
+    padding: 0.3em;
+    cursor: default;
+    line-height: 1.8;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.eReturn a:hover span {
+    visibility: visible;
+}
+
+/* end */
+
+/* start */
+
+.eTaxPayment a {
+    text-decoration: none;
+    color: black;
+    cursor: default;
+    font-weight: normal;
+}
+
+.eTaxPayment a span {
+    visibility: hidden;
+    position: absolute;
+    /* left: 18em;
+    top: -2em; */
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    box-shadow: 1px 1px 10px 2px #00000029;
+    color: #0F0F0F;
+    width: 17em;
+    /* border: 1px solid #404040; */
+    font-size: 0.8em;
+    padding: 0.3em;
+    cursor: default;
+    line-height: 1.8;
+    border-radius: 5px;
+    margin-left: 30px;
+    text-align: left;
+}
+
+.eTaxPayment a:hover span {
+    visibility: visible;
+}
+
+/* end */
+
+/* start */
+.eReturnLedger a {
+    text-decoration: none;
+    color: black;
+    cursor: default;
+    font-weight: normal;
+}
+
+.eReturnLedger a span {
+    visibility: hidden;
+    position: absolute;
+    /* left: 18em;
+    top: -2em; */
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    box-shadow: 1px 1px 10px 2px #00000029;
+    color: #0F0F0F;
+    width: 17em;
+    /* border: 1px solid #404040; */
+    font-size: 0.8em;
+    padding: 0.3em;
+    cursor: default;
+    line-height: 1.8;
+    border-radius: 5px;
+    margin-left: 30px;
+    text-align: left;
+}
+
+.eReturnLedger a:hover span {
+    visibility: visible;
+}
+/* end */
+
+
+/* start */
+.eTDS a {
+    text-decoration: none;
+    color: black;
+    cursor: default;
+    font-weight: normal;
+}
+
+.eTDS a span {
+    visibility: hidden;
+    position: absolute;
+    /* left: 18em;
+    top: -2em; */
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    box-shadow: 1px 1px 10px 2px #00000029;
+    color: #0F0F0F;
+    width: 17em;
+    /* border: 1px solid #404040; */
+    font-size: 0.8em;
+    padding: 0.3em;
+    cursor: default;
+    line-height: 1.8;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.eTDS a:hover span {
+    visibility: visible;
+}
+/* end */
+
+/* start */
+.eTax_Service a {
+    text-decoration: none;
+    color: black;
+    cursor: default;
+    font-weight: normal;
+}
+
+.eTax_Service a span {
+    visibility: hidden;
+    position: absolute;
+    /* left: 18em;
+    top: -2em; */
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    box-shadow: 1px 1px 10px 2px #00000029;
+    color: #0F0F0F;
+    width: 17em;
+    /* border: 1px solid #404040; */
+    font-size: 0.8em;
+    padding: 0.3em;
+    cursor: default;
+    line-height: 1.8;
+    border-radius: 5px;
+    margin-left: 20px;
+    text-align: left;
+}
+
+.eTax_Service a:hover span {
+    visibility: visible;
+}
+/* end */
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+@media (max-width: 767px){
+    .link_logo{
+        width: 33vw;
+        height:7vh;
+        margin-left:10vw;
+        cursor: pointer;
+    }
+    .eLedger_logo{
+        margin-left: 13vw !important;
+    }
+
+    .nbr_logo{
+        float: left;
+        margin-left: 24px;
+        width: 180px;
+        height: 40px;
+    }
+    
+    .mujib100_logo{
+        margin-top: -100px;
+        float: right;
+        margin-right: 30px;
+        width:22vw;
+        height:11vh;
+    }
+
+    .bg_image{
+        background-image: url('assets/img/background/bg.png');
+        height: 107vh;
+        width: 105vw;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+    }
+
+    @media (max-height: 568px){
+        .mujib100_logo{
+            margin-top: -85px; 
+        }
+        .bg_image{
+            background-image: url('assets/img/background/bg.png');
+            height: 112vh;
+            width: 109vw;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+    
+        }
+    }
+}

@@ -1,0 +1,730 @@
+<div class="row" *ngIf="isNotReturnSubmit">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-12 col-sm-2">
+        <span class="incomeDetailsSpan">Rebate</span>
+      </div>
+      <div class="col-12 col-sm-10">
+        <div class="row buttonAllign">
+          <button type="button" class="btn btn-pill rounded-pill btn-outline-dark btn-customize btn-sm main_nav"
+            *ngFor="let head of selectedNavbar; let i = index" (click)="mainNavActiveSelect(head['id'])"
+            [class.active]="mainNavActive[head['id']]" routerLink="{{head['link']}}"
+            style="float: right; margin-right: 5px;">{{head['name']}}
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 30px;">
+      <div class="content-background">
+        <form [formGroup]="rebateForm">
+          <div style="margin-left: 5px;">
+            <div class="investmentCategory">
+              <p><b>Investment Category</b></p>
+              <hr>
+            </div>
+            <!-- TABLE - 1 -->
+            <div class="input-group mb-3">
+              <div class="form-check" placement="right" style="padding-right: 5px">
+                <input class="form-check-input" type="checkbox" formControlName="lifeInsurancePremium"
+                  (change)="onLifeInsuranceChange($event)" id="lifeInsurancePremium">
+                <label class="form-check-label" for="defaultCheck1" style="margin-right: 40px;">
+                  Life Insurance Premium
+                </label>
+              </div>
+            </div>
+            <div class="form-group" style="margin-left: 5px;" *ngIf="chklifeInsurance">
+              <div class="main">
+                <div class="col-12 addAnotherButtonClass">
+                  <!-- <button type="button" class="addAnotherBtnStyle" (click)="addlifeInsuranceRow(i)"> -->
+                  <button type="button" class="addAnotherBtnStyle" (click)="add_row_table_1()">
+                    &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    Add&nbsp;
+                  </button>
+                </div>
+                <div class="table-responsive tableBgStyle" id="dynamicTable">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Life Insurance Policy Number</th>
+                        <th scope="col">Insurance Company</th>
+                        <th scope="col">Policy Value</th>
+                        <th scope="col">Premium Paid</th>
+                        <th scope="col">Allowable Amount</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of table_1_List.controls; let k = index" [formGroup]="item">
+                        <td scope="row">{{ k+1 }}</td>
+                        <td>
+                          <input type="text" class="form-control" formControlName="policyNumber" (keyup)="changeLIP(k,'policyNumber')" placeholder="" [ngClass]="{'is-invalid': validateLIP[k].policyNumber_showError}">
+                          <div class="invalid-feedback">
+                            <div>Life Insurance Policy Number is Required!</div>
+                          </div>
+                        </td>
+                        <td>
+                          <input type="text" class="form-control" formControlName="insuranceCompany" (keyup)="changeLIP(k,'insuranceCompany')" placeholder="" [ngClass]="{'is-invalid': validateLIP[k].insuranceCompany_showError}">
+                          <div class="invalid-feedback">
+                            <div>Insurance Company is Required!</div>
+                          </div>
+                        </td>
+                        <td>
+                          <input type="text" (keypress)="numberOnly($event)" class="form-control text-right"
+                            formControlName="policyValue" placeholder="" (keyup)="commaSeperateLIP(item.value.policyValue,item.value.premiumPaid,k)" (keyup)="changeLIP(k,'policyValue')" [ngClass]="{'is-invalid': validateLIP[k].policyValue_showError}">
+                            <div class="invalid-feedback">
+                              <div>Policy Value is Required!</div>
+                            </div>
+                        </td>
+                        <td><input type="text"  (keypress)="numberOnly($event)" class="form-control text-right"
+                            formControlName="premiumPaid" placeholder="" (keyup)="commaSeperateLIP(item.value.policyValue,item.value.premiumPaid,k)" (keyup)="changeLIP(k,'premiumPaid')"   (keyup)="summaryLIP()" [ngClass]="{'is-invalid': validateLIP[k].premiumPaid_showError}">
+                            <div class="invalid-feedback">
+                              <div>Premium Paid is Required!</div>
+                            </div>
+                        </td>
+                        <td><input type="text"  (keypress)="numberOnly($event)" class="form-control text-right"
+                          formControlName="allowableAmt_lip" placeholder="" readonly>
+                      </td>
+                        <td>
+                          <button *ngIf="isLifeInsuranceDeleteActionShow" (click)="delete_table_1_row(k)"
+                            class="deleteBtnStyle">
+                            <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- TABLE - 2 -->
+            <div class="input-group mb-3">
+              <div class="form-check" placement="right" style="padding-right: 5px">
+                <input class="form-check-input" type="checkbox" formControlName="dps" (change)="onDpsChange($event)"
+                  id=dps>
+                <label class="form-check-label" for="defaultCheck2" style="margin-right: 40px;">
+                  Deposit Pension Scheme (DPS)
+                </label>
+              </div>
+            </div>
+            <div class="form-group" style="margin-left: 5px;" *ngIf="chkDPS">
+              <div class="main">
+                <div class="col-12 addAnotherButtonClass">
+                  <!-- <button type="button" class="addAnotherBtnStyle" (click)="addDpsRow(i)"> -->
+                  <button type="button" class="addAnotherBtnStyle" (click)="add_row_table_2()">
+                    &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    Add&nbsp;
+                  </button>
+                </div>
+                <div class="table-responsive tableBgStyle" id="dynamicTable">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Bank/FI</th>
+                        <th scope="col">Account No</th>
+                        <th scope="col">Deposit Amount</th>
+                        <th scope="col">Allowable Amount</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of table_2_List.controls; let k = index" [formGroup]="item">
+                        <td scope="row">{{ k+1 }}</td>
+                        <td>
+                          <input type="text" class="form-control" formControlName="bankorFI" id="exampleRegistrationNo1" (keyup)="changeDPS(k, 'bankorFI')"
+                            placeholder="" [ngClass]="{'is-invalid': validateDPS[k].bankorFI_showError}">
+                            <div class="invalid-feedback">
+                              <div>Bank/FI is Required!</div>
+                            </div>
+                        </td>
+                        <td>
+                          <input type="text" class="form-control" formControlName="accountNo" (keyup)="changeDPS(k, 'accountNo')"
+                            id="exampleRegistrationNo1" placeholder="" [ngClass]="{'is-invalid': validateDPS[k].accountNo_showError}">
+                            <div class="invalid-feedback">
+                              <div>Account No is Required!</div>
+                            </div>
+                        </td>
+                        <td><input type="text"  (keypress)="numberOnly($event)" (keyup)="changeDPS(k, 'depositAmount')" class="form-control text-right"
+                            formControlName="depositAmount" id="exampleRegistrationNo1" placeholder="" (keyup)="commaSeperateDPS(item.value.depositAmount,k)" (keyup)="summaryDPS()"
+                            [ngClass]="{'is-invalid': validateDPS[k].depositAmount_showError}">
+                            <div class="invalid-feedback">
+                              <div>Deposit Amount is Required!</div>
+                            </div>
+                        </td>
+                        <td><input type="text" (keypress)="numberOnly($event)" class="form-control text-right"
+                          formControlName="allowableAmt_dps" placeholder="" readonly>
+                      </td>
+                        <td *ngIf="isDpsDeleteActionShow">
+                          <button (click)="delete_table_2_row(k)" class="deleteBtnStyle">
+                            <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- TABLE - 3 -->
+            <div class="input-group mb-3">
+              <div class="form-check" placement="right" style="padding-right: 5px">
+                <input class="form-check-input" type="checkbox" formControlName="approvedSavingCertificate"
+                  id="approvedSavingCertificate" (change)="onApprovedSavingChange($event)">
+                <label class="form-check-label" for="defaultCheck3" style="margin-right: 40px;">
+                  Approved Savings Certificate
+                </label>
+              </div>
+            </div>
+            <div class="form-group" style="margin-left: 5px;" *ngIf="chkApprovedSaving">
+              <div class="main">
+                <div class="col-12 addAnotherButtonClass">
+                  <button type="button" class="addAnotherBtnStyle" (click)="add_row_table_3()">
+                    &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    Add&nbsp;
+                  </button>
+                </div>
+                <div class="table-responsive tableBgStyle" id="dynamicTable">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Registration No.</th>
+                        <th scope="col">Issue Date</th>
+                        <th scope="col">Investment Amount</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of table_3_List.controls; let k = index" [formGroup]="item">
+                        <td scope="row">{{ k+1 }}</td>
+                        <td>
+                          <input type="text" class="form-control" formControlName="name" id="exampleRegistrationNo1" (keyup)="changeASC(k, 'name')"
+                            placeholder="" [ngClass]="{'is-invalid': validateASC[k].name_showError}">
+                            <div class="invalid-feedback">
+                              <div>Name is Required!</div>
+                            </div>
+                        </td>
+                        <td>
+                          <input type="text" class="form-control" formControlName="registrationNo" (keyup)="changeASC(k, 'registrationNo')"
+                            id="exampleRegistrationNo1" placeholder="" [ngClass]="{'is-invalid': validateASC[k].registrationNo_showError}">
+                            <div class="invalid-feedback">
+                              <div>Registration No is Required!</div>
+                            </div>
+                        </td>
+                        <td>
+                          <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="" formControlName="issueDate"  (bsValueChange)="changeASC(k, 'issueDate')"
+                              aria-label="Recipient's username" aria-describedby="button-addon2" #issueDate="bsDatepicker" bsDatepicker [minDate]="minDateLen" [maxDate]="maxDateLen"
+                              [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}" [ngClass]="{'is-invalid': validateASC[k].issueDate_showError}">
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-info btn-sm" type="button" (click)="issueDate.toggle()">
+                                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </button>
+                              </div>
+                              <div class="invalid-feedback">
+                                <div>Issue Date is Required!</div>
+                              </div>
+                          </div>
+                        </td>
+                        <td><input type="text" (keypress)="numberOnly($event)" class="form-control text-right"
+                            formControlName="investment" id="exampleRegistrationNo1" placeholder="" (keyup)="commaSeperateASC(item.value.investment,k)" (keyup)="summaryASC()"
+                            (keyup)="changeASC(k, 'investment')" [ngClass]="{'is-invalid': validateASC[k].investment_showError}">
+                            <div class="invalid-feedback">
+                              <div>Investment Amount is Required!</div>
+                            </div>
+                        </td>
+                        <td *ngIf="isApprovedSavingDeleteActionShow">
+                          <button (click)="delete_table_3_row(k)" class="deleteBtnStyle">
+                            <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- TABLE -4 -->
+            <div class="input-group mb-3">
+              <div class="form-check" placement="right" style="padding-right: 5px">
+                <input class="form-check-input" type="checkbox" formControlName="generalProvidentFund"
+                  id="generalProvidentFund" (change)="onGPFChange($event)">
+                <label class="form-check-label" for="defaultCheck4" style="margin-right: 40px;">
+                  General Provident Fund (GPF)
+                </label>
+              </div>
+            </div>
+            <div class="form-group" style="margin-left: 5px;" *ngIf="chkGPF">
+              <div class="main">
+                <div class="col-12 addAnotherButtonClass">
+                  <button type="button" class="addAnotherBtnStyle" (click)="add_row_table_4()">
+                    &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    Add&nbsp;
+                  </button>
+                </div>
+                <div class="table-responsive tableBgStyle" id="dynamicTable">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Account No.</th>
+                        <th scope="col">Contribution</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of table_4_List.controls; let k = index" [formGroup]="item">
+                        <td scope="row">{{ k+1 }}</td>
+                        <td>
+                          <input type="text" class="form-control" formControlName="gpfAccountNo" (keyup)="changeGPF(k, 'gpfAccountNo')"
+                            id="exampleRegistrationNo1" placeholder="" [ngClass]="{'is-invalid': validateGPF[k].gpfAccountNo_showError}">
+                            <div class="invalid-feedback">
+                              <div>Account No is Required!</div>
+                            </div>
+                        </td>
+                        <td>
+                          <input type="text"  (keypress)="numberOnly($event)" class="form-control text-right"
+                            formControlName="contribution" id="exampleRegistrationNo1" placeholder="" (keyup)="commaSeperateGPF(item.value.contribution,k)" (keyup)="summaryGPF()"
+                            (keyup)="changeGPF(k, 'contribution')" [ngClass]="{'is-invalid': validateGPF[k].contribution_showError}">
+                            <div class="invalid-feedback">
+                              <div>Contribution is Required!</div>
+                            </div>
+                        </td>
+                        <td *ngIf="isGPFDeleteActionShow">
+                          <button (click)="delete_table_4_row(k)" class="deleteBtnStyle">
+                            <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- TABLE - 5 -->
+            <div class="input-group mb-3">
+              <div class="form-check" placement="right" style="padding-right: 5px">
+                <input class="form-check-input" type="checkbox" formControlName="benevolentFund" id="benevolentFund"
+                  (change)="onBenevolentFundChange($event)">
+                <label class="form-check-label" for="defaultCheck5" style="margin-right: 40px;">
+                  Benevolent Fund & Group Insurance Premium
+                </label>
+              </div>
+            </div>
+            <div class="form-group" style="margin-left: 5px;" *ngIf="chkBenevolentFund">
+              <div class="main">
+                <!-- <div class="col-12 addAnotherButtonClass">
+                  <button type="button" class="addAnotherBtnStyle" (click)="add_row_table_5()">
+                    &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    Add&nbsp;
+                  </button>
+                </div> -->
+                <div class="table-responsive" id="dynamicTable">
+                  <table class="table">
+                    <tbody>
+                      <tr class="border-bottom">
+                        <th style="background: #E1EAEC !important;">Contribution of Benevolent Fund (Amount)</th>
+                        <td>
+                          <input type="text"  (keypress)="numberOnly($event)" class="form-control text-right" (keyup)="changeBenevolentFund('benevolentAmount')"
+                          formControlName="benevolentAmount" id="exampleRegistrationNo1" placeholder="" (keyup)="commaSeperateBF_GIP($event,'benevolentAmount')" (keyup)="summaryBF_GIP()"
+                          [ngClass]="{'is-invalid': validateBF_GIP[0].benevolentAmount_showError}">
+                          <div class="invalid-feedback">
+                            <div>Contribution of Benevolent Fund is Required!</div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr class="border-bottom">
+                        <th style="background: #E1EAEC !important;">Group Insurance Premium (Amount)</th>
+                        <td>
+                          <input type="text" (keypress)="numberOnly($event)" class="form-control text-right" (keyup)="changeBenevolentFund('groupInsurancePremiumAmount')"
+                            formControlName="groupInsurancePremiumAmount" id="exampleRegistrationNo1" placeholder="" (keyup)="commaSeperateBF_GIP($event,'grpInsurancePremium')" (keyup)="summaryBF_GIP()"
+                            [ngClass]="{'is-invalid': validateBF_GIP[0].groupInsurancePremiumAmount_showError}">
+                            <div class="invalid-feedback">
+                              <div>Group Insurance Premium is Required!</div>
+                            </div>
+                        </td>        
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- TABLE - 6 -->
+            <div class="input-group mb-3">
+              <div class="form-check" placement="right" style="padding-right: 5px">
+                <input class="form-check-input" type="checkbox" formControlName="recognizedProvidentFund"
+                  id="recognizedProvidentFund" (change)="onRPFChange($event)">
+                <label class="form-check-label" for="defaultCheck6" style="margin-right: 40px;">
+                  Recognized Provident Fund (RPF)
+                </label>
+              </div>
+            </div>
+            <div class="form-group" style="margin-left: 5px;" *ngIf="chkRPF">
+              <div class="main">
+                <div class="col-12 addAnotherButtonClass">
+                  <button type="button" class="addAnotherBtnStyle" (click)="add_row_table_6()">
+                    &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    Add&nbsp;
+                  </button>
+                </div>
+                <div class="table-responsive tableBgStyle" id="dynamicTable">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Employer Name</th>
+                        <th scope="col">Self Contribution</th>
+                        <th scope="col">Employer Contribution</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of table_6_List.controls; let k = index" [formGroup]="item">
+                        <td scope="row">{{ k+1 }}</td>
+                        <td>
+                          <input type="text" class="form-control" formControlName="employerName" (keyup)="changeRPF(k, 'employerName')"
+                            id="exampleRegistrationNo1" placeholder="" [ngClass]="{'is-invalid': validateRPF[k].employerName_showError}">
+                            <div class="invalid-feedback">
+                              <div>Employer Name is Required!</div>
+                            </div>
+                        </td>
+                        <td>
+                          <input type="text"  (keypress)="numberOnly($event)" class="form-control text-right"
+                            formControlName="selfContribution" id="exampleRegistrationNo1" placeholder="" (keyup)="commaSeperateRPF(item.value.selfContribution,item.value.employerContribution,k)" 
+                            (keyup)="changeRPF(k, 'selfContribution')" [ngClass]="{'is-invalid': validateRPF[k].selfContribution_showError}">
+                            <div class="invalid-feedback">
+                              <div>Self Contribution is Required!</div>
+                            </div>
+                          </td>
+                        <td>
+                          <input type="text"  (keypress)="numberOnly($event)" class="form-control text-right"
+                            formControlName="employerContribution" id="exampleRegistrationNo1" placeholder="" (keyup)="commaSeperateRPF(item.value.selfContribution,item.value.employerContribution,k)"
+                            (keyup)="changeRPF(k, 'employerContribution')" [ngClass]="{'is-invalid': validateRPF[k].employerContribution_showError}">
+                            <div class="invalid-feedback">
+                              <div>Employer Contribution is Required!</div>
+                            </div>
+                        </td>
+                        <td *ngIf="isRPFDeleteActionShow">
+                          <button (click)="delete_table_6_row(k)" class="deleteBtnStyle">
+                            <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- TABLE - 7 -->
+            <div class="input-group mb-3">
+              <div class="form-check" placement="right" style="padding-right: 5px">
+                <input class="form-check-input" type="checkbox" formControlName="approvedStocks" id="approvedStocks"
+                  (change)="onApprovedStocksChange($event)">
+                <label class="form-check-label" for="defaultCheck7" style="margin-right: 40px;">
+                  Approved Stocks or Shares
+                </label>
+              </div>
+            </div>
+            <div class="form-group" style="margin-left: 5px;" *ngIf="chkApprovedStocks">
+              <div class="main">
+                <div class="col-12 addAnotherButtonClass">
+                  <button type="button" class="addAnotherBtnStyle" (click)="add_row_table_7()">
+                    &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    Add&nbsp;
+                  </button>
+                </div>
+                <div class="table-responsive tableBgStyle" id="dynamicTable">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">BO Account No.</th>
+                        <th scope="col">Brokerage House Name</th>
+                        <th scope="col">Investment During the Year</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of table_7_List.controls; let k = index" [formGroup]="item">
+                        <td scope="row">{{ k+1 }}</td>
+                        <td>
+                          <input type="text" class="form-control" formControlName="boAccountNo" (keyup)="changeASS(k, 'boAccountNo')" 
+                            id="exampleRegistrationNo1" placeholder="" [ngClass]="{'is-invalid': validateASS[k].boAccountNo_showError}">
+                            <div class="invalid-feedback">
+                              <div>BO Account No is Required!</div>
+                            </div>
+                        </td>
+                        <td>
+                          <input type="text" class="form-control" formControlName="brokerageHouseName" (keyup)="changeASS(k, 'brokerageHouseName')"
+                            id="brokerageHouseName" placeholder="" [ngClass]="{'is-invalid': validateASS[k].brokerageHouseName_showError}">
+                            <div class="invalid-feedback">
+                              <div>Brokerage House Name is Required!</div>
+                            </div>
+                        </td>
+                        <td>
+                          <input type="text"  (keypress)="numberOnly($event)" class="form-control text-right"
+                            formControlName="investmentDuringtheYear" id="exampleRegistrationNo1" placeholder="" (keyup)="commaSeperateAS_S(item.value.investmentDuringtheYear,k)" (keyup)="summaryAS_S()"
+                            (keyup)="changeASS(k, 'investmentDuringtheYear')" [ngClass]="{'is-invalid': validateASS[k].investmentDuringtheYear_showError}">
+                            <div class="invalid-feedback">
+                              <div>Investment During the Year is Required!</div>
+                            </div>
+                        </td>
+                        <td *ngIf="isApprovedStocksDeleteActionShow">
+                          <button (click)="delete_table_7_row(k)" class="deleteBtnStyle">
+                            <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- TABLE -8,9 -->
+            <div class="input-group mb-3">
+              <div class="form-check" placement="right" style="padding-right: 5px">
+                <input class="form-check-input" type="checkbox" formControlName="others" id="others"
+                  (change)="onOthersChange($event)">
+                <label class="form-check-label" for="defaultCheck8" style="margin-right: 40px;">
+                  Others
+                </label>
+              </div>
+            </div>
+            <div class="form-group" style="margin-left: 10px;" *ngIf="chkOthers && isShow">
+              <div class="input-group mb-3">
+                <div class="form-check" placement="right" style="padding-right: 5px">
+                  <input class="form-check-input" type="checkbox" formControlName="investmentUnder6Schedule"
+                    id="investmentUnder6Schedule" (change)="onInvestmentUnder6ScheduleChange($event)">
+                  <label class="form-check-label" for="defaultCheck8" style="margin-right: 40px;">
+                    Investment Under 6 Schedule Part B
+                  </label>
+                </div>
+              </div>
+              <div class="form-group" style="margin-left: 5px;" *ngIf="chkInvestmentUnder6Schedule">
+                <div class="main">
+                  <div class="col-12 addAnotherButtonClass">
+                    <button type="button" class="addAnotherBtnStyle" (click)="add_row_table_8(i)">
+                      &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                      Add&nbsp;
+                    </button>
+                  </div>
+                  <div class="table-responsive tableBgStyle" id="dynamicTable">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col"></th>
+                          <th scope="col">Paragraph Number</th>
+                          <th scope="col">Description</th>
+                          <th scope="col">Amount</th>
+                          <th scope="col"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of table_8_List.controls; let k = index" [formGroup]="item">
+                          <td scope="row">{{ k+1 }}</td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="paragraphNumber" (keyup)="validedParagraphNo(item.value.paragraphNumber,k)"
+                              id="exampleRegistrationNo1" placeholder="" (keyup)="changeOtherSchedule6(k, 'paragraphNumber')" [ngClass]="{'is-invalid': validateOther_schedule6[k].paragraphNumber_showError}">
+                              <div class="invalid-feedback">
+                                <div>Paragraph Number is Required!</div>
+                              </div>
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="description" (keyup)="changeOtherSchedule6(k, 'description')"
+                              id="brokerageHouseName" placeholder="" [ngClass]="{'is-invalid': validateOther_schedule6[k].description_showError}">
+                              <div class="invalid-feedback">
+                                <div>Description is Required!</div>
+                              </div>
+                          </td>
+                          <td>
+                            <input type="text"  (keypress)="numberOnly($event)" class="form-control text-right"
+                              formControlName="amount" id="exampleRegistrationNo1" placeholder="" (keyup)="commaSeperateOther1(item.value.amount,k)" (keyup)="summaryOther1()"
+                              (keyup)="changeOtherSchedule6(k, 'amount')" [ngClass]="{'is-invalid': validateOther_schedule6[k].amount_showError}">
+                              <div class="invalid-feedback">
+                                <div>Amount is Required!</div>
+                              </div>
+                          </td>
+                          <td *ngIf="isInvestmentUnder6ScheduleDeleteActionShow">
+                            <button (click)="delete_table_8_row(k)" class="deleteBtnStyle">
+                              <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <div class="form-check" placement="right" style="padding-right: 5px">
+                  <input class="form-check-input" type="checkbox" formControlName="investmentUnderSRO"
+                    id="investmentUnderSRO" (change)="onInvestmentUnderSROChange($event)">
+                  <label class="form-check-label" for="defaultCheck8" style="margin-right: 40px;">
+                    Investment Under SRO
+                  </label>
+                </div>
+              </div>
+              <div class="form-group" style="margin-left: 5px;" *ngIf="chkInvestmentUnderSRO">
+                <div class="main">
+                  <div class="col-12 addAnotherButtonClass">
+                    <button type="button" class="addAnotherBtnStyle" (click)="add_row_table_9()">
+                      &nbsp; <i class="fa fa-plus-square" aria-hidden="true"></i>
+                      Add&nbsp;
+                    </button>
+                  </div>
+                  <div class="table-responsive tableBgStyle" id="dynamicTable">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col"></th>
+                          <th scope="col">SRO No.</th>
+                          <th scope="col">Year</th>
+                          <th scope="col">Description</th>
+                          <th scope="col">Amount</th>
+                          <th scope="col"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of table_9_List.controls; let k = index" [formGroup]="item">
+                          <td scope="row">{{ k+1 }}</td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="sroNo" id="sroNo" (keyup)="changeOtherSRO(k, 'sroNo')" placeholder="" [ngClass]="{'is-invalid': validateOther_SRO[k].sroNo_showError}">
+                            <div class="invalid-feedback">
+                              <div>SRO No is Required!</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-group mb-3">
+                              <input type="text" class="form-control" placeholder="" formControlName="sroYear" (bsValueChange)="changeOtherSRO(k, 'sroYear')" 
+                                aria-label="Recipient's username" aria-describedby="button-addon2" [minDate]="minYear"
+                                [maxDate]="maxYear" #sroYear="bsDatepicker" bsDatepicker
+                                [bsConfig]="{ dateInputFormat: 'YYYY', containerClass: 'theme-dark-blue', minMode: 'year' }" [ngClass]="{'is-invalid': validateOther_SRO[k].sroYear_showError}">
+                                <div class="input-group-append">
+                                  <button class="btn btn-outline-info btn-sm" type="button" (click)="sroYear.toggle()">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                  </button>
+                                </div>
+                                <div class="invalid-feedback">
+                                  <div>Year is Required!</div>
+                                </div>
+                            </div>
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="sroDescription" id="sroDescription" (keyup)="changeOtherSRO(k, 'sroDescription')"
+                              placeholder="" [ngClass]="{'is-invalid': validateOther_SRO[k].sroDescription_showError}">
+                              <div class="invalid-feedback">
+                                <div>Description is Required!</div>
+                              </div>
+                          </td>
+                          <td>
+                            <input type="text"  (keypress)="numberOnly($event) " class="form-control text-right"
+                              formControlName="sroAmount" id="exampleRegistrationNo1" placeholder="" (keyup)="commaSeperateOther2(item.value.sroAmount,k)" (keyup)="summaryOther2()"
+                              (keyup)="changeOtherSRO(k, 'sroAmount')" [ngClass]="{'is-invalid': validateOther_SRO[k].sroAmount_showError}">
+                              <div class="invalid-feedback">
+                                <div>Amount is Required!</div>
+                              </div>
+                          </td>
+                          <td *ngIf="isInvestmentUnderSRODeleteActionShow">
+                            <button (click)="delete_table_9_row(k)" class="deleteBtnStyle">
+                              <i class="fa fa-trash fa-lg" style="margin-top: 10px; color:red"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- Summary -->
+        <!-- <div class="content-background" style="margin-bottom: 5px;">
+          <div class="row" type="button" aria-controls="collapseExample">
+            <div class="col-sm-11">
+              <p style="font-weight: bold; font-size: 15px;">
+                Summary
+              </p>
+            </div>
+            <div class="col-sm-1" style="text-align: end;">
+
+            </div>
+          </div>
+          <div class="summary">
+            <table class="table table-striped" id="summaryTable">
+              <thead>
+                <tr>
+                  <th width="70%">Total Actual Investment</th>
+                  <th width="30%" class="text-right">Total Allowable Investment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="pl-50">{{totalRebateActualSum}}</td>
+                  <td class="text-right pr-50">{{totalRebateSum}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div> -->
+        <div class="col-12 netIncomeSection">
+          <div class="row">
+            <div class="col-9 netIncomeDivStyle2">
+              <label class="netIncomeLabel"><b>Total Actual Investment</b></label>
+            </div>
+            <div class="col-3 netIncomeDivStyle2">
+              <input type="text" class="form-control netIncomeInput text-right" id="netIncome" value="{{totalRebateActualSum}}"
+                readonly>
+            </div>
+            <div class="col-12" style="padding: 0; margin: 0;">
+              <hr>
+            </div>
+            <div class="col-9 netTaxExemptedIncomeDivStyle">
+              <label class="netTaxExemptedIncomeLabel"><b>Total Allowable Investment for Rebate</b></label>
+            </div>
+            <div class="col-3 netTaxExemptedIncomeDivStyle">
+              <input type="text" class="form-control netTaxExemptedIncomeInput text-right" id="exemptedIncome"
+                value="{{totalRebateSum}}" readonly>
+            </div>
+          </div>
+        </div>
+
+        <!-- bottom button design start -->
+        <div class="row  mt-4">
+          <div class="col-sm-6 pl-3">
+            <button type="button" class="btn btn-sm backBtn" (click)="onBackPage()">
+              <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left"
+                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+              </svg>&nbsp;
+              Back</button>
+          </div>
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-12 text-right">
+                <button type="button" class="btn btn-sm saveDraftBtn" (click)="saveDraft()">
+                  Save Draft</button>
+                <button type="button" class="btn btn-sm saveContinueBtn" (click)="submittedData()">
+                  <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em" viewBox="0 0 16 16"
+                    class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                      d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                  </svg>
+                  Save & Continue</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- new button design end -->
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-ui-loader></ngx-ui-loader>

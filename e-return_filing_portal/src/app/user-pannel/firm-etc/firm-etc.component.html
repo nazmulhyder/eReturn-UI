@@ -1,0 +1,884 @@
+<div class="row" ngxUiLoaderBlurred *ngIf="isShow">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-12 col-sm-2">
+        <!-- <span style="font: normal normal bold 24px/28px Ubuntu;color: #22223B;">Income Details</span> -->
+        <span style="font-size:20px; font-weight: bold; color: #22223B;">Income Details</span>
+      </div>
+      <div class="col-12 col-sm-10">
+        <div class="row" style="float: right; padding-right: 5px;">
+          <button type="button" class="btn btn-pill rounded-pill btn-outline-dark btn-customize btn-sm main_nav"
+            *ngFor="let head of selectedNavbar; let i = index" (click)="mainNavActiveSelect(head['id'])"
+            [class.activeMainNav]="mainNavActive[head['id']]" routerLink="{{head['link']}}"
+            style="float: right; margin-right: 5px;">{{head['name']}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-12">
+        <ul class="nav nav-tabs nav_font" style="margin-top: 36px">
+          <li class="nav-item" *ngFor="let head of headsOfIncome; let i = index">
+            <a class="nav-link" [class.activeHead]="navActive[head['id']]" routerLink="{{head['link']}}"
+              (click)="navActiveSelect(head['id'])">{{head['name']}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="multiple-section">
+      <div class="row">
+        <div class="col-sm-10">
+          <button class="btn btn-sm btn-light addPropertyBtn" [class.property-btn-active]="activeProperty[item['id']]"
+            *ngFor="let item of firmItems; let i = index" (click)="selectedHeadFromGUI(i, item['id'])">{{item['name']}}
+            <i class="fa fa-times-circle" (click)="onCloseTabClick(closetabpopup)" aria-hidden="true"
+              style="margin-left: 10px;">
+            </i> &nbsp;
+
+            <ng-template #closetabpopup>
+              <div class="modal-header">
+                <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>This action will remove all your unsaved data.</p>
+                <p>Would you like to remove it?</p>
+                <button type="button" class="btn btn-danger" style="float: right;" (click)="close(i)">Remove</button>
+                <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+                  (click)="modalRef.hide()">Keep</button>
+              </div>
+            </ng-template>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="multiple-section" [hidden]="!firmInnerTab">
+      <div class="row">
+        <div class="col-sm-9">
+          <button class="btn btn-sm btn-light addPropertyBtn" [class.property-btn-active]="isVisibleForm == i"
+            *ngFor="let item of firmArray.controls; let i = index" (click)="selectedFirmEtc(i)">
+            <!-- Firm {{i+1}} --> {{firmName[i]}}
+            <i class="fa fa-times-circle" (click)="onCloseTabClick(closetabpopup)" aria-hidden="true"
+              style="margin-left: 10px;">
+            </i>
+            <ng-template #closetabpopup>
+              <div class="modal-header">
+                <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>This action will remove all your unsaved data.</p>
+                <p>Would you like to remove it?</p>
+                <button type="button" class="btn btn-danger" style="float: right;"
+                  (click)="closeFirmInnerTab(i)">Remove</button>
+                <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+                  (click)="modalRef.hide()">Keep</button>
+              </div>
+            </ng-template>
+            &nbsp;
+          </button>
+        </div>
+        <div class="col-sm-3" style="text-align: right; padding: 0;">
+          <button type="button" class="btn btn-sm btn-pill" (click)="insertFormGroupToArray('1')"
+            style="margin-right: 5px; border-radius: 50px; background-color: #01649A; color: white;"><i
+              class="fa fa-plus-square" aria-hidden="true">
+            </i>&nbsp;Add More Firm
+          </button>&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+    <div class="multiple-section" [hidden]="!aOPInnerTab">
+      <div class="row">
+        <div class="col-sm-9">
+          <button class="btn btn-sm btn-light addPropertyBtn" [class.property-btn-active]="isVisibleFormAop == i"
+            *ngFor="let item of aoPArray.controls; let i = index" (click)="selectedFirmEtc(i)">
+            <!-- AoP {{i+1}} -->{{aopName[i]}}
+            <i class="fa fa-times-circle" (click)="onCloseTabClick(closetabpopup)" aria-hidden="true"
+              style="margin-left: 10px;">
+            </i>
+            <ng-template #closetabpopup>
+              <div class="modal-header">
+                <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>This action will remove all your unsaved data.</p>
+                <p>Would you like to remove it?</p>
+                <button type="button" class="btn btn-danger" style="float: right;"
+                  (click)="closeAopInnerTab(i)">Remove</button>
+                <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+                  (click)="modalRef.hide()">Keep</button>
+              </div>
+            </ng-template>
+            &nbsp;
+          </button>
+        </div>
+        <div class="col-sm-3" style="text-align: right; padding: 0;">
+          <button type="button" class="btn btn-sm btn-pill" (click)="insertFormGroupToArray(2)"
+            style="margin-right: 5px; border-radius: 50px; background-color: #01649A; color: white;"><i
+              class="fa fa-plus-square" aria-hidden="true">
+            </i>&nbsp;Add More AoP
+          </button>&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+    <div class="multiple-section" [hidden]="!foreignIncomeInnerTab">
+      <div class="row">
+        <div class="col-sm-9">
+          <button class="btn btn-sm btn-light addPropertyBtn"
+            [class.property-btn-active]="isVisibleFormForeignIncome == i"
+            *ngFor="let item of foreignIncomeArray.controls; let i = index" (click)="selectedFirmEtc(i)">
+            <!-- Foreign Income {{i+1}} --> {{foreignIncomeName[i]}}
+            <i class="fa fa-times-circle" (click)="onCloseTabClick(closetabpopup)" aria-hidden="true"
+              style="margin-left: 10px;">
+            </i>
+            <ng-template #closetabpopup>
+              <div class="modal-header">
+                <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>This action will remove all your unsaved data.</p>
+                <p>Would you like to remove it?</p>
+                <button type="button" class="btn btn-danger" style="float: right;"
+                  (click)="closeForeignInnerTab(i)">Remove</button>
+                <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+                  (click)="modalRef.hide()">Keep</button>
+              </div>
+            </ng-template>
+            &nbsp;
+          </button>
+        </div>
+        <div class="col-sm-3" style="text-align: right; padding: 0;">
+          <button type="button" class="btn btn-sm btn-pill" (click)="insertFormGroupToArray(3)"
+            style="margin-right: 5px; border-radius: 50px; background-color: #01649A; color: white;"><i
+              class="fa fa-plus-square" aria-hidden="true">
+            </i>&nbsp;Add More F.I.
+          </button>&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+    <div class="multiple-section" [hidden]="!spouseInnerTab">
+      <div class="row">
+        <div class="col-sm-9">
+          <button class="btn btn-sm btn-light addPropertyBtn"
+            [class.property-btn-active]="isVisibleFormSpouseIncome == i"
+            *ngFor="let item of spouseIncomeArray.controls; let i = index" (click)="selectedFirmEtc(i)">
+            Spouse/Minor Income {{i+1}}
+            <i class="fa fa-times-circle" (click)="onCloseTabClick(closetabpopup)" aria-hidden="true"
+              style="margin-left: 10px;">
+            </i>
+            <ng-template #closetabpopup>
+              <div class="modal-header">
+                <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>This Action will Remove All Your Unsaved Data.</p>
+                <p>Would You like to Remove It?</p>
+                <button type="button" class="btn btn-danger" style="float: right;"
+                  (click)="closeSpouseInnerTab(i)">Remove</button>
+                <button type="button" class="btn btn-success" style="float: right; margin-right: 10px;"
+                  (click)="modalRef.hide()">Keep</button>
+              </div>
+            </ng-template>
+            &nbsp;
+          </button>
+        </div>
+        <div class="col-sm-3" style="text-align: right; padding: 0;">
+          <button type="button" class="btn btn-sm btn-pill" (click)="insertFormGroupToArray(4)"
+            style="margin-right: 5px; border-radius: 50px; background-color: #01649A; color: white;"><i
+              class="fa fa-plus-square" aria-hidden="true">
+            </i>&nbsp;Add More S.I.
+          </button>&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+    <div class="content-background">
+      <div [hidden]="!firmInnerTab">
+        <form [formGroup]="form" *ngFor="let form of firmArray.controls; let m = index">
+          <div class="row">
+            <div class="col-6 col-sm-6">
+              <div class="content-background" [hidden]="m != isVisibleForm">
+                <div class="form-group">
+                  <label for="firmInput1">Name of the Firm</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="nameFATT" placement="top"></i>
+                  <ng-template #nameFATT> <div [innerHtml]="nameFA"></div>
+                  </ng-template>
+                  <input type="text" class="form-control" id="firmInput1" placeholder=""
+                    (keyup)="firmNameChangeOnKeyUp(m)" formControlName="FirmName" [ngClass]="{'is-invalid': nameOfFirm_showError[m]}">
+                    <div class="invalid-feedback">
+                      <div>Name of the Firm is Required!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="firmInput1">TIN of the Firm</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="tinFATT" placement="top"></i>
+                  <ng-template #tinFATT> <div [innerHtml]="tinFA"></div>
+                  </ng-template>
+                  <input type="text" class="form-control" (keypress)="numberOnly($event)" id="firmInput1" placeholder="" (keyup)="initializeTINFirmAop(m,'tinOfFirm')"
+                     formControlName="tinOfFirm"  [ngClass]="{'is-invalid': tinOfFirm_showError[m]}">
+                     <div class="invalid-feedback">
+                      <div>TIN of the Firm is Required.It should be 12 digit.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="firmInput2">Total Income of the Firm</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="totalIncomeFATT" placement="top"></i>
+                  <ng-template #totalIncomeFATT> <div [innerHtml]="totalIncomeFA"></div>
+                  </ng-template>
+                  <input type="text" (keypress)="numberOnly($event)" class="form-control" id="firmInput2" placeholder="" 
+                    (keyup)="calShareOfIncome(m,'FirmTotalIncome')" (keyup)="calShareOfFirmIncomeNotTaxed(m)"
+                    (keyup)="calShareOfFirmIncomeTaxed(m)" formControlName="FirmTotalIncome"  [ngClass]="{'is-invalid': totalIncomeFirm_showError[m]}">
+                    <div class="invalid-feedback">
+                      <div>Total Income of the Firm is Required!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label>Tax Paid on Total Income by the Firm?</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360 tooltip-360" [tooltip]="TaxPaidTotalIncFATT"></i>
+                  <ng-template #TaxPaidTotalIncFATT> <div [innerHtml]="TaxPaidTotalIncFA"></div>
+                  </ng-template>
+                  <div class="row">
+                    <div class="col-md-6 input-group">
+                      <div class="form-check" placement="right" style="padding-right: 5px">
+                        <input class="form-check-input" type="radio" formControlName="isTaxPaidOnTotalIncByFirm" (change)="isTaxPaidOnTotalIncByFirmTrue($event,m)"
+                           value="1">
+                        <label class="form-check-label" for="chkTaxPaidOnTotalIncByFirmYes" style="margin-right: 40px;">
+                          Yes
+                        </label>
+                        <input class="form-check-input" type="radio"  formControlName="isTaxPaidOnTotalIncByFirm" (change)="isTaxPaidOnTotalIncByFirmFalse($event,m)"
+                          value="0">
+                        <label class="form-check-label" for="chkTaxPaidOnTotalIncByFirmNo">
+                          No
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+                <div class="form-group">
+                  <label for="firmInput1">Taxpayer's Share of Income (%)</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="shareOfIncomeTaxpayerFATT" placement="top"></i>
+                  <ng-template #shareOfIncomeTaxpayerFATT> <div [innerHtml]="shareOfIncomeTaxpayerFA"></div>
+                  </ng-template>
+                  <input type="text" (keyup)="floatingNumbersOnly_firm($event,m)" class="form-control" id="firmInput1" placeholder="" (keyup)="calShareOfIncome(m,'FirmTaxpayerSharedIncome')"
+                    (keyup)="calShareOfFirmIncomeNotTaxed(m)" (keyup)="calShareOfFirmIncomeTaxed(m)"
+                    formControlName="FirmTaxpayerSharedIncome" [ngClass]="{'is-invalid': taxpayerShareIncomeFirm_showError[m]}">
+                    <div class="invalid-feedback">
+                      <div>Taxpayer's Share of Income(%) is Required!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="firmInput2">Salary/Remuneration Received by the Taxpayer</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="remunRecvTaxpayerFATT" placement="top"></i>
+                  <ng-template #remunRecvTaxpayerFATT> <div [innerHtml]="remunRecvTaxpayerFA"></div>
+                  </ng-template>
+                  <input type="text" (keypress)="numberOnly($event)" class="form-control" id="firmInput2" placeholder="" (keyup)="calShareOfIncome(m,'FirmRemunerationTaxpayer')"
+                    (keyup)="calShareOfFirmIncomeNotTaxed(m)" (keyup)="calShareOfFirmIncomeTaxed(m)"
+                    formControlName="FirmRemunerationTaxpayer">
+                </div>
+                <div class="form-group">
+                  <label for="firmInput2">Salary/Remuneration Received by Other Partners</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="remunRecvPartnersFATT" placement="top"></i>
+                  <ng-template #remunRecvPartnersFATT> <div [innerHtml]="remunRecvPartnersFA"></div>
+                  </ng-template>
+                  <input type="text" (keypress)="numberOnly($event)" class="form-control" id="firmInput2" placeholder="" (keyup)="calShareOfIncome(m,'FirmRemunerationPartners')"
+                    (keyup)="calShareOfFirmIncomeNotTaxed(m)" (keyup)="calShareOfFirmIncomeTaxed(m)"
+                    formControlName="FirmRemunerationPartners">
+                </div>
+                <div class="form-group">
+                  <label for="firmInput2">Share of Income</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="shareOfIncomeFATT" placement="top"></i>
+                  <ng-template #shareOfIncomeFATT> <div [innerHtml]="shareOfIncomeFA"></div>
+                  </ng-template>
+                  <input type="text" class="form-control" id="firmInput2" placeholder=""
+                    formControlName="FirmSharedIncome" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="firmInput2">Share of Firm Income (Not Taxed)</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="shareofFirmIncomeNTTT" placement="top"></i>
+                  <ng-template #shareofFirmIncomeNTTT> <div [innerHtml]="shareofFirmIncomeNT"></div>
+                  </ng-template>
+                  <input type="text"  class="form-control" id="firmInput2" placeholder=""
+                    formControlName="FirmSharedIncomeNotTaxed" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="firmInput2">Share of Firm Income (Taxed)</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="shareofFirmIncomeTTT" placement="top"></i>
+                  <ng-template #shareofFirmIncomeTTT> <div [innerHtml]="shareofFirmIncomeT"></div>
+                  </ng-template>
+                  <input type="text"  class="form-control" id="firmInput2" placeholder=""
+                    formControlName="FirmSharedIncomeTaxed" readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div [hidden]="!aOPInnerTab">
+        <form [formGroup]="form" *ngFor="let form of aoPArray.controls; let n = index">
+          <div class="row">
+            <div class="col-6 col-sm-6">
+              <div class="content-background" [hidden]="n != isVisibleFormAop">
+                <div class="form-group">
+                  <label for="firmInput1">Name of the AoP</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="nameFATT" placement="top"></i>
+                  <ng-template #nameFATT> <div [innerHtml]="nameFA"></div>
+                  </ng-template>
+                  <input type="text" class="form-control" id="firmInput1" placeholder=""
+                    (keyup)="aopNameChangeOnKeyUp(n)" formControlName="AoPName" [ngClass]="{'is-invalid': nameOfAop_showError[n]}">
+                    <div class="invalid-feedback">
+                      <div>Name of the AoP is Required!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="firmInput1">TIN of the AoP</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="tinFATT" placement="top"></i>
+                  <ng-template #tinFATT> <div [innerHtml]="tinFA"></div>
+                  </ng-template>
+                  <input type="text" class="form-control" (keypress)="numberOnly($event)" id="firmInput1" placeholder="" (keyup)="initializeTINFirmAop(n,'tinOfAoP')"
+                     formControlName="tinOfAoP" [ngClass]="{'is-invalid': tinOfAoP_showError[n]}">
+                     <div class="invalid-feedback">
+                      <div>TIN of the AoP is Required.It should be 12 digit.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="firmInput2">Total Income of the AoP</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="totalIncomeFATT" placement="top"></i>
+                  <ng-template #totalIncomeFATT> <div [innerHtml]="totalIncomeFA"></div>
+                  </ng-template>
+                  <input type="text"  (keypress)="numberOnly($event)" class="form-control" id="firmInput2" placeholder=""
+                    (keyup)="calShareOfIncomeAoP(n,'AoPTotalIncome')" (keyup)="calShareOfFirmIncomeNotTaxedAoP(n)" (keyup)="calShareOfFirmIncomeTaxedAoP(n)"
+                    formControlName="AoPTotalIncome" [ngClass]="{'is-invalid': totalIncomeAoP_showError[n]}">
+                    <div class="invalid-feedback">
+                      <div>Total Income of the AoP is Required!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label>Tax Paid on Total Income by the AoP?</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360 tooltip-360" [tooltip]="TaxPaidTotalIncFATT"></i>
+                  <ng-template #TaxPaidTotalIncFATT> <div [innerHtml]="TaxPaidTotalIncFA"></div>
+                  </ng-template>
+                  <div class="row">
+                    <div class="col-md-6 input-group">
+                      <div class="form-check" placement="right" style="padding-right: 5px">
+                        <input class="form-check-input" type="radio" formControlName="isTaxPaidOnTotalIncByAoP" (change)="isTaxPaidOnTotalIncByAoPTrue($event,n)"
+                           value="1">
+                        <label class="form-check-label" for="chkTaxPaidOnTotalIncByAoPYes" style="margin-right: 40px;">
+                          Yes
+                        </label>
+                        <input class="form-check-input" type="radio"  formControlName="isTaxPaidOnTotalIncByAoP" (change)="isTaxPaidOnTotalIncByAoPFalse($event,n)"
+                          value="0">
+                        <label class="form-check-label" for="chkTaxPaidOnTotalIncByAoPNo">
+                          No
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+                <div class="form-group">
+                  <label for="firmInput1">Taxpayer's Share of Income (%)</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="shareOfIncomeTaxpayerFATT" placement="top"></i>
+                  <ng-template #shareOfIncomeTaxpayerFATT> <div [innerHtml]="shareOfIncomeTaxpayerFA"></div>
+                  </ng-template>
+                  <input type="text"  (keyup)="floatingNumbersOnly_aop($event)" class="form-control" id="firmInput1" placeholder=""
+                    (keyup)="calShareOfIncomeAoP(n,'AoPTaxpayerSharedIncome')" (keyup)="calShareOfFirmIncomeNotTaxedAoP(n)"
+                    (keyup)="calShareOfFirmIncomeTaxedAoP(n)" formControlName="AoPTaxpayerSharedIncome" [ngClass]="{'is-invalid': taxpayerShareIncomeAoP_showError[n]}">
+                    <div class="invalid-feedback">
+                      <div>Taxpayer's Share of Income(%) is Required!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="firmInput2">Salary/Remuneration Received by the Taxpayer</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="remunRecvTaxpayerFATT" placement="top"></i>
+                  <ng-template #remunRecvTaxpayerFATT> <div [innerHtml]="remunRecvTaxpayerFA"></div>
+                  </ng-template>
+                  <input type="text"  (keypress)="numberOnly($event)" class="form-control" id="firmInput2" placeholder=""
+                    (keyup)="calShareOfIncomeAoP(n,'AoPRemunerationTaxpayer')" (keyup)="calShareOfFirmIncomeNotTaxedAoP(n)"
+                    (keyup)="calShareOfFirmIncomeTaxedAoP(n)" formControlName="AoPRemunerationTaxpayer">
+                </div>
+                <div class="form-group">
+                  <label for="firmInput2">Salary/Remuneration Received by Other Members</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="remunRecvPartnersFATT" placement="top"></i>
+                  <ng-template #remunRecvPartnersFATT> <div [innerHtml]="remunRecvPartnersFA"></div>
+                  </ng-template>
+                  <input type="text" (keypress)="numberOnly($event)" class="form-control" id="firmInput2" placeholder=""
+                    (keyup)="calShareOfIncomeAoP(n,'AoPRemunerationPartners')" (keyup)="calShareOfFirmIncomeNotTaxedAoP(n)"
+                    (keyup)="calShareOfFirmIncomeTaxedAoP(n)" formControlName="AoPRemunerationPartners">
+                </div>
+                <div class="form-group">
+                  <label for="firmInput2">Share of Income</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="shareOfIncomeFATT" placement="top"></i>
+                  <ng-template #shareOfIncomeFATT> <div [innerHtml]="shareOfIncomeFA"></div>
+                  </ng-template>
+                  <input type="text"  class="form-control" id="firmInput2" placeholder=""
+                    formControlName="AoPSharedIncome" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="firmInput2">Share of AoP Income (Not Taxed)</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="shareofFirmIncomeNTTT" placement="top"></i>
+                  <ng-template #shareofFirmIncomeNTTT> <div [innerHtml]="shareofFirmIncomeNT"></div>
+                  </ng-template>
+                  <input type="text" class="form-control" id="firmInput2" placeholder=""
+                    formControlName="AoPSharedIncomeNotTaxed" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="firmInput2">Share of AoP Income (Taxed)</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="shareofFirmIncomeTTT" placement="top"></i>
+                  <ng-template #shareofFirmIncomeTTT> <div [innerHtml]="shareofFirmIncomeT"></div>
+                  </ng-template>
+                  <input type="text" class="form-control" id="firmInput2" placeholder=""
+                    formControlName="AoPSharedIncomeTaxed" readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div [hidden]="!foreignIncomeInnerTab">
+        <form [formGroup]="form" *ngFor="let form of foreignIncomeArray.controls; let o = index">
+          <div class="row">
+            <div class="col-6 col-sm-6">
+              <div class="content-background" [hidden]="o != isVisibleFormForeignIncome">
+                <div class="form-group">
+                  <label for="firmInput1">Gross Foreign Income</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="grossFITT" placement="top"></i>
+                  <ng-template #grossFITT> <div [innerHtml]="grossFI"></div>
+                  </ng-template>
+                  <input type="text"  (keypress)="numberOnly($event)" class="form-control" id="firmInput1" placeholder=""
+                    (keyup)="calculateForeignIncome(o)" formControlName="TotalForeignIncome" [ngClass]="{'is-invalid': grossIncomeforeign_showError[o]}">
+                    <div class="invalid-feedback">
+                      <div>Gross Foreign Income is Required!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="firmInput2">Source of Income</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="sourceofIncomeTT" placement="top"></i>
+                  <ng-template #sourceofIncomeTT> <div [innerHtml]="sourceofIncome"></div>
+                  </ng-template>
+                  <input type="text" class="form-control" id="firmInput2" placeholder="" (keyup) ="initSrcOfIncome(o)"
+                    formControlName="ForeignSourceIncome" [ngClass]="{'is-invalid': srcIncomeForeign_showError[o]}">
+                    <div class="invalid-feedback">
+                      <div>Source of Income is Required!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="firmInput2">Country of Origin</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="countryOfOriginTT" placement="top"></i>
+                  <ng-template #countryOfOriginTT> <div [innerHtml]="countryOfOrigin"></div>
+                  </ng-template>
+                  <!-- <input type="text" class="form-control" id="firmInput2" placeholder=""
+                      formControlName="CountryOrigin"> -->
+
+                  <select class="form-control" formControlName="CountryOrigin" (change)="changeCountryOfOrigin(o)" [ngClass]="{'is-invalid': countryOriginForeign_showError[o]}">
+                    <option value="0" selected>Select</option>
+                    <option value="Afganistan">Afghanistan</option>
+                    <option value="Albania">Albania</option>
+                    <option value="Algeria">Algeria</option>
+                    <option value="American Samoa">American Samoa</option>
+                    <option value="Andorra">Andorra</option>
+                    <option value="Angola">Angola</option>
+                    <option value="Anguilla">Anguilla</option>
+                    <option value="Antigua & Barbuda">Antigua & Barbuda</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Armenia">Armenia</option>
+                    <option value="Aruba">Aruba</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Austria">Austria</option>
+                    <option value="Azerbaijan">Azerbaijan</option>
+                    <option value="Bahamas">Bahamas</option>
+                    <option value="Bahrain">Bahrain</option>
+                    <!-- <option value="Bangladesh">Bangladesh</option> -->
+                    <option value="Barbados">Barbados</option>
+                    <option value="Belarus">Belarus</option>
+                    <option value="Belgium">Belgium</option>
+                    <option value="Belize">Belize</option>
+                    <option value="Benin">Benin</option>
+                    <option value="Bermuda">Bermuda</option>
+                    <option value="Bhutan">Bhutan</option>
+                    <option value="Bolivia">Bolivia</option>
+                    <option value="Bonaire">Bonaire</option>
+                    <option value="Bosnia & Herzegovina">Bosnia & Herzegovina</option>
+                    <option value="Botswana">Botswana</option>
+                    <option value="Brazil">Brazil</option>
+                    <option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
+                    <option value="Brunei">Brunei</option>
+                    <option value="Bulgaria">Bulgaria</option>
+                    <option value="Burkina Faso">Burkina Faso</option>
+                    <option value="Burundi">Burundi</option>
+                    <option value="Cambodia">Cambodia</option>
+                    <option value="Cameroon">Cameroon</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Canary Islands">Canary Islands</option>
+                    <option value="Cape Verde">Cape Verde</option>
+                    <option value="Cayman Islands">Cayman Islands</option>
+                    <option value="Central African Republic">Central African Republic</option>
+                    <option value="Chad">Chad</option>
+                    <option value="Channel Islands">Channel Islands</option>
+                    <option value="Chile">Chile</option>
+                    <option value="China">China</option>
+                    <option value="Christmas Island">Christmas Island</option>
+                    <option value="Cocos Island">Cocos Island</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="Comoros">Comoros</option>
+                    <option value="Congo">Congo</option>
+                    <option value="Cook Islands">Cook Islands</option>
+                    <option value="Costa Rica">Costa Rica</option>
+                    <option value="Cote DIvoire">Cote DIvoire</option>
+                    <option value="Croatia">Croatia</option>
+                    <option value="Cuba">Cuba</option>
+                    <option value="Curaco">Curacao</option>
+                    <option value="Cyprus">Cyprus</option>
+                    <option value="Czech Republic">Czech Republic</option>
+                    <option value="Denmark">Denmark</option>
+                    <option value="Djibouti">Djibouti</option>
+                    <option value="Dominica">Dominica</option>
+                    <option value="Dominican Republic">Dominican Republic</option>
+                    <option value="East Timor">East Timor</option>
+                    <option value="Ecuador">Ecuador</option>
+                    <option value="Egypt">Egypt</option>
+                    <option value="El Salvador">El Salvador</option>
+                    <option value="Equatorial Guinea">Equatorial Guinea</option>
+                    <option value="Eritrea">Eritrea</option>
+                    <option value="Estonia">Estonia</option>
+                    <option value="Ethiopia">Ethiopia</option>
+                    <option value="Falkland Islands">Falkland Islands</option>
+                    <option value="Faroe Islands">Faroe Islands</option>
+                    <option value="Fiji">Fiji</option>
+                    <option value="Finland">Finland</option>
+                    <option value="France">France</option>
+                    <option value="French Guiana">French Guiana</option>
+                    <option value="French Polynesia">French Polynesia</option>
+                    <option value="French Southern Ter">French Southern Ter</option>
+                    <option value="Gabon">Gabon</option>
+                    <option value="Gambia">Gambia</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Ghana">Ghana</option>
+                    <option value="Gibraltar">Gibraltar</option>
+                    <option value="Great Britain">Great Britain</option>
+                    <option value="Greece">Greece</option>
+                    <option value="Greenland">Greenland</option>
+                    <option value="Grenada">Grenada</option>
+                    <option value="Guadeloupe">Guadeloupe</option>
+                    <option value="Guam">Guam</option>
+                    <option value="Guatemala">Guatemala</option>
+                    <option value="Guinea">Guinea</option>
+                    <option value="Guyana">Guyana</option>
+                    <option value="Haiti">Haiti</option>
+                    <option value="Hawaii">Hawaii</option>
+                    <option value="Honduras">Honduras</option>
+                    <option value="Hong Kong">Hong Kong</option>
+                    <option value="Hungary">Hungary</option>
+                    <option value="Iceland">Iceland</option>
+                    <option value="Indonesia">Indonesia</option>
+                    <option value="India">India</option>
+                    <option value="Iran">Iran</option>
+                    <option value="Iraq">Iraq</option>
+                    <option value="Ireland">Ireland</option>
+                    <option value="Isle of Man">Isle of Man</option>
+                    <option value="Israel">Israel</option>
+                    <option value="Italy">Italy</option>
+                    <option value="Jamaica">Jamaica</option>
+                    <option value="Japan">Japan</option>
+                    <option value="Jordan">Jordan</option>
+                    <option value="Kazakhstan">Kazakhstan</option>
+                    <option value="Kenya">Kenya</option>
+                    <option value="Kiribati">Kiribati</option>
+                    <option value="Korea North">Korea North</option>
+                    <option value="Korea Sout">Korea South</option>
+                    <option value="Kuwait">Kuwait</option>
+                    <option value="Kyrgyzstan">Kyrgyzstan</option>
+                    <option value="Laos">Laos</option>
+                    <option value="Latvia">Latvia</option>
+                    <option value="Lebanon">Lebanon</option>
+                    <option value="Lesotho">Lesotho</option>
+                    <option value="Liberia">Liberia</option>
+                    <option value="Libya">Libya</option>
+                    <option value="Liechtenstein">Liechtenstein</option>
+                    <option value="Lithuania">Lithuania</option>
+                    <option value="Luxembourg">Luxembourg</option>
+                    <option value="Macau">Macau</option>
+                    <option value="Macedonia">Macedonia</option>
+                    <option value="Madagascar">Madagascar</option>
+                    <option value="Malaysia">Malaysia</option>
+                    <option value="Malawi">Malawi</option>
+                    <option value="Maldives">Maldives</option>
+                    <option value="Mali">Mali</option>
+                    <option value="Malta">Malta</option>
+                    <option value="Marshall Islands">Marshall Islands</option>
+                    <option value="Martinique">Martinique</option>
+                    <option value="Mauritania">Mauritania</option>
+                    <option value="Mauritius">Mauritius</option>
+                    <option value="Mayotte">Mayotte</option>
+                    <option value="Mexico">Mexico</option>
+                    <option value="Midway Islands">Midway Islands</option>
+                    <option value="Moldova">Moldova</option>
+                    <option value="Monaco">Monaco</option>
+                    <option value="Mongolia">Mongolia</option>
+                    <option value="Montserrat">Montserrat</option>
+                    <option value="Morocco">Morocco</option>
+                    <option value="Mozambique">Mozambique</option>
+                    <option value="Myanmar">Myanmar</option>
+                    <option value="Nambia">Nambia</option>
+                    <option value="Nauru">Nauru</option>
+                    <option value="Nepal">Nepal</option>
+                    <option value="Netherland Antilles">Netherland Antilles</option>
+                    <option value="Netherlands">Netherlands (Holland, Europe)</option>
+                    <option value="Nevis">Nevis</option>
+                    <option value="New Caledonia">New Caledonia</option>
+                    <option value="New Zealand">New Zealand</option>
+                    <option value="Nicaragua">Nicaragua</option>
+                    <option value="Niger">Niger</option>
+                    <option value="Nigeria">Nigeria</option>
+                    <option value="Niue">Niue</option>
+                    <option value="Norfolk Island">Norfolk Island</option>
+                    <option value="Norway">Norway</option>
+                    <option value="Oman">Oman</option>
+                    <option value="Pakistan">Pakistan</option>
+                    <option value="Palau Island">Palau Island</option>
+                    <option value="Palestine">Palestine</option>
+                    <option value="Panama">Panama</option>
+                    <option value="Papua New Guinea">Papua New Guinea</option>
+                    <option value="Paraguay">Paraguay</option>
+                    <option value="Peru">Peru</option>
+                    <option value="Phillipines">Philippines</option>
+                    <option value="Pitcairn Island">Pitcairn Island</option>
+                    <option value="Poland">Poland</option>
+                    <option value="Portugal">Portugal</option>
+                    <option value="Puerto Rico">Puerto Rico</option>
+                    <option value="Qatar">Qatar</option>
+                    <option value="Republic of Montenegro">Republic of Montenegro</option>
+                    <option value="Republic of Serbia">Republic of Serbia</option>
+                    <option value="Reunion">Reunion</option>
+                    <option value="Romania">Romania</option>
+                    <option value="Russia">Russia</option>
+                    <option value="Rwanda">Rwanda</option>
+                    <option value="St Barthelemy">St Barthelemy</option>
+                    <option value="St Eustatius">St Eustatius</option>
+                    <option value="St Helena">St Helena</option>
+                    <option value="St Kitts-Nevis">St Kitts-Nevis</option>
+                    <option value="St Lucia">St Lucia</option>
+                    <option value="St Maarten">St Maarten</option>
+                    <option value="St Pierre & Miquelon">St Pierre & Miquelon</option>
+                    <option value="St Vincent & Grenadines">St Vincent & Grenadines</option>
+                    <option value="Saipan">Saipan</option>
+                    <option value="Samoa">Samoa</option>
+                    <option value="Samoa American">Samoa American</option>
+                    <option value="San Marino">San Marino</option>
+                    <option value="Sao Tome & Principe">Sao Tome & Principe</option>
+                    <option value="Saudi Arabia">Saudi Arabia</option>
+                    <option value="Senegal">Senegal</option>
+                    <option value="Seychelles">Seychelles</option>
+                    <option value="Sierra Leone">Sierra Leone</option>
+                    <option value="Singapore">Singapore</option>
+                    <option value="Slovakia">Slovakia</option>
+                    <option value="Slovenia">Slovenia</option>
+                    <option value="Solomon Islands">Solomon Islands</option>
+                    <option value="Somalia">Somalia</option>
+                    <option value="South Africa">South Africa</option>
+                    <option value="Spain">Spain</option>
+                    <option value="Sri Lanka">Sri Lanka</option>
+                    <option value="Sudan">Sudan</option>
+                    <option value="Suriname">Suriname</option>
+                    <option value="Swaziland">Swaziland</option>
+                    <option value="Sweden">Sweden</option>
+                    <option value="Switzerland">Switzerland</option>
+                    <option value="Syria">Syria</option>
+                    <option value="Tahiti">Tahiti</option>
+                    <option value="Taiwan">Taiwan</option>
+                    <option value="Tajikistan">Tajikistan</option>
+                    <option value="Tanzania">Tanzania</option>
+                    <option value="Thailand">Thailand</option>
+                    <option value="Togo">Togo</option>
+                    <option value="Tokelau">Tokelau</option>
+                    <option value="Tonga">Tonga</option>
+                    <option value="Trinidad & Tobago">Trinidad & Tobago</option>
+                    <option value="Tunisia">Tunisia</option>
+                    <option value="Turkey">Turkey</option>
+                    <option value="Turkmenistan">Turkmenistan</option>
+                    <option value="Turks & Caicos Is">Turks & Caicos Is</option>
+                    <option value="Tuvalu">Tuvalu</option>
+                    <option value="Uganda">Uganda</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="Ukraine">Ukraine</option>
+                    <option value="United Arab Erimates">United Arab Emirates</option>
+                    <option value="United States of America">United States of America</option>
+                    <option value="Uraguay">Uruguay</option>
+                    <option value="Uzbekistan">Uzbekistan</option>
+                    <option value="Vanuatu">Vanuatu</option>
+                    <option value="Vatican City State">Vatican City State</option>
+                    <option value="Venezuela">Venezuela</option>
+                    <option value="Vietnam">Vietnam</option>
+                    <option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
+                    <option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
+                    <option value="Wake Island">Wake Island</option>
+                    <option value="Wallis & Futana Is">Wallis & Futana Is</option>
+                    <option value="Yemen">Yemen</option>
+                    <option value="Zaire">Zaire</option>
+                    <option value="Zambia">Zambia</option>
+                    <option value="Zimbabwe">Zimbabwe</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    <div>Country of Origin is Required!</div>
+                  </div>
+                  
+                </div>
+                <div class="form-group">
+                  <label for="firmInput1">Name of the Employer/Company</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="nameOfEMPTT" placement="top"></i>
+                  <ng-template #nameOfEMPTT> <div [innerHtml]="nameOfEMP"></div>
+                  </ng-template>
+                  <input type="text" class="form-control" id="firmInput1" placeholder=""
+                    (keyup)="foreignIncomeNameChangeOnKeyUp(o)" formControlName="ForeignCompanyName">
+                </div>
+              
+                 <div class="form-group">
+                  <label for="firmInput2">Amount of Foreign Tax Paid</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="amountOfForeignTaxPaidTT" placement="top"></i>
+                  <ng-template #amountOfForeignTaxPaidTT> <div [innerHtml]="amountOfForeignTaxPaid"></div>
+                  </ng-template>
+                  <input type="text"  (keypress)="numberOnly($event)" (keyup)="initializeAmtOfForeignTaxPaid($event,o)" class="form-control" id="firmInput2" placeholder=""
+                    formControlName="amtOfForeignTaxPaid">
+                </div>
+                
+                   <div class="form-group">
+                  <label for="firmInput2">Foreign Income</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="foreignIncomeTT" placement="top"></i>
+                  <ng-template #foreignIncomeTT> <div [innerHtml]="foreignIncome"></div>
+                  </ng-template>
+                  <input type="text"  class="form-control" id="firmInput2" placeholder="" formControlName="ForeignIncome"
+                    readonly>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div [hidden]="!spouseInnerTab">
+        <form [formGroup]="form"  *ngFor="let form of spouseIncomeArray.controls; let p = index">
+          <div class="row">
+            <div class="col-6 col-sm-6">
+              <div class="content-background" [hidden]="p != isVisibleFormSpouseIncome">
+                <div class="form-group">
+                  <label for="spouseInput1">Net Income of Spouse/Minor Children (Not Assessed Separately)</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="spouseIncomeTT" placement="top"></i>
+                  <ng-template #spouseIncomeTT> <div [innerHtml]="spouseIncome"></div>
+                  </ng-template>
+                  <input type="text" (keypress)="numberOnly($event)" (keyup)="initializeSpouseChildIncome($event,p)" class="form-control"  placeholder=""
+                    formControlName="SpouseChildIncome"  [ngClass]="{'is-invalid': netIncomeOfSpouse_showError[p]}">
+                    <div class="invalid-feedback">
+                      <div>Net Income of Spouse/Minor Children is Required!</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="spouseInput2">Name of the Spouse/Child</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="nameOfSpouseTT" placement="top"></i>
+                  <ng-template #nameOfSpouseTT> <div [innerHtml]="html"></div>
+                  </ng-template>
+                  <input type="text"  class="form-control"  placeholder="" (keyup)="spouseIncomeChange(p,'SpouseChildName')"
+                    formControlName="SpouseChildName" [ngClass]="{'is-invalid': nameOfSpouse_showError[p]}">
+                    <div class="invalid-feedback">
+                      <div>Name of the Spouse/Child is Required!</div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="exampleFormControlInput15">Date of Birth</label>
+                      <i class="fa fa-question-circle-o fa-md tooltip-360"  [tooltip]="dateOfSpouseTT" placement="top"></i>
+                      <ng-template #dateOfSpouseTT> <div [innerHtml]="html"></div>
+                      </ng-template>
+                          <div class="input-group">
+                            <input type="text" placeholder="" class="form-control" formControlName="SpouseChildDOB"
+                             bsDatepicker [maxDate]="maxDateLen" #referenceDate="bsDatepicker"
+                              [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-info btn-sm" (click)="referenceDate.toggle()" type="button" id="button-addon2">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                              </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="firmInput2">Relationship</label>
+                      <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="relationOfSpouseTT" placement="top"></i>
+                      <ng-template #relationOfSpouseTT> <div [innerHtml]="html"></div>
+                      </ng-template>
+                      <select class="form-control" formControlName="SpouseChildRelationShip" (change)="spouseIncomeChange(p,'SpouseChildRelationShip')" [ngClass]="{'is-invalid': relationshipOfSpouse_showError[p]}">
+                        <option value="0" selected>Select</option>
+                        <option value="Spouse">Spouse</option>
+                        <option value="Daughter">Daughter</option>  
+                        <option value="Son">Son</option>           
+                      </select>
+                      <div class="invalid-feedback">
+                        <div>Relationship is Required!</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="spouseInput5">Source of Income</label>
+                  <i class="fa fa-question-circle-o fa-md tooltip-360" [tooltip]="srcOfspouseIncomeTT" placement="top"></i>
+                  <ng-template #srcOfspouseIncomeTT> <div [innerHtml]="html"></div>
+                  </ng-template>
+                  <input type="text"  class="form-control"  placeholder="" (keyup)="spouseIncomeChange(p,'SpouseChildSrcOfIncome')"
+                    formControlName="SpouseChildSrcOfIncome"  [ngClass]="{'is-invalid': srcIncomeOfSpouse_showError[p]}">
+                    <div class="invalid-feedback">
+                      <div>Source of Income is Required!</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- bottom button design start -->
+      <div class="row  mt-4">
+        <div class="col-sm-6 pl-3">
+          <button type="button" class="btn btn-sm backBtn" (click)="onBackPage()">
+            <svg style="font-size: 20px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left"
+              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+            </svg>&nbsp;
+            Back</button>
+        </div>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12 text-right">
+              <!-- <button type="button" class="btn btn-sm saveDraftBtn" (click)="saveDraft()">
+                Save Draft</button> -->
+                <button type="button" class="btn btn-sm saveDraftBtn" (click)="saveDraftNew(selectedParent)">
+                  Save Draft</button>
+              <button type="button" class="btn btn-sm saveContinueBtn" (click)="submittedData()">
+                <svg style="font-size: 20px;vertical-align: sub" width="1em" height="1em" viewBox="0 0 16 16"
+                  class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                </svg>
+                Save & Continue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- new button design end -->
+
+    </div>
+  </div>
+</div>
+<ngx-ui-loader></ngx-ui-loader>

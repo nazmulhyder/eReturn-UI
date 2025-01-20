@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Re-Assign Admin</title>
+</head>
+
+<div class="col-md-12 content-background">
+    <div class="row">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Released Admin List &nbsp; &nbsp;
+            </span>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-12 mt-2">
+            <div class="col-md-12">
+                <div class="content-background ">
+                    <div class="table-responsive tableBgStyle" id="adminListTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL.</th>
+                                    <th scope="col">User ID</th>
+                                    <th scope="col">User Name</th>
+                                    <th scope="col">Admin Type</th>
+                                    <th scope="col">Mobile No</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="getInactiveAdminData.length>0">
+                                <tr *ngFor="let item of getInactiveAdminData; let k = index">
+                                    <td scope="row">{{ k+1 }}</td>
+                                    <td scope="row">{{ item.userIdentification }}</td>
+                                    <td scope="row">{{ item.userName }}</td>
+                                    <td scope="row">{{ item.roles[0]['roleName'] }}</td>
+                                    <td scope="row">{{ item.phone }}</td>
+                                    <td scope="row">
+                                        <button class="btn btn-sm customBtn"
+                                            (click)="onReassign(assignModal,item.userIdentification)">Reassign</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #assignModal>
+    <div class="modal-header">
+        <h5 class="modal-title pull-left" style="color: orange; font-size: 16px;">Re-Assign Admin</h5>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="close_assign()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" [formGroup]="reAssignAdminForm" aria-labelledby="title">
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label class="label form-control-label">User ID
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" readonly formControlName="userId" class="form-control " required>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label class="label form-control-label">User Name
+                    </label>
+                </div>
+                <div class="col-8">
+                    <input type="text" formControlName="userName" class="form-control " required
+                        [ngClass]="{'is-invalid':reAssignAdminForm.get('userName').touched && reAssignAdminForm.get('userName').invalid}">
+                    <div class="invalid-feedback ">
+                        <div>User Name is required!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-4">
+                    <label class="label form-control-label">Mobile No
+                    </label>
+                </div>
+                <div class="col-8">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">+880</span>
+                        </div>
+                        <input type="text" id="mobileNo" (keypress)="numberOnly($event)" class="form-control"
+                            placeholder="Enter Mobile No" formControlName="mobileNo"
+                            [ngClass]="{'is-invalid':reAssignAdminForm.get('mobileNo').touched && reAssignAdminForm.get('mobileNo').invalid}"
+                            required />
+                        <div class="invalid-feedback">
+                            <div>Registered Mobile No. must be 11 digits!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- <button type="button" class="btn btn-sm btn-outline-danger mr-1" style="float: right;width: 100px;"
+            (click)="close_extension()">close</button> -->
+        <button type="button" [disabled]="!reAssignAdminForm.valid" class="btn btn-sm customBtn"
+            style="float: right;width: 100px;" (click)="onAssign()">Assign</button>
+    </div>
+</ng-template>
+
+</html>
+
+<ngx-ui-loader></ngx-ui-loader>

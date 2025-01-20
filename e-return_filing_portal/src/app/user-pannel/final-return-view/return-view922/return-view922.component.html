@@ -1,0 +1,1438 @@
+<div class="row custom-container" style="margin-top: 10px; page-break-before: always;">
+  <div class="col-sm-12">
+    <div class="content-background" style="height: 100%">
+      <div class="row px-2 pt-2 text-center">
+        <div class="col-sm-12">
+          <h5 class="font-weight-bolder">SCHEDULE 24A</h5>
+          <h5>Particulars of income from Salaries</h5>
+          <!-- <p style="font-style: italic;">Annex this Schedule to the return of income if you have income from
+            Salaries</p> -->
+        </div>
+        <div class="col-sm-12 text-right customMargin">
+          <img src="assets\img\logo\eReturn_Logo.svg" class="eReturn-logo" alt="logo">
+        </div>
+        <div class="col-sm-12 text-left customMargin">
+          <label for="">Reference No: <span style="font-weight: bold;">{{referenceNo}}</span></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- row -1 -->
+          <div class="row border-full">
+            <div class="col-sm-1 border-right">01</div>
+            <div class="col-sm-5 border-right">
+              <div class="row mt-2">
+                &nbsp;Assessment Year
+              </div>
+              <div class="row mb-2">
+                &nbsp;<input type="text" class="assessment-input-box-len text-center" value="{{assYr1}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr2}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr3}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr4}}" disabled>
+                <span class="mt-2">-</span>
+                <input class="assessment-input-box-len text-center" type="text" value="{{assYr5}}" disabled>
+                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr6}}" disabled>
+              </div>
+            </div>
+            <div class="col-sm-1" style="border-right: 1px solid black;">02</div>
+            <div class="col-sm-5">TIN
+              <br>
+              <label for="">{{userTin}}</label>
+            </div>
+          </div>
+          <!-- row -2 -->
+          <div class="row  mt-4">
+            <div class="col-sm-6">
+              <div class="row ml-1">Particulars</div>
+              <div class="row"></div>
+            </div>
+            <div class="col-sm-2">
+              <div class="row ml-4">Amount</div>
+              <div class="row" style="margin-left: 42px !important;">(A)</div>
+            </div>
+            <div class="col-sm-2">
+              <div class="row ml-4">Tax exempted</div>
+              <div class="row" style="margin-left: 50px !important;">(B)</div>
+            </div>
+            <div class="col-sm-2">
+              <div class="row ml-4">Taxable</div>
+              <div class="row ml-4">(C = A - B)</div>
+            </div>
+          </div>
+
+          <div *ngFor="let data of salaryReturnViewData; let i = index">
+            <!-- row-3 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_BASIC_PAY'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Basic Pay</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">
+                  &nbsp;{{addComma(data.gross)}}
+                </div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">
+                  &nbsp;{{addComma(data.exempted)}}
+                </div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">
+                  &nbsp;{{addComma(data.taxable)}}
+                </div>
+              </div>
+            </div>
+            <!-- row-4 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_SPECIAL_PAY'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Special Pay</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+            <!-- row-5 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_ARREAR_PAY'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <!-- <div class="row">&nbsp;Arrear Pay (if not included in taxable income earlier)</div> -->
+                <div class="row">&nbsp;Arrear Pay</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+            <!-- row-6 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_DEARNESS_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Dearness Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+            <!-- row-7 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_HOUSE_RENT_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;House Rent Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+            <!-- row-8 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_MEDICAL_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Medical Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+            <!-- row-9 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_CONVEYANCE_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Conveyance Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+            <!-- row-10 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_FESTIVAL_BONUS'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Festival Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+            <!-- row-11 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_BANGLA_NEW_YEAR_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Bangla New Year Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+            <!-- row-12 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_LEAVE_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Leave Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable) }}</div>
+              </div>
+            </div>
+            <!-- row-13 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_HONORARIUM_REWARD_FEE'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Honorarium</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+            <!-- row-14 -->
+            <!-- <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_OVERTIME_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Overtime Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div> -->
+            <!-- row-15 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_TADA_NOT_EXPENDED'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;TA/DA etc. not Expended</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+            <!-- row-16 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_EDUCATION_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Education Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-17 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_EMP_CONTRIBUTION_RPF'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Employer’s Contribution to a Recognized Provident Fund</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+            <!-- row-18 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_INTEREST_ACCRUED_RPF'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Interest Accrued on a Recognized Provident Fund</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+            <!-- row-19 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_MOBILE_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Mobile/Cellphone Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+            <!-- row-20 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_RESIDENTIAL_TELEPHN_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Residential Telephone Encashment Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+            <!-- row-21 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_ENTERTAINMENT_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Entertainment Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-22 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_REST_RECREATION_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Rest and Recreation Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-23 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_DEPUTATION_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Deputation Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-24 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_CHARGE_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Charge Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-25 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_JUDICIAL_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Judicial Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-26 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_DEFENSE_SERVICE_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Defence Services Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-27 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_TRANSPORT_MAINTENANCE_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Transport Maintenance Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-28 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_FOREIGN_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Foreign Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-29 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_PERSONAL_PAY'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Personal Pay</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-30 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_GPF_INTEREST'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;GPF Interest</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-31 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_PENSION'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Pension</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-32 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_GRATUITY'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Gratuity</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-32 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_OTHER_RETIREMENT_BENEFITS'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Other Retirement Benefits</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-33 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_VAL_OF_ACMDTN_RFA'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Deemed Income for Rent Free Accommodation</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-34 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_RES_OF_ACMDTN_ACR'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Deemed Income for Free/Concessional Accommodation</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-35 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_VAL_OF_ACMDTN_ACR'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Value of Accommodation at Concessional Rate</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-36 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_RENT_PAID_BY_TAXPAYER_ACR'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Rent Paid by the Taxpayer</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-37 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_VAL_ONCB'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Deemed Income for Other Non-Cash Benefit</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-38 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_COOK_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Cook Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-39 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_OVERTIME_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Overtime Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-40 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_REFRESHMENT_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Refreshment Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-41 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_SECURITY_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Security Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-42 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_TRAINING_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Training Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-43 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_TRAVEL_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Travel Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-44 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_OTHER_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Other Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-45 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_OTHER_INCOME_VALUE'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Other, if any (give detail)</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+            <!-- row-45 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_DEEMED_INCM_TRANSPORT'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Deemed Income for Transport Facility</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-46 -->
+            <!-- <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_SUM_REG'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Total Regular Income</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross) }}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted) }}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable) }}</div>
+              </div>
+            </div> -->
+
+            <!-- row-47 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_SUM_SRO'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)-1}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;SRO Income</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-48 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_TAX_EXEMPTED_INCM_SES'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Tax Exempted Income</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-49 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_TAXABLE_INCM_SES'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{i+3}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Taxable Income</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-50 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_APPOINTMENT_PAY'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Appointment Pay</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-51 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_HILL_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Hill Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-52 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_HAZARDOUS_JOB_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Hazardous Job Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-53 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_FLYING_PAY'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Flying Pay</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-54 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_GOOD_CONDUCT_PAY'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;GOOD CONDUCT PAY</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-55 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_SSG_PAY'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;SSG PAY</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-56 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_WORTHYNESS_PAY'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;WORTHYNESS PAY</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-57 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_BATSMAN_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Batsman Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-58 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_CHAWKI_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Chawki Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-59 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_DAILY_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Daily Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-60 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_DOMESTIC_AID_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Domestic Aid Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-61 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_HAIRCUT_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Haircut Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-62 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_MEDAL_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Medal Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-63 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_RATION_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Ration Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-64 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_TIFFIN_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Tiffin Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-65 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_UNIFORM_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Uniform Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-66 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_WASHING_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Washing Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-67 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_COMPENSATORY_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Compensatory Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+            <!-- row-67 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_RETAINER_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Retainer Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>            
+
+            <!-- row-68 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_DISTURBANCE_ALW'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Disturbance Allowance</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div> 
+            
+            <!-- row-69 -->
+            <div class="row border-top row-height-922" *ngIf="(data.titleKey.substring(0, 3) != 'IS_')">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;{{data.titleKey}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>            
+
+            <!-- row-69 -->
+            <div class="row border-top row-height-922" *ngIf="data.titleKey==='IS_SUM'">
+              <div class="col-sm-1  border-left border-right">
+                <div class="row ml-1">{{(i+3)-1}}</div>
+              </div>
+              <div class="col-sm-5 border-right">
+                <div class="row">&nbsp;Total</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp; {{addComma(data.gross)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.exempted)}}</div>
+              </div>
+              <div class="col-sm-2 border-right">
+                <div class="ml-1 text-right">&nbsp;{{addComma(data.taxable)}}</div>
+              </div>
+            </div>
+
+          </div>
+          <!-- row-47 -->
+          <div class="row border-top row-height-922">
+            <div class="col-sm-1">
+              <div class="row ml-1"></div>
+            </div>
+            <div class="col-sm-5 ">
+              <div class="row ft-12">&nbsp;All figures of amount are in taka (৳)</div>
+            </div>
+            <div class="col-sm-2 ">
+              <div class="row ml-1">&nbsp;</div>
+            </div>
+            <div class="col-sm-2 ">
+              <div class="row ml-1">&nbsp;</div>
+            </div>
+            <div class="col-sm-2 ">
+              <div class="row ml-1">&nbsp;</div>
+            </div>
+          </div>
+          <!-- row-48 -->
+          <div class="row border-top border-bottom mb-4" style="height: 100px;">
+            <div class="col-sm-6  border-left border-right">
+              <div class="row">&nbsp;Name</div>
+              <div class="row">&nbsp;{{taxPayerName}}</div>
+            </div>
+            <div class="col-sm-6 border-right">
+              <div class="row">&nbsp;Signature</div>
+              <div class="row">
+                <i>&nbsp;This is a system generated document. No signature is required.</i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Search</title>
+</head>
+
+<div class="col-md-12 content-background" [formGroup]="searchForm">
+    <div class="row">
+        <div class="col-4 col-sm-4 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left iconStyle">
+                </i> Search &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-4 col-sm-4">
+            <div class="input-group rounded">
+                <input type="text" class="form-control rounded" placeholder="Search TIN" aria-label="Search"
+                    aria-describedby="search-addon" formControlName="searchTIN" (keyup)="onChangeSearch()"/>
+                <button id="search-button" type="button" (click)="searchTIN(searchForm.value.searchTIN)" class="btn btn-primary">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-4 col-sm-4">
+            <label class="mt-2 float-right" for="assessmentYear"> <strong>Assessment Year : </strong> 2021-2022</label>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="isShow">
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="form-horizontal" aria-labelledby="title">
+                    <div class="table-responsive tableBgStyle" id="returnListTable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th width="5%">SL.</th>
+                                    <th width="10%">TIN</th>
+                                    <th width="25%">Taxpayer Name</th>
+                                    <th width="15%">Zone</th>
+                                    <th width="15%">Circle</th>
+                                    <th width="25%">Date of Submission</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of returnGetData; let k = index">
+                                    <td width="5%">{{ k+1 }}</td>
+                                    <td width="10%">{{ item.tinNo }}</td>
+                                    <td width="25%">{{ item.assesName }}</td>
+                                    <td width="15%">{{ item.zone }}</td>
+                                    <td width="15%">{{ item.circle }}</td>
+                                    <td width="25%">{{ item.submissionDate }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-ui-loader></ngx-ui-loader>

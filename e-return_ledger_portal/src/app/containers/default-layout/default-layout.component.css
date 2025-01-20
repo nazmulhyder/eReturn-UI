@@ -1,0 +1,26 @@
+.dropdown-menu a:hover {
+    background-color: #01649A;
+    color: #ffffff;
+}
+
+.img-50{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* width: 35%; */
+    width: 100px;
+    height: 100px;
+}
+
+.img-100{
+    width: 32px;
+    height: 32px;
+}
+
+.main{
+    background-image: url("/assets/img/background/bg.png");
+}
+
+.logoPadding{
+    padding-bottom: 10px !important;
+}

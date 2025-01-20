@@ -1,0 +1,57 @@
+<div class="after-print" id="time-extension-receipt">
+<div class="row custom-container mt-4">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6" >
+        <!-- <div class="row px-2 pt-2 text-right">
+            <div class="col-sm-12">
+              <img src="assets\img\logo\eReturn_logo_png.png" alt="Logo" style="width:140px;">
+            </div>
+          </div> -->
+          <div class="row text-center mt-2">
+              <div class="col-sm-12"><b>Time extension for return submission</b></div>
+          </div>
+        <div class="row text-center mt-4">
+            <div class="col-sm-12"><b>Application Slip</b></div>
+            <div class="col-sm-12">Assessment Year: 2021-2022</div>
+        </div>
+        <div class="row text-left mt-4">
+            <div class="col-sm-12">Name of Taxpayer: {{taxpayerName}}</div>
+        </div>
+        <div class="row text-left mt-1">
+            <div class="col-sm-12">TIN: {{tin}}</div>
+        </div>
+        <div class="row text-left mt-1">
+            <div class="col-sm-6">Circle: {{circle}}</div>
+            <div class="col-sm-6">Zone: {{taxZone}}</div>
+        </div>
+        <div class="row text-left mt-1">
+            <div class="col-sm-12">Applied extension up to: {{appliedExtentionUpto}}</div>
+        </div>
+        <div class="row text-left mt-1">
+            <div class="col-sm-12">Reason for extension: {{reasonOfExtension}}</div>
+        </div>
+        <div class="row text-left mt-4">
+            <div class="col-sm-12">Date of application: {{timeExtensionAppDate}}</div>
+        </div>
+        <div class="row text-left mt-1">
+            <div class="col-sm-12">Application Reference Number: {{timeExtensionTrackingNumber}}</div>
+        </div>
+        <div class="row text-left mt-4">
+            <div class="col-sm-12"><i style="font-size: 13.5px;">This Application Slip is not an order of time extension.</i></div>
+            <div class="col-sm-12"><i style="font-size: 13.5px;">Time extension is subject to the approval by the Deputy Commissioner of Taxes. 
+                You may check the status of your application by logging in to eReturn.</i></div>
+        </div>
+    </div>
+    <div class="col-sm-3"></div>
+</div>
+</div>
+<div class="row">
+    <div class="col-sm-12 text-right">
+        <button type="button"
+    style="float: right !important;margin-top: 12px; margin-right: 14px !important; margin-bottom: 10px !important; width: 95px !important;"
+    class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"
+    [printStyle]="{body : {'background': 'white'}}" [useExistingCss]="true" printTitle="Extension-slip-{{timeExtensionTrackingNumber}}" printSectionId="time-extension-receipt" ngxPrint>
+    <i class="fa fa-print mr-1" aria-hidden="true"></i>
+    <b>Print</b></button>
+    </div>
+</div>

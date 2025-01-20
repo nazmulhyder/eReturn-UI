@@ -1,0 +1,26 @@
+.nextBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 150px;
+}
+    
+.backBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 150px;
+}
+
+.navFont{
+    font-size: 14px;
+}
+
+label,input,select,option,p{
+    font-size: 14px !important;
+}
+
+.activeHead{
+    background-color: #01649A !important;
+    color: #ffffff !important;
+    border: 0px;
+}
+    

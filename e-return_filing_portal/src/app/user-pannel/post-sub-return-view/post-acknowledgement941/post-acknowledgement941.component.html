@@ -1,0 +1,193 @@
+<div class="row custom-container" style="margin-top: 10px">
+    <div class="col-sm-12">
+      <div class="content-background" style="height: 100%">
+        <div class="row px-2 pt-2 text-center">
+          <div class="col-sm-12">
+            <h5 class="font-weight-bolder">ACKNOWLEDGEMENT RECEIPT OF</h5>
+            <h5 class="font-weight-bolder">RETURN OF INCOME</h5>
+          </div>
+        </div>
+
+        <div class="row my-4">
+          <div class="col-sm-12">
+            <!-- row -1 -->
+            <div class="row border-top">
+              <div class="col-sm-6 border-left border-right">
+                <div class="row mt-2">
+                  &nbsp;Assessment Year
+                </div>
+                <div class="row mb-2">
+                  &nbsp;
+                  <input class="ml-1 assessment-input-box-len text-center" value="2" type="text" disabled>
+                  <input class="ml-1 assessment-input-box-len text-center" value="0" type="text" disabled>
+                  <input class="ml-1 assessment-input-box-len text-center" value="2" type="text" disabled>
+                  <input class="ml-1 assessment-input-box-len text-center" value="1" type="text" disabled>
+                  -
+                  <input class="ml-1 assessment-input-box-len text-center" value="2" type="text" disabled>
+                  <input class="ml-1 assessment-input-box-len text-center" value="2" type="text" disabled>
+                </div>
+              </div>
+              <div class="col-sm-6 border-right">
+                <div class="row border-bottom">&nbsp;Return under section 82BB? (tick one)</div>
+                <div class="row" style="height: 70%">
+                  <div class="col-sm-6 border-right">
+                    <div class="row mt-2">
+                      &nbsp;Yes
+                      <input class="ml-4 mt-1 custom-checkbox" type="checkbox" style="width: 30px;" disabled
+                        [checked]="true">
+                    </div>
+                  </div>
+                  <div class="col-sm-6 mt-2">
+                    <div class="row">
+                      &nbsp;No
+                      <input class="ml-4 mt-1 custom-checkbox " type="checkbox" style="width: 30px;" disabled>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- row-2 -->
+            <div class="row border-top">
+              <div class="col-sm-12 border-left border-right" style="height: 80px;">
+                <div class="row mt-2">
+                  &nbsp;Name of the Assessee <br>
+                  &nbsp;{{nameOfAssessee}}
+                </div>
+              </div>
+            </div>
+            <!-- row - 3 -->
+            <div class="row border-top">
+              <div class="col-sm-6 border-left border-right" style="height: 80px;">
+                <div class="row">
+                  &nbsp;Twelve-digit TIN <br>
+                  &nbsp;{{twelveDigitTIN}}
+                </div>
+              </div>
+              <div class="col-sm-6 border-right" style="height: 80px;">
+                <div class="row">
+                  &nbsp;Old TIN
+                </div>
+              </div>
+            </div>
+            <!-- row - 4 -->
+            <div class="row border-top">
+              <div class="col-sm-6 border-left border-right" style="height: 80px;">
+                <div class="row">
+                  &nbsp;Circle <br>
+                  &nbsp;{{circle}}
+                </div>
+              </div>
+              <div class="col-sm-6 border-right" style="height: 80px;">
+                <div class="row">
+                  &nbsp;Taxes Zone <br>
+                  &nbsp;{{zone}}
+                </div>
+              </div>
+            </div>
+            <!-- row-5 -->
+            <div class="row border-top">
+              <div class="col-sm-12 border-left border-right" style="height: 80px;">
+                <div class="row">
+                  &nbsp;Total income shown (serial 34)
+                </div>
+                <div class="row mt-1">
+                  &nbsp;৳ {{totalIncome}}
+                </div>
+              </div>
+            </div>
+
+            <!-- row - 6 -->
+            <div class="row border-top">
+              <div class="col-sm-6 border-left border-right" style="height: 80px;">
+                <div class="row">
+                  &nbsp;Amount payable (serial 41)
+                </div>
+                <div class="row">
+                  &nbsp;৳ {{amountPayable}}
+                </div>
+              </div>
+              <div class="col-sm-6 border-right" style="height: 80px;">
+                <div class="row">
+                  &nbsp;Amount paid and adjusted (serial 46)
+                </div>
+                <div class="row">
+                  &nbsp;৳ {{amt_paid_adjusted}}
+                </div>
+              </div>
+            </div>
+            <!-- row - 7 -->
+            <div class="row border-top">
+              <div class="col-sm-6 border-left border-right" style="height: 80px;">
+                <div class="row">
+                  &nbsp;Amount of net wealth shown in IT10B2016
+                </div>
+                <div class="row">
+                  &nbsp;৳ {{gross_wealth}}
+                </div>
+              </div>
+              <div class="col-sm-6 border-right" style="height: 80px;">
+                <div class="row">
+                  &nbsp;Amount of net wealth surcharge paid
+                </div>
+                <div class="row">
+                  &nbsp;৳
+                </div>
+              </div>
+            </div>
+            <!-- row - 8 -->
+            <div class="row border-top">
+              <div class="col-sm-6 border-left border-right" style="height: 80px;">
+                <div class="row">
+                  &nbsp;Date of Submission (DD-MM-YYYY)
+                </div>
+                <div class="row">
+                  &nbsp;
+                  <input class="assessment-input-box-len text-center" type="text" value="{{dd1}}" disabled>
+                  <input class="assessment-input-box-len text-center" type="text" value="{{dd2}}" disabled>
+
+                  <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{mm1}}" disabled>
+                  <input class="assessment-input-box-len text-center" type="text" value="{{mm2}}" disabled>
+                  <input class="ml-1 assessment-input-box-len text-center" value="{{yy1}}" type="text" disabled>
+                  <input class="assessment-input-box-len text-center" value="{{yy2}}" type="text" disabled>
+                  <input class="assessment-input-box-len text-center" value="{{yy3}}" disabled>
+                  <input class="assessment-input-box-len text-center" value="{{yy4}}" disabled>
+                </div>
+              </div>
+              <div class="col-sm-6 border-right" style="height: 80px;">
+                <div class="row">
+                  &nbsp;Tax Office Entry Number
+                </div>
+                <div class="row">
+                  &nbsp;{{office_entry_no}}
+                </div>
+
+              </div>
+            </div>
+            <!-- row-9 -->
+            <div class="row border-top mt-0 pt-0">
+              <div class="col-sm-12 border-left border-right" style="height: 80px;">
+                <div class="row">
+                  &nbsp;Signature and seal of the official receiving the return
+                </div>
+                <div class="row">
+                  &nbsp;<i>This is a system generated online submission return. No signature required.</i>
+                </div>
+              </div>
+            </div>
+
+            <div class="row border-top border-bottom mb-4" style="height: 100px;">
+              <div class="col-sm-6  border-left border-right">
+                <div class="row">&nbsp;Signature & Date</div>
+              </div>
+              <div class="col-sm-6 border-right">
+                <div class="row">&nbsp;Contact Number of Tax Office</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>

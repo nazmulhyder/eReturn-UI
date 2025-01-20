@@ -1,0 +1,182 @@
+.text-border{
+    border-left: 10px solid #01649A;
+    border-right: 0px solid #01649A;
+    border-top: 0px solid #01649A;
+    border-bottom: 0px solid #01649A;
+    padding: 5px 10px;
+    // font: normal normal normal 22px/42px Open Sans;
+    font-size:22px; 
+    font-weight: normal;
+    color: #000000;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 10px 10px 20px #00000029;
+    border-radius: 10px 37px 37px 10px;
+    opacity: 1;
+}
+
+.titleSection{
+    margin-top: 5px; 
+    margin-bottom: 5px;
+}
+
+.titleText{
+    margin-right: 10px; 
+    color: #FFFFFF;
+}
+
+.iconStyle{
+    margin-right: 10px;
+    color: #01649A;
+}
+
+.formSection{
+    margin-top: 10px;
+}
+
+.incomeDetailsSpan {
+    /* font: normal normal bold 24px/28px Ubuntu; */
+    font-size: 20px;
+    font-weight: bold;
+    color: #22223B;
+  }
+  
+  .buttonAllign {
+    float: right;
+    padding-right: 5px;
+  }
+  
+  .assets_liabilities:hover {
+    float: right;
+    background-color: #01649A;
+    color: white;
+  }
+  
+  .rebateBtn {
+    float: right;
+    background-color: #1350ac;
+    color: white;
+  }
+  
+  #dynamicTable th {
+    background-color: #C0D8DE;
+    color: #424548;
+  }
+  
+  .tableBgStyle {
+    background-color: #FFFFFF;
+  }
+  
+  .main {
+    margin-left: 3px !important;
+    font-size: 12px;
+  }
+  
+  .addAnotherButtonClass {
+    float: right;
+    padding: 0;
+    margin-bottom: 5px;
+  }
+  
+  .addAnotherBtnStyle {
+    width: 75px;
+    color: #01649A;
+    font-size: 14px;
+    float: right;
+    background: none;
+    border: 1px solid #01649A;
+    border-radius: 20px;
+    outline: none;
+  }
+  
+  .main_nav:hover {
+    float: right;
+    background-color: #01649A;
+    color: white;
+  }
+  
+  .active {
+    background-color: #01649A !important;
+    color: white;
+    border: 0px;
+  }
+  
+  label,
+  input,
+  select,
+  option {
+    font-size: 14px !important;
+  }
+  
+  .saveContinueBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 200px;
+  }
+  
+  .backBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 100px;
+  }
+  
+  .deleteBtnStyle {
+    background: none;
+    outline: none;
+    border: none;
+  }
+  
+  .investmentCategory {
+    font-size: 17px;
+  }
+  
+  .saveDraftBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 100px;
+    margin-right: 3px;
+  }
+  .red-border{
+    border: 1px solid red;
+  }
+  .border-none{
+    border: none;
+  }
+  
+  .pl-50
+  {
+    padding-left: 50px !important;
+  }
+  
+  .pr-50
+  {
+    padding-right: 50px !important;
+  }
+  
+  .netIncomeSection {
+    background-color: #E1EAEC;
+    margin-top: 30px; 
+    margin-left: 3px;                    
+    margin-bottom: 30px; 
+    /* border: 1px solid #01649A;  */
+    border-radius: 5px;
+  }
+  
+  .netIncomeDivStyle2 {
+    margin-top: 10px; 
+    /* margin-bottom: 10px; */
+  }
+  .netTaxExemptedIncomeDivStyle {
+    margin-top: -10px; 
+    padding-bottom: 10px !important;
+    /* margin-bottom: 10px; */
+  }
+  .border-bottom{
+    border: 1px solid #E1EAEC !important;
+  }
+
+  .checkbox-align-center
+  {
+     text-align: center !important;
+  }
+  
+  

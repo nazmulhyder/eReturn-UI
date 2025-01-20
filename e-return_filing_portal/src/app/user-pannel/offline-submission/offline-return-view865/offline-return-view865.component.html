@@ -1,0 +1,206 @@
+<div class="row custom-container" style="margin-top: 10px;page-break-before: always;">
+    <div class="col-sm-12">
+        <div class="content-background" style="height: 100%">
+            <div class="row px-2 pt-2 text-center">
+                <div class="col-sm-12">
+                    <h5 class="font-weight-bolder">SCHEDULE 24D</h5>
+                    <p>Particulars of tax credit/rebate<br>
+                        To be annexed to return by an assessee claiming investment tax credit<br>
+                        (Attach the proof of claimed investment, contribution, etc.)</p>
+                </div>
+            </div>
+
+            <div class="row my-4">
+                <div class="col-sm-12">
+                    <!-- row -1 -->
+                    <div class="row border-full">
+                        <div class="col-sm-1 border-right">01</div>
+                        <div class="col-sm-5 border-right">
+                            <div class="row">
+                                &nbsp;Assessment Year
+                            </div>
+                            <div class="row mb-2">
+                                &nbsp;<input type="text" class="assessment-input-box-len text-center" value="{{assYr1}}" disabled>
+                                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr2}}" disabled>
+                                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr3}}" disabled>
+                                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr4}}" disabled>
+                                <span class="mt-2">-</span>
+                                <input class="assessment-input-box-len text-center" type="text" value="{{assYr5}}" disabled>
+                                <input class="ml-1 assessment-input-box-len text-center" type="text" value="{{assYr6}}" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-1" style="border-right: 1px solid black;">02</div>
+                        <div class="col-sm-5">TIN
+                            <br>
+                            <label for="">{{userTin}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-sm-10">
+                    <div class="row">&nbsp;Particulars of rebatable investment, contribution, etc.</div>
+                </div>
+                <div class="col-sm-2">Amount ৳</div>
+            </div>
+            <div class="row border-top">
+                <div class="col-sm-1 border-left border-right">03</div>
+                <div class="col-sm-11">
+                    <div class="row">
+                        <div class="col-sm-9 border-right">&nbsp;Life insurance premium</div>
+                        <div class="col-sm-3  border-right text-right">&nbsp;{{lifeInsurancePremium }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row border-top">
+                <div class="col-sm-1 border-left border-right">04</div>
+                <div class="col-sm-11">
+                    <div class="row">
+                        <div class="col-sm-9 border-right">&nbsp;Contribution to deposit pension scheme (not exceeding
+                            allowable limit)</div>
+                        <div class="col-sm-3  border-right text-right">&nbsp;{{DPS }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row border-top">
+                <div class="col-sm-1 border-left border-right">05</div>
+                <div class="col-sm-11">
+                    <div class="row">
+                        <div class="col-sm-9 border-right">&nbsp;Investment in approved savings certificate</div>
+                        <div class="col-sm-3  border-right text-right">&nbsp;{{approvedSavingCertificate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row border-top">
+                <div class="col-sm-1 border-left border-right">06</div>
+                <div class="col-sm-11">
+                    <div class="row">
+                        <div class="col-sm-9 border-right">&nbsp;Investment in approved debenture or debenture stock,
+                            Stock or Shares</div>
+                        <div class="col-sm-3  border-right text-right">&nbsp;{{approvedStocks }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row border-top">
+                <div class="col-sm-1 border-left border-right">07</div>
+                <div class="col-sm-11">
+                    <div class="row">
+                        <div class="col-sm-9 border-right">&nbsp;Contribution to provident fund to which Provident Fund
+                            Act, 1925 applies</div>
+                        <div class="col-sm-3  border-right text-right">&nbsp;{{gpf }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row border-top">
+                <div class="col-sm-1 border-left border-right">08</div>
+                <div class="col-sm-11">
+                    <div class="row">
+                        <div class="col-sm-9 border-right">&nbsp;Self contribution and employer’s contribution to
+                            Recognized Provident Fund</div>
+                        <div class="col-sm-3  border-right text-right">&nbsp;{{rpf }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row border-top">
+                <div class="col-sm-1 border-left border-right">09</div>
+                <div class="col-sm-11">
+                    <div class="row">
+                        <div class="col-sm-9 border-right">&nbsp;Contribution to Super Annuation Fund</div>
+                        <div class="col-sm-3  border-right ">{{paragraph_6_amount}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row border-top">
+                <div class="col-sm-1 border-left border-right">10</div>
+                <div class="col-sm-11">
+                    <div class="row">
+                        <div class="col-sm-9 border-right">&nbsp;Contribution to Benevolent Fund and Group Insurance
+                            Premium</div>
+                        <div class="col-sm-3  border-right text-right">&nbsp;{{benevolentFund }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row border-top">
+                <div class="col-sm-1 border-left border-right">11</div>
+                <div class="col-sm-11">
+                    <div class="row">
+                        <div class="col-sm-9 border-right">&nbsp;Contribution to Zakat Fund</div>
+                        <div class="col-sm-3  border-right">{{paragraph_13_amount}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row border-top">
+                <div class="col-sm-1 border-left border-right">12</div>
+                <div class="col-sm-11">
+                    <div class="row">
+                        <div class="col-sm-9 border-right">&nbsp;Others,{{paragraph_other_particular}}</div>
+                        <div class="col-sm-3  border-right text-right">&nbsp; {{paragraph_other_amount}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row border-top">
+                <div class="col-sm-1 border-left border-right">13</div>
+                <div class="col-sm-11">
+                    <div class="row">
+                        <div class="col-sm-9 border-right">&nbsp;Total allowable investment, contribution etc.</div>
+                        <div class="col-sm-3  border-right text-right"> &nbsp;{{totalRebateAmt }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row border-left border-right border-bottom border-top">
+                <div class="col-sm-1 border-right">14</div>
+                <div class="col-sm-11">
+                    <div class="row">
+                        <div class="col-sm-9 border-right">&nbsp;Eligible amount for rebate (the lesser of 14A, 14B or
+                            14C)</div>
+                        <div class="col-sm-3 text-right">&nbsp;{{eligibleAmtRebate }}</div>
+                    </div>
+                    <div class="row border-top">
+                        <div class="col-sm-1 border-right">14A </div>
+                        <div class="col-sm-8 border-right">&nbsp;Total allowable investment, contribution, etc. (as in
+                            13) </div>
+                        <div class="col-sm-3 text-left">&nbsp;{{totalRebateAmt }}</div>
+                    </div>
+                    <div class="row border-top">
+                        <div class="col-sm-1 border-right">14B </div>
+                        <div class="col-sm-8 border-right">&nbsp;25 % of the total income [excluding any income
+                            for which a tax exemption or a reduced rate is applicable under sub-section (4) of section
+                            44 or any income from any source or sources mentioned in clause (a) of sub-section (2) of
+                            section 82C.]</div>
+                        <div class="col-sm-3 text-left">&nbsp;{{percentageOfTotalIncomeRebate }}</div>
+                    </div>
+                    <div class="row border-top">
+                        <div class="col-sm-1 border-right">14C </div>
+                        <div class="col-sm-8 border-right">&nbsp;1 crore</div>
+                        <div class="col-sm-3 text-left">&nbsp;{{staticValue }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-sm-1 border-left border-right">15</div>
+                <div class="col-sm-11">
+                    <div class="row">
+                        <div class="col-sm-9 border-right">&nbsp;Amount of tax rebate calculated on eligible amount
+                            (Serial14) under section 44(2)(b)</div>
+                        <div class="col-sm-3 border-right text-right">&nbsp;{{totalInvestmentRebate }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row border-top border-bottom mt-4 mb-4" style="height: 100px;">
+                <div class="col-sm-6  border-left border-right">
+                    <div class="row">&nbsp;Name</div>
+                    <div class="row">&nbsp;{{taxPayerName}}</div>
+                </div>
+                <div class="col-sm-6 border-right">
+                    <div class="row">&nbsp;Signature & Date</div>
+                    <div class="row">
+                        <!-- &nbsp;No signature required -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+<!--new design start-->
+<div class="app-body">
+    <div class="col-md-12 px-0">
+      <div class="row pt-5">
+        <div class="col-md-12 text-center py-2">
+          <!-- <button type="button" class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"><b>Guideline</b></button>                         
+          <button type="button" class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize mx-2"><b>Reference</b></button>
+          <button type="button" class="btn btn-sm bg-white btn-pill rounded-pill btn-outline-dark btn-customize"><b>Contact Us</b></button> -->
+        </div>
+        <div class="col-md-12" style="padding-top: 90px;">
+          <form [formGroup]="otpForm" class="col-md-10 offset-md-2" (ngSubmit)="onSubmit()" style="padding-top: 50px;">    
+            <div class="row">
+              <div class="col-11">
+                <p class="uk-text-bold font-14" style="text-align: center;">Please Check Your Mobile Phone and Enter the 6 Digit OTP below.</p>
+              </div>
+            </div>              
+            <!-- <div  class="form-group text-center" style="color: chocolate;">
+              OTP will expire in <countdown #otpCountdown [config]="{ leftTime: 180, format: 'm:s' }" (event)="handleEvent($event)"></countdown> sec
+            </div>  -->
+            <div class="row mb-3 ml-2">    
+                <input #digitOne   class="custom-otp-input form-control text-center" type="text" id="digit-1" formControlName="otpInp1" name="digit-1" data-next="digit-2" required maxlength="1" (keyup)="onDigitInput($event)"/>
+                <input #digitTwo   class="custom-otp-input form-control text-center ml-2" type="text" id="digit-2" formControlName="otpInp2" name="digit-2" data-next="digit-3" data-previous="digit-1" required maxlength="1" (keyup)="onDigitInput($event)"/>
+                <input #digitThree class="custom-otp-input form-control text-center ml-2" type="text" id="digit-3" formControlName="otpInp3" name="digit-3" data-next="digit-4" data-previous="digit-2" required maxlength="1" (keyup)="onDigitInput($event)"/>
+                <input #digitFour  class="custom-otp-input form-control text-center ml-2" type="text" id="digit-4" formControlName="otpInp4" name="digit-4" data-next="digit-5" data-previous="digit-3" required maxlength="1" (keyup)="onDigitInput($event)"/>
+                <input #digitFive  class="custom-otp-input form-control text-center ml-2" type="text" id="digit-5" formControlName="otpInp5" name="digit-5" data-next="digit-5" data-previous="digit-4" required maxlength="1" (keyup)="onDigitInput($event)"/>
+                <input #digitSix   class="custom-otp-input form-control text-center ml-2" type="text" id="digit-6" formControlName="otpInp6" name="digit-6" data-next="digit-6" data-previous="digit-5" required maxlength="1" (keyup)="onDigitInput($event)"/>
+            </div>
+            <!-- <div class="row mb-3" style="justify-content: center;">
+              <input #digitOne [readonly]="isReadonlyOtpInp" class="custom-otp-input form-control text-center" type="text" id="digit-1" formControlName="otpInp1" name="digit-1" data-next="digit-2" required maxlength="1" (keyup)="onDigitInput($event)"/>
+              <input #digitTwo [readonly]="isReadonlyOtpInp" class="custom-otp-input form-control text-center ml-4" type="text" id="digit-2" formControlName="otpInp2" name="digit-2" data-next="digit-3" data-previous="digit-1" required maxlength="1" (keyup)="onDigitInput($event)"/>
+              <input #digitThree [readonly]="isReadonlyOtpInp" class="custom-otp-input form-control text-center ml-4" type="text" id="digit-3" formControlName="otpInp3" name="digit-3" data-next="digit-4" data-previous="digit-2" required maxlength="1" (keyup)="onDigitInput($event)"/>
+              <input #digitFour [readonly]="isReadonlyOtpInp" class="custom-otp-input form-control text-center ml-4" type="text" id="digit-4" formControlName="otpInp4" name="digit-4" data-next="digit-5" data-previous="digit-3" required maxlength="1" (keyup)="onDigitInput($event)"/>
+            </div> -->
+            <div class="row mb-3">
+              <div class="col-11">
+                <button [disabled]="!otpForm.valid" type="submit" class="btn btn-block" style="background-color:#145DA0;color: white;">Verify</button>
+              </div>
+            </div>
+            <!-- <ng-template [ngIf]="isReadonlyOtpInp==true">
+              <div class="form-group text-center">
+                  <p style="color: red;" class="font-12"><i>You reached your OTP max limit.</i></p>
+              </div>  
+          </ng-template>  -->
+            <div class="row text-right p-0">
+              <!-- OTP limit max three times  <button  type="button" [disabled]="isReadonlyOtpInp" (click)="otpResendCounter()" (click)="otpCountdown.restart()" class="btn btn-outline-dark btn-sm font-11"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;Resend OTP</button> -->
+               <!-- <button  type="button" (click)="resetOTP()" class="btn btn-outline-dark btn-lg font-11">Reset</button> -->
+               <div class="col-11">
+                <button type="button" (click)="resetOTP()" class="btn btn-warning btn-outline-dark btn-lg font-13" style="font-weight: bolder;">Reset</button>
+                <div *ngIf="isCompleteOTPMaxLimit"><p style="color: red;font-weight: bolder;" class="font-13">Your OTP Limit is over! Please try again after 1 minute</p></div>
+                <button [disabled]="otpTimeLeft != 0" *ngIf="!isCompleteOTPMaxLimit"  type="button" (click)="resendOTP()" class="btn btn-outline-dark btn-lg font-13 ml-1" style="font-weight: bolder;">Resend OTP <span *ngIf="isResendOTP" style="color: chocolate;">in <countdown #cd (event)="handleEvent($event)" [config]="{ leftTime: 300 }"></countdown>sec</span></button>
+               </div>   
+          </div>  
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--new design end-->
+  
+  

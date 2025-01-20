@@ -1,0 +1,57 @@
+.menu_bg_Color {
+    background-color: #F4F9FA;
+}
+
+.border-full
+{
+    border: 1px solid #F4F9FA !important;
+}
+
+.navbar-nav a.active {
+    background-color: #01649A;
+    color: #ffffff;
+}
+
+.navbar-nav a:hover {
+    /* background-color: #ddd;
+    color: black; */
+    background-color: #01649A;
+    color: #ffffff;
+}
+
+.nav-item{
+    float: right;
+    padding-right: 5px;
+}
+
+.bg_image{
+    background-image: url('/assets/img/background/eReturn_bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    @media (max-height: 767px){
+        height: 82vh;
+    }
+    @media (min-height: 768px){
+        height: 89vh;
+    }
+}
+
+// .eReturn_logo_sologan{
+//     margin-top: 18vh;
+//     margin-left: 10vw;
+//     width:28%;
+//     height:15%;
+// }
+
+.eReturn_office_logo{
+    margin-top: 24vh;
+    margin-left: 5vw;
+    width:19%;
+    height:5%;
+}
+  
+/* .customMargin{
+    margin-top: -50px;
+} */

@@ -1,0 +1,177 @@
+<div class="row content-background page-default-height" [formGroup]="timeExtensionForm" *ngIf="isShow">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-12 col-sm-3">
+        <div class="titleSection">
+          <span class="text-border">
+            <i class="fa fa-clock-o titleText">
+            </i>Time Extension &nbsp; &nbsp;
+          </span>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 content-background">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+                <label for="taxZone">Tax Zone</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="taxZoneTT" placement="top"></i>
+                <ng-template #taxZoneTT> <div [innerHtml]="TE_Zone"></div>
+                </ng-template>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" id="taxZone" placeholder=""
+                  formControlName="taxZone" disabled>
+                </div>
+              </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+                <label for="taxCircle">Tax Circle</label>
+                <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="taxCircleTT" placement="top"></i>
+                <ng-template #taxCircleTT> <div [innerHtml]="TE_Circle"></div>
+                </ng-template>
+                <input type="text" class="form-control" id="taxCircle" placeholder=""
+                  formControlName="taxCircle" disabled>
+              </div>
+          </div>
+      </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput9">Applied Extension Upto</label>
+          <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="dateOfExtensionTT" placement="top"></i>
+          <ng-template #dateOfExtensionTT>
+            <div [innerHtml]="TE_Upto"></div>
+          </ng-template>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="" (keypress)="dateInputValidate()" formControlName="dateOfTimeExtension"
+              (bsValueChange)="setupDateOfAlienation($event)" aria-label="Recipient's username"
+              [minDate]="dateofExtensionStart" [maxDate]="maxTimeExtensionLimit"
+              [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue'}"
+              aria-describedby="button-addon2" #dateOfExtension="bsDatepicker" bsDatepicker>
+            <div class="input-group-append">
+              <button class="btn btn-outline-info btn-sm" type="button" (click)="dateOfExtension.toggle()">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlInput9">Reasons for Time Extension</label>
+          <i class="fa fa-question-circle-o fa-md tooltip-350" [tooltip]="timeExtensionRemarksTT" placement="top"></i>
+          <ng-template #timeExtensionRemarksTT>
+            <div [innerHtml]="TE_Reason"></div>
+          </ng-template>
+          <textarea name="" id="" cols="65" rows="3" maxlength="254" formControlName="timeExtensionRemarks"
+            style="border: 1px solid #dadde1"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-sm backBtn" (click)="timeExtensionSubmit(isConfirmTE)"
+          [disabled]="!timeExtensionForm.valid" style="float: right !important;;">
+          <i class="fa fa-floppy-o" aria-hidden="true"></i>
+          Submit</button>
+      </div>
+      <div class="col-12 col-sm-3"></div>
+    </div>
+
+    <div class="row mt-4">
+ <div class="col-12">
+        <div class="titleSection">
+          <span class="text-border">
+            <i class="fa fa-clock-o titleText">
+            </i>Details&nbsp;
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4"  >
+      <!-- <div class="col-12 col-sm-1">
+        <div class="titleSection">
+          <span class="text-border">
+            <i class="fa fa-clock-o titleText">
+            </i>Details&nbsp;
+          </span>
+        </div>
+      </div> -->
+      <div class="col-12 col-sm-12 content-background">
+        <div class="table-responsive tableBgStyle" id="extensionDetailsTable">
+          <table class="table">
+            <thead  *ngIf = "tableLen != 0">
+              <tr>
+                <th width="5%">SL.</th>
+                <th width="12%" class="text-center">Ticket Number</th>
+                <th width="12%" class="text-center">Assessment Year</th>
+                <th width="12%" class="text-center">Application Date</th>
+                <th width="15%" class="text-center">Requested Extension Upto</th>
+                <!-- <th class="text-center">Reason of Extension</th> -->
+                <th width="12%" class="text-center">Status</th>
+                <th width="12%" class="text-center">Application Slip</th>
+                <th width="12%" class="text-center">Extension Order</th>
+              </tr>
+            </thead>
+            <thead *ngIf = "tableLen == 0">
+              <tr>
+                <th width="5%">SL.</th>
+                <th width="12%" class="text-center">Ticket Number</th>
+                <th width="12%" class="text-center">Assessment Year</th>
+                <th width="12%" class="text-center">Application Date</th>
+                <th width="15%" class="text-center">Requested Extension Upto</th>
+                <!-- <th class="text-center">Reason of Extension</th> -->
+                <th width="12%" class="text-center">Status</th>
+                <th width="12%" class="text-center">Application Slip</th>
+                <th width="12%" class="text-center">Extension Order</th>
+              </tr>
+            </thead>
+            <tbody *ngIf = "tableLen == 0">
+              <tr>
+                <td class="text-center" colspan="7" style="color: red; font-style: italic;">No Data Found!</td>
+              </tr>
+            </tbody>
+            <tbody *ngFor="let item of timeExtensionDetails; let k=index;">       
+                <tr *ngIf = "tableLen > 0">
+                  <td width="5%">{{k+1}}</td>
+                  <td width="12%" class="text-center">{{item.invoiceNumber}}</td>
+                  <td width="12%" class="text-center">{{item.assessmentYear}}</td>
+                  <td width="12%" class="text-center">{{item.reqDate}}</td>
+                  <td width="15%" class="text-center">{{item.approvedDate}}</td>
+                  <td width="12%" *ngIf="item.timeExtnStatus ==='Pending DCT Approval'" class="text-center"><span
+                      class="badge badge-warning">pending</span></td>
+                  <td width="12%" *ngIf="item.timeExtnStatus ==='Approved'" class="text-center"><span
+                      class="badge badge-success">approved</span></td>
+                  <td width="12%" *ngIf="item.timeExtnStatus ==='Rejected'" class="text-center"><span
+                      class="badge badge-danger">rejected</span></td>
+                  <td width="12%" class="text-center">
+                    <button *ngIf="item.timeExtnStatus ==='Pending DCT Approval' || item.timeExtnStatus ==='Approved'" type="button" (click)="timeExtensionReceiptPreview(item.invoiceNumber,item.reqDate)" class="btn btn-info" style="height: 25px;font-size: 11px;">View & Print</button>
+                    <span *ngIf="item.timeExtnStatus == 'Rejected'">-</span>
+                  </td>
+                  <td width="12%" class="text-center">
+                    <button *ngIf="item.timeExtnStatus ==='Approved'" type="button" (click)="timeExtensionPreview(item.invoiceNumber,item.reqDate)" class="btn btn-info" style="height: 25px;font-size: 11px;">View & Print</button>
+                    <span *ngIf="item.timeExtnStatus !='Approved'">-</span>
+                  </td>
+                  
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-12 col-sm-2"></div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #isConfirmTE>
+  <!-- <div class="modal-header">
+    <h4 class="modal-title pull-left" style="color: orange; font-size: 14px;">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="unchange_TE()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body">
+    <!-- <p>This Extension cannot be change later!</p> -->
+    <p>Do you want to Submit?</p>
+    <button type="button" class="btn btn-success" style="float: right;" (click)="submit_TE()">Yes</button>
+    <button type="button" class="btn btn-danger" style="float: right; margin-right: 10px;"
+      (click)="unchange_TE()">No</button>
+  </div>
+</ng-template>
+
+<ngx-ui-loader></ngx-ui-loader>

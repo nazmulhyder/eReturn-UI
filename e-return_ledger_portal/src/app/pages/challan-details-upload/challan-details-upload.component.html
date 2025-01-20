@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Challan Upload</title>
+</head>
+
+<div class="col-md-10 offset-md-1 content-background">
+    <div class="row">
+        <div class="col-6 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Challan Details &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-6">
+            <a class="align-content-center template" href="assets/sample/sample_challan.xlsx" target="_blank"
+                download="sample-file.xlsx"><i class="fa fa-download"></i> Download Upload File Template</a>
+        </div>
+
+        <div class="col-md-12">
+            <div class="content-background formSection">
+                <form class="row form-horizontal" [formGroup]="challanUploadForm" aria-labelledby="title">
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="name" class="label col-8 form-control-label">Name</label>
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Your Name" formControlName="name"
+                                    class="form-control" id="name" required readonly
+                                    [ngClass]="{'is-invalid':challanUploadForm.get('name').touched && challanUploadForm.get('name').invalid}">
+                                <div class="invalid-feedback">
+                                    <div>Name is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="win" class="label col-8 form-control-label">WIN</label>
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter WIN" formControlName="win" class="form-control"
+                                    id="win" required readonly
+                                    [ngClass]="{'is-invalid':challanUploadForm.get('win').touched && challanUploadForm.get('win').invalid}">
+                                <div class="invalid-feedback ">
+                                    <div>WIN is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="assessmentYear" class="label col-8 form-control-label">Assessment Year</label>
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Your Name" formControlName="assessmentYear"
+                                    class="form-control" id="assessmentYear" required readonly
+                                    [ngClass]="{'is-invalid':challanUploadForm.get('assessmentYear').touched && challanUploadForm.get('assessmentYear').invalid}">
+                                <div class="invalid-feedback ">
+                                    <div>Assessment Year is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="challanDate" class="label col-8 form-control-label ">Challan
+                                Date</label>
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Challan Date" formControlName="challanDate"
+                                    class="form-control" id="challanDate" required readonly
+                                    [ngClass]="{'is-invalid':challanUploadForm.get('challanDate').touched && challanUploadForm.get('challanDate').invalid}">
+                                <div class="invalid-feedback">
+                                    <div>Challan Date is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="challanNo" class="label col-8 form-control-label">Challan
+                                No.</label>
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Challan No." formControlName="challanNo"
+                                    class="form-control" id="challanNo" required readonly
+                                    [ngClass]="{'is-invalid':challanUploadForm.get('challanNo').touched && challanUploadForm.get('challanNo').invalid}">
+                                <div class="invalid-feedback">
+                                    <div>Challan No. is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="section" class="label col-8 form-control-label">Section</label>
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Your Section" formControlName="section"
+                                    class="form-control" id="section" required readonly
+                                    [ngClass]="{'is-invalid':challanUploadForm.get('section').touched && challanUploadForm.get('section').invalid}">
+                                <div class="invalid-feedback">
+                                    <div>Section is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="codeNo" class="label col-8 form-control-label ">Code No.</label>
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Code No." formControlName="codeNo"
+                                    class="form-control" id="codeNo" required readonly
+                                    [ngClass]="{'is-invalid':challanUploadForm.get('codeNo').touched && challanUploadForm.get('codeNo').invalid}">
+                                <div class="invalid-feedback">
+                                    <div>Code No. is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="amount" class="label col-8 form-control-label">Amount</label>
+                            <div class="col-12">
+                                <input type="text" placeholder="Enter Amount" formControlName="amount"
+                                    class="form-control" id="amount" required readonly
+                                    [ngClass]="{'is-invalid':challanUploadForm.get('amount').touched && challanUploadForm.get('amount').invalid}">
+                                <div class="invalid-feedback">
+                                    <div>Amount is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12" *ngIf="isShow">
+                        <div class="form-group">
+                            <label for="details" class="label col-8 form-control-label">Details</label>
+                            <div class="col-12">
+                                <div class="table-responsive tableBgStyle" id="chalanDetailsTable">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">S.L</th>
+                                                <th scope="col">Person Name</th>
+                                                <th scope="col">Person Tin</th>
+                                                <th scope="col">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of detailsData; let k = index">
+                                                <td scope="row">{{ k+1 }}</td>
+                                                <td scope="row">{{ item.personName }}</td>
+                                                <td scope="row">{{ item.personTin }}</td>
+                                                <td scope="row">{{ item.challanAmount }}</td>
+                                            </tr>                                
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-2" *ngIf="isShow">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="label col-12 form-control-label"> Total Row : {{totalRowExisting}}</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="label col-12 form-control-label"> Total Amount :
+                                            {{totalValueExisting}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="challanUploadFile" class="label col-8 form-control-label">Upload Challan</label>
+                            <div class="col-12">
+                                <!-- <input type="file" class="form-control inputStyle customHeight" accept=".csv"
+                                    formControlName="challanUploadFile" multiple="false"
+                                    (change)="handleFileSelect($event)" required> -->
+                                <input type="file" class="form-control customHeight" accept=".xlsx"
+                                    formControlName="challanUploadFile" multiple="false" (change)="onFileChange($event)"
+                                    required>
+                                <div class="table-responsive tableBgStyle mt-4" [hidden]="isHidden"
+                                    id="chalanDetailsTable">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr *ngFor="let row of data">
+                                                <td *ngFor="let val of row">
+                                                    {{val}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-2" [hidden]="isHidden">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="label col-12 form-control-label"> Total Row : {{totalRowUploaded}}</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="label col-12 form-control-label"> Total Amount :
+                                            {{totalValueUploaded}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-2">
+                        <div class="row">
+                            <div class="col-6"></div>
+                            <div class="col-6">
+                                <div class="col-12">
+                                    <button type="button" class="btn reset" (click)="reset()">
+                                        Reset
+                                    </button>
+                                    <button type="button" [disabled]="!challanUploadForm.valid" class="btn submitBtn"
+                                        (click)="submittedData()">
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+<ngx-ui-loader></ngx-ui-loader>
+
+<!-- <pre>Form values: {{challanUploadForm.value | json}}</pre> -->

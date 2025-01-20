@@ -1,0 +1,63 @@
+.card{
+    background-color: #F4F9FA;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
+    border-top: 0px solid #F4F9FA;
+    border-bottom: 0px solid #F4F9FA;
+}
+
+
+.fa-customize{
+    margin-left: auto;
+}
+.custom-row-up{
+    margin-bottom:40%;
+}
+.custom-row{
+    margin-bottom:55%;
+}
+
+
+.btn-customize {
+    background-color: white;
+    font-size: 12px;
+  }
+.btn-customize:hover {
+    background-color: black;
+    color:  white;
+  }
+  .custom-signin-btn{
+    background-color:#145DA0;
+    color: white;
+    font-size: 12px;
+  }
+
+  .text-blue{
+    color: #145DA0 !important;
+ }
+ @media (max-width: 767px){
+    .logo-text{
+        display: block !important;
+    }
+ }
+ @media (min-width: 768px){
+    .logo-text{
+        display: none !important;
+    }
+ }
+
+ .font-12
+{
+   font-size: 12px !important;;
+}
+
+.font-13
+{
+   font-size: 13px !important;;
+}
+.font-14
+{
+   font-size: 14px !important;;
+}
+
+
+

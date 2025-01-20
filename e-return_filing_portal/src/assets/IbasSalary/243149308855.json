@@ -1,0 +1,23 @@
+{
+   "salary":[
+      {
+         "IS_SALARY_NO":"",
+         "IS_EMP_TYPE":"GI",
+         "IS_OFC_NAME":"Taxes Zone Narayanganj",
+         "IS_EMP_DESIGNATION":"Joint Commissioner of Taxes",
+         "IS_BASIC_PAY":672240,
+         "IS_HOUSE_RENT_ALW":268896,
+		 "IS_CHARGE_ALW":0,
+         "IS_MEDICAL_ALW":18000,
+		 "IS_MOBILE_ALW":12000,
+		 "IS_EDUCATION_ALW":12000,
+		 "IS_FESTIVAL_BONUS":112040,
+         "IS_BANGLA_NEW_YEAR_ALW":11204,
+		 "IS_REST_RECREATION_ALW":0
+         
+      }
+   ],
+   "tds":{
+      "50":24000
+   }
+}

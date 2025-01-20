@@ -1,0 +1,89 @@
+.multiple-section {
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 10px #00000029;
+    opacity: 1;
+    padding: 20px 30px 20px 30px!important;
+    border: 1px solid #E0E0E0;
+}
+
+.addPropertyBtn {
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    /* box-shadow: 0px 3px 6px #707070; */
+    border-radius: 4px;
+    margin-right: 10px;
+    color: #01649A;
+    border-color: #01649A;
+}
+
+.property-btn-active{
+    background-color:#01649A;
+    color: white;
+    border: 0px;
+}
+
+.main_nav:hover {
+    float: right;
+    background-color: #01649A;
+    color: white;
+}
+  
+.activeMainNav{
+    background-color: #01649A !important;
+    color: white;
+    border: 0px;
+}
+
+.activeHead{
+    background-color: #01649A !important;
+    color: white;
+    border: 0px;
+}
+    
+label,input,select,option,p{
+    font-size: 14px !important;
+}
+  
+.saveContinueBtn {
+background-color: #01649A;
+color: #ffffff;
+width: 200px;
+}
+
+.backBtn {
+background-color: #01649A;
+color: #ffffff;
+width: 100px;
+}
+.saveDraftBtn {
+    background-color: #01649A;
+    color: #ffffff;
+    width: 100px;
+    margin-right: 3px;
+}
+  
+  /* ::ng-deep .tooltip-350 ~ .tooltip .tooltip-inner {
+    max-width: 380px;
+    min-width: 380px;
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    box-shadow: 1px 1px 10px 2px #00000029;
+    color: #0F0F0F;
+    margin-left: 3px;
+    text-align: left !important;
+  } */
+
+::ng-deep .tooltip-360 ~ .tooltip .tooltip-inner {
+    max-width: 300px;
+    min-width: 300px;
+    background: #F4F9FA 0% 0% no-repeat padding-box;
+    box-shadow: 1px 1px 10px 2px #00000029;
+    color: #0F0F0F;
+    font-size: 12px;
+    font-style: italic;
+    font-family: Helvetica;
+    font-weight: bold;
+    text-align: left !important;
+}
+
+.tooltip-360{
+    margin-left: 3px;
+}

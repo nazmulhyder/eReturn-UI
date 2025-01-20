@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sign In</title>
+</head>
+
+<div class="app-body">
+    <div class="col-md-12 px-0">
+        <div class="row pt-5">
+            <div class="col-md-12 text-center py-2">
+            </div>
+            <div class="col-md-12 mainSection">
+
+                <form class="col-md-8 offset-md-2" [formGroup]="signinForm">
+                    <div class="form-group text-center">
+                        <h4><b>Welcome!</b></h4>
+                        <p class="font-13"><b>Sign in to your account</b></p>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label class="font-14">TIN</label>
+                        <input type="text" class="form-control" placeholder="Enter your TIN" formControlName="winOrTin" required />
+                    </div>
+
+                    <!-- <div class="form-group mb-2">
+                        <label class="font-14">TIN</label>
+                        <input type="text" class="form-control" placeholder="Enter your TIN" formControlName="winOrTin"
+                            [ngClass]="{'is-invalid':signinForm.get('winOrTin').touched && signinForm.get('winOrTin').invalid}"
+                            required />
+                        <div class="invalid-feedback">
+                            <div>12 Digit TIN No. is required!</div>
+                        </div>
+                    </div> -->
+
+                    <div class="form-group mb-2">
+                        <label class="font-14">Password</label>
+                        <input type="password" class="form-control" placeholder="Enter your password"
+                            formControlName="password"
+                            [ngClass]="{'is-invalid':signinForm.get('password').touched && signinForm.get('password').invalid}"
+                            required />
+                        <div class="invalid-feedback">
+                            <div>Password is required!</div>
+                        </div>
+                    </div>
+                    <label class="font-14">Captcha</label>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" placeholder="" formControlName="captcha"
+                            [ngClass]="{'is-invalid':signinForm.get('captcha').touched && signinForm.get('captcha').invalid}"
+                            required />
+                        <div class="input-group-prepend">
+                            <div class="input-group-prepend" id="captcha" style="background-color: rgb(220, 220, 220); width: 130px;">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-outline-dark captchaBtn " (click)="reloadCaptcha()"><span><i
+                                    class="fa fa-refresh" aria-hidden="true"></i></span></button>
+                        <div class="invalid-feedback">
+                            <div>captcha is required!</div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <button type="submit" (click)="submitData()" class="btn btn-primary btn-block signInBtn"
+                                [disabled]="!signinForm.valid">Sign in</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+<!-- <pre>Form values: {{signinForm.value | json}}</pre> -->

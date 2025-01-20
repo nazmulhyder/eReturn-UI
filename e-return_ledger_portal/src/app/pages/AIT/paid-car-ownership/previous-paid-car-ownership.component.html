@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Paid Car Ownership</title>
+</head>
+
+<div class="col-md-8 offset-md-2 content-background">
+    <div class="row">
+        <div class="col-12 col-sm-12 titleSection">
+            <span class="text-border">
+                <i class="fa fa-chevron-left titleText">
+                </i>Paid Car Ownership &nbsp; &nbsp;
+            </span>
+        </div>
+        <div class="col-md-10 offset-md-1">
+            <div class="content-background formSection">
+                <div>
+                    <div>
+                        <form class="form-horizontal" [formGroup]="paidCarOwnershipForm" aria-labelledby="title">
+                            <!-- <div class="form-group row  mb-2">
+                                <label for="tin" class="label col-8 form-control-label labelStyle">TIN</label>
+                                <div class="col-9">
+                                    <input type="text" placeholder="Enter Your TIN" formControlName="tin"
+                                        class="form-control inputStyle" id="tin" required
+                                        [ngClass]="{'is-invalid':paidCarOwnershipForm.get('tin').touched && paidCarOwnershipForm.get('tin').invalid}">
+                                    <div class="invalid-feedback inputStyle">
+                                        <div>TIN is required!</div>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="form-group row  mb-2">
+                                <label for="section" class="label col-8 form-control-label labelStyle">Assessment Year</label>
+                                <div class="col-9">
+                                    <select class="form-control inputStyle" id="assessmentYear" formControlName="assessmentYear">
+                                        <option value="2021-2022">2021-2022</option>
+                                      </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row  mb-2">
+                                <label for="carName" class="label col-8 form-control-label labelStyle">Car Name</label>
+                                <div class="col-9">
+                                    <input type="text" placeholder="Enter Car Name" formControlName="carName"
+                                        class="form-control inputStyle" id="carName" required
+                                        [ngClass]="{'is-invalid':paidCarOwnershipForm.get('carName').touched && paidCarOwnershipForm.get('carName').invalid}">
+                                    <div class="invalid-feedback inputStyle">
+                                        <div>Car Name is required!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row  mb-2">
+                                <label for="licenseNo" class="label col-8 form-control-label labelStyle">License No.</label>
+                                <div class="col-9">
+                                    <input type="text" placeholder="Enter License No." formControlName="licenseNo"
+                                        class="form-control inputStyle" id="licenseNo" required
+                                        [ngClass]="{'is-invalid':paidCarOwnershipForm.get('licenseNo').touched && paidCarOwnershipForm.get('licenseNo').invalid}">
+                                    <div class="invalid-feedback inputStyle">
+                                        <div>License No. is required!</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row  mb-2">
+                                <label for="section" class="label col-8 form-control-label labelStyle">Section</label>
+                                <div class="col-9">
+                                    <select class="form-control inputStyle" id="section" formControlName="section">
+                                        <option value="0" selected>Select One</option>
+                                        <option value="Motor Car AIT">Motor Car AIT [ Section-68B]
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row  mb-3">
+                                <label for="paymentAmt" class="label col-8 form-control-label labelStyle">Amount</label>
+                                <div class="col-9">
+                                    <input type="text" placeholder="Enter Amount" formControlName="amount"
+                                        class="form-control inputStyle" id="amount" required
+                                        [ngClass]="{'is-invalid':paidCarOwnershipForm.get('amount').touched && paidCarOwnershipForm.get('amount').invalid}">
+                                    <div class="invalid-feedback inputStyle">
+                                        <div>Amount is required!</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <div class="form-group row  mb-3">
+                            <div class="col-9 col-sm-10 col-md-10 col-lg-10 buttonRowStyle">
+                                <div class="row">
+                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                                        <button type="button" [disabled]="!paidCarOwnershipForm.valid" class="btn submitBtn"
+                                            (click)="submittedData()">
+                                            Submit
+                                        </button>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                                        <button type="button" class="btn reset" (click)="reset()">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+<!-- <pre>Form values: {{paidCarOwnershipForm.value | json}}</pre> -->
+
+

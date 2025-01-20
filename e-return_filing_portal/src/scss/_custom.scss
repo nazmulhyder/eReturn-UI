@@ -1,0 +1,86 @@
+// Here you can add other styles
+.content-background{
+  background: #F4F9FA 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029!important;
+  border-radius: 5px!important;
+  opacity: 1!important;
+  padding: 20px 30px 20px 30px!important;
+}
+.btn-style {
+  background: #3F85ED 0% 0% no-repeat padding-box!important;
+  border-radius: 4px!important;
+  opacity: 1!important;
+  color: #FFFFFF!important;
+  font: normal normal 600 16px/14px Open Sans!important;
+  width: 298px!important;
+  height: 40px!important;
+}
+
+.content-slider-footer {
+  background: #E1EAEC 0% 0% no-repeat padding-box!important;
+  box-shadow: 0px 1px 10px #0000001A!important;
+  border: 1px solid #E0E0E0!important;
+  opacity: 1!important;
+  padding: 15px 30px 15px 30px;
+}
+
+.custom-container {
+  border-radius: 5px!important;
+  opacity: 1!important;
+  padding: 20px 10px 20px 10px!important;
+}
+
+.container-cover-shadow {
+  background: #F4F9FA 0% 0% no-repeat padding-box;
+  box-shadow: 0px 10px 20px #00000029;
+}
+
+.nav_font
+{
+  font-size: 14px !important;
+}
+
+
+//added for side bar menu by saifuddin
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?6yjppe');
+  src:  url('fonts/icomoon.eot?6yjppe#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?6yjppe') format('truetype'),
+    url('fonts/icomoon.woff?6yjppe') format('woff'),
+    url('fonts/icomoon.svg?6yjppe#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-side_bar_icon_4:before {
+  content: "\e900";
+  font-size: 10px;
+}
+.icon-side_bar_icon_3:before {
+  content: "\e901";
+  font-size: 10px;
+}
+.icon-side_bar_icon_2:before {
+  content: "\e902";
+}
+.icon-side_bar_icon_1:before {
+  content: "\e903";
+}
+

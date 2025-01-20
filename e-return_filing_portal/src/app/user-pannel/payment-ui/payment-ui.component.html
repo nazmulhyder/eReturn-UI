@@ -1,0 +1,132 @@
+<div class="container-fluid" style="margin-bottom: 20px;">
+    <div class="row content-background">
+        <div class="col-sm-6 offset-sm-3" [formGroup]="PaymentForm">
+            <div class="row pt-4">
+                <div class="col-sm-12 text-center">
+                    <h5 class="mr-3"><b>Make Payment</b></h5>
+                </div>
+            </div>
+
+            <div class="col-sm-12 pl-4 pt-4">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10 ml-4">
+                    <div class="form-group">
+                        <label class="font-14">Payment Type</label>
+                        <select class="form-control" formControlName="paymentType"
+                            [ngClass]="{'is-invalid':PaymentForm.get('paymentType').touched && PaymentForm.get('paymentType').invalid}"
+                            required>
+                            <option value="Tax with Return">Tax with Return</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            <div>Payment Type is required!</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-6"></div> -->
+            </div>
+
+            <div class="col-sm-12 pl-4" hidden>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10 ml-4">
+                    <div class="form-group">
+                        <label class="font-14">Taxpayer Origin</label>
+                        <select class="form-control" formControlName="taxpayerOrigin"
+                            [ngClass]="{'is-invalid':PaymentForm.get('taxpayerOrigin').touched && PaymentForm.get('taxpayerOrigin').invalid}"
+                            required>
+                            <option value="eFilling">eFilling</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            <div>Taxpayer Origin is required!</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-6"></div> -->
+            </div>
+
+            <div class="col-sm-12 pl-4">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10 ml-4">
+                    <div class="form-group">
+                        <label class="font-14">Payment Method</label>
+                        <select class="form-control" formControlName="paymentMethod" (change)="onPaymentMethod($event)"
+                            [ngClass]="{'is-invalid':PaymentForm.get('paymentMethod').touched && PaymentForm.get('paymentMethod').invalid}"
+                            required>
+                            <option value="">Please select</option>
+                            <option value="Bkash">Bkash</option>
+                            <option value="Nagad">Nagad</option>
+                            <option value="Rocket">Rocket</option>
+                            <option value="Upay">Upay</option>
+                            <option value="SBL">SBL</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            <div>Payment Method is required!</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-6"></div> -->
+            </div>
+
+            <div class="col-sm-12 pl-4">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10 ml-4">
+                    <div class="form-group">
+                        <label class="font-14">Account Code</label>
+                        <input class="form-control" formControlName="accountCode"
+                            [ngClass]="{'is-invalid':PaymentForm.get('accountCode').touched && PaymentForm.get('accountCode').invalid}"
+                            required readonly>
+                        <div class="invalid-feedback">
+                            <div>Account Code is required!</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-6"></div> -->
+            </div>
+
+            <div class="col-sm-12 pl-4">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10 ml-4">
+                    <div class="form-group">
+                        <label class="font-14">Chalan No</label>
+                        <input class="form-control" formControlName="chalanNo"
+                            [ngClass]="{'is-invalid':PaymentForm.get('chalanNo').touched && PaymentForm.get('chalanNo').invalid}"
+                            required readonly>
+                        <div class="invalid-feedback">
+                            <div>Chalan No is required!</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-6"></div> -->
+            </div>
+
+            <div class="col-sm-12 pl-4">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10 ml-4">
+                    <div class="form-group">
+                        <label class="font-14">Amount</label>
+                        <input class="form-control" formControlName="amount" (keypress)="numberOnly($event)" (keyup)="onAmountChange($event)"
+                            [ngClass]="{'is-invalid':PaymentForm.get('amount').touched && PaymentForm.get('amount').invalid}"
+                            required>
+                        <div class="invalid-feedback">
+                            <div>Amount is required!</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-6"></div> -->
+            </div>
+
+            <div class="col-sm-12 pt-2 pl-4">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10 ml-4">
+                    <div class="form-group">
+                        <button type="button" class="form-control btn" [disabled]="!PaymentForm.valid"
+                            style="background-color:#145DA0;color: white;" (click)="submitData()">
+                            Submit</button>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-6"></div> -->
+            </div>
+
+        </div>
+    </div>
+</div>
+<ngx-ui-loader></ngx-ui-loader>
